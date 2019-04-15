@@ -4,7 +4,7 @@ target ‘NoteDemo’ do
 pod 'AFNetworking'
 pod 'Masonry'
 pod 'ReactiveObjC', '~> 3.0.0'
-pod 'MBProgressHUD'
+pod 'LGAlertHUD', '1.0.3'
 pod 'MJExtension'
 pod 'MJRefresh'
 pod 'TFHpple', '~> 2.0.0'

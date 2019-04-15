@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -586,7 +586,7 @@
 		32326414216D9006005CC784 = {
 			isa = PBXGroup;
 			children = (
-				32326452216D9059005CC784 /* LGNotes */,
+				32326452216D9059005CC784 /* LGNote */,
 				3232641F216D9006005CC784 /* NoteDemo */,
 				32326438216D9007005CC784 /* NoteDemoTests */,
 				32326443216D9007005CC784 /* NoteDemoUITests */,
@@ -640,7 +640,7 @@
 			path = NoteDemoUITests;
 			sourceTree = "<group>";
 		};
-		32326452216D9059005CC784 /* LGNotes */ = {
+		32326452216D9059005CC784 /* LGNote */ = {
 			isa = PBXGroup;
 			children = (
 				32326488216E2C94005CC784 /* Base */,
@@ -652,7 +652,7 @@
 				325BC39F216EE2EB00D077F5 /* Resource */,
 				32326470216DF01E005CC784 /* Other */,
 			);
-			path = LGNotes;
+			path = LGNote;
 			sourceTree = "<group>";
 		};
 		32326453216D9398005CC784 /* Model */ = {

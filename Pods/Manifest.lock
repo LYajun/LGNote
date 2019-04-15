@@ -14,8 +14,14 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
+  - LGAlertHUD (1.0.3):
+    - LGAlertHUD/AlertView (= 1.0.3)
+    - Masonry
+    - YJExtensions
+  - LGAlertHUD/AlertView (1.0.3):
+    - Masonry
+    - YJExtensions
   - Masonry (1.1.0)
-  - MBProgressHUD (1.1.0)
   - MJExtension (3.0.15.1)
   - MJRefresh (3.1.15.7)
   - ReactiveObjC (3.0.0)
@@ -23,14 +29,21 @@ PODS:
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
   - TFHpple (2.0.0)
+  - YJExtensions (1.0.7):
+    - YJExtensions/Foundation (= 1.0.7)
+    - YJExtensions/UIKit (= 1.0.7)
+  - YJExtensions/Foundation (1.0.7):
+    - TFHpple
+  - YJExtensions/UIKit (1.0.7):
+    - YJExtensions/Foundation
   - YYImage (1.0.4):
     - YYImage/Core (= 1.0.4)
   - YYImage/Core (1.0.4)
 
 DEPENDENCIES:
   - AFNetworking
+  - LGAlertHUD (= 1.0.3)
   - Masonry
-  - MBProgressHUD
   - MJExtension
   - MJRefresh
   - ReactiveObjC (~> 3.0.0)
@@ -41,26 +54,28 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
+    - LGAlertHUD
     - Masonry
-    - MBProgressHUD
     - MJExtension
     - MJRefresh
     - ReactiveObjC
     - SDWebImage
     - TFHpple
+    - YJExtensions
     - YYImage
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  LGAlertHUD: 170243b33b65ec701ffd5c24bcdfac9a209d1b10
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   MJExtension: 19bc33ce2eee2d319760f5622562cf581a6ff756
   MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
   ReactiveObjC: ce79989e8684b9086b5f8d0c74bc7b81a8729c9e
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   TFHpple: a916fe0799eb30aa29b2670d14d5868cdd3a5b81
+  YJExtensions: 8c5fa569ce35af2f91da505e1ea75ee10083cce0
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
 
-PODFILE CHECKSUM: f1fc960229919196739b15d6aceb9cfd8bccad84
+PODFILE CHECKSUM: e72a2c398ed0ac3518496d84a69736d1659d15e0
 
 COCOAPODS: 1.7.0.beta.3

@@ -3,7 +3,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "LGNote"
-  spec.version      = "1.0.0"
+  spec.version      = "1.0.1"
   spec.summary      = "本公司笔记公共工具"
 
   spec.homepage     = "https://github.com/LYajun/LGNote"
@@ -27,18 +27,18 @@ Pod::Spec.new do |spec|
   spec.source       = { :git => "https://github.com/LYajun/LGNote.git", :tag => spec.version }
 
 
-  spec.source_files  = "LGNotes", "LGNotes/**/*.{h,m}"
+  spec.source_files  = "LGNote", "LGNote/**/*.{h,m}"
 
   spec.public_header_files = "Helper/YBIBUtilities.h"
 
 
-  spec.resources = "LGNotes/Resource/LGNote.bundle"
+  spec.resources = "LGNote/Resource/LGNote.bundle"
 
   spec.requires_arc = true
 
   spec.dependency 'Masonry'
   spec.dependency 'MJExtension'
-  spec.dependency 'MBProgressHUD'
+  spec.dependency 'LGAlertHUD'
   spec.dependency 'ReactiveObjC'
   spec.dependency 'AFNetworking'
   spec.dependency 'MJRefresh'
