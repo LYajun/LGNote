@@ -14,6 +14,21 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
+  - BlocksKit (2.2.5):
+    - BlocksKit/All (= 2.2.5)
+  - BlocksKit/All (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+    - BlocksKit/MessageUI
+    - BlocksKit/UIKit
+  - BlocksKit/Core (2.2.5)
+  - BlocksKit/DynamicDelegate (2.2.5)
+  - BlocksKit/MessageUI (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
+  - BlocksKit/UIKit (2.2.5):
+    - BlocksKit/Core
+    - BlocksKit/DynamicDelegate
   - LGAlertHUD (1.0.3):
     - LGAlertHUD/AlertView (= 1.0.3)
     - Masonry
@@ -42,6 +57,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - BlocksKit
   - LGAlertHUD (= 1.0.3)
   - Masonry
   - MJExtension
@@ -54,6 +70,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
+    - BlocksKit
     - LGAlertHUD
     - Masonry
     - MJExtension
@@ -66,6 +83,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  BlocksKit: 7f422b971407001178d181a43b99014ea2591fe6
   LGAlertHUD: 170243b33b65ec701ffd5c24bcdfac9a209d1b10
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MJExtension: 19bc33ce2eee2d319760f5622562cf581a6ff756
@@ -76,6 +94,6 @@ SPEC CHECKSUMS:
   YJExtensions: 8c5fa569ce35af2f91da505e1ea75ee10083cce0
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
 
-PODFILE CHECKSUM: e72a2c398ed0ac3518496d84a69736d1659d15e0
+PODFILE CHECKSUM: 256cb1645b69a7f199828c848b29bb6e5609290a
 
 COCOAPODS: 1.7.0.beta.3

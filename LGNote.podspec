@@ -3,7 +3,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "LGNote"
-  spec.version      = "1.0.1"
+  spec.version      = "1.0.2"
   spec.summary      = "本公司笔记公共工具"
 
   spec.homepage     = "https://github.com/LYajun/LGNote"
@@ -45,5 +45,6 @@ Pod::Spec.new do |spec|
   spec.dependency 'TFHpple'
   spec.dependency 'YYImage'
   spec.dependency 'SDWebImage'
-
+  spec.dependency 'BlocksKit'
+  
 end

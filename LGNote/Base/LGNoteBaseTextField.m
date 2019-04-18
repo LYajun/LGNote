@@ -10,10 +10,12 @@
 #import "NSString+NotesEmoji.h"
 #import "NSBundle+Notes.h"
 
+#import <BlocksKit/UITextField+BlocksKit.h>
+
 NSString  *const LGTextFieldKeyBoardDidShowNotification    = @"LGTextFieldKeyBoardDidShowNotification";
 NSString  *const LGTextFieldKeyBoardWillHiddenNotification = @"LGTextFieldKeyBoardWillHiddenNotification";
 
-@interface LGNoteBaseTextField ()<UITextFieldDelegate>
+@interface LGNoteBaseTextField ()
 
 @property (nonatomic, strong) UIToolbar *toolBarView;
 
@@ -41,7 +43,7 @@ NSString  *const LGTextFieldKeyBoardWillHiddenNotification = @"LGTextFieldKeyBoa
 
 - (void)commonInit{
     self.inputAccessoryView = self.toolBarView;
-    self.delegate = self;
+    
     self.maxLength = NSUIntegerMax;
     self.clearsOnBeginEditing = NO;
     self.leftViewMode = UITextFieldViewModeAlways;
@@ -54,6 +56,14 @@ NSString  *const LGTextFieldKeyBoardWillHiddenNotification = @"LGTextFieldKeyBoa
     [self addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     [self registerNotification];
+    
+    __weak typeof(self) weakSelf = self;
+    self.bk_didEndEditingBlock = ^(UITextField *textField) {
+        [weakSelf yj_textFieldDidEndEditing:textField];
+    };
+    self.bk_shouldChangeCharactersInRangeWithReplacementStringBlock = ^BOOL(UITextField *textField, NSRange range, NSString *string) {
+        return [weakSelf yj_textField:textField shouldChangeCharactersInRange:range replacementString:string];
+    };
 }
 
 - (void)registerNotification{
@@ -83,7 +93,7 @@ NSString  *const LGTextFieldKeyBoardWillHiddenNotification = @"LGTextFieldKeyBoa
 
 
 #pragma mark UITextFieldDelegate
-- (void)textFieldDidEndEditing:(UITextField *)textField{
+- (void)yj_textFieldDidEndEditing:(UITextField *)textField{
     if (self.lgDelegate && [self.lgDelegate respondsToSelector:@selector(lg_textFieldDidEndEditing:)]) {
         [self.lgDelegate lg_textFieldDidEndEditing:self];
     }
@@ -98,7 +108,7 @@ NSString  *const LGTextFieldKeyBoardWillHiddenNotification = @"LGTextFieldKeyBoa
 //
 //}
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+- (BOOL)yj_textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     
     if (string.length == 0) {
         return YES;
