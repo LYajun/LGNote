@@ -43,6 +43,7 @@
     self.sourceModel.SystemID = self.paramModel.SystemID;
     self.sourceModel.UserName = self.paramModel.UserName;
     self.sourceModel.SchoolID = self.paramModel.SchoolID;
+    
 }
 
 - (void)addRightNavigationBar{
@@ -143,6 +144,11 @@
         _sourceModel.ResourceName = self.paramModel.ResourceName;
         _sourceModel.ResourceID = self.paramModel.ResourceID;
         _sourceModel.SchoolID = self.paramModel.SchoolID;
+        
+        _sourceModel.MaterialIndex = self.paramModel.MaterialIndex;
+        _sourceModel.UserName = self.paramModel.UserName;
+        _sourceModel.SystemName = self.paramModel.SystemName;
+        _sourceModel.MaterialID = self.paramModel.MaterialID;
     }
     return _sourceModel;
 }

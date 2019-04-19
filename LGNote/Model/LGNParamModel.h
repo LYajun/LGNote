@@ -22,7 +22,8 @@ typedef NS_ENUM(NSInteger, SystemType) {
 };
 
 @interface LGNParamModel : NSObject
-
+/** 课后标准资料来源第几大题， 默认传 -1 */
+@property (nonatomic, assign) NSInteger MaterialIndex;
 /** 系统类型，集成时赋值 */
 @property (nonatomic, assign) SystemType SystemType;
 /** 基础平台地址 */
@@ -44,6 +45,8 @@ typedef NS_ENUM(NSInteger, SystemType) {
 @property (nonatomic, copy) NSString *SubjectName;
 /** 系统ID */
 @property (nonatomic, copy) NSString *SystemID;
+/** 系统名 */
+@property (nonatomic, copy) NSString *SystemName;
 @property (nonatomic, copy) NSString *Secret;    // 传空
 /** token：必须要传 */
 @property (nonatomic, copy) NSString *Token;
@@ -56,7 +59,7 @@ typedef NS_ENUM(NSInteger, SystemType) {
 /** 题目大题数量 */
 @property (nonatomic, assign) NSInteger MaterialCount;
 /** 1 重点   0 非重点   -1所有 */
-@property (nonatomic, copy) NSString *IsKeyPoint;
+@property (nonatomic, assign) NSInteger IsKeyPoint;
 @property (nonatomic, copy) NSString *StartTime;
 @property (nonatomic, copy) NSString *EndTime;
 

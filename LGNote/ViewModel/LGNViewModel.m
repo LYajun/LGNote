@@ -38,12 +38,12 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     @weakify(self);
     self.refreshCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
         @strongify(self);
-        NSString *checkUrl = [[NSUserDefaults standardUserDefaults] valueForKey:CheckNoteBaseUrlKey];
-        if (!IsStrEmpty(checkUrl)) {
-            self.paramModel.NoteBaseUrl = @"http://192.168.3.158:1212/";
+//        NSString *checkUrl = [[NSUserDefaults standardUserDefaults] valueForKey:CheckNoteBaseUrlKey];
+//        if (!IsStrEmpty(checkUrl)) {
+//            self.paramModel.NoteBaseUrl = @"http://192.168.3.158:1212/";
 //            self.paramModel.NoteBaseUrl = checkUrl;
-            [self p_getData];
-        } else {
+//            [self p_getData];
+//        } else {
             RACSignal *checkSignal = [self checkNoteBaseUrl];
             [checkSignal subscribeNext:^(NSString *  _Nullable url) {
                 if (!IsStrEmpty(url)) {
@@ -54,7 +54,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                     [self.refreshSubject sendNext:@[]];
                 }
             }];
-        }
+//        }
         
         return [RACSignal empty];
     }];
@@ -287,7 +287,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                                  @"SecretKey":self.paramModel.Secret,
                                  @"SchoolID":schoolID,
                                  @"MaterialID":self.paramModel.MaterialID,
-                                 @"IsKeyPoint":self.paramModel.IsKeyPoint,
+                                 @"IsKeyPoint":@(self.paramModel.IsKeyPoint),
                                  @"SysID":systemID,
                                  @"Keycon":keycon,
                                  @"Page":@(pageIndex),

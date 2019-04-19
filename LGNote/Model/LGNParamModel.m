@@ -118,7 +118,29 @@
     _C_SubjectID = C_SubjectID;
 }
 
-
+- (void)setSystemType:(SystemType)SystemType{
+    _SystemType = SystemType;
+    switch (SystemType) {
+        case SystemType_HOME:
+            _SystemName = @"课后作业";
+            break;
+        case SystemType_KQ:
+            _SystemName = @"课前预习";
+            break;
+        case SystemType_KT:
+            _SystemName = @"课堂教案";
+            break;
+        case SystemType_CP:
+            _SystemName = @"基础平台";
+            break;
+        case SystemType_ASSISTANTER:
+            _SystemName = @"学习小助手";
+            break;
+        default:
+            _SystemName = @"全部系统";
+            break;
+    }
+}
 //- (SystemType)SystemType{
 //    if (!_SystemType) {
 //        _SystemType = SystemType_ASSISTANTER;
