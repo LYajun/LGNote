@@ -287,7 +287,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                                  @"SecretKey":self.paramModel.Secret,
                                  @"SchoolID":schoolID,
                                  @"MaterialID":self.paramModel.MaterialID,
-                                 @"IsKeyPoint":@(self.paramModel.IsKeyPoint),
+                                 @"IsKeyPoint":self.paramModel.IsKeyPoint,
                                  @"SysID":systemID,
                                  @"Keycon":keycon,
                                  @"Page":@(pageIndex),

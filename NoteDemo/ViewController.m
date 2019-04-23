@@ -53,7 +53,7 @@
     // 页面
     params.PageIndex = 1;
     // 是否查看重点笔记，-1表示查看全部，1表示查看重点，0表示非重点
-    params.IsKeyPoint = -1;
+    params.IsKeyPoint = @"-1";
     // 课后标准资料来源第几大题,默认传-1
     params.MaterialIndex = -1;
     // 笔记来源对应学习任务ID （比如作业ID，课前预习ID，自学资料ID）

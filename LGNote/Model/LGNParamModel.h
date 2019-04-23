@@ -59,7 +59,7 @@ typedef NS_ENUM(NSInteger, SystemType) {
 /** 题目大题数量 */
 @property (nonatomic, assign) NSInteger MaterialCount;
 /** 1 重点   0 非重点   -1所有 */
-@property (nonatomic, assign) NSInteger IsKeyPoint;
+@property (nonatomic, copy) NSString *IsKeyPoint;
 @property (nonatomic, copy) NSString *StartTime;
 @property (nonatomic, copy) NSString *EndTime;
 
