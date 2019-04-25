@@ -62,6 +62,9 @@
     params.ResourceName = @"第五课教学方案_课前预习";
     // 学习任务相关的学习资料ID，用于取某个资料下的所有笔记
     params.MaterialID = @"Local1";
+    params.MaterialName = @"Local1";
+    params.ResourceIOSLink = @"";
+    params.MaterialTotal = @"-1";
     // 用户ID
     params.UserID = @"tcstu105";
     params.UserName = @"招伟江";

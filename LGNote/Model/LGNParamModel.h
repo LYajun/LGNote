@@ -56,8 +56,14 @@ typedef NS_ENUM(NSInteger, SystemType) {
 @property (nonatomic, copy) NSString *ResourceID;
 /** 用于取某个资料下的所有笔记 与学习任务相关的学习资料ID((对应任务里面多份资料)) */
 @property (nonatomic, copy) NSString *MaterialID;
+/** 资料名 */
+@property (nonatomic, copy) NSString *MaterialName;
+/** 跳转笔记来源链接 对应学习任务详情IOS端地址 */
+@property (nonatomic, copy) NSString *ResourceIOSLink;
 /** 题目大题数量 */
 @property (nonatomic, assign) NSInteger MaterialCount;
+/** 该份学习资料的总题目数  如无传 -1  */
+@property (nonatomic, copy) NSString *MaterialTotal;
 /** 1 重点   0 非重点   -1所有 */
 @property (nonatomic, copy) NSString *IsKeyPoint;
 @property (nonatomic, copy) NSString *StartTime;

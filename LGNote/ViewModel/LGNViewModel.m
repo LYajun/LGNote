@@ -112,6 +112,15 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 }
 
 - (void)p_getData{
+    RACSignal *uploadSignal = [self uploadNoteSourceInfo:@""];
+
+    [uploadSignal subscribeNext:^(id  _Nullable x) {
+        
+    }];
+    
+    
+    
+    
     RACSignal *mainSignal = [self getNotesWithUserID:self.paramModel.UserID systemID:self.paramModel.C_SystemID subjectID:self.paramModel.C_SubjectID schoolID:self.paramModel.SchoolID pageIndex:self.paramModel.PageIndex pageSize:self.paramModel.PageSize keycon:self.paramModel.SearchKeycon];
     RACSignal *subjectSignal = [self getAllSubjectInfo];
     RACSignal *getSystemSigal = [self getAllSystemInfo];
@@ -474,36 +483,37 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/UploadNoteSourceInfo"];
         NSDictionary *params = @{
+                                 @"SystemType":@"5",
                                  @"ResourceID":self.paramModel.ResourceID,
                                  @"MaterialID":self.paramModel.MaterialID,
-                                 @"ResourceName":@"",
-                                 @"MaterialName":@"",
+                                 @"ResourceName":self.paramModel.ResourceName,
+                                 @"MaterialName":self.paramModel.MaterialName,
                                  @"ResourcePCLink":@"",
-                                 @"ResourceIOSLink":@"",
+                                 @"ResourceIOSLink":self.paramModel.ResourceIOSLink,
                                  @"ResourceAndroidLink":@"",
                                  @"MaterialURL":@"",
                                  @"MaterialContent":@"",
-                                 @"MaterialTotal":@""
+                                 @"MaterialTotal":self.paramModel.MaterialTotal
                                  };
         [kNetwork.setRequestUrl(url).setRequestType(POST).setParameters(params)starSendRequestSuccess:^(id respone) {
             
             if (![respone[kErrorcode] hasSuffix:kSuccess]) {
-                [kMBAlert showErrorWithStatus:@"删除失败,请检查网络后再重试!"];
+//                [kMBAlert showErrorWithStatus:@"上传失败,请检查网络后再重试!"];
                 [subscriber sendNext:nil];
                 [subscriber sendCompleted];
                 return;
             }
             
-            [kMBAlert showSuccessWithStatus:@"删除成功!" afterDelay:1 completetion:^{
-                [subscriber sendNext:@"成功"];
-                [subscriber sendCompleted];
-            }];
+//            [kMBAlert showSuccessWithStatus:@"上传成功!" afterDelay:1 completetion:^{
+//                [subscriber sendNext:@"成功"];
+//                [subscriber sendCompleted];
+//            }];
             
             [subscriber sendNext:respone[kResult]];
             [subscriber sendCompleted];
             
         } failure:^(NSError *error) {
-            [kMBAlert showErrorWithStatus:@"删除失败,请检查网络后再重试!"];
+//            [kMBAlert showErrorWithStatus:@"上传失败,请检查网络后再重试!"];
             [subscriber sendNext:nil];
             [subscriber sendCompleted];
         }];
