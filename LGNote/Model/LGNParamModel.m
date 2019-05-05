@@ -10,6 +10,13 @@
 
 @implementation LGNParamModel
 
+- (void)setResourceName:(NSString *)ResourceName{
+    ResourceName = [ResourceName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (ResourceName.length > 20) {
+        ResourceName = [ResourceName substringToIndex:20];
+    }
+    _ResourceName = ResourceName;
+}
 
 - (NSString *)UserID{
     if (!_UserID) {

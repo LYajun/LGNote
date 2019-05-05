@@ -122,7 +122,7 @@
 - (LGNNoteEditView *)contentView{
     if (!_contentView) {
         NSInteger style = NoteEditViewHeaderStyleNoHidden;
-        if (self.paramModel.SystemType == SystemType_ASSISTANTER | self.paramModel.SystemType == SystemType_CP) {
+        if (self.paramModel.SystemType == SystemType_ASSISTANTER | self.paramModel.SystemType == SystemType_CP | self.paramModel.SystemType == SystemType_KQ) {
             style = NoteEditViewHeaderStyleHideSource;
         } else {
             style = NoteEditViewHeaderStyleNoHidden;

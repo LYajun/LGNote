@@ -519,10 +519,10 @@ LGSubjectPickerViewDelegate
         _titleTextF = [[LGNoteBaseTextField alloc] init];
         _titleTextF.borderStyle = UITextBorderStyleNone;
         _titleTextF.backgroundColor = [UIColor whiteColor];
-        _titleTextF.placeholder = @"请输入标题(100字内)";
+        _titleTextF.placeholder = @"请输入标题(50字内)";
         _titleTextF.leftView = nil;
         _titleTextF.lgDelegate = self;
-        _titleTextF.maxLength = 100;
+        _titleTextF.maxLength = 50;
         _titleTextF.limitType = LGTextFiledKeyBoardInputTypeNoneEmoji;
     }
     return _titleTextF;

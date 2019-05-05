@@ -59,7 +59,7 @@
     // 笔记来源对应学习任务ID （比如作业ID，课前预习ID，自学资料ID）
     params.ResourceID = @"YXRW-tcldy1-00000000000000000000000000000000000005-7592b5ae-c958-4456-a2f0-3dcbc82f1192";
     // 笔记来源名称
-    params.ResourceName = @"第五课教学方案_课前预习";
+    params.ResourceName = @"第五课教学方案_课前预习YXRW-tcldy1-000000000000000000000000000000000";
     // 学习任务相关的学习资料ID，用于取某个资料下的所有笔记
     params.MaterialID = @"Local1";
     params.MaterialName = @"Local1";
