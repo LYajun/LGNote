@@ -504,10 +504,10 @@ LGSubjectPickerViewDelegate
         _subjectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _subjectBtn.frame = CGRectZero;
         [_subjectBtn setTitle:@"英语" forState:UIControlStateNormal];
-        [_subjectBtn setImage:[NSBundle lg_imageName:@"note_subject_unselected"] forState:UIControlStateNormal];
+//        [_subjectBtn setImage:[NSBundle lg_imageName:@"note_subject_unselected"] forState:UIControlStateNormal];
         _subjectBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
         [_subjectBtn setTitleColor:kColorWithHex(0x0099ff) forState:UIControlStateNormal];
-        [_subjectBtn addTarget:self action:@selector(subjectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        [_subjectBtn addTarget:self action:@selector(subjectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
     }
     return _subjectBtn;
