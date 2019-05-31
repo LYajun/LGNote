@@ -17,8 +17,18 @@
 #define kColorWithHex(rgbValue)           [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define kColorInitWithRGB(r, g, b, a)     [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
+#define LGRGB(r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
+#ifdef DEBUG
+#define LGLog(...) NSLog(__VA_ARGS__)
+#else //发布状态 关闭状态
+#define LGLog(...)
+#endif
+#define LGFontSize(size)      [UIFont systemFontOfSize:size]
+
+
 /** Label淡灰 */
 #define kLabelColorLightGray     kColorInitWithRGB(152, 152, 152, 1)
+
 /** 背景 */
 #define kColorBackgroundGray     kColorInitWithRGB(242, 242, 242, 1)
 #define kSeletedLabelTextColor   kColorInitWithRGB(27, 98, 129, 1)

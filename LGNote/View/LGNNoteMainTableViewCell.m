@@ -56,17 +56,20 @@
         make.top.equalTo(self.noteTitleLabel.mas_bottom).offset(10);
         make.bottom.equalTo(self.sourceLabel.mas_top).offset(-10);
     }];
-    [self.sourceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.editTimeLabel);
-        make.left.equalTo(self.editTimeLabel.mas_right).offset(20);
-        make.right.equalTo(self.contentView).offset(-10);
-        make.height.mas_equalTo(15);
-    }];
+    
     [self.editTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.contentView).offset(-10);
         make.left.equalTo(self.noteTitleLabel);
         make.size.mas_equalTo(CGSizeMake(100, 15));
     }];
+    
+    [self.sourceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.editTimeLabel);
+        make.left.equalTo(self.editTimeLabel.mas_right).offset(5);
+        make.right.equalTo(self.contentView).offset(-10);
+        make.height.mas_equalTo(15);
+    }];
+   
 }
 
 - (void)configureCellForDataSource:(LGNNoteModel *)dataSource indexPath:(NSIndexPath *)indexPath{
@@ -112,7 +115,7 @@
         _noteContentLabel.text = @"荷塘月色内容";
         _noteContentLabel.numberOfLines = 0;
         _noteContentLabel.font = kSYSTEMFONT(14.f);
-        _noteContentLabel.textColor = kLabelColorLightGray;
+        _noteContentLabel.textColor = LGRGB(101, 101, 101);
     }
     return _noteContentLabel;
 }
@@ -120,10 +123,10 @@
 - (UILabel *)noteTitleLabel{
     if (!_noteTitleLabel) {
         _noteTitleLabel = [[UILabel alloc] init];
-        _noteTitleLabel.font = [UIFont systemFontOfSize:15.f];
+        _noteTitleLabel.font = [UIFont systemFontOfSize:17.f];
         _noteTitleLabel.text = @"毛泽东思想，马克思主义，中国特色社会主义核心价值观";
         _noteTitleLabel.numberOfLines = 1;
-        _noteTitleLabel.textColor = [UIColor darkGrayColor];
+        _noteTitleLabel.textColor = LGRGB(37, 37, 37);
     }
     return _noteTitleLabel;
 }

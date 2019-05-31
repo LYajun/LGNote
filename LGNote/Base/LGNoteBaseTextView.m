@@ -362,7 +362,7 @@ static const void *LGTextViewToolBarStyleKey          = &LGTextViewToolBarStyleK
         drawBoardBtn.tag = LGToolBarFuntionTypeDrawBoard;
         UIBarButtonItem *drawBoard = [[UIBarButtonItem alloc] initWithCustomView:drawBoardBtn];
         
-        UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStyleDone target:self action:@selector(toolBarEvent:)];
+        UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithTitle:@"收起" style:UIBarButtonItemStyleDone target:self action:@selector(toolBarEvent:)];
         done.tag = LGToolBarFuntionTypeDone;
         switch (self.toolBarStyle) {
                 case LGTextViewToolBarStyleDefault:{

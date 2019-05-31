@@ -59,7 +59,7 @@
     }];
     [self.sourceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.editTimeLabel);
-        make.left.equalTo(self.editTimeLabel.mas_right).offset(20);
+        make.left.equalTo(self.editTimeLabel.mas_right).offset(5);
         make.right.equalTo(self.contentView).offset(-10);
         make.height.mas_equalTo(15);
     }];
@@ -80,7 +80,7 @@
         make.left.equalTo(self.imageViewLeft.mas_right).offset(10);
         make.width.equalTo(self.imageViewLeft);
 //        make.top.equalTo(self.noteTitleLabel.mas_bottom).offset(10);
-        make.height.mas_equalTo(60);
+        make.height.mas_equalTo(80);
     }];
     [self.imageViewRight mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.contentView);
@@ -156,10 +156,10 @@
 - (UILabel *)noteTitleLabel{
     if (!_noteTitleLabel) {
         _noteTitleLabel = [[UILabel alloc] init];
-        _noteTitleLabel.font = [UIFont systemFontOfSize:15.f];
+        _noteTitleLabel.font = [UIFont systemFontOfSize:17.f];
         _noteTitleLabel.text = @"毛泽东思想，马克思主义，中国特色社会主义核心价值观";
         _noteTitleLabel.numberOfLines = 1;
-        _noteTitleLabel.textColor = [UIColor darkGrayColor];
+        _noteTitleLabel.textColor = LGRGB(37, 37, 37);
     }
     return _noteTitleLabel;
 }

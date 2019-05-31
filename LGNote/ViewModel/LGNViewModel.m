@@ -200,6 +200,9 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                                  };
         [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(self.paramModel.UserID).setToken(self.paramModel.Token).setParameters(params)starSendRequestSuccess:^(id respone) {
             
+            NSLog(@"%@",respone);
+            
+            
             if (![respone[kErrorcode] hasSuffix:kSuccess]) {
                 [subscriber sendNext:nil];
                 [subscriber sendCompleted];
@@ -293,24 +296,53 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 - (RACSignal *)getNotesWithUserID:(NSString *)userID systemID:(NSString *)systemID subjectID:(NSString *)subjectID schoolID:(NSString *)schoolID pageIndex:(NSInteger)pageIndex pageSize:(NSInteger)size keycon:(NSString *)keycon{
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNotesInformation"];
-        NSDictionary *params = @{
-                                 @"UserID":self.paramModel.UserID,
-                                 @"UserType":@(self.paramModel.UserType),
-                                 @"ResourceID":self.paramModel.ResourceID,
-                                 @"SubjectID":subjectID,
-                                 @"SecretKey":self.paramModel.Secret,
-                                 @"SchoolID":schoolID,
-                                 @"MaterialID":self.paramModel.MaterialID,
-                                 @"IsKeyPoint":self.paramModel.IsKeyPoint,
-                                 @"SysID":systemID,
-                                 @"Keycon":keycon,
-                                 @"Page":@(pageIndex),
-                                 @"StartTime":self.paramModel.StartTime,
-                                 @"EndTime":self.paramModel.EndTime,
-                                 @"Size":@(size),
-                                 @"BackUpOne":@"",
-                                 @"BackUpTwo":@""
-                                 };
+        NSLog(@"%zd",self.paramModel.SystemType);
+        NSDictionary *params;
+        if (self.paramModel.SystemType ==0 || self.paramModel.SystemType ==2) {
+            params = @{
+                                     @"UserID":self.paramModel.UserID,
+                                     @"UserType":@(self.paramModel.UserType),
+                                     @"ResourceID":self.paramModel.ResourceID,
+                                     @"SubjectID":subjectID,
+                                     @"SecretKey":self.paramModel.Secret,
+                                     @"SchoolID":schoolID,
+                                     @"MaterialID":self.paramModel.MaterialID,
+                                     @"IsKeyPoint":self.paramModel.IsKeyPoint,
+                                     @"SysID":systemID,
+                                     @"Keycon":keycon,
+                                     @"Page":@(pageIndex),
+                                     @"StartTime":self.paramModel.StartTime,
+                                     @"EndTime":self.paramModel.EndTime,
+                                     
+                                     @"Size":@(size),
+                                     @"BackUpOne":@"All",
+                                     @"BackUpTwo":@""
+                                     };
+            
+        }else{
+            
+          params = @{
+                                     @"UserID":self.paramModel.UserID,
+                                     @"UserType":@(self.paramModel.UserType),
+                                     @"ResourceID":self.paramModel.ResourceID,
+                                     @"SubjectID":subjectID,
+                                     @"SecretKey":self.paramModel.Secret,
+                                     @"SchoolID":schoolID,
+                                     @"MaterialID":self.paramModel.MaterialID,
+                                     @"IsKeyPoint":self.paramModel.IsKeyPoint,
+                                     @"SysID":systemID,
+                                     @"Keycon":keycon,
+                                     @"Page":@(pageIndex),
+                                     @"StartTime":self.paramModel.StartTime,
+                                     @"EndTime":self.paramModel.EndTime,
+                                     
+                                     @"Size":@(size),
+                                     @"BackUpOne":@"",
+                                     @"BackUpTwo":@""
+                                     };
+            
+        }
+        
         [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(self.paramModel.UserID).setToken(self.paramModel.Token).setParameters(params)starSendRequestSuccess:^(id respone) {
             
             if (![respone[kErrorcode] hasSuffix:kSuccess]) {

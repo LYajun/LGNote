@@ -61,7 +61,7 @@
     }];
     [self.sourceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.editTimeLabel);
-        make.left.equalTo(self.editTimeLabel.mas_right).offset(20);
+        make.left.equalTo(self.editTimeLabel.mas_right).offset(5);
         make.right.equalTo(self.contentView).offset(-10);
         make.height.mas_equalTo(15);
     }];
@@ -73,7 +73,7 @@
     CGFloat imageWidth = (kMain_Screen_Width - 30)/3;
     [self.noteImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(self.contentView);
-        make.size.mas_equalTo(CGSizeMake(imageWidth, 60));
+        make.size.mas_equalTo(CGSizeMake(imageWidth, 80));
         make.right.equalTo(self.contentView).offset(-10);
     }];
 }
@@ -89,6 +89,7 @@
     self.noteContentLabel.text = contentString;
     
     NSString *imageUrl = [dataSource.imgaeUrls objectAtIndex:0];
+
     [self.noteImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[NSBundle lg_imageName:@"lg_empty"] options:SDWebImageRefreshCached];
     
     if ([dataSource.IsKeyPoint isEqualToString:@"1"]) {
@@ -125,6 +126,7 @@
         _noteContentLabel.text = @"荷塘月色内容";
         _noteContentLabel.font = kSYSTEMFONT(14.f);
         _noteContentLabel.numberOfLines = 0;
+         _noteContentLabel.textColor = LGRGB(101, 101, 101);
     }
     return _noteContentLabel;
 }
@@ -132,10 +134,10 @@
 - (UILabel *)noteTitleLabel{
     if (!_noteTitleLabel) {
         _noteTitleLabel = [[UILabel alloc] init];
-        _noteTitleLabel.font = [UIFont systemFontOfSize:15.f];
+        _noteTitleLabel.font = [UIFont systemFontOfSize:17.f];
         _noteTitleLabel.text = @"毛泽东思想，马克思主义，中国特色社会主义核心价值观";
         _noteTitleLabel.numberOfLines = 1;
-        _noteTitleLabel.textColor = [UIColor darkGrayColor];
+        _noteTitleLabel.textColor = LGRGB(37, 37, 37);
     }
     return _noteTitleLabel;
 }

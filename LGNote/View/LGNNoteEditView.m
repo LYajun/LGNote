@@ -95,7 +95,8 @@ LGSubjectPickerViewDelegate
             [self addSubview:self.bottomView];
             self.subjectBtn.hidden = (_style == NoteEditViewHeaderStyleHideSubject) ? YES:NO;
             self.sourceBtn.hidden  = (_style == NoteEditViewHeaderStyleHideSource) ? YES:NO;
-            self.sourceTipImageView.hidden = self.sourceBtn.hidden;
+           // self.sourceTipImageView.hidden = self.sourceBtn.hidden;
+            self.sourceTipImageView.hidden =YES;
         }
             break;
         case NoteEditViewHeaderStyleHideAll: break;
@@ -134,14 +135,15 @@ LGSubjectPickerViewDelegate
             [self.sourceTipImageView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerY.equalTo(self.headerView);
                 make.right.equalTo(self.headerView).offset(-offsetX);
-                make.size.mas_equalTo(CGSizeMake(6, 8));
+                //make.size.mas_equalTo(CGSizeMake(6, 8));
+                 make.size.mas_equalTo(CGSizeMake(1, 1));
             }];
             [self.subjectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self.subjTipImageView.mas_right).offset(5);
                 make.centerY.equalTo(self.headerView);
             }];
             [self.sourceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.right.equalTo(self.sourceTipImageView.mas_left).offset(-5);
+                make.right.equalTo(self.sourceTipImageView.mas_left).offset(-1);
                 make.centerY.equalTo(self.headerView);
             }];
             [self.titleTextF mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -177,7 +179,7 @@ LGSubjectPickerViewDelegate
     [self.contentTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.line.mas_bottom);
         make.centerX.bottom.equalTo(self);
-        make.left.equalTo(self.titleTextF);
+        make.left.equalTo(self.titleTextF).offset(-5);
     }];
 }
 
@@ -196,6 +198,11 @@ LGSubjectPickerViewDelegate
     self.remarkBtn.selected = [viewModel.dataSourceModel.IsKeyPoint isEqualToString:@"1"] ? YES:NO;
     self.materialArray = [self.viewModel configureMaterialPickerDataSource];
     self.subjectArray = [self.viewModel configureSubjectPickerDataSource];
+    
+    NSLog(@"%@",viewModel.dataSourceModel.ResourceName);
+    
+    
+     [self.sourceBtn setTitle:viewModel.dataSourceModel.ResourceName forState:UIControlStateNormal];
     
     @weakify(self)
     [[self.viewModel getSubjectIDAndPickerSelectedForSubjectArray:viewModel.subjectArray subjectName:viewModel.dataSourceModel.SubjectName] subscribeNext:^(NSArray * _Nullable subjectSelectedData) {
@@ -316,7 +323,7 @@ LGSubjectPickerViewDelegate
     [self.contentTextView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.line.mas_bottom);
         make.centerX.equalTo(self);
-        make.left.equalTo(self.titleTextF);
+        make.left.equalTo(self.titleTextF).offset(-5);
         make.bottom.equalTo(self).offset(-self.contentTextView.keyboardHeight);
     }];
 }
@@ -356,8 +363,10 @@ LGSubjectPickerViewDelegate
     sender.selected = !sender.selected;
     if (sender.selected) {
         self.viewModel.dataSourceModel.IsKeyPoint = @"1";
+         [[LGNoteMBAlert shareMBAlert] showRemindStatus:@"已标记为重点"];
     } else {
         self.viewModel.dataSourceModel.IsKeyPoint = @"0";
+         [[LGNoteMBAlert shareMBAlert] showRemindStatus:@"已取消标记"];
     }
 }
 
@@ -453,6 +462,7 @@ LGSubjectPickerViewDelegate
     if (!_sourceTipImageView) {
         _sourceTipImageView = [[UIImageView alloc] init];
         _sourceTipImageView.image = [NSBundle lg_imagePathName:@"note_source_unselected"];
+        
     }
     return _sourceTipImageView;
 }
@@ -474,7 +484,7 @@ LGSubjectPickerViewDelegate
 - (UIView *)line{
     if (!_line) {
         _line = [[UIView alloc] init];
-        _line.backgroundColor = [UIColor lightGrayColor];
+        _line.backgroundColor = LGRGB(231, 231, 231);
     }
     return _line;
 }
@@ -504,10 +514,10 @@ LGSubjectPickerViewDelegate
         _subjectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _subjectBtn.frame = CGRectZero;
         [_subjectBtn setTitle:@"英语" forState:UIControlStateNormal];
-//        [_subjectBtn setImage:[NSBundle lg_imageName:@"note_subject_unselected"] forState:UIControlStateNormal];
+        [_subjectBtn setImage:[NSBundle lg_imageName:@"note_subject_unselected"] forState:UIControlStateNormal];
         _subjectBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
         [_subjectBtn setTitleColor:kColorWithHex(0x0099ff) forState:UIControlStateNormal];
-//        [_subjectBtn addTarget:self action:@selector(subjectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+      [_subjectBtn addTarget:self action:@selector(subjectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
     }
     return _subjectBtn;
@@ -524,6 +534,8 @@ LGSubjectPickerViewDelegate
         _titleTextF.lgDelegate = self;
         _titleTextF.maxLength = 50;
         _titleTextF.limitType = LGTextFiledKeyBoardInputTypeNoneEmoji;
+        _titleTextF.textColor = LGRGB(37, 37, 37);
+        _titleTextF.font = kSYSTEMFONT(18.f);
     }
     return _titleTextF;
 }
@@ -535,7 +547,8 @@ LGSubjectPickerViewDelegate
         _contentTextView.inputType = LGTextViewKeyBoardTypeEmojiLimit;
         _contentTextView.toolBarStyle = LGTextViewToolBarStyleDrawBoard;
         _contentTextView.maxLength = 50000;
-        _contentTextView.font = [UIFont systemFontOfSize:15];
+        _contentTextView.textColor = LGRGB(37, 37, 37);
+        _contentTextView.font = [UIFont systemFontOfSize:16];
         _contentTextView.lgDelegate = self;
         [_contentTextView showMaxTextLengthWarn:^{
             [[LGNoteMBAlert shareMBAlert] showRemindStatus:@"字数已达限制"];

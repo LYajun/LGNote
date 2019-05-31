@@ -27,7 +27,7 @@
 
 
 - (void)enterNoteViewController:(UIButton *)sender {
-    LGNNoteMainViewController *noteController = [[LGNNoteMainViewController alloc] initWithNaviBarLeftItemStyle:NoteMainViewControllerNaviBarStyleBack systemType:SystemUsedTypeOther];
+    LGNNoteMainViewController *noteController = [[LGNNoteMainViewController alloc] initWithNaviBarLeftItemStyle:NoteMainViewControllerNaviBarStyleBack systemType:SystemUsedTypeAssistanter];
     // 配置笔记首页所需参数
     noteController.paramModel = [self configureParams];
     
@@ -39,6 +39,34 @@
  */
 - (LGNParamModel *)configureParams{
     LGNParamModel *params = [[LGNParamModel alloc] init];
+    
+    params.SystemID = @"S21";
+    params.SubjectID = @"All";
+    params.C_SystemID = @"All";
+    params.PageSize = 10;
+    params.PageIndex = 1;
+    params.MaterialIndex = -1;
+    params.MaterialCount = 10;
+    params.SubjectName = @"";
+    params.IsKeyPoint = @"-1";
+    params.SchoolID = @"S27-508-EC82";
+    params.Token = @"B3C16070-17CE-405B-A251-4449C5A1255F";
+    params.ResourceName = @"我的笔记";
+    params.ResourceID = @"";
+    params.MaterialName = @"";
+    params.MaterialTotal = @"-1";
+    params.ResourceIOSLink = @"";
+    params.UserID = @"g2";
+    params.UserType = 2;
+    params.UserName = @"g2姓名";
+    params.CPBaseUrl = @"http://192.168.3.158:10103//";
+    params.SystemType = SystemType_ASSISTANTER;
+    
+    return params;
+    
+    
+    
+    
     // 系统ID，传All表示获取全部系统的数据
     params.SystemID = @"630";
     // 学科ID，传All表示获取全部学科数据

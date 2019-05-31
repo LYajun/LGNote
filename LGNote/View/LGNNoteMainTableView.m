@@ -28,7 +28,7 @@
     if (self = [super initWithFrame:frame style:style]) {
         self.delegate = self;
         self.dataSource = self;
-        self.rowHeight = 140;
+        self.rowHeight = 150;
         [self registerClass:[LGNNoteMainTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LGNNoteMainTableViewCell class])];
         [self registerClass:[LGNNoteMainImageTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LGNNoteMainImageTableViewCell class])];
         [self registerClass:[LGNNoteMoreImageTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LGNNoteMoreImageTableViewCell class])];
