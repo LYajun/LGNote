@@ -22,7 +22,7 @@
     [button setTitle:@"进入笔记" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(enterNoteViewController:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
-    //test
+  //去除text
 }
 
 
