@@ -112,6 +112,8 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 }
 
 - (void)p_getData{
+    
+    //上传笔记来源信息
     RACSignal *uploadSignal = [self uploadNoteSourceInfo:@""];
 
     [uploadSignal subscribeNext:^(id  _Nullable x) {
@@ -120,9 +122,11 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     
     
     
-    
+    //获取当前学生笔记列表
     RACSignal *mainSignal = [self getNotesWithUserID:self.paramModel.UserID systemID:self.paramModel.C_SystemID subjectID:self.paramModel.C_SubjectID schoolID:self.paramModel.SchoolID pageIndex:self.paramModel.PageIndex pageSize:self.paramModel.PageSize keycon:self.paramModel.SearchKeycon];
+    //获取当前学生学科列表
     RACSignal *subjectSignal = [self getAllSubjectInfo];
+    //获取系统列表
     RACSignal *getSystemSigal = [self getAllSystemInfo];
     
     // 如果skip == -1 的则表示跳过了 获取学科或者系统这两个接口
@@ -180,8 +184,9 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         return nil;
     }];
 }
-
+//获取当前学生学科列表
 - (RACSignal *)getAllSubjectInfo{
+    
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetSubjectInfo"];
         NSDictionary *params = @{
@@ -217,7 +222,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     }];
 }
 
-
+//获取当前学生系统列表
 - (RACSignal *)getAllSystemInfo{
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetSystemInfo"];
@@ -252,7 +257,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         return nil;
     }];
 }
-
+  //获取某条笔记的全部信息
 - (RACSignal *)getOneNoteInfoWithNoteID:(NSString *)noteID{
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNoteInfoByID"];
@@ -284,7 +289,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     }];
 }
 
-
+ //获取当前学生笔记列表
 - (RACSignal *)getNotesWithUserID:(NSString *)userID systemID:(NSString *)systemID subjectID:(NSString *)subjectID schoolID:(NSString *)schoolID pageIndex:(NSInteger)pageIndex pageSize:(NSInteger)size keycon:(NSString *)keycon{
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNotesInformation"];
@@ -358,7 +363,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         return nil;
     }];
 }
-
+//添加、编辑和删除当前学生笔记   1添加  0编辑  3 删除
 - (RACSignal *)operatedNoteWithParams:(id)params{
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/OperateNote"];
@@ -442,7 +447,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     }];
 }
 
-
+//   上传图片
 - (RACSignal *)uploadImages:(NSArray<UIImage *> *)images{
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/UploadImg"];
@@ -478,7 +483,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         return nil;
     }];
 }
-
+ //获取上传笔记相关来源详细信息
 - (RACSignal *)uploadNoteSourceInfo:(id)sourceInfo{
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/UploadNoteSourceInfo"];
