@@ -118,6 +118,8 @@ static const void *LGTextViewToolBarStyleKey          = &LGTextViewToolBarStyleK
 
 #pragma mark UITextViewDelegate
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    
+    
     //如果用户点击了return/ 输入为空
     if([text isEqualToString:@"\n"] || text.length == 0){
         return YES;
@@ -174,6 +176,9 @@ static const void *LGTextViewToolBarStyleKey          = &LGTextViewToolBarStyleK
 - (void)textViewDidChangeSelection:(UITextView *)textView{
     //获取光标位置
     _cursorPosition = textView.selectedRange.location;
+    
+    
+    
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView{
@@ -194,7 +199,11 @@ static const void *LGTextViewToolBarStyleKey          = &LGTextViewToolBarStyleK
     }
 }
 
+
+
 - (BOOL)textView:(UITextView *)textView shouldInteractWithTextAttachment:(NSTextAttachment *)textAttachment inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction{
+
+    
     if (self.lgDelegate && [self.lgDelegate respondsToSelector:@selector(lg_textViewShouldInteractWithTextAttachment:)]) {
        return [self.lgDelegate lg_textViewShouldInteractWithTextAttachment:self];
     }

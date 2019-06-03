@@ -609,8 +609,7 @@ LGSubjectPickerViewDelegate
         _contentTextView.textColor = LGRGB(37, 37, 37);
         _contentTextView.font = [UIFont systemFontOfSize:16];
         _contentTextView.lgDelegate = self;
-        
-  
+       
         [_contentTextView showMaxTextLengthWarn:^{
             [[LGNoteMBAlert shareMBAlert] showRemindStatus:@"字数已达限制"];
         }];

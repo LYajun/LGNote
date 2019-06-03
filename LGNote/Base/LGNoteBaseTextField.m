@@ -285,7 +285,7 @@ NSString  *const LGTextFieldKeyBoardWillHiddenNotification = @"LGTextFieldKeyBoa
 
 - (UIImageView *)leftImageView{
     if (!_leftImageView) {
-        _leftImageView = [[UIImageView alloc] initWithImage:[NSBundle lg_imagePathName:@"lg_search"]];
+        _leftImageView = [[UIImageView alloc] initWithImage:[NSBundle lg_imagePathName:@"lg_Newsearch"]];
         _leftImageView.frame = CGRectMake(0, 0, 25, 25);
         _leftImageView.contentMode = UIViewContentModeCenter;
         self.leftView = _leftImageView;
