@@ -17,8 +17,21 @@
 
 - (NSMutableAttributedString *)lg_changeforMutableAtttrubiteString{
     NSData *htmlData = [self dataUsingEncoding:NSUnicodeStringEncoding];
+    
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithData:htmlData options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType} documentAttributes:nil error:nil];
-    [att addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.f]} range:NSMakeRange(0, att.length)];
+    
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    
+    paragraphStyle.lineSpacing = 15;// 字体的行间距
+    
+    NSDictionary *attributes = @{
+                                 
+                                 NSFontAttributeName:[UIFont systemFontOfSize:15],
+                             NSParagraphStyleAttributeName:paragraphStyle
+                                 
+                                 };
+    
+    [att addAttributes:attributes range:NSMakeRange(0, att.length)];
     return att;
 }
 

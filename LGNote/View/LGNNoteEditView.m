@@ -204,8 +204,9 @@ LGSubjectPickerViewDelegate
 - (void)bindViewModel:(LGNViewModel *)viewModel{
     self.viewModel = viewModel;
     self.titleTextF.text = viewModel.dataSourceModel.NoteTitle;
-    self.contentTextView.attributedText = viewModel.dataSourceModel.NoteContent_Att;
     
+    self.contentTextView.attributedText = viewModel.dataSourceModel.NoteContent_Att;
+
     //讲图片总数同步
     self.viewModel.dataSourceModel.imageAllCont =self.viewModel.dataSourceModel.imgaeUrls.count;
 
@@ -252,6 +253,8 @@ LGSubjectPickerViewDelegate
     self.isInsert = NO;
     
     [self.viewModel.dataSourceModel updateText:self.contentTextView.attributedText];
+    
+    
 }
 
 - (BOOL)lg_textViewShouldInteractWithTextAttachment:(LGNoteBaseTextView *)textView{
@@ -346,7 +349,23 @@ LGSubjectPickerViewDelegate
     NSString *imgStr = [NSString stringWithFormat:@"<img src=\"%@\" width=\"%.f\" height=\"%.f\"/>",path,width,height];
     NSMutableAttributedString *currentAttr = [[NSMutableAttributedString alloc] initWithAttributedString:self.contentTextView.attributedText];
     self.imgAttr = imgStr.lg_changeforMutableAtttrubiteString;
-    [self.imgAttr addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} range:NSMakeRange(0, self.imgAttr.length)];
+    
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+
+    paragraphStyle.lineSpacing = 15;// 字体的行间距
+
+    NSDictionary *attributes = @{
+
+                                 NSFontAttributeName:[UIFont systemFontOfSize:15],
+
+                                 NSParagraphStyleAttributeName:paragraphStyle
+
+                                 };
+
+   [self.imgAttr addAttributes:attributes range:NSMakeRange(0, self.imgAttr.length)];
+  //  [self.imgAttr addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} range:NSMakeRange(0, self.imgAttr.length)];
+    
+  
     
     [self.viewModel.dataSourceModel updateImageInfo:@{@"src":path,@"width":[NSString stringWithFormat:@"%.f",width],@"height":[NSString stringWithFormat:@"%.f",height]} imageAttr:self.imgAttr];
     self.currentLocation = [self.contentTextView offsetFromPosition:self.contentTextView.beginningOfDocument toPosition:self.contentTextView.selectedTextRange.start];
@@ -590,6 +609,8 @@ LGSubjectPickerViewDelegate
         _contentTextView.textColor = LGRGB(37, 37, 37);
         _contentTextView.font = [UIFont systemFontOfSize:16];
         _contentTextView.lgDelegate = self;
+        
+  
         [_contentTextView showMaxTextLengthWarn:^{
             [[LGNoteMBAlert shareMBAlert] showRemindStatus:@"字数已达限制"];
         }];
