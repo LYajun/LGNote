@@ -99,7 +99,7 @@
     if ([dataSource.IsKeyPoint isEqualToString:@"1"]) {
         NSTextAttachment *attment = [[NSTextAttachment alloc] init];
         attment.image = [NSBundle lg_imagePathName:@"note_remark_selected"];
-        attment.bounds = CGRectMake(5, -3, 15, 15);
+        attment.bounds = CGRectMake(5, -1, 15, 15);
         
         NSAttributedString *attmentAtt = [NSAttributedString attributedStringWithAttachment:attment];
         NSMutableAttributedString *att1 = [[NSMutableAttributedString alloc] initWithString:[dataSource.NoteTitle stringByAppendingString:@" "]];
@@ -159,6 +159,7 @@
         _noteTitleLabel.font = [UIFont systemFontOfSize:17.f];
         _noteTitleLabel.text = @"毛泽东思想，马克思主义，中国特色社会主义核心价值观";
         _noteTitleLabel.numberOfLines = 1;
+        _noteTitleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
         _noteTitleLabel.textColor = LGRGB(37, 37, 37);
     }
     return _noteTitleLabel;

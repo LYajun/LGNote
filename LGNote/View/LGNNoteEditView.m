@@ -33,6 +33,8 @@ LGSubjectPickerViewDelegate
 @property (nonatomic, strong) UIButton *subjectBtn;
 @property (nonatomic, strong) UIImageView *subjTipImageView;
 @property (nonatomic, strong) UIImageView *sourceTipImageView;
+@property (nonatomic,strong) UIScrollView * bgScrollView;
+
 /** 标题下的线(0.7高度) */
 @property (nonatomic, strong) UIView *line;
 
@@ -101,6 +103,15 @@ LGSubjectPickerViewDelegate
             break;
         case NoteEditViewHeaderStyleHideAll: break;
     }
+    
+    
+//
+//    UIScrollView *bgScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0,kMain_Screen_Width, kMain_Screen_Height-32)];
+//   // bgScrollView.contentSize = CGSizeMake(0, kMain_Screen_Height+300);
+//    //bgScrollView.backgroundColor = LGRGB(238, 238, 238);
+//    [self addSubview:self.bgScrollView=bgScrollView];
+//
+    
     
     [self addSubview:self.remarkBtn];
     [self addSubview:self.titleTextF];
@@ -180,6 +191,7 @@ LGSubjectPickerViewDelegate
         make.top.equalTo(self.line.mas_bottom);
         make.centerX.bottom.equalTo(self);
         make.left.equalTo(self.titleTextF).offset(-5);
+        
     }];
 }
 

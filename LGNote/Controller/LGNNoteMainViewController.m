@@ -67,7 +67,7 @@ SearchToolViewDelegate
 - (void)setupSubViewsContraints{
     [self.toolView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.centerX.top.equalTo(self.view);
-        make.height.mas_equalTo(60);
+        make.height.mas_equalTo(45);
     }];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.bottom.equalTo(self.view);
