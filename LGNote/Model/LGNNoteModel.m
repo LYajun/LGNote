@@ -82,6 +82,7 @@
 - (void)updateText:(NSAttributedString *)textAttr{
     NSString *html = [self deleteBodyInAttr:textAttr];
     NSArray *textImgArr = [self imageArrayInHTML:html];
+     _imageAllCont = textImgArr.count;
     if (textImgArr && textImgArr.count > 0) {
         for (int i = 0; i < textImgArr.count; i++) {
             TFHppleElement *hppleElement = textImgArr[i];

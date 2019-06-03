@@ -61,7 +61,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSArray *imgaeUrls;
 /** 是否是图文混排 */
 @property (nonatomic, assign) BOOL mixTextImage;
-
+//当前图片的总张数
+@property (nonatomic,assign) NSInteger  imageAllCont;
 
 @property (nonatomic, strong) NSMutableDictionary *imageInfo;
 

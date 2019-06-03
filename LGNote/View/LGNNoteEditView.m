@@ -205,6 +205,11 @@ LGSubjectPickerViewDelegate
     self.viewModel = viewModel;
     self.titleTextF.text = viewModel.dataSourceModel.NoteTitle;
     self.contentTextView.attributedText = viewModel.dataSourceModel.NoteContent_Att;
+    
+    //讲图片总数同步
+    self.viewModel.dataSourceModel.imageAllCont =self.viewModel.dataSourceModel.imgaeUrls.count;
+
+    
     viewModel.dataSourceModel.SubjectName = viewModel.isAddNoteOperation ? @"英语":viewModel.dataSourceModel.SubjectName;
     [self.subjectBtn setTitle:viewModel.dataSourceModel.SubjectName forState:UIControlStateNormal];
     self.remarkBtn.selected = [viewModel.dataSourceModel.IsKeyPoint isEqualToString:@"1"] ? YES:NO;
@@ -269,6 +274,13 @@ LGSubjectPickerViewDelegate
 }
 
 - (void)lg_textViewPhotoEvent:(LGNoteBaseTextView *)textView{
+    
+    if(self.viewModel.dataSourceModel.imageAllCont ==9 ||self.viewModel.dataSourceModel.imageAllCont>9){
+        [[LGNoteMBAlert shareMBAlert] showErrorWithStatus:@"仅允许最多上传9张图片!"];
+        
+        return;
+    }
+    
     if (![LGNImagePickerViewController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
         [[LGNoteMBAlert shareMBAlert] showErrorWithStatus:@"没有打开相册权限"];
     }
@@ -285,6 +297,14 @@ LGSubjectPickerViewDelegate
 }
 
 - (void)lg_textViewCameraEvent:(LGNoteBaseTextView *)textView{
+    
+    if(self.viewModel.dataSourceModel.imageAllCont ==9 ||self.viewModel.dataSourceModel.imageAllCont>9){
+        [[LGNoteMBAlert shareMBAlert] showErrorWithStatus:@"仅允许最多上传9张图片!"];
+        
+        return;
+    }
+    
+    
     if (![LGNImagePickerViewController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         [[LGNoteMBAlert shareMBAlert] showErrorWithStatus:@"没有打开照相机权限"];
     }
@@ -301,6 +321,14 @@ LGSubjectPickerViewDelegate
 }
 
 - (void)lg_textViewDrawBoardEvent:(LGNoteBaseTextView *)textView{
+    
+    if(self.viewModel.dataSourceModel.imageAllCont ==9 ||self.viewModel.dataSourceModel.imageAllCont>9){
+        [[LGNoteMBAlert shareMBAlert] showErrorWithStatus:@"仅允许最多上传9张图片!"];
+        
+        return;
+    }
+    
+    
     LGNDrawBoardViewController *drawController = [[LGNDrawBoardViewController alloc] init];
     drawController.style = LGNoteDrawBoardViewControllerStyleDraw;
     [self.ownController presentViewController:drawController animated:YES completion:nil];

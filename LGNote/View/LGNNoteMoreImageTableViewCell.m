@@ -114,7 +114,7 @@
 }
 
 - (void)loadImageViewWithImageUrls:(NSArray *)imageUrls{
-    if (imageUrls.count == 3) {
+    if (imageUrls.count == 3 ||imageUrls.count > 3) {
         NSString *url1 = [imageUrls objectAtIndex:0];
         NSString *url2 = [imageUrls objectAtIndex:1];
         NSString *url3 = [imageUrls objectAtIndex:2];

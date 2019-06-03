@@ -23,6 +23,14 @@
 //    self.allowsEditing = YES;
 }
 
+//点击取消按钮
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    
+    
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey,id> *)info{
     
     NSString *type = [info objectForKey:UIImagePickerControllerMediaType];

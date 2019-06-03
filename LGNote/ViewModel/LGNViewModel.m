@@ -202,7 +202,6 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
             
             NSLog(@"%@",respone);
             
-            
             if (![respone[kErrorcode] hasSuffix:kSuccess]) {
                 [subscriber sendNext:nil];
                 [subscriber sendCompleted];
@@ -366,7 +365,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                 NSMutableArray *imageUrls = [self filterImageUrlWithHtml:model.NoteContent];
                 // 如果有多张图片，只取前三张用来在首页展示
                 if (imageUrls.count > 3 && imageUrls.count != 0) {
-                    model.imgaeUrls = [imageUrls subarrayWithRange:NSMakeRange(0, 2)];
+                    model.imgaeUrls = [imageUrls subarrayWithRange:NSMakeRange(0, imageUrls.count)];
                 } else {
                     model.imgaeUrls = imageUrls;
                 }
