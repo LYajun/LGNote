@@ -83,8 +83,11 @@
         resultStr = @"物理";
     } else if ([subjectID hasSuffix:@"Politics"]) {
         resultStr = @"社会";
-    } else {
+    } else if ([subjectID hasSuffix:@"Other"]){
         resultStr = @"其他";
+    }else{
+        
+        resultStr = @"全部";
     }
     return resultStr;
 }
