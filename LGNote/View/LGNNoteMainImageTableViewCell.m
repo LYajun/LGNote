@@ -22,6 +22,7 @@
 @property (nonatomic, strong) UILabel *sourceLabel;
 @property (nonatomic, strong) UIImageView *noteImageView;
 
+
 @end
 
 @implementation LGNNoteMainImageTableViewCell
@@ -30,6 +31,7 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self lg_addSubViews];
+
     }
     return self;
 }
@@ -92,21 +94,81 @@
 
     [self.noteImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[NSBundle lg_imageName:@"lg_empty"] options:SDWebImageRefreshCached];
     
+    
     if ([dataSource.IsKeyPoint isEqualToString:@"1"]) {
+        if(_isSearchVC){//搜索标注关键字颜色
+            NSMutableAttributedString *att1 = [[NSMutableAttributedString alloc] initWithString:[dataSource.NoteTitle stringByAppendingString:@" "]];
+            self.noteTitleLabel.attributedText = att1;
+            
+            self.noteTitleLabel.attributedText = [self setAllText:self.noteTitleLabel.text andSpcifiStr:_searchContent withColor:nil specifiStrFont:nil isremark:YES];
+        }else{
+            NSTextAttachment *attment = [[NSTextAttachment alloc] init];
+            attment.image = [NSBundle lg_imagePathName:@"note_remark_selected"];
+            attment.bounds = CGRectMake(5, -1, 15, 15);
+            
+            NSAttributedString *attmentAtt = [NSAttributedString attributedStringWithAttachment:attment];
+            NSMutableAttributedString *att1 = [[NSMutableAttributedString alloc] initWithString:[dataSource.NoteTitle stringByAppendingString:@" "]];
+            
+            [att1 appendAttributedString:attmentAtt];
+            
+            
+            self.noteTitleLabel.attributedText = att1;
+        }
+    } else {
+        NSMutableAttributedString *att1 = [[NSMutableAttributedString alloc] initWithString:dataSource.NoteTitle];
+        self.noteTitleLabel.attributedText = att1;
+        if(_isSearchVC){
+            
+      self.noteTitleLabel.attributedText = [self setAllText:self.noteTitleLabel.text andSpcifiStr:_searchContent withColor:nil specifiStrFont:nil isremark:NO];
+        }
+    }
+    
+}
+
+
+- (NSMutableAttributedString *)setAllText:(NSString *)allStr andSpcifiStr:(NSString *)keyWords withColor:(UIColor *)color specifiStrFont:(UIFont *)font isremark:(BOOL)remak{
+    NSMutableAttributedString *mutableAttributedStr = [[NSMutableAttributedString alloc] initWithString:allStr];
+    if (color == nil) {
+        color = [UIColor orangeColor];
+    }
+    if (font == nil) {
+        font = [UIFont systemFontOfSize:17];
+    }
+    
+    
+    for (NSInteger j=0; j<=keyWords.length-1; j++) {
+        
+        NSRange searchRange = NSMakeRange(0, [allStr length]);
+        NSRange range;
+        NSString *singleStr = [keyWords substringWithRange:NSMakeRange(j, 1)];
+        while
+            ((range = [allStr rangeOfString:singleStr options:NSLiteralSearch range:searchRange]).location != NSNotFound) {
+                //改变多次搜索时searchRange的位置
+                searchRange = NSMakeRange(NSMaxRange(range), [allStr length] - NSMaxRange(range));
+                //设置富文本
+                [mutableAttributedStr addAttribute:NSForegroundColorAttributeName value:color range:range];
+                [mutableAttributedStr addAttribute:NSFontAttributeName value:font range:range];
+            }
+        
+       
+        
+    }
+    
+    if(remak){
+        
         NSTextAttachment *attment = [[NSTextAttachment alloc] init];
         attment.image = [NSBundle lg_imagePathName:@"note_remark_selected"];
         attment.bounds = CGRectMake(5, -1, 15, 15);
         
         NSAttributedString *attmentAtt = [NSAttributedString attributedStringWithAttachment:attment];
-        NSMutableAttributedString *att1 = [[NSMutableAttributedString alloc] initWithString:[dataSource.NoteTitle stringByAppendingString:@" "]];
-        [att1 appendAttributedString:attmentAtt];
-        self.noteTitleLabel.attributedText = att1;
-    } else {
-        NSMutableAttributedString *att1 = [[NSMutableAttributedString alloc] initWithString:dataSource.NoteTitle];
-        self.noteTitleLabel.attributedText = att1;
+        
+        [mutableAttributedStr appendAttributedString:attmentAtt];
     }
     
+    return mutableAttributedStr;
 }
+
+
 
 
 #pragma mark - lazy

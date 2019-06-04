@@ -52,6 +52,7 @@
 }
 
 - (void)createSubViews{
+    self.tableView.isSearchVC = YES;
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
@@ -68,6 +69,8 @@
 #pragma mark - TextFieldDelegate
 - (void)lg_textFieldDidChange:(LGNoteBaseTextField *)textField{
     self.viewModel.paramModel.SearchKeycon = textField.text;
+    
+    self.tableView.searchContent = textField.text;
 }
 
 - (void)lg_textFieldDidEndEditing:(LGNoteBaseTextField *)textField{
@@ -75,6 +78,7 @@
 }
 
 - (void)searchBtnEvent:(UIButton *)sender{
+        
     [self.searchBar resignFirstResponder];
     [self searchEvent];
 }
@@ -128,6 +132,7 @@
         _tableView = [[LGNNoteMainTableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         [_tableView allocInitRefreshHeader:NO allocInitFooter:NO];
         _tableView.ownerController = self;
+        _tableView.isSearchVC = YES;
         _tableView.errorImageView.image = kImage(@"NoSearchResult");
         _tableView.errorInfoLabel.text = @"未搜索到结果";
         self.viewModel.isSearchOperation = YES;

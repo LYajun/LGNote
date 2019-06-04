@@ -87,18 +87,28 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     LGNNoteModel *model = self.dataArray[indexPath.section];
+
+    
     // 判断是不是图文混排类型
     if (model.imgaeUrls.count <= 0) {
         LGNNoteMainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMainTableViewCell class]) forIndexPath:indexPath];
+        cell.searchContent =_searchContent;
+        cell.isSearchVC = _isSearchVC;
         [cell configureCellForDataSource:model indexPath:indexPath];
         return cell;
     } else if (model.imgaeUrls > 0 && model.mixTextImage) {
         LGNNoteMainImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMainImageTableViewCell class]) forIndexPath:indexPath];
+        cell.searchContent =_searchContent;
+        cell.isSearchVC = _isSearchVC;
         [cell configureCellForDataSource:model indexPath:indexPath];
+    
         return cell;
     } else {
         LGNNoteMoreImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMoreImageTableViewCell class]) forIndexPath:indexPath];
+        cell.searchContent =_searchContent;
+        cell.isSearchVC = _isSearchVC;
         [cell configureCellForDataSource:model indexPath:indexPath];
+    
         return cell;
     }
 }

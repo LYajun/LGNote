@@ -11,7 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LGNNoteMainTableView : LGNoteBaseTableView
-
+//搜索
+@property (nonatomic,assign) BOOL  isSearchVC;
+@property (nonatomic,strong) NSString * searchContent;
 @end
 
 NS_ASSUME_NONNULL_END
