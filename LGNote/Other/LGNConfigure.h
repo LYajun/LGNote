@@ -20,5 +20,5 @@
 #import "LGNParamModel.h"
 #import "UIButton+Notes.h"
 #import "NSString+Notes.h"
-
+#import "LGNSingleTool.h"
 #endif /* Configure_h */

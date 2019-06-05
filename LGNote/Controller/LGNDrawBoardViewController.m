@@ -84,10 +84,15 @@
 #pragma mark - NoteDrawSettingViewDelegate
 - (void)drawSettingViewSelectedPenFontButton:(NSInteger)buttonTag{
     [self.buttonView penFontButtonSeleted];
+    
+    
+    
 }
 
 - (void)drawSettingViewSelectedPenColorButton:(NSInteger)buttonTag{
     [self.buttonView penColorButtonSeleted];
+    
+    
 }
 
 - (void)drawSettingViewSelectedDrawBackgroudButton:(NSInteger)buttonTag{
@@ -98,6 +103,7 @@
 }
 
 - (void)drawSettingViewSelectedLastButton:(NSInteger)buttonTag{
+    
     [self.buttonView lastButtonSeleted];
     [self.drawSettingWindow hiddenAnimationWithDurationTime:0.25];
     [self.drawView unDo];
@@ -156,6 +162,8 @@
 }
 
 - (void)chooseBoardBackgroudImageForButtonTag:(NSInteger)butonTag{
+    
+    
     if (self.style == LGNoteDrawBoardViewControllerStyleDefault) {
         [kMBAlert showRemindStatus:@"该模式下暂不支持切换图片该功能"];
         [self.drawToolView closePenFont:NO closePenColor:NO closeBoardView:YES];
@@ -191,6 +199,7 @@
 - (LGNNoteCustomWindow *)drawSettingWindow{
     if (!_drawSettingWindow) {
         _drawSettingWindow = [[LGNNoteCustomWindow alloc] initWithAnmationContentView:self.drawToolView];
+        
     }
     return _drawSettingWindow;
 }
@@ -198,6 +207,7 @@
 - (LGNNoteDrawSettingView *)drawToolView{
     if (!_drawToolView) {
         _drawToolView = [[LGNNoteDrawSettingView alloc] initWithFrame:CGRectMake(0, kMain_Screen_Height, kMain_Screen_Width, 140)];
+        //_drawToolView.backgroundColor = [UIColor redColor];
         _drawToolView.delegate = self;
     }
     return _drawToolView;

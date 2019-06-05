@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28EF5B3022A754C100EA94DB /* LGNSingleTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 28EF5B2F22A754C100EA94DB /* LGNSingleTool.m */; };
 		320D4E8F224372EA0013872A /* LGNNoteMoreImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 320D4E8E224372EA0013872A /* LGNNoteMoreImageTableViewCell.m */; };
 		321156F3223637900000A054 /* LGNNoteEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 321156F2223637900000A054 /* LGNNoteEditView.m */; };
 		3213BBF9225B23660065E2DD /* LGNoteSafeTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 3213BBF8225B23660065E2DD /* LGNoteSafeTool.m */; };
@@ -140,6 +141,8 @@
 
 /* Begin PBXFileReference section */
 		1327CF5CEE302EAC89AC964E /* Pods-NoteDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoteDemo.release.xcconfig"; path = "Target Support Files/Pods-NoteDemo/Pods-NoteDemo.release.xcconfig"; sourceTree = "<group>"; };
+		28EF5B2E22A754C100EA94DB /* LGNSingleTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LGNSingleTool.h; sourceTree = "<group>"; };
+		28EF5B2F22A754C100EA94DB /* LGNSingleTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LGNSingleTool.m; sourceTree = "<group>"; };
 		320D4E8D224372EA0013872A /* LGNNoteMoreImageTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LGNNoteMoreImageTableViewCell.h; sourceTree = "<group>"; };
 		320D4E8E224372EA0013872A /* LGNNoteMoreImageTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LGNNoteMoreImageTableViewCell.m; sourceTree = "<group>"; };
 		321156F1223637900000A054 /* LGNNoteEditView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LGNNoteEditView.h; sourceTree = "<group>"; };
@@ -664,6 +667,8 @@
 				3232647A216E2142005CC784 /* LGNParamModel.m */,
 				321932C7224274D90019AA64 /* LGNSubjectModel.h */,
 				321932C8224274D90019AA64 /* LGNSubjectModel.m */,
+				28EF5B2E22A754C100EA94DB /* LGNSingleTool.h */,
+				28EF5B2F22A754C100EA94DB /* LGNSingleTool.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1081,6 +1086,7 @@
 				32B6BE8622488002001F9E10 /* UIButton+Notes.m in Sources */,
 				3213BC46225B46B90065E2DD /* YBIBWebImageManager.m in Sources */,
 				3213BC8D225C6E950065E2DD /* UIImageView+HighlightedWebCache.m in Sources */,
+				28EF5B3022A754C100EA94DB /* LGNSingleTool.m in Sources */,
 				3213BBF9225B23660065E2DD /* LGNoteSafeTool.m in Sources */,
 				3213BBFC225B24CF0065E2DD /* NSData+Notes.m in Sources */,
 				32326487216E2C87005CC784 /* LGNoteNetworkManager.m in Sources */,

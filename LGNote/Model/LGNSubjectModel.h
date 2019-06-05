@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** 暂时无用字段 */
 @property (nonatomic, copy) NSString *Grades;
 
+
 @end
 
 @interface SystemModel : NSObject

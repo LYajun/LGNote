@@ -23,6 +23,7 @@
     LGNoteBaseNavigationViewController *nav = [[LGNoteBaseNavigationViewController alloc] initWithRootViewController:controller];
     self.window.rootViewController = nav;
     
+   
     return YES;
 }
 

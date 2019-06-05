@@ -76,6 +76,8 @@
 
 
 - (void)buttonClickEvent:(UIButton *)sender{
+    
+    
     [self refreshButtonSelectedWithSelectedType:sender.tag];
     
     if (sender.tag == 100) {

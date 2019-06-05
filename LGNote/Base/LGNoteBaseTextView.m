@@ -117,8 +117,81 @@ static const void *LGTextViewToolBarStyleKey          = &LGTextViewToolBarStyleK
 
 
 #pragma mark UITextViewDelegate
+
+//- (BOOL)canBecomeFirstResponder{
+//
+//    return YES;
+//
+//}
+
+//-(BOOL)canPerformAction:(SEL)action withSender:(id)sender{
+//    
+//    if (action ==@selector(copy:)){
+//        
+//        return YES;
+//        
+//    }
+//    
+//    else if (action ==@selector(paste:)){
+//        
+//        return YES;
+//        
+//    }
+//    
+//    else if (action ==@selector(cut:)){
+//        
+//        return NO;
+//        
+//    }
+//    
+//    else if(action ==@selector(select:)){
+//        
+//        return YES;
+//        
+//    }
+//    
+//    else if (action ==@selector(delete:)){
+//        
+//        return NO;
+//        
+//    }
+//    
+//    return NO;
+//    
+//}
+
+-(void)paste:(id)sender
+
+{
+    
+    UIPasteboard *pboard = [UIPasteboard generalPasteboard];
+    
+    
+    
+    NSLog(@"pboard.string : %@",pboard.string);
+     NSLog(@"pboard.items : %@",pboard.items);
+     NSLog(@"pboard.image : %@",pboard.image);
+  
+    
+    NSLog(@"粘贴了");
+    
+}
+
+//-(void)copy:(id)sender
+//
+//{
+//    
+//    NSLog(@"复制了");
+//  
+////    UIPasteboard *pboard = [UIPasteboard generalPasteboard];
+////
+////    pboard.string = self.text;
+////
+//    
+//}
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-        
+    
     //如果用户点击了return/ 输入为空
     if([text isEqualToString:@"\n"] || text.length == 0){
         return YES;

@@ -22,6 +22,8 @@
 }
 
 - (instancetype)initWithAnmationContentView:(UIView *)animationContentView{
+      [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(hideTop) name:@"hideTop" object:nil];
+    
     self.backgroundColor = [UIColor lightGrayColor];
     if (self = [super initWithFrame:[UIScreen mainScreen].bounds]) {
         self.animationView = animationContentView;
@@ -33,6 +35,10 @@
     return self;
 }
 
+- (void)hideTop{
+    
+    [self hiddenAnimationWithDurationTime:self.animationTime];
+}
 - (void)showAnimationWithDurationTime:(NSTimeInterval)durantion{
     self.animationTime = durantion;
     [self makeKeyAndVisible];

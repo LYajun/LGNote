@@ -51,6 +51,9 @@ static CGFloat const penColorHeight = 30.f;
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:BoardBgImageViewChangeBackgroudImageViewNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"hideTop" object:nil];
+    
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -125,6 +128,10 @@ static CGFloat const penColorHeight = 30.f;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+ 
+   [[NSNotificationCenter defaultCenter] postNotificationName:@"hideTop" object:nil userInfo:nil];
+    
     for (int i = 0; i < self.colorSelectModels.count; i ++) {
         PenColorModel *model = self.colorSelectModels[i];
         if (indexPath.row == i) {
@@ -146,6 +153,8 @@ static CGFloat const penColorHeight = 30.f;
 
 #pragma mark - NotificationMethod
 - (void)changeBackgroudImage:(NSNotification *)notification{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"hideTop" object:nil userInfo:nil];
+    
     NSDictionary *dic = notification.userInfo;
     NSString *imageName = dic[BoardBgPostNotificationKey];
     if (self.delegate && [self.delegate respondsToSelector:@selector(drawSettingViewChangeBackgroudImage:)]) {
@@ -155,6 +164,8 @@ static CGFloat const penColorHeight = 30.f;
 
 #pragma mark - ButtonViewDelegate
 - (void)choosePenFontForButtonTag:(NSInteger)butonTag{
+    
+    
     [self showPenFont:YES showPenColor:NO showBoardView:NO buttonTag:0];
     if (self.delegate && [self.delegate respondsToSelector:@selector(drawSettingViewSelectedPenFontButton:)]) {
         [self.delegate drawSettingViewSelectedPenFontButton:butonTag];
@@ -231,6 +242,12 @@ static CGFloat const penColorHeight = 30.f;
     if (self.delegate && [self.delegate respondsToSelector:@selector(drawSettingViewChanegPenFont:)]) {
         [self.delegate drawSettingViewChanegPenFont:drawLineWidth];
     }
+}
+
+- (void)endPenFont{
+    
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"hideTop" object:nil userInfo:nil];
 }
 
 #pragma mark - lazy
@@ -316,9 +333,12 @@ static CGFloat const penColorHeight = 30.f;
     if (!_sliderView) {
         _sliderView = [[UISlider alloc] init];
         [_sliderView addTarget:self action:@selector(changePenFont:) forControlEvents:UIControlEventValueChanged];
+         [_sliderView addTarget:self action:@selector(endPenFont) forControlEvents:UIControlEventTouchUpInside];
+        
     }
     return _sliderView;
 }
+
 
 
 @end

@@ -95,6 +95,10 @@
     }
 
     [kMBAlert showIndeterminateWithStatus:@"正在进行，请稍等..."];
+    
+ 
+    
+    
     [self.viewModel.operateCommand execute:[self.sourceModel mj_keyValues]];
     [[UIApplication sharedApplication].keyWindow endEditing:YES];
     @weakify(self);
