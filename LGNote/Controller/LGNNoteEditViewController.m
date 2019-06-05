@@ -122,7 +122,8 @@
 - (LGNNoteEditView *)contentView{
     if (!_contentView) {
         NSInteger style = NoteEditViewHeaderStyleNoHidden;
-        if (self.paramModel.SystemType == SystemType_ASSISTANTER | self.paramModel.SystemType == SystemType_CP | self.paramModel.SystemType == SystemType_KQ) {
+        if (self.paramModel.SystemType == SystemType_ASSISTANTER | self.paramModel.SystemType == SystemType_CP | self.paramModel.SystemType == SystemType_KQ |
+            self.paramModel.SystemType == SystemType_HOME) {
             style = NoteEditViewHeaderStyleHideSource;
         } else {
             style = NoteEditViewHeaderStyleNoHidden;
@@ -149,8 +150,7 @@
         _sourceModel.UserName = self.paramModel.UserName;
         _sourceModel.SystemName = self.paramModel.SystemName;
         _sourceModel.MaterialID = self.paramModel.MaterialID;
-        _sourceModel.SystemID = self.paramModel.SystemID;
-        _sourceModel.SubjectID = self.paramModel.SubjectID;
+        _sourceModel.MaterialName = self.paramModel.MaterialName;
     }
     return _sourceModel;
 }

@@ -536,7 +536,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 - (RACSignal *)getSubjectIDAndPickerSelectedForSubjectArray:(NSArray *)subjectArray subjectName:(NSString *)subjectName{
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         if (IsArrEmpty(subjectArray)) {
-            [subscriber sendNext:@[@"0",@"S2_English"]];
+            [subscriber sendNext:@[@"0",self.paramModel.SubjectID]];
             [subscriber sendCompleted];
             return nil;
         }
