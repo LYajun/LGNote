@@ -189,6 +189,10 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetSubjectInfo"];
+        
+        NSLog(@"%@",url);
+        
+        
         NSDictionary *params = @{
                                  @"UserID":self.paramModel.UserID,
                                  @"UserType":@(self.paramModel.UserType),
@@ -199,6 +203,9 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                                  @"BackUpTwo":@""
                                  };
         [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(self.paramModel.UserID).setToken(self.paramModel.Token).setParameters(params)starSendRequestSuccess:^(id respone) {
+            
+            NSLog(@"==UserID%@==Token%@==Secret%@==SchoolID%@",self.paramModel.UserID,self.paramModel.Token,self.paramModel.Secret,self.paramModel.SchoolID);
+            
             
             NSLog(@"%@",respone);
             
@@ -295,6 +302,11 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 - (RACSignal *)getNotesWithUserID:(NSString *)userID systemID:(NSString *)systemID subjectID:(NSString *)subjectID schoolID:(NSString *)schoolID pageIndex:(NSInteger)pageIndex pageSize:(NSInteger)size keycon:(NSString *)keycon{
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNotesInformation"];
+        
+        NSLog(@"%@",url);
+        
+        
+        
         NSLog(@"%zd",self.paramModel.SystemType);
         NSDictionary *params;
         if (self.paramModel.SystemType ==0 || self.paramModel.SystemType ==2) {

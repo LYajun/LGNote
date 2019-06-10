@@ -17,7 +17,7 @@
 #import "LGNImagePickerViewController.h"
 #import "LGNDrawBoardViewController.h"
 #import "LGNCutImageViewController.h"
-
+#import "LGNSingleTool.h"
 @interface LGNNoteEditView ()
 <
 LGNoteBaseTextFieldDelegate,
@@ -253,7 +253,7 @@ LGSubjectPickerViewDelegate
     self.isInsert = NO;
     
     [self.viewModel.dataSourceModel updateText:self.contentTextView.attributedText];
-    
+
     
 }
 

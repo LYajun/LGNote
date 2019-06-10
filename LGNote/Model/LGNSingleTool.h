@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableAttributedString *CopyNoteContent_Att;
 
 @property (nonatomic,strong) NSAttributedString * attributedString;
+
+@property (nonatomic,strong) NSString * Notcontent;
 AS_SINGLETON(LGNSingleTool)
 @end
 

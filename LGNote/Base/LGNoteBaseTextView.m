@@ -10,7 +10,7 @@
 #import <objc/runtime.h>
 #import "NSString+NotesEmoji.h"
 #import "NSBundle+Notes.h"
-
+#import "LGNSingleTool.h"
 /** 辅助工具上功能类型 */
 typedef NS_ENUM(NSInteger ,LGToolBarFuntionType){
     LGToolBarFuntionTypeClear,
@@ -61,7 +61,46 @@ static const void *LGTextViewToolBarStyleKey          = &LGTextViewToolBarStyleK
 - (void)commonInit{
     _toolBarHeight = 44;
     self.delegate = self;
+    
+ //   [self createMenu];
 }
+
+-(void)createMenu{
+    UIMenuItem * mean = [[UIMenuItem alloc]initWithTitle:@"复制" action:@selector(ccopyContent:)];
+    UIMenuController * meanVC = [UIMenuController sharedMenuController];
+    
+    [meanVC setMenuItems:@[mean]];
+    [meanVC setTargetRect:self.frame inView:self.superview];
+    [meanVC setMenuVisible:YES animated:YES];
+    
+}
+
+- (void)ccopyContent:(UIMenuItem*) itenm{
+    
+   // NSLog(@"==%@==", [self.text substringWithRange:self.selectedRange]);
+    
+    //NSLog(@"%zd==%zd",self.selectedRange.location,self.selectedRange.length);
+    
+    NSLog(@"%@",[LGNSingleTool sharedInstance].Notcontent);
+    
+    
+       NSLog(@"==%@==", [[LGNSingleTool sharedInstance].Notcontent substringWithRange:self.selectedRange]);
+    
+    
+    
+   //存下当前text的attributedText
+    [LGNSingleTool sharedInstance].attributedString = self.attributedText;
+    //通过selectedRange取attributedText中的选中内容
+    
+    NSLog(@"%@",self.attributedText);
+    
+    
+    //粘贴的时候  q取选中内容通过当前的光标位置selectedRange.location插入内容中
+    
+    
+}
+
+
 
 - (void)registerNotification{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidAppear:) name:UIKeyboardDidShowNotification object:nil];
@@ -118,64 +157,62 @@ static const void *LGTextViewToolBarStyleKey          = &LGTextViewToolBarStyleK
 
 #pragma mark UITextViewDelegate
 
-//- (BOOL)canBecomeFirstResponder{
-//
-//    return YES;
-//
-//}
+- (BOOL)canBecomeFirstResponder{
 
-//-(BOOL)canPerformAction:(SEL)action withSender:(id)sender{
-//    
-//    if (action ==@selector(copy:)){
-//        
-//        return YES;
-//        
-//    }
-//    
-//    else if (action ==@selector(paste:)){
-//        
-//        return YES;
-//        
-//    }
-//    
-//    else if (action ==@selector(cut:)){
-//        
-//        return NO;
-//        
-//    }
-//    
-//    else if(action ==@selector(select:)){
-//        
-//        return YES;
-//        
-//    }
-//    
-//    else if (action ==@selector(delete:)){
-//        
-//        return NO;
-//        
-//    }
-//    
-//    return NO;
-//    
-//}
+    return YES;
 
--(void)paste:(id)sender
+}
 
-{
+-(BOOL)canPerformAction:(SEL)action withSender:(id)sender{
     
-    UIPasteboard *pboard = [UIPasteboard generalPasteboard];
+    if (action ==@selector(copy:)){
+        
+        return NO;
+        
+    }
     
+    else if (action ==@selector(paste:)){
+        
+        return NO;
+        
+    }
     
+    else if (action ==@selector(cut:)){
+        
+        return NO;
+        
+    }
     
-    NSLog(@"pboard.string : %@",pboard.string);
-     NSLog(@"pboard.items : %@",pboard.items);
-     NSLog(@"pboard.image : %@",pboard.image);
-  
+    else if(action ==@selector(select:)){
+        
+        return NO;
+        
+    }
     
-    NSLog(@"粘贴了");
+    else if (action ==@selector(delete:)){
+        
+        return NO;
+        
+    }
+    
+    return NO;
     
 }
+//
+//-(void)paste:(id)sender
+//
+//{
+//    
+//    UIPasteboard *pboard = [UIPasteboard generalPasteboard];
+//
+//    NSLog(@"pboard.string : %@",pboard.string);
+//     NSLog(@"pboard.items : %@",pboard.items);
+//     NSLog(@"pboard.image : %@",pboard.image);
+//  
+//    
+//    NSLog(@"粘贴了");
+//    
+//}
 
 //-(void)copy:(id)sender
 //
