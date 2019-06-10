@@ -223,7 +223,7 @@ static const void *LGTextViewToolBarStyleKey          = &LGTextViewToolBarStyleK
 ////    UIPasteboard *pboard = [UIPasteboard generalPasteboard];
 ////
 ////    pboard.string = self.text;
-////
+
 //    
 //}
 
