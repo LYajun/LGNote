@@ -153,8 +153,7 @@
         _sourceModel.UserName = self.paramModel.UserName;
         _sourceModel.SystemName = self.paramModel.SystemName;
         _sourceModel.MaterialID = self.paramModel.MaterialID;
-        _sourceModel.SystemID = self.paramModel.SystemID;
-        _sourceModel.SubjectID = self.paramModel.SubjectID;
+        _sourceModel.MaterialName = self.paramModel.MaterialName;
     }
     return _sourceModel;
 }
