@@ -234,6 +234,7 @@
         _imageViewLeft = [[UIImageView alloc] init];
         _imageViewLeft.layer.cornerRadius = 5;
         _imageViewLeft.clipsToBounds = YES;
+        _imageViewLeft.contentMode = UIViewContentModeScaleAspectFill;
         [_imageViewLeft sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[NSBundle lg_imageName:@"lg_empty"]];
     }
     return _imageViewLeft;
@@ -244,6 +245,7 @@
         _imageViewCenter = [[UIImageView alloc] init];
         _imageViewCenter.layer.cornerRadius = 5;
         _imageViewCenter.clipsToBounds = YES;
+        _imageViewCenter.contentMode = UIViewContentModeScaleAspectFill;
         [_imageViewCenter sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[NSBundle lg_imageName:@"lg_empty"]];
     }
     return _imageViewCenter;
@@ -254,6 +256,7 @@
         _imageViewRight = [[UIImageView alloc] init];
         _imageViewRight.layer.cornerRadius = 5;
         _imageViewRight.clipsToBounds = YES;
+        _imageViewRight.contentMode = UIViewContentModeScaleAspectFill;
         [_imageViewRight sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[NSBundle lg_imageName:@"lg_empty"]];
     }
     return _imageViewRight;

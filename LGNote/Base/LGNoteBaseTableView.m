@@ -17,9 +17,9 @@
 
 /** 加载中 */
 //@property (nonatomic, strong) UIView *viewLoading;
+
 /** 错误 */
 @property (nonatomic, strong) UIView *viewError;
-
 @end
 
 @implementation LGNoteBaseTableView
@@ -113,7 +113,10 @@
             [kMBAlert hide];
             [self tableViewShowEndLoading];
             self.viewError.hidden = NO;
-            [self showRequestOnView:self.viewError];
+        [self showRequestOnView:self.viewError];
+//
+            
+            
 //            if (kNetwork.networkReachabilityStatus == AFNetworkReachabilityStatusNotReachable) {
 //                self.errorInfoLabel.text = @"请检查网络是否正常";
 //            } else {
@@ -159,11 +162,12 @@
 #pragma mark - lazy
 - (UIView *)viewError{
     if (!_viewError) {
+        
         _viewError = [[UIView alloc] init];
         [self addSubview:_viewError];
         [_viewError mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
-            make.size.mas_equalTo(CGSizeMake(kMain_Screen_Width, kMain_Screen_Height));
+         make.size.mas_equalTo(CGSizeMake(kMain_Screen_Width, kMain_Screen_Height));
         }];
 
         [self setContentOffset:CGPointZero animated:NO];
@@ -171,19 +175,31 @@
         
         _errorImageView  = [[UIImageView alloc] init];
         [_viewError addSubview:_errorImageView];
-        _errorImageView.image = [NSBundle lg_imagePathName:@"lg_empty"];
+   
+        if(_isNotoSearchVC){
+                _errorImageView.image = [NSBundle lg_imagePathName:@"NoSearchResult"];
+        }else{
+                 _errorImageView.image = [NSBundle lg_imagePathName:@"lg_empty"];
+        }
+
         [_errorImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self.viewError);
-            //make.centerY.equalTo(self.viewError).offset(-100);
-            make.top.equalTo(self.viewError).offset(kMain_Screen_Height/2-64-49);
-//            make.size.mas_equalTo(CGSizeMake(70, 70));
-            
+          make.centerX.equalTo(self.viewError);
+      make.top.equalTo(self.viewError).offset(kMain_Screen_Height/2-64-49);
             
         }];
         
+        
+        
         _errorInfoLabel = [[UILabel alloc] init];
         _errorInfoLabel.textAlignment = NSTextAlignmentCenter;
-        _errorInfoLabel.text = @"暂无笔记";
+        if(_isNotoSearchVC){
+              _errorInfoLabel.text = @"暂无搜索内容";
+            
+        }else{
+            
+            _errorInfoLabel.text = @"暂无笔记";
+        }
+   
         _errorInfoLabel.textColor = kLabelColorLightGray;
         _errorInfoLabel.font = kSYSTEMFONT(14.f);
         [_viewError addSubview:_errorInfoLabel];

@@ -28,12 +28,22 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];
+    
+    [self.searchBar becomeFirstResponder];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    [super viewWillDisappear:YES];
+    
+    [self.searchBar canBecomeFirstResponder];
+    
 }
 
 - (void)leftNavigationBar:(id)sender{
-//    if (self.backRefreshSubject) {
-//        [self.backRefreshSubject sendNext:@"back"];
-//    }
+    if (self.backRefreshSubject) {
+        [self.backRefreshSubject sendNext:@"back"];
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -43,6 +53,8 @@
     [self addLeftItem];
     
     [self createSubViews];
+    
+    
 }
 
 - (void)addLeftItem{
@@ -85,6 +97,13 @@
 
 // 搜索
 - (void)searchEvent{
+    
+
+    if (IsStrEmpty(self.searchBar.text)) {
+        [kMBAlert showRemindStatus:@"请输入搜索关键字!"];
+        return;
+    }
+    
     self.tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
     [self.viewModel.searchCommand execute:self.viewModel.paramModel];
 }
@@ -130,11 +149,10 @@
 - (LGNNoteMainTableView *)tableView{
     if (!_tableView) {
         _tableView = [[LGNNoteMainTableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        _tableView.isNotoSearchVC = YES;
         [_tableView allocInitRefreshHeader:NO allocInitFooter:NO];
         _tableView.ownerController = self;
         _tableView.isSearchVC = YES;
-        _tableView.errorImageView.image = kImage(@"NoSearchResult");
-        _tableView.errorInfoLabel.text = @"未搜索到结果";
         self.viewModel.isSearchOperation = YES;
         [_tableView lg_bindViewModel:self.viewModel];
         _tableView.requestStatus = LGBaseTableViewRequestStatusNoData;

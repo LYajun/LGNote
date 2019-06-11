@@ -216,6 +216,7 @@ SearchToolViewDelegate
 - (LGNNoteMainTableView *)tableView{
     if (!_tableView) {
         _tableView = [[LGNNoteMainTableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        _tableView.isNotoSearchVC = NO;
         _tableView.ownerController = self;
         _tableView.cusDelegate = self;
         _tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;

@@ -141,6 +141,7 @@
         NSRange searchRange = NSMakeRange(0, [allStr length]);
         NSRange range;
         NSString *singleStr = [keyWords substringWithRange:NSMakeRange(j, 1)];
+        
         while
             ((range = [allStr rangeOfString:singleStr options:NSLiteralSearch range:searchRange]).location != NSNotFound) {
                 //改变多次搜索时searchRange的位置
@@ -217,6 +218,7 @@
         _noteImageView = [[UIImageView alloc] init];
         _noteImageView.layer.cornerRadius = 5;
         _noteImageView.clipsToBounds = YES;
+        _noteImageView.contentMode = UIViewContentModeScaleAspectFill;
         [_noteImageView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[NSBundle lg_imageName:@"lg_empty"]];
     }
     return _noteImageView;

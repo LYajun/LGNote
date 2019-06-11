@@ -43,6 +43,11 @@ typedef NS_ENUM(NSInteger, LGBaseTableViewRequestStatus) {
 @end
 
 @interface LGNoteBaseTableView : UITableView
+
+@property (nonatomic,assign) BOOL  isNotoSearchVC;
+
+
+
 /** 错误信息 */
 @property (nonatomic, strong) UILabel *errorInfoLabel;
 /** 错误图片 */
