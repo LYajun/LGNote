@@ -67,6 +67,9 @@
     }];
 }
 
+
+
+
 #pragma mark - 导航栏右按钮触发事件
 - (void)rightBarButtonItem:(UIBarButtonItem *)sender{
     self.paramModel.OperateFlag = self.isNewNote ? 1:0;
@@ -134,6 +137,8 @@
         _contentView = [[LGNNoteEditView alloc] initWithFrame:CGRectZero headerViewStyle:style];
         _contentView.ownController = self;
         [_contentView bindViewModel:self.viewModel];
+        
+     
     }
     return _contentView;
 }

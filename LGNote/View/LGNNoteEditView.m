@@ -18,11 +18,13 @@
 #import "LGNDrawBoardViewController.h"
 #import "LGNCutImageViewController.h"
 #import "LGNSingleTool.h"
+#import "HPTextViewTapGestureRecognizer.h"
 @interface LGNNoteEditView ()
 <
 LGNoteBaseTextFieldDelegate,
 LGNoteBaseTextViewDelegate,
-LGSubjectPickerViewDelegate
+LGSubjectPickerViewDelegate,
+HPTextViewTapGestureRecognizerDelegate
 >
 
 @property (nonatomic, strong) UIView *headerView;
@@ -107,10 +109,10 @@ LGSubjectPickerViewDelegate
     
 //
 //    UIScrollView *bgScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0,kMain_Screen_Width, kMain_Screen_Height-32)];
-//   // bgScrollView.contentSize = CGSizeMake(0, kMain_Screen_Height+300);
+//    bgScrollView.contentSize = CGSizeMake(0, kMain_Screen_Height+300);
 //    //bgScrollView.backgroundColor = LGRGB(238, 238, 238);
 //    [self addSubview:self.bgScrollView=bgScrollView];
-//
+
     
     
     [self addSubview:self.remarkBtn];
@@ -150,8 +152,10 @@ LGSubjectPickerViewDelegate
                  make.size.mas_equalTo(CGSizeMake(1, 1));
             }];
             [self.subjectBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(self.subjTipImageView.mas_right).offset(5);
+            make.left.equalTo(self.subjTipImageView.mas_right).offset(5);
                 make.centerY.equalTo(self.headerView);
+                make.width.mas_equalTo(kMain_Screen_Width/2-50);
+                
             }];
             [self.sourceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.right.equalTo(self.sourceTipImageView.mas_left).offset(-1);
@@ -215,6 +219,7 @@ LGSubjectPickerViewDelegate
     [self.subjectBtn setTitle:viewModel.dataSourceModel.SubjectName forState:UIControlStateNormal];
     self.remarkBtn.selected = [viewModel.dataSourceModel.IsKeyPoint isEqualToString:@"1"] ? YES:NO;
     self.materialArray = [self.viewModel configureMaterialPickerDataSource];
+    //    去除全部与其他学科
     self.subjectArray = [self.viewModel configureSubjectPickerDataSource];
     
     NSLog(@"%@",viewModel.dataSourceModel.ResourceName);
@@ -408,6 +413,29 @@ LGSubjectPickerViewDelegate
     }];
 }
 
+#pragma mark HPTextViewTapGestureRecognizerDelegate
+// 点击链接
+//-(void)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer handleTapOnURL:(NSURL*)URL inRange:(NSRange)characterRange
+//{
+//    [[UIApplication sharedApplication] openURL:URL];
+//}
+// 点击图片
+-(void)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer handleTapOnTextAttachment:(NSTextAttachment*)textAttachment inRange:(NSRange)characterRange
+{
+    
+    
+    
+//    YBImageBrowser *browser = [YBImageBrowser new];
+//    browser.dataSourceArray = [self configureUrls];
+//    browser.currentIndex = 0;
+//    [browser show];
+   // 4508B2919BD975C9072821FEA89874D3
+   // 4508B2919BD975C9072821FEA89874D3.
+    //4E86E22117E59BC7F65E66BA805F0C1F
+    
+}
+
+
 #pragma mark - textFildDelegate
 - (void)lg_textFieldDidChange:(LGNoteBaseTextField *)textField{
     self.viewModel.dataSourceModel.NoteTitle = textField.text;
@@ -481,6 +509,8 @@ LGSubjectPickerViewDelegate
         self.currentSelectedSubjectIndex = row;
         self.viewModel.dataSourceModel.SubjectID = model.SubjectID;
         self.viewModel.dataSourceModel.SubjectName = model.SubjectName;
+        //刷新布局
+        [self.subjectBtn setImagePosition:LGImagePositionRight spacing:5];
     }
     
     if (self.sourceBtn.selected) {
@@ -572,10 +602,12 @@ LGSubjectPickerViewDelegate
     if (!_subjectBtn) {
         _subjectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _subjectBtn.frame = CGRectZero;
+        
         [_subjectBtn setTitle:@"英语" forState:UIControlStateNormal];
         [_subjectBtn setImage:[NSBundle lg_imageName:@"note_subject_unselected"] forState:UIControlStateNormal];
         _subjectBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
         [_subjectBtn setTitleColor:kColorWithHex(0x0099ff) forState:UIControlStateNormal];
+        [_subjectBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
       [_subjectBtn addTarget:self action:@selector(subjectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
     }
@@ -588,7 +620,7 @@ LGSubjectPickerViewDelegate
         _titleTextF = [[LGNoteBaseTextField alloc] init];
         _titleTextF.borderStyle = UITextBorderStyleNone;
         _titleTextF.backgroundColor = [UIColor whiteColor];
-        _titleTextF.placeholder = @"请输入标题(50字内)";
+        _titleTextF.placeholder = @"请输入笔记标题(50字内)";
         _titleTextF.leftView = nil;
         _titleTextF.lgDelegate = self;
         _titleTextF.maxLength = 50;
@@ -602,13 +634,17 @@ LGSubjectPickerViewDelegate
 - (LGNoteBaseTextView *)contentTextView{
     if (!_contentTextView) {
         _contentTextView = [[LGNoteBaseTextView alloc] initWithFrame:CGRectZero];
-        _contentTextView.placeholder = @"请输入内容...";
+        _contentTextView.placeholder = @"请输入笔记内容";
         _contentTextView.inputType = LGTextViewKeyBoardTypeEmojiLimit;
         _contentTextView.toolBarStyle = LGTextViewToolBarStyleDrawBoard;
         _contentTextView.maxLength = 50000;
         _contentTextView.textColor = LGRGB(37, 37, 37);
         _contentTextView.font = [UIFont systemFontOfSize:16];
         _contentTextView.lgDelegate = self;
+        // 破解UITextView编辑和点击图片无解之题
+        HPTextViewTapGestureRecognizer *textViewTapGestureRecognizer = [[HPTextViewTapGestureRecognizer alloc] init];
+        textViewTapGestureRecognizer.delegate = self;
+        [_contentTextView addGestureRecognizer:textViewTapGestureRecognizer];
        
         [_contentTextView showMaxTextLengthWarn:^{
             [[LGNoteMBAlert shareMBAlert] showRemindStatus:@"字数已达限制"];

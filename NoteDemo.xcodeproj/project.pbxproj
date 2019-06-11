@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		282B719D22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 282B719C22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m */; };
 		28EF5B3022A754C100EA94DB /* LGNSingleTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 28EF5B2F22A754C100EA94DB /* LGNSingleTool.m */; };
 		320D4E8F224372EA0013872A /* LGNNoteMoreImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 320D4E8E224372EA0013872A /* LGNNoteMoreImageTableViewCell.m */; };
 		321156F3223637900000A054 /* LGNNoteEditView.m in Sources */ = {isa = PBXBuildFile; fileRef = 321156F2223637900000A054 /* LGNNoteEditView.m */; };
@@ -141,6 +142,8 @@
 
 /* Begin PBXFileReference section */
 		1327CF5CEE302EAC89AC964E /* Pods-NoteDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoteDemo.release.xcconfig"; path = "Target Support Files/Pods-NoteDemo/Pods-NoteDemo.release.xcconfig"; sourceTree = "<group>"; };
+		282B719B22AE848C006691C5 /* HPTextViewTapGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewTapGestureRecognizer.h; sourceTree = "<group>"; };
+		282B719C22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewTapGestureRecognizer.m; sourceTree = "<group>"; };
 		28EF5B2E22A754C100EA94DB /* LGNSingleTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LGNSingleTool.h; sourceTree = "<group>"; };
 		28EF5B2F22A754C100EA94DB /* LGNSingleTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LGNSingleTool.m; sourceTree = "<group>"; };
 		320D4E8D224372EA0013872A /* LGNNoteMoreImageTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LGNNoteMoreImageTableViewCell.h; sourceTree = "<group>"; };
@@ -752,6 +755,8 @@
 				32326480216E265D005CC784 /* LGNoteMBAlert.m */,
 				3213BBF7225B23660065E2DD /* LGNoteSafeTool.h */,
 				3213BBF8225B23660065E2DD /* LGNoteSafeTool.m */,
+				282B719B22AE848C006691C5 /* HPTextViewTapGestureRecognizer.h */,
+				282B719C22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -1060,6 +1065,7 @@
 				3213BC95225C6E950065E2DD /* HDAnimatedImageRep.m in Sources */,
 				3213BC9D225C6E950065E2DD /* NSImage+WebCache.m in Sources */,
 				321932C6224263400019AA64 /* LGNNoteMainImageTableViewCell.m in Sources */,
+				282B719D22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m in Sources */,
 				3213BC9A225C6E950065E2DD /* HDWebImageDownloaderOperation.m in Sources */,
 				32D8CEFD2237D199000BD642 /* LGNoteBaseNavigationViewController.m in Sources */,
 				3213BC45225B46B90065E2DD /* YBImageBrowseCell.m in Sources */,
@@ -1315,7 +1321,7 @@
 				DEVELOPMENT_TEAM = Z35S33J39R;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = NoteDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1336,7 +1342,7 @@
 				DEVELOPMENT_TEAM = Z35S33J39R;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				INFOPLIST_FILE = NoteDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

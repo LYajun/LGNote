@@ -647,7 +647,10 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         // 去除第一个“全部”选项的学科
         if (i != 0) {
             LGNSubjectModel *model = self.subjectArray[i];
-            [resultArray addObject:model.SubjectName];
+            // 去除其他选项的学科
+            if(![model.SubjectName isEqualToString:@"其他学科"]){
+                [resultArray addObject:model.SubjectName];
+            }
         }
     }
     return resultArray;
