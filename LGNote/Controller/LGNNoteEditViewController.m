@@ -131,8 +131,16 @@
         NSInteger style = NoteEditViewHeaderStyleNoHidden;
         if ( self.paramModel.SystemType == SystemType_CP | self.paramModel.SystemType == SystemType_KQ|self.paramModel.SystemType == SystemType_HOME) {
             style = NoteEditViewHeaderStyleHideSource;
+            
         } else {
-            style = NoteEditViewHeaderStyleNoHidden;
+            if(self.paramModel.SystemType ==SystemType_ASSISTANTER &&_isNewNote){
+                //小助手新建笔记需要隐藏
+               style = NoteEditViewHeaderStyleHideSource;
+                
+            }else{
+               style = NoteEditViewHeaderStyleNoHidden;
+            }
+           
         }
         _contentView = [[LGNNoteEditView alloc] initWithFrame:CGRectZero headerViewStyle:style];
         _contentView.ownController = self;

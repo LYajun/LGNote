@@ -252,6 +252,8 @@ HPTextViewTapGestureRecognizerDelegate
 }
 
 - (void)lg_textViewDidChange:(LGNoteBaseTextView *)textView{
+    
+    
     if (self.isInsert) {
         self.contentTextView.selectedRange = NSMakeRange(self.currentLocation + self.imgAttr.length,0);
     }
@@ -259,7 +261,7 @@ HPTextViewTapGestureRecognizerDelegate
     
     [self.viewModel.dataSourceModel updateText:self.contentTextView.attributedText];
 
-    
+
 }
 
 - (BOOL)lg_textViewShouldInteractWithTextAttachment:(LGNoteBaseTextView *)textView{
@@ -396,7 +398,7 @@ HPTextViewTapGestureRecognizerDelegate
     [self.contentTextView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.line.mas_bottom);
         make.centerX.bottom.equalTo(self);
-        make.left.equalTo(self.titleTextF);
+        make.left.equalTo(self.titleTextF).offset(-5);
     }];
 }
 
@@ -450,10 +452,13 @@ HPTextViewTapGestureRecognizerDelegate
     sender.selected = !sender.selected;
     if (sender.selected) {
         self.viewModel.dataSourceModel.IsKeyPoint = @"1";
-         [[LGNoteMBAlert shareMBAlert] showRemindStatus:@"已标记为重点"];
+       
+        [[LGNoteMBAlert shareMBAlert] showSuccessWithStatus:@"已标记为重点"];
+        
     } else {
         self.viewModel.dataSourceModel.IsKeyPoint = @"0";
-         [[LGNoteMBAlert shareMBAlert] showRemindStatus:@"已取消标记"];
+     
+         [[LGNoteMBAlert shareMBAlert] showSuccessWithStatus:@"已取消标记"];
     }
 }
 
@@ -635,6 +640,8 @@ HPTextViewTapGestureRecognizerDelegate
     if (!_contentTextView) {
         _contentTextView = [[LGNoteBaseTextView alloc] initWithFrame:CGRectZero];
         _contentTextView.placeholder = @"请输入笔记内容";
+        _contentTextView.placeholderColor = LGRGB(201, 201, 206);
+        
         _contentTextView.inputType = LGTextViewKeyBoardTypeEmojiLimit;
         _contentTextView.toolBarStyle = LGTextViewToolBarStyleDrawBoard;
         _contentTextView.maxLength = 50000;
@@ -645,6 +652,15 @@ HPTextViewTapGestureRecognizerDelegate
         HPTextViewTapGestureRecognizer *textViewTapGestureRecognizer = [[HPTextViewTapGestureRecognizer alloc] init];
         textViewTapGestureRecognizer.delegate = self;
         [_contentTextView addGestureRecognizer:textViewTapGestureRecognizer];
+        NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+        
+        paragraphStyle.lineSpacing = 15;// 字体的行间距
+        
+        NSDictionary *attributes = @{
+                                     NSFontAttributeName:[UIFont systemFontOfSize:15],
+                                     NSParagraphStyleAttributeName:paragraphStyle
+                                     };
+        _contentTextView.typingAttributes = attributes;
        
         [_contentTextView showMaxTextLengthWarn:^{
             [[LGNoteMBAlert shareMBAlert] showRemindStatus:@"字数已达限制"];

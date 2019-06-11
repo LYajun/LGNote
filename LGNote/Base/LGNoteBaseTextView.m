@@ -111,7 +111,15 @@ static const void *LGTextViewToolBarStyleKey          = &LGTextViewToolBarStyleK
 - (id <UITextViewDelegate>)delegate{
     return [super delegate];
 }
-
+//重写返回光标frame的方法避免光标扩大问题
+- (CGRect)caretRectForPosition:(UITextPosition *)position {
+    CGRect originalRect = [super caretRectForPosition:position];
+    
+    originalRect.size.height = self.font.lineHeight + 2;
+    originalRect.size.width = 3;
+    
+    return originalRect;
+}
 #pragma mark - ToolBarItemEvent
 - (void)toolBarEvent:(UIBarButtonItem *)sender{
     switch (sender.tag) {

@@ -157,7 +157,7 @@
 }
 
 #pragma mark - lazy
-- (UIView *)viewError {
+- (UIView *)viewError{
     if (!_viewError) {
         _viewError = [[UIView alloc] init];
         [self addSubview:_viewError];
@@ -175,13 +175,15 @@
         [_errorImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.viewError);
             //make.centerY.equalTo(self.viewError).offset(-100);
-            make.top.equalTo(self.viewError).offset(100);
+            make.top.equalTo(self.viewError).offset(kMain_Screen_Height/2-64-49);
 //            make.size.mas_equalTo(CGSizeMake(70, 70));
+            
+            
         }];
         
         _errorInfoLabel = [[UILabel alloc] init];
         _errorInfoLabel.textAlignment = NSTextAlignmentCenter;
-        _errorInfoLabel.text = @"数据为空,请刷新重试!";
+        _errorInfoLabel.text = @"暂无笔记";
         _errorInfoLabel.textColor = kLabelColorLightGray;
         _errorInfoLabel.font = kSYSTEMFONT(14.f);
         [_viewError addSubview:_errorInfoLabel];
