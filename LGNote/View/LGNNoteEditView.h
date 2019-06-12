@@ -13,7 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 编辑页头部样式使用 */
 typedef NS_ENUM(NSInteger, NoteEditViewHeaderStyle) {
-    NoteEditViewHeaderStyleNoHidden,          // 都不隐藏
+    NoteEditViewHeaderStyleNoHidden,          // 都不隐藏,不支持点击
+    
+    NoteEditViewHeaderStyleNoHiddenCanTouch,//都不隐藏,支持点击
     NoteEditViewHeaderStyleHideSource,        // 隐藏来源选项
     NoteEditViewHeaderStyleHideSubject,       // 隐藏学科选项
     NoteEditViewHeaderStyleHideAll            // 隐藏全部

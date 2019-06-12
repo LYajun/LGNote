@@ -183,16 +183,20 @@
 - (LGNNoteEditView *)contentView{
     if (!_contentView) {
         NSInteger style = NoteEditViewHeaderStyleNoHidden;
-        if ( self.paramModel.SystemType == SystemType_CP | self.paramModel.SystemType == SystemType_KQ|self.paramModel.SystemType == SystemType_HOME) {
+        if ( self.paramModel.SystemType == SystemType_CP ) {
             style = NoteEditViewHeaderStyleHideSource;
             
         } else {
             if(self.paramModel.SystemType ==SystemType_ASSISTANTER &&_isNewNote){
-                //小助手新建笔记需要隐藏
+                //小助手新建笔记需要隐藏来源选项
                style = NoteEditViewHeaderStyleHideSource;
                 
+            }else if (self.paramModel.SystemType ==SystemType_ASSISTANTER){
+                
+                style = NoteEditViewHeaderStyleNoHiddenCanTouch;
             }else{
-               style = NoteEditViewHeaderStyleNoHidden;
+                style = NoteEditViewHeaderStyleNoHidden;
+                
             }
            
         }

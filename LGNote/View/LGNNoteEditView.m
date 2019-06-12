@@ -91,6 +91,7 @@ HPTextViewTapGestureRecognizerDelegate
 - (void)createSubviews{
     switch (_style) {
         case NoteEditViewHeaderStyleNoHidden:
+        case NoteEditViewHeaderStyleNoHiddenCanTouch:
         case NoteEditViewHeaderStyleHideSubject:
         case NoteEditViewHeaderStyleHideSource:{
             [self addSubview:self.headerView];
@@ -98,14 +99,37 @@ HPTextViewTapGestureRecognizerDelegate
             [self.headerView addSubview:self.sourceBtn];
             [self.headerView addSubview:self.subjTipImageView];
             [self addSubview:self.bottomView];
-            if (_style == NoteEditViewHeaderStyleHideSource) {
-                [self.subjectBtn setImage:nil forState:UIControlStateNormal];
+            
+            if(_style ==NoteEditViewHeaderStyleNoHiddenCanTouch){
+                //小助手
+                self.sourceBtn.hidden = NO;
+                self.sourceBtn.enabled = YES;
+                self.subjectBtn.hidden = NO;
+                self.subjectBtn.enabled = YES;
+                self.sourceTipImageView.hidden =NO;
+                self.subjTipImageView.hidden = NO;
+
             }
-            self.subjectBtn.userInteractionEnabled = !(_style == NoteEditViewHeaderStyleHideSource);
+            if(_style == NoteEditViewHeaderStyleNoHidden){
+                self.sourceBtn.hidden = NO;
+                self.sourceBtn.enabled = NO;
+                self.subjectBtn.hidden = NO;
+                self.subjectBtn.enabled = NO;
+                self.sourceTipImageView.hidden =YES;
+                [self.subjectBtn setImage:nil forState:UIControlStateNormal];
+                }
+            
+            
+            if (_style == NoteEditViewHeaderStyleHideSource) {
+               // [self.subjectBtn setImage:nil forState:UIControlStateNormal];
+                
+            }
+            //self.subjectBtn.userInteractionEnabled = !(_style == NoteEditViewHeaderStyleHideSource);
             self.subjectBtn.hidden = (_style == NoteEditViewHeaderStyleHideSubject) ? YES:NO;
             self.sourceBtn.hidden  = (_style == NoteEditViewHeaderStyleHideSource) ? YES:NO;
-           // self.sourceTipImageView.hidden = self.sourceBtn.hidden;
-            self.sourceTipImageView.hidden =YES;
+            
+
+          
         }
             break;
         case NoteEditViewHeaderStyleHideAll: break;
@@ -134,6 +158,7 @@ HPTextViewTapGestureRecognizerDelegate
     
     switch (_style) {
         case NoteEditViewHeaderStyleNoHidden:
+        case NoteEditViewHeaderStyleNoHiddenCanTouch:
         case NoteEditViewHeaderStyleHideSubject:
         case NoteEditViewHeaderStyleHideSource:{
             [self.headerView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -489,6 +514,7 @@ HPTextViewTapGestureRecognizerDelegate
 }
 
 - (void)sourceBtnClick:(UIButton *)sender{
+    
     sender.selected = !sender.selected;
     if (sender.selected) {
         self.sourceTipImageView.transform = CGAffineTransformMakeRotation(M_PI/2);
@@ -531,6 +557,7 @@ HPTextViewTapGestureRecognizerDelegate
 //    if (IsArrEmpty(self.subjectArray) || IsArrEmpty(self.materialArray)) {
 //        return;
 //    }
+    
     
     if (self.subjectBtn.selected) {
         if (IsArrEmpty(self.subjectArray)) return;
@@ -626,6 +653,8 @@ HPTextViewTapGestureRecognizerDelegate
         _sourceBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
         [_sourceBtn setTitleColor:kColorInitWithRGB(249, 102, 2, 1) forState:UIControlStateNormal];
         [_sourceBtn addTarget:self action:@selector(sourceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        
     }
     return _sourceBtn;
 }
