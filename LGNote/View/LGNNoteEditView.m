@@ -59,6 +59,7 @@ HPTextViewTapGestureRecognizerDelegate
 
 @property (nonatomic, strong) LGNViewModel *viewModel;
 
+@property (nonatomic,assign) int  photoIndex;
 @end
 
 @implementation LGNNoteEditView
@@ -276,21 +277,33 @@ HPTextViewTapGestureRecognizerDelegate
 }
 
 - (BOOL)lg_textViewShouldInteractWithTextAttachment:(LGNoteBaseTextView *)textView{
-    YBImageBrowser *browser = [YBImageBrowser new];
-    browser.dataSourceArray = [self configureUrls];
-    browser.currentIndex = 0;
-    [browser show];
+//    YBImageBrowser *browser = [YBImageBrowser new];
+//    browser.dataSourceArray = [self configureUrls];
+//    browser.currentIndex = 0;
+//    [browser show];
     
     return YES;
 }
 
-- (NSArray *)configureUrls{
+- (NSArray *)configureUrls:(NSString*)urlStr{
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:self.viewModel.dataSourceModel.imgaeUrls.count];
+    
     for (int i = 0; i < self.viewModel.dataSourceModel.imgaeUrls.count; i ++) {
         YBImageBrowseCellData *data = [YBImageBrowseCellData new];
         data.url = self.viewModel.dataSourceModel.imgaeUrls[i];
+       NSString *str1 = [data.url absoluteString];;
+     if([str1 containsString:urlStr]){
+         //保存照片index
+         _photoIndex = i;
+       
+     }
+        
+        
         [result addObject:data];
+        
     }
+    
+    
     return result;
 }
 
@@ -356,6 +369,10 @@ HPTextViewTapGestureRecognizerDelegate
 }
 
 - (void)settingImageAttributes:(UIImage *)image imageFTPPath:(NSString *)path{
+    
+    
+
+    
     CGFloat width = image.size.width;
     CGFloat height = image.size.height;
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width - kNoteImageOffset;
@@ -438,10 +455,10 @@ HPTextViewTapGestureRecognizerDelegate
 -(void)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer handleTapOnTextAttachment:(NSTextAttachment*)textAttachment inRange:(NSRange)characterRange
 {
 
-    
+    _photoIndex = 0;
     YBImageBrowser *browser = [YBImageBrowser new];
-    browser.dataSourceArray = [self configureUrls];
-    browser.currentIndex = 0;
+    browser.dataSourceArray = [self configureUrls:textAttachment.fileWrapper.preferredFilename];
+    browser.currentIndex = _photoIndex;
     [browser show];
   
 }
