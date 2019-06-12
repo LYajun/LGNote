@@ -156,6 +156,7 @@
         _sourceModel = [[LGNNoteModel alloc] init];
         _sourceModel.SystemID = self.paramModel.SystemID;
         _sourceModel.SubjectID = self.paramModel.SubjectID;
+        _sourceModel.SubjectName = self.paramModel.SubjectName;
         _sourceModel.UserID = self.paramModel.UserID;
         _sourceModel.UserName = self.paramModel.UserName;
         _sourceModel.ResourceName = self.paramModel.ResourceName;
