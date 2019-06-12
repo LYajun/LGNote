@@ -46,8 +46,18 @@
         if (IsArrEmpty(self.dataArray)) {
             self.requestStatus = LGBaseTableViewRequestStatusNoData;
         } else {
-            NSInteger papge = self.viewModel.paramModel.PageIndex;
+            NSInteger papge;
+           papge = self.viewModel.paramModel.PageIndex;
             NSInteger size  = self.viewModel.paramModel.PageSize;
+            
+            //预防搜索内容编辑修改返回page==0崩溃
+            if(papge == 0){
+                self.requestStatus = LGBaseTableViewRequestStatusNormal;
+                [self.mj_footer endRefreshing];
+                return ;
+            }
+            
+            
             if (self.viewModel.totalCount / (papge*size) == 0 || (self.viewModel.totalCount%(papge*size) == 0 && self.viewModel.totalCount == (papge*size))) {
                 self.requestStatus = LGBaseTableViewRequestStatusNormal;
                 [self.mj_footer endRefreshingWithNoMoreData];

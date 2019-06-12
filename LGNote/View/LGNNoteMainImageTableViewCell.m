@@ -17,6 +17,7 @@
 @interface LGNNoteMainImageTableViewCell ()
 
 @property (nonatomic, strong) UILabel *noteTitleLabel;
+@property (nonatomic,strong) UIImageView * markImageV;
 @property (nonatomic, strong) UILabel *noteContentLabel;
 @property (nonatomic, strong) UILabel *editTimeLabel;
 @property (nonatomic, strong) UILabel *sourceLabel;
@@ -40,6 +41,7 @@
 - (void)lg_addSubViews{
     self.contentView.backgroundColor = [UIColor whiteColor];
     [self.contentView addSubview:self.noteTitleLabel];
+    [self.contentView addSubview:self.markImageV];
     [self.contentView addSubview:self.noteContentLabel];
     [self.contentView addSubview:self.editTimeLabel];
     [self.contentView addSubview:self.sourceLabel];
@@ -49,11 +51,21 @@
 }
 
 - (void)lg_setupSubViewsContraints{
+    
+  
+
     [self.noteTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).offset(10);
         make.left.equalTo(self.contentView).offset(10);
-        make.centerX.equalTo(self.contentView);
         make.height.mas_equalTo(21);
+    }];
+    [self.markImageV mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+       make.top.equalTo(self.contentView).offset(13);
+    make.left.equalTo(self.noteTitleLabel.mas_right).offset(5);
+        make.height.mas_equalTo(15);
+        make.width.mas_equalTo(15);
+        
     }];
     [self.noteContentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.noteTitleLabel);
@@ -102,19 +114,15 @@
             
             self.noteTitleLabel.attributedText = [self setAllText:self.noteTitleLabel.text andSpcifiStr:_searchContent withColor:nil specifiStrFont:nil isremark:YES];
         }else{
-            NSTextAttachment *attment = [[NSTextAttachment alloc] init];
-            attment.image = [NSBundle lg_imagePathName:@"note_remark_selected"];
-            attment.bounds = CGRectMake(5, -1, 15, 15);
             
-            NSAttributedString *attmentAtt = [NSAttributedString attributedStringWithAttachment:attment];
-            NSMutableAttributedString *att1 = [[NSMutableAttributedString alloc] initWithString:[dataSource.NoteTitle stringByAppendingString:@" "]];
-            
-            [att1 appendAttributedString:attmentAtt];
-            
-            
+            NSMutableAttributedString *att1 = [[NSMutableAttributedString alloc] initWithString:dataSource.NoteTitle];
             self.noteTitleLabel.attributedText = att1;
+            
+            self.markImageV.hidden = NO;
+           
         }
     } else {
+        self.markImageV.hidden = YES;
         NSMutableAttributedString *att1 = [[NSMutableAttributedString alloc] initWithString:dataSource.NoteTitle];
         self.noteTitleLabel.attributedText = att1;
         if(_isSearchVC){
@@ -157,13 +165,10 @@
     
     if(remak){
         
-        NSTextAttachment *attment = [[NSTextAttachment alloc] init];
-        attment.image = [NSBundle lg_imagePathName:@"note_remark_selected"];
-        attment.bounds = CGRectMake(5, -1, 15, 15);
-        
-        NSAttributedString *attmentAtt = [NSAttributedString attributedStringWithAttachment:attment];
-        
-        [mutableAttributedStr appendAttributedString:attmentAtt];
+        self.markImageV.hidden =NO;
+
+    }else{
+       self.markImageV.hidden =YES;
     }
     
     return mutableAttributedStr;
@@ -199,11 +204,23 @@
         _noteTitleLabel = [[UILabel alloc] init];
         _noteTitleLabel.font = [UIFont systemFontOfSize:17.f];
         _noteTitleLabel.text = @"毛泽东思想，马克思主义，中国特色社会主义核心价值观";
-        _noteTitleLabel.numberOfLines = 1;
+        _noteTitleLabel.numberOfLines = 0;
+        _noteTitleLabel.preferredMaxLayoutWidth = kMain_Screen_Width-40;
         _noteTitleLabel.textColor = LGRGB(37, 37, 37);
-         _noteTitleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+        
+        
     }
     return _noteTitleLabel;
+}
+
+- (UIImageView *)markImageV{
+    
+    if(!_markImageV){
+        _markImageV = [[UIImageView alloc] init];
+        _markImageV.image = [NSBundle lg_imagePathName:@"note_remark_selected"];
+    }
+    
+    return _markImageV;
 }
 
 - (UILabel *)sourceLabel{

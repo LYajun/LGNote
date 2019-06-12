@@ -21,6 +21,7 @@
 @property (nonatomic, strong) UIView *searchBgView;
 @property (nonatomic, strong) LGNViewModel *viewModel;
 
+@property (nonatomic,assign) BOOL  iscomeblack;
 @end
 
 @implementation LGNNoteSearchViewController
@@ -28,7 +29,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];
-    
+    _iscomeblack = NO;
     [self.searchBar becomeFirstResponder];
 }
 
@@ -36,8 +37,10 @@
     
     [super viewWillDisappear:YES];
     
-    [self.searchBar canBecomeFirstResponder];
+    _iscomeblack = YES;
     
+    [self.searchBar resignFirstResponder];
+
 }
 
 - (void)leftNavigationBar:(id)sender{
@@ -86,7 +89,15 @@
 }
 
 - (void)lg_textFieldDidEndEditing:(LGNoteBaseTextField *)textField{
+   
+
+    if(_iscomeblack){
+        return;
+    }
+    
     [self searchEvent];
+    
+    
 }
 
 - (void)searchBtnEvent:(UIButton *)sender{
