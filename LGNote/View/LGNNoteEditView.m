@@ -95,6 +95,10 @@ LGSubjectPickerViewDelegate
             [self.headerView addSubview:self.sourceBtn];
             [self.headerView addSubview:self.subjTipImageView];
             [self addSubview:self.bottomView];
+            if (_style == NoteEditViewHeaderStyleHideSource) {
+                [self.subjectBtn setImage:nil forState:UIControlStateNormal];
+            }
+            self.subjectBtn.userInteractionEnabled = !(_style == NoteEditViewHeaderStyleHideSource);
             self.subjectBtn.hidden = (_style == NoteEditViewHeaderStyleHideSubject) ? YES:NO;
             self.sourceBtn.hidden  = (_style == NoteEditViewHeaderStyleHideSource) ? YES:NO;
            // self.sourceTipImageView.hidden = self.sourceBtn.hidden;
@@ -211,7 +215,7 @@ LGSubjectPickerViewDelegate
     self.viewModel.dataSourceModel.imageAllCont =self.viewModel.dataSourceModel.imgaeUrls.count;
 
     
-    viewModel.dataSourceModel.SubjectName = viewModel.isAddNoteOperation ? @"英语":viewModel.dataSourceModel.SubjectName;
+//    viewModel.dataSourceModel.SubjectName = viewModel.isAddNoteOperation ? @"英语":viewModel.dataSourceModel.SubjectName;
     [self.subjectBtn setTitle:viewModel.dataSourceModel.SubjectName forState:UIControlStateNormal];
     self.remarkBtn.selected = [viewModel.dataSourceModel.IsKeyPoint isEqualToString:@"1"] ? YES:NO;
     self.materialArray = [self.viewModel configureMaterialPickerDataSource];
