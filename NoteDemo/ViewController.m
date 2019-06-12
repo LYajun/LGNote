@@ -40,6 +40,9 @@
 - (LGNParamModel *)configureParams{
     LGNParamModel *params = [[LGNParamModel alloc] init];
     
+ //   S27-508-EC82==EF3DFC6C-B95F-431D-ABED-301B4037EAB3==g1==2==g1姓名==http://192.168.3.158:10103//===
+    
+    
     params.SystemID = @"S21";
     params.SubjectID = @"All";
     params.C_SystemID = @"All";
@@ -50,15 +53,15 @@
     params.SubjectName = @"";
     params.IsKeyPoint = @"-1";
     params.SchoolID = @"S27-508-EC82";
-    params.Token = @"B3C16070-17CE-405B-A251-4449C5A1255F";
+    params.Token = @"EF3DFC6C-B95F-431D-ABED-301B4037EAB3";
     params.ResourceName = @"我的笔记";
     params.ResourceID = @"";
     params.MaterialName = @"";
     params.MaterialTotal = @"-1";
     params.ResourceIOSLink = @"";
-    params.UserID = @"g2";
+    params.UserID = @"g1";
     params.UserType = 2;
-    params.UserName = @"g2姓名";
+    params.UserName = @"g1姓名";
     params.CPBaseUrl = @"http://192.168.3.158:10103//";
     params.SystemType = SystemType_ASSISTANTER;
     

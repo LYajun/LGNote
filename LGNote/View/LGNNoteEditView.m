@@ -232,6 +232,9 @@ HPTextViewTapGestureRecognizerDelegate
         @strongify(self);
         self.currentSelectedSubjectIndex = [[subjectSelectedData firstObject] integerValue];
         self.viewModel.dataSourceModel.SubjectID = [subjectSelectedData lastObject];
+        
+        
+        
     }];
 }
 
@@ -411,6 +414,8 @@ HPTextViewTapGestureRecognizerDelegate
             [[LGNoteMBAlert shareMBAlert] showErrorWithStatus:@"上传失败，上传地址为空"];
             return ;
         }
+        
+        _contentTextView.placeholder=@"";
         [self settingImageAttributes:image imageFTPPath:x];
     }];
 }
@@ -513,6 +518,7 @@ HPTextViewTapGestureRecognizerDelegate
         [self.subjectBtn setTitle:model.SubjectName forState:UIControlStateNormal];
         self.currentSelectedSubjectIndex = row;
         self.viewModel.dataSourceModel.SubjectID = model.SubjectID;
+        
         self.viewModel.dataSourceModel.SubjectName = model.SubjectName;
         //刷新布局
         [self.subjectBtn setImagePosition:LGImagePositionRight spacing:5];

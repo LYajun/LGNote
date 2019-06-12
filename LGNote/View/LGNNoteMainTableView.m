@@ -174,6 +174,7 @@
     LGNNoteEditViewController *editVC = [[LGNNoteEditViewController alloc] init];
     editVC.updateSubject = [RACSubject subject];
     LGNNoteModel *model = self.dataArray[indexPath.section];
+    
     NSDictionary *param = [self.viewModel.paramModel mj_keyValues];
     editVC.paramModel = [LGNParamModel mj_objectWithKeyValues:param];
     editVC.isNewNote = NO;

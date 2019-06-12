@@ -359,7 +359,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         
         [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(self.paramModel.UserID).setToken(self.paramModel.Token).setParameters(params)starSendRequestSuccess:^(id respone) {
             
-            NSLog(@"%@",respone);
+            NSLog(@"==%@==",respone);
             
             
             
@@ -418,6 +418,15 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/OperateNote"];
         [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(self.paramModel.UserID).setToken(self.paramModel.Token).setParameters(params)starSendRequestSuccess:^(id respone) {
+            
+            NSLog(@"==%@==",params);
+            
+            NSLog(@"=UserID=%@=Token=%@",self.paramModel.UserID,self.paramModel.Token);
+            
+            
+            NSLog(@"respone==%@==",respone);
+            
+            
         
             if (![respone[kErrorcode] hasSuffix:kSuccess]) {
                 NSString *message;

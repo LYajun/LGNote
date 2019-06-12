@@ -19,6 +19,8 @@
 @property (nonatomic, strong) LGNNoteModel *sourceModel;
 @property (nonatomic, strong) LGNNoteEditView *contentView;
 
+@property (nonatomic,strong) NSString * OldSystemID;
+@property (nonatomic,strong) NSString * OldSubjectID;
 @end
 
 @implementation LGNNoteEditViewController
@@ -39,10 +41,19 @@
 
 - (void)editNoteWithDataSource:(LGNNoteModel *)dataSource{
     self.sourceModel = dataSource;
+    
+    
+    self.OldSystemID = dataSource.SystemID;
+    self.OldSubjectID = dataSource.SubjectID;
+    
+    NSLog(@"%@==%@=",dataSource.SystemID,dataSource.SubjectID);
+    
+    
     self.sourceModel.UserID = self.paramModel.UserID;
     self.sourceModel.SystemID = self.paramModel.SystemID;
     self.sourceModel.UserName = self.paramModel.UserName;
     self.sourceModel.SchoolID = self.paramModel.SchoolID;
+
     
 }
 
@@ -79,9 +90,9 @@
 
 
 - (void)back:(UIBarButtonItem *)sender{
-//    if (self.updateSubject && !self.isNewNote) {
-//        [self.updateSubject sendNext:@"update"];
-//    }
+    if (self.updateSubject && !self.isNewNote) {
+        [self.updateSubject sendNext:@"update"];
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -99,7 +110,18 @@
 
     [kMBAlert showIndeterminateWithStatus:@"正在进行，请稍等..."];
     
- 
+    NSLog(@"paramModel==%@",self.paramModel.SubjectID);
+
+    
+    
+    NSLog(@"sourceModel=%@",self.sourceModel.SubjectID);
+    
+    if([self.sourceModel.SubjectID isEqualToString:@"All"]){
+        
+        self.sourceModel.SubjectID =_OldSubjectID;
+        self.sourceModel.SystemID = _OldSystemID;
+    }
+    
     
     
     [self.viewModel.operateCommand execute:[self.sourceModel mj_keyValues]];
@@ -156,6 +178,7 @@
         _sourceModel = [[LGNNoteModel alloc] init];
         _sourceModel.SystemID = self.paramModel.SystemID;
         _sourceModel.SubjectID = self.paramModel.SubjectID;
+        
         _sourceModel.UserID = self.paramModel.UserID;
         _sourceModel.UserName = self.paramModel.UserName;
         _sourceModel.ResourceName = self.paramModel.ResourceName;
