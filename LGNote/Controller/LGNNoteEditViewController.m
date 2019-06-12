@@ -18,7 +18,7 @@
 /** model类 */
 @property (nonatomic, strong) LGNNoteModel *sourceModel;
 @property (nonatomic, strong) LGNNoteEditView *contentView;
-
+@property (nonatomic,strong) NSString * NotoContent;
 @property (nonatomic,strong) NSString * OldSystemID;
 @property (nonatomic,strong) NSString * OldSubjectID;
 @end
@@ -33,6 +33,8 @@
     [super viewDidLoad];
     [self commonInit];
     [self createSubViews];
+    
+    _NotoContent = self.sourceModel.NoteContent;
 }
 
 - (void)commonInit{
@@ -43,18 +45,16 @@
     self.sourceModel = dataSource;
     
     
-    self.OldSystemID = dataSource.SystemID;
-    self.OldSubjectID = dataSource.SubjectID;
-    
-    NSLog(@"%@==%@=",dataSource.SystemID,dataSource.SubjectID);
-    
+//    self.OldSystemID = dataSource.SystemID;
+//    self.OldSubjectID = dataSource.SubjectID;
+//
+
     
     self.sourceModel.UserID = self.paramModel.UserID;
     self.sourceModel.SystemID = self.paramModel.SystemID;
     self.sourceModel.UserName = self.paramModel.UserName;
     self.sourceModel.SchoolID = self.paramModel.SchoolID;
 
-    
 }
 
 - (void)addRightNavigationBar{
@@ -90,10 +90,47 @@
 
 
 - (void)back:(UIBarButtonItem *)sender{
-    if (self.updateSubject && !self.isNewNote) {
-        [self.updateSubject sendNext:@"update"];
-    }
-    [self.navigationController popViewControllerAnimated:YES];
+//    if (self.updateSubject && !self.isNewNote) {
+//        [self.updateSubject sendNext:@"update"];
+//    }
+    
+  
+        if(!IsStrEmpty(self.sourceModel.NoteContent) && ![_NotoContent isEqualToString:self.sourceModel.NoteContent]) {
+            
+            [self exti];
+        }else{
+            
+            [self.navigationController popViewControllerAnimated:YES];
+    
+            
+        }
+    
+    
+  
+}
+
+- (void)exti{
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"修改的内容未保存,您确定要退出吗?" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        
+          [self.navigationController popViewControllerAnimated:YES];
+    }];
+    
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+        
+    }];
+    
+    
+    [alert addAction:action];
+    [alert addAction:action1];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+    
+    
+    
 }
 
 - (void)operatedNote{
@@ -109,19 +146,14 @@
     }
 
     [kMBAlert showIndeterminateWithStatus:@"正在进行，请稍等..."];
-    
-    NSLog(@"paramModel==%@",self.paramModel.SubjectID);
 
     
-    
-    NSLog(@"sourceModel=%@",self.sourceModel.SubjectID);
-    
-    if([self.sourceModel.SubjectID isEqualToString:@"All"]){
-        
-        self.sourceModel.SubjectID =_OldSubjectID;
-        self.sourceModel.SystemID = _OldSystemID;
-    }
-    
+//    if([self.sourceModel.SubjectID isEqualToString:@"All"]&&IsStrEmpty(_OldSubjectID)){
+//
+//        self.sourceModel.SubjectID =_OldSubjectID;
+//        self.sourceModel.SystemID = _OldSystemID;
+//    }
+//
     
     
     [self.viewModel.operateCommand execute:[self.sourceModel mj_keyValues]];
@@ -190,6 +222,7 @@
         _sourceModel.SystemName = self.paramModel.SystemName;
         _sourceModel.MaterialID = self.paramModel.MaterialID;
         _sourceModel.MaterialName = self.paramModel.MaterialName;
+        
     }
     return _sourceModel;
 }

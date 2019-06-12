@@ -53,7 +53,7 @@
     params.SubjectName = @"";
     params.IsKeyPoint = @"-1";
     params.SchoolID = @"S27-508-EC82";
-    params.Token = @"EF3DFC6C-B95F-431D-ABED-301B4037EAB3";
+    params.Token = @"B83A61C1-2F60-4B03-8F93-6CDCAE50EA64";
     params.ResourceName = @"我的笔记";
     params.ResourceID = @"";
     params.MaterialName = @"";

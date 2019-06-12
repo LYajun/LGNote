@@ -219,7 +219,11 @@ HPTextViewTapGestureRecognizerDelegate
     self.viewModel.dataSourceModel.imageAllCont =self.viewModel.dataSourceModel.imgaeUrls.count;
 
     
-//    viewModel.dataSourceModel.SubjectName = viewModel.isAddNoteOperation ? @"英语":viewModel.dataSourceModel.SubjectName;
+
+    
+    viewModel.dataSourceModel.SubjectName = IsStrEmpty(viewModel.dataSourceModel.SubjectName) ? @"英语":viewModel.dataSourceModel.SubjectName;
+    
+    
     [self.subjectBtn setTitle:viewModel.dataSourceModel.SubjectName forState:UIControlStateNormal];
     self.remarkBtn.selected = [viewModel.dataSourceModel.IsKeyPoint isEqualToString:@"1"] ? YES:NO;
     self.materialArray = [self.viewModel configureMaterialPickerDataSource];
@@ -433,17 +437,13 @@ HPTextViewTapGestureRecognizerDelegate
 // 点击图片
 -(void)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer handleTapOnTextAttachment:(NSTextAttachment*)textAttachment inRange:(NSRange)characterRange
 {
+
     
-    
-    
-//    YBImageBrowser *browser = [YBImageBrowser new];
-//    browser.dataSourceArray = [self configureUrls];
-//    browser.currentIndex = 0;
-//    [browser show];
-   // 4508B2919BD975C9072821FEA89874D3
-   // 4508B2919BD975C9072821FEA89874D3.
-    //4E86E22117E59BC7F65E66BA805F0C1F
-    
+    YBImageBrowser *browser = [YBImageBrowser new];
+    browser.dataSourceArray = [self configureUrls];
+    browser.currentIndex = 0;
+    [browser show];
+  
 }
 
 
