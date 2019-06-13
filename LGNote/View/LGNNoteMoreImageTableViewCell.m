@@ -175,20 +175,20 @@
         NSString *url1 = [imageUrls objectAtIndex:0];
         NSString *url2 = [imageUrls objectAtIndex:1];
         NSString *url3 = [imageUrls objectAtIndex:2];
-        [self.imageViewLeft sd_setImageWithURL:[NSURL URLWithString:url1] placeholderImage:[NSBundle lg_imageName:@"lg_empty"]];
-        [self.imageViewCenter sd_setImageWithURL:[NSURL URLWithString:url2] placeholderImage:[NSBundle lg_imageName:@"lg_empty"]];
-        [self.imageViewRight sd_setImageWithURL:[NSURL URLWithString:url3] placeholderImage:[NSBundle lg_imageName:@"lg_empty"]];
+        [self.imageViewLeft sd_setImageWithURL:[NSURL URLWithString:url1] placeholderImage:[NSBundle lg_imageName:@"notoPlaceholderImage"]];
+        [self.imageViewCenter sd_setImageWithURL:[NSURL URLWithString:url2] placeholderImage:[NSBundle lg_imageName:@"notoPlaceholderImage"]];
+        [self.imageViewRight sd_setImageWithURL:[NSURL URLWithString:url3] placeholderImage:[NSBundle lg_imageName:@"notoPlaceholderImage"]];
         [self showLeftImage:YES showCenterImage:YES showRightImage:YES];
         
     } else if (imageUrls.count == 2) {
         NSString *url1 = [imageUrls objectAtIndex:0];
         NSString *url2 = [imageUrls objectAtIndex:1];
-        [self.imageViewLeft sd_setImageWithURL:[NSURL URLWithString:url1] placeholderImage:[NSBundle lg_imageName:@"lg_empty"]];
-        [self.imageViewCenter sd_setImageWithURL:[NSURL URLWithString:url2] placeholderImage:[NSBundle lg_imageName:@"lg_empty"]];
+        [self.imageViewLeft sd_setImageWithURL:[NSURL URLWithString:url1] placeholderImage:[NSBundle lg_imageName:@"notoPlaceholderImage"]];
+        [self.imageViewCenter sd_setImageWithURL:[NSURL URLWithString:url2] placeholderImage:[NSBundle lg_imageName:@"notoPlaceholderImage"]];
         [self showLeftImage:YES showCenterImage:YES showRightImage:NO];
     } else {
         NSString *url1 = [imageUrls objectAtIndex:0];
-        [self.imageViewLeft sd_setImageWithURL:[NSURL URLWithString:url1] placeholderImage:[NSBundle lg_imageName:@"lg_empty"]];
+        [self.imageViewLeft sd_setImageWithURL:[NSURL URLWithString:url1] placeholderImage:[NSBundle lg_imageName:@"notoPlaceholderImage"]];
         [self showLeftImage:YES showCenterImage:NO showRightImage:NO];
     }
 }
@@ -244,7 +244,7 @@
         _imageViewLeft.layer.cornerRadius = 5;
         _imageViewLeft.clipsToBounds = YES;
         _imageViewLeft.contentMode = UIViewContentModeScaleAspectFill;
-        [_imageViewLeft sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[NSBundle lg_imageName:@"lg_empty"]];
+        [_imageViewLeft sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[NSBundle lg_imageName:@"notoPlaceholderImage"]];
     }
     return _imageViewLeft;
 }
@@ -255,7 +255,7 @@
         _imageViewCenter.layer.cornerRadius = 5;
         _imageViewCenter.clipsToBounds = YES;
         _imageViewCenter.contentMode = UIViewContentModeScaleAspectFill;
-        [_imageViewCenter sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[NSBundle lg_imageName:@"lg_empty"]];
+        [_imageViewCenter sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[NSBundle lg_imageName:@"notoPlaceholderImage"]];
     }
     return _imageViewCenter;
 }
@@ -266,7 +266,7 @@
         _imageViewRight.layer.cornerRadius = 5;
         _imageViewRight.clipsToBounds = YES;
         _imageViewRight.contentMode = UIViewContentModeScaleAspectFill;
-        [_imageViewRight sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[NSBundle lg_imageName:@"lg_empty"]];
+        [_imageViewRight sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[NSBundle lg_imageName:@"notoPlaceholderImage"]];
     }
     return _imageViewRight;
 }

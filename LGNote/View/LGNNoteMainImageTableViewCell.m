@@ -104,7 +104,7 @@
     
     NSString *imageUrl = [dataSource.imgaeUrls objectAtIndex:0];
 
-    [self.noteImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[NSBundle lg_imageName:@"lg_empty"] options:SDWebImageRefreshCached];
+    [self.noteImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[NSBundle lg_imageName:@"notoPlaceholderImage"] options:SDWebImageRefreshCached];
     
     
     if ([dataSource.IsKeyPoint isEqualToString:@"1"]) {
@@ -236,7 +236,7 @@
         _noteImageView.layer.cornerRadius = 5;
         _noteImageView.clipsToBounds = YES;
         _noteImageView.contentMode = UIViewContentModeScaleAspectFill;
-        [_noteImageView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[NSBundle lg_imageName:@"lg_empty"]];
+        [_noteImageView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[NSBundle lg_imageName:@"notoPlaceholderImage"]];
     }
     return _noteImageView;
 }
