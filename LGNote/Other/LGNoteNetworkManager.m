@@ -277,6 +277,9 @@
 
 - (void)startSendRequestWithProgress:(void (^)(NSProgress *))progress success:(void (^)(id))success failure:(void (^)(NSError *))failure{
    
+    
+    
+    
     LGNoteNetworkManager *manager = [self setupAttributeBeforSendRequest];
     manager.timeout = self.timeout;
     NSString *url = [[self setupRequestUrl] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];

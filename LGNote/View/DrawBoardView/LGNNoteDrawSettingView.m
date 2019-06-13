@@ -297,12 +297,16 @@ static CGFloat const penColorHeight = 30.f;
 
 - (LGNNoteDrawSettingButtonView *)buttonView{
     if (!_buttonView) {
+        
+   
         _buttonView = [[LGNNoteDrawSettingButtonView alloc] initWithFrame:CGRectZero buttonNorImages:@[@"note_pencil_unselected",@"note_color_unselected",@"note_pho_newunselected",@"note_last_unselected",@"note_next_unselected"] buttonSelectedImages:@[@"note_pencil_selected",@"note_color_selected",@"note_Newpho_selected",@"note_last_selected",@"note_next_selected"] singleTitle:@"完成" ];
         _buttonView.backgroundColor = [UIColor blackColor];
         _buttonView.delegate = self;
     }
     return _buttonView;
 }
+
+
 
 - (LGNBoardBgImageView *)boardImageView{
     if (!_boardImageView) {

@@ -78,6 +78,8 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     
     self.operateSubject = [RACSubject subject];
     self.operateCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
+        
+        
         @strongify(self);
         [[self operatedNoteWithParams:input] subscribeNext:^(id  _Nullable x) {
             @strongify(self);
@@ -436,7 +438,12 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 }
 //添加、编辑和删除当前学生笔记   1添加  0编辑  3 删除
 - (RACSignal *)operatedNoteWithParams:(id)params{
+    
+    
+    
+    
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+        
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/OperateNote"];
         [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(self.paramModel.UserID).setToken(self.paramModel.Token).setParameters(params)starSendRequestSuccess:^(id respone) {
             
@@ -540,6 +547,12 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
             
             NSArray *dataArray = respone[kResult];
             // 图片上传后，暂时取返回的第一个数据，因为每次只上传一张图片，如果后期要一次上传多张，则这里返回一个数组
+            
+            if (IsArrEmpty(dataArray)) {
+                
+                return;
+            }
+            
             NSString *imagePath = [dataArray objectAtIndex:0];
             
             [kMBAlert showSuccessWithStatus:@"上传成功"];

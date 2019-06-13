@@ -126,6 +126,7 @@
         _searchBar.layer.cornerRadius = 15.f;
         _searchBar.layer.masksToBounds = YES;
         _searchBar.borderStyle = UITextBorderStyleNone;
+    _searchBar.clearButtonMode=UITextFieldViewModeAlways;
         _searchBar.limitType = LGTextFiledKeyBoardInputTypeNoneEmoji;
         _searchBar.placeholder = @"请输入搜索内容";
         _searchBar.lgDelegate = self;

@@ -311,9 +311,10 @@ HPTextViewTapGestureRecognizerDelegate
     }
     self.isInsert = NO;
     
+    
+    
     [self.viewModel.dataSourceModel updateText:self.contentTextView.attributedText];
-
-
+    
 }
 
 - (BOOL)lg_textViewShouldInteractWithTextAttachment:(LGNoteBaseTextView *)textView{

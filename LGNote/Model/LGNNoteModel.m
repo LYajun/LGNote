@@ -65,15 +65,22 @@
 - (NSString *)deleteBodyInAttr:(NSAttributedString *) attr{
     NSString *html = nil;
     if (attr && attr.length > 0) {
+        
         NSDictionary *exportParams = @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,NSCharacterEncodingDocumentAttribute:[NSNumber numberWithInt:NSUTF8StringEncoding]};
+        
         NSData *htmlData = [attr dataFromRange:NSMakeRange(0,attr.length) documentAttributes:exportParams error:nil];
+        
         TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:htmlData];
         NSArray *bodyArray = [xpathParser searchWithXPathQuery:@"//body"];
         if (bodyArray && bodyArray.count > 0) {
             TFHppleElement *hppleElement = bodyArray.firstObject;
             html = hppleElement.raw;
+
             html = [html stringByReplacingOccurrencesOfString:@"<body>\n" withString:@""];
             html = [html stringByReplacingOccurrencesOfString:@"\n</body>" withString:@""];
+  
+            
+            
         }
     }
     return html;
@@ -82,6 +89,8 @@
 - (void)updateText:(NSAttributedString *)textAttr{
     NSString *html = [self deleteBodyInAttr:textAttr];
     NSArray *textImgArr = [self imageArrayInHTML:html];
+    
+
      _imageAllCont = textImgArr.count;
     if (textImgArr && textImgArr.count > 0) {
         for (int i = 0; i < textImgArr.count; i++) {
@@ -103,6 +112,7 @@
             html = [html stringByReplacingOccurrencesOfString:str1 withString:str2];
         }
     }
+    
     _NoteContent = html;
 }
 

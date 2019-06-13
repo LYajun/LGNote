@@ -165,8 +165,8 @@
     
     
     if (self.style == LGNoteDrawBoardViewControllerStyleDefault) {
-        //[kMBAlert showRemindStatus:@"该模式下暂不支持切换图片该功能"];
-      //  [self.drawToolView closePenFont:NO closePenColor:NO closeBoardView:YES];
+        [kMBAlert showRemindStatus:@"该模式下暂不支持切换图片该功能"];
+        [self.drawToolView closePenFont:NO closePenColor:NO closeBoardView:YES];
     } else {
         [self.drawToolView showPenFont:NO showPenColor:NO showBoardView:YES buttonTag:butonTag];
         [self.drawSettingWindow showAnimationWithDurationTime:0.25];
@@ -218,7 +218,7 @@
         
         if (self.style == LGNoteDrawBoardViewControllerStyleDefault) {
             
-             _buttonView = [[LGNNoteDrawSettingButtonView alloc] initWithFrame:CGRectZero buttonNorImages:@[@"note_pencil_unselected",@"note_color_unselected",@"",@"note_last_unselected",@"note_next_unselected"] buttonSelectedImages:@[@"note_pencil_selected",@"note_color_selected",@"",@"note_last_selected",@"note_next_selected"] singleTitle:@"完成" ];
+             _buttonView = [[LGNNoteDrawSettingButtonView alloc] initWithFrame:CGRectZero buttonNorImages:@[@"note_pencil_unselected",@"note_color_unselected",@"note_pho_newunselected",@"note_last_unselected",@"note_next_unselected"] buttonSelectedImages:@[@"note_pencil_selected",@"note_color_selected",@"note_pho_newunselected",@"note_last_selected",@"note_next_selected"] singleTitle:@"完成" ];
         }else{
              _buttonView = [[LGNNoteDrawSettingButtonView alloc] initWithFrame:CGRectZero buttonNorImages:@[@"note_pencil_unselected",@"note_color_unselected",@"note_pho_newunselected",@"note_last_unselected",@"note_next_unselected"] buttonSelectedImages:@[@"note_pencil_selected",@"note_color_selected",@"note_Newpho_selected",@"note_last_selected",@"note_next_selected"] singleTitle:@"完成" ];
         }

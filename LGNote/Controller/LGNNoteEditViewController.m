@@ -112,15 +112,14 @@
 
 - (void)exti{
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"修改的内容未保存,您确定要退出吗?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"保存已输入的内容?" preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"不保存" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         
           [self.navigationController popViewControllerAnimated:YES];
     }];
     
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         
     }];
     
@@ -149,7 +148,18 @@
     [kMBAlert showIndeterminateWithStatus:@"正在进行，请稍等..."];
 
 
+    NSLog(@"%@",self.sourceModel.NoteContent);
+    
+    
+    
+    NSDictionary *statusDict = self.sourceModel.mj_keyValues;
+
+
+
+    
     [self.viewModel.operateCommand execute:[self.sourceModel mj_keyValues]];
+    
+     // [self.viewModel.operateCommand execute:self.sourceModel];
     [[UIApplication sharedApplication].keyWindow endEditing:YES];
     @weakify(self);
     [self.viewModel.operateSubject subscribeNext:^(id  _Nullable x) {
