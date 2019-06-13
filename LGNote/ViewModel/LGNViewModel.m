@@ -12,7 +12,7 @@
 #import "LGNoteMBAlert.h"
 #import <MJExtension/MJExtension.h>
 #import "NoteXMLDictionary.h"
-
+#import "LGNNoteModel.h"
 
 NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 
@@ -96,6 +96,21 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 //        return [RACSignal empty];
 //    }];
     
+    self.getDetailNoteSubject  = [RACSubject subject];
+    self.getDetailNoteCommand = [[RACCommand alloc]initWithSignalBlock:^RACSignal * _Nonnull(LGNNoteModel * _Nullable inputModel) {
+        @strongify(self);
+        
+
+        
+        
+        RACSignal * mainSignal = [self getOneNoteInfoWithNoteID: inputModel.NoteID];
+        
+        [mainSignal subscribeNext:^(id  _Nullable x) {
+            @strongify(self);
+            [self.getDetailNoteSubject sendNext:x];
+        }];
+        return [RACSignal empty];
+    }];
     
     self.searchSubject = [RACSubject subject];
     self.searchCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
@@ -268,6 +283,8 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 }
   //获取某条笔记的全部信息
 - (RACSignal *)getOneNoteInfoWithNoteID:(NSString *)noteID{
+    
+    
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNoteInfoByID"];
         NSDictionary *params = @{
@@ -280,18 +297,22 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                                  };
         [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(self.paramModel.UserID).setToken(self.paramModel.Token).setParameters(params)starSendRequestSuccess:^(id respone) {
             
-            
-            
+            NSLog(@"%@",respone);
             
             if (![respone[kErrorcode] hasSuffix:kSuccess]) {
                 [subscriber sendNext:nil];
                 [subscriber sendCompleted];
                 return;
             }
-            LGNNoteModel *model = [LGNNoteModel mj_objectWithKeyValues:respone];
             
+
+            LGNNoteModel * model =  [LGNNoteModel mj_objectWithKeyValues:respone[kResult]];
+        
             [subscriber sendNext:model];
             [subscriber sendCompleted];
+            
+           
+        
             
         } failure:^(NSError *error) {
             [subscriber sendNext:nil];
@@ -419,14 +440,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/OperateNote"];
         [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(self.paramModel.UserID).setToken(self.paramModel.Token).setParameters(params)starSendRequestSuccess:^(id respone) {
             
-            NSLog(@"==%@==",params);
-            
-            NSLog(@"=UserID=%@=Token=%@",self.paramModel.UserID,self.paramModel.Token);
-            
-            
-            NSLog(@"respone==%@==",respone);
-            
-            
+     
         
             if (![respone[kErrorcode] hasSuffix:kSuccess]) {
                 NSString *message;
@@ -546,8 +560,13 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 - (RACSignal *)uploadNoteSourceInfo:(id)sourceInfo{
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/UploadNoteSourceInfo"];
+        
+      //  NSLog(@"SystemType:%@===ResourceID:%@==MaterialID:%@===ResourceName:%@==MaterialName:%@==ResourceIOSLink:%@==MaterialTotal:%@",[NSString stringWithFormat:@"%zd",self.paramModel.SystemType],self.paramModel.ResourceID,self.paramModel.MaterialID,self.paramModel.ResourceName,self.paramModel.MaterialName,self.paramModel.ResourceIOSLink,self.paramModel.MaterialTotal);
+        
+        
+        
         NSDictionary *params = @{
-                                 @"SystemType":@"5",
+                                 @"SystemType":[NSString stringWithFormat:@"%zd",self.paramModel.SystemType],
                                  @"ResourceID":self.paramModel.ResourceID,
                                  @"MaterialID":self.paramModel.MaterialID,
                                  @"ResourceName":self.paramModel.ResourceName,
@@ -559,7 +578,10 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                                  @"MaterialContent":@"",
                                  @"MaterialTotal":self.paramModel.MaterialTotal
                                  };
-        [kNetwork.setRequestUrl(url).setRequestType(POST).setParameters(params)starSendRequestSuccess:^(id respone) {
+        
+ [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(self.paramModel.UserID).setToken(self.paramModel.Token).setParameters(params)starSendRequestSuccess:^(id respone) {
+            
+            
             
             if (![respone[kErrorcode] hasSuffix:kSuccess]) {
 //                [kMBAlert showErrorWithStatus:@"上传失败,请检查网络后再重试!"];

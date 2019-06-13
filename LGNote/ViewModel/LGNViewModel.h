@@ -37,6 +37,11 @@ UIKIT_EXTERN NSString *const CheckNoteBaseUrlKey;
 @property (nonatomic, strong) RACCommand *searchCommand;
 @property (nonatomic, strong) RACSubject *searchSubject;
 
+/** 获取某一条笔记的详情信息 */
+@property (nonatomic, strong) RACCommand *getDetailNoteCommand;
+@property (nonatomic, strong) RACSubject *getDetailNoteSubject;
+
+
 /** 数据总数 */
 @property (nonatomic, assign) NSInteger totalCount;
 /** 笔记所支持学科 */

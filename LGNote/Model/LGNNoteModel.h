@@ -35,6 +35,10 @@ NS_ASSUME_NONNULL_BEGIN
 /** iOS链接 */
 @property (nonatomic, copy) NSString *NoteIOSLink;
 @property (nonatomic, copy) NSString *NoteAndroidLink;
+
+/** iOS跳转链接 */
+@property (nonatomic, copy) NSString *ResourceIOSLink;
+
 /** 笔记来源ID */
 @property (nonatomic, copy) NSString *ResourceID;
 /** 笔记来源名 */

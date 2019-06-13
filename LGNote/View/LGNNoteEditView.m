@@ -19,6 +19,7 @@
 #import "LGNCutImageViewController.h"
 #import "LGNSingleTool.h"
 #import "HPTextViewTapGestureRecognizer.h"
+#import "LGNNoteModel.h"
 @interface LGNNoteEditView ()
 <
 LGNoteBaseTextFieldDelegate,
@@ -60,6 +61,8 @@ HPTextViewTapGestureRecognizerDelegate
 @property (nonatomic, strong) LGNViewModel *viewModel;
 
 @property (nonatomic,assign) int  photoIndex;
+
+@property (nonatomic,strong) NSString * ResourceIOSLink;
 @end
 
 @implementation LGNNoteEditView
@@ -270,6 +273,18 @@ HPTextViewTapGestureRecognizerDelegate
         
         
     }];
+    
+    
+    [self.viewModel.getDetailNoteSubject subscribeNext:^(id  _Nullable x) {
+
+        LGNNoteModel * model = x;
+        
+    self.ResourceIOSLink = model.ResourceIOSLink;
+        
+      
+    }];
+    
+    
 }
 
 #pragma mark - TextViewDelegate
@@ -514,8 +529,11 @@ HPTextViewTapGestureRecognizerDelegate
 }
 
 - (void)sourceBtnClick:(UIButton *)sender{
-    
+    if (IsStrEmpty(_ResourceIOSLink)) {
+        return;
+    }
     sender.selected = !sender.selected;
+    
     if (sender.selected) {
         self.sourceTipImageView.transform = CGAffineTransformMakeRotation(M_PI/2);
     } else {
@@ -529,8 +547,10 @@ HPTextViewTapGestureRecognizerDelegate
         pickerView.delegate = self;
         [pickerView showPickerViewMenuForDataSource:self.materialArray matchIndex:self.currentSelectedTopicIndex];
     } else {
+    
+    
         @weakify(self);
-        [[LGNNoteSourceDetailView showSourceDatailView] loadDataWithUrl:@"https://www.baidu.com/" didShowCompletion:^{
+        [[LGNNoteSourceDetailView showSourceDatailView] loadDataWithUrl:_ResourceIOSLink didShowCompletion:^{
             @strongify(self);
             self.sourceBtn.selected = NO;
             self.sourceTipImageView.transform = CGAffineTransformMakeRotation(0);

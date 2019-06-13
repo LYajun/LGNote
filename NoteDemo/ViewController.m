@@ -42,6 +42,7 @@
     
  //   S27-508-EC82==EF3DFC6C-B95F-431D-ABED-301B4037EAB3==g1==2==g1姓名==http://192.168.3.158:10103//===
     
+  //  S27-508-EC82==B0CB1115-EA45-49E7-A0D4-88EF2995251D==g3==2==g3姓名==http://192.168.3.158:10103//===
     
     params.SystemID = @"S21";
     params.SubjectID = @"All";
@@ -53,15 +54,15 @@
     params.SubjectName = @"";
     params.IsKeyPoint = @"-1";
     params.SchoolID = @"S27-508-EC82";
-    params.Token = @"B83A61C1-2F60-4B03-8F93-6CDCAE50EA64";
+    params.Token = @"B0CB1115-EA45-49E7-A0D4-88EF2995251D";
     params.ResourceName = @"我的笔记";
     params.ResourceID = @"";
     params.MaterialName = @"";
     params.MaterialTotal = @"-1";
     params.ResourceIOSLink = @"";
-    params.UserID = @"g1";
+    params.UserID = @"g3";
     params.UserType = 2;
-    params.UserName = @"g1姓名";
+    params.UserName = @"g3姓名";
     params.CPBaseUrl = @"http://192.168.3.158:10103//";
     params.SystemType = SystemType_ASSISTANTER;
     

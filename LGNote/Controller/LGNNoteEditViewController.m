@@ -35,6 +35,12 @@
     [self createSubViews];
     
     _NotoContent = self.sourceModel.NoteContent;
+  
+    if(!self.viewModel.isAddNoteOperation && self.paramModel.SystemType ==SystemType_ASSISTANTER){
+    
+    [self.viewModel.getDetailNoteCommand execute:self.sourceModel];
+    }
+    
 }
 
 - (void)commonInit{
@@ -44,11 +50,6 @@
 - (void)editNoteWithDataSource:(LGNNoteModel *)dataSource{
     self.sourceModel = dataSource;
     
-    
-//    self.OldSystemID = dataSource.SystemID;
-//    self.OldSubjectID = dataSource.SubjectID;
-//
-
     
     self.sourceModel.UserID = self.paramModel.UserID;
     self.sourceModel.SystemID = self.paramModel.SystemID;
@@ -147,15 +148,7 @@
 
     [kMBAlert showIndeterminateWithStatus:@"正在进行，请稍等..."];
 
-    
-//    if([self.sourceModel.SubjectID isEqualToString:@"All"]&&IsStrEmpty(_OldSubjectID)){
-//
-//        self.sourceModel.SubjectID =_OldSubjectID;
-//        self.sourceModel.SystemID = _OldSystemID;
-//    }
-//
-    
-    
+
     [self.viewModel.operateCommand execute:[self.sourceModel mj_keyValues]];
     [[UIApplication sharedApplication].keyWindow endEditing:YES];
     @weakify(self);
