@@ -24,6 +24,8 @@
     NSLog(@"%@释放了",NSStringFromClass([self class]));
 }
 
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
@@ -60,6 +62,9 @@
     LGNDrawBoardViewController *drawController = [[LGNDrawBoardViewController alloc] init];
     drawController.style = LGNoteDrawBoardViewControllerStyleDefault;
     drawController.drawBgImage = [self.cutImageView currentCroppedImage];
+    
+    
+    
     [self presentViewController:drawController animated:YES completion:nil];
 }
 

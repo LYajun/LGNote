@@ -266,6 +266,7 @@
         _drawView.brushWidth = 2.4;
         _drawView.shapeType = DrawBoardShapeCurve;
         _drawView.backgroundImage = (self.style == LGNoteDrawBoardViewControllerStyleDefault) ? self.drawBgImage:bgImgView.image;
+        
     }
     return _drawView;
 }

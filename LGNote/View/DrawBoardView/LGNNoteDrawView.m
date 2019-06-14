@@ -80,6 +80,9 @@
         
         _bgImgView = [UIImageView new];
         _bgImgView.frame = self.bounds;
+        _bgImgView.contentMode = UIViewContentModeScaleAspectFit;
+        
+
         [self addSubview:_bgImgView];
         
         _composeView = [UIImageView new];

@@ -385,7 +385,6 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
             NSLog(@"==%@==",respone);
             
             
-            
             if (![respone[kErrorcode] hasSuffix:kSuccess]) {
                 [subscriber sendNext:nil];
                 [subscriber sendCompleted];
@@ -440,6 +439,20 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 - (RACSignal *)operatedNoteWithParams:(id)params{
     
     
+    NSLog(@"%@",params);
+    
+    
+
+    if(IsStrEmpty(params[@"MaterialID"])){
+
+        [params setValue:params[@"SystemID"] forKey:@"MaterialID"];
+    }
+
+    if(IsStrEmpty(params[@"ResourceID"])){
+
+        [params setValue:params[@"SystemID"] forKey:@"ResourceID"];
+    }
+
     
     
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
