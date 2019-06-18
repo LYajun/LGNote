@@ -329,12 +329,9 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNotesInformation"];
         
-        NSLog(@"%@",url);
         
         
-        
-        NSLog(@"%zd",self.paramModel.SystemType);
-        NSDictionary *params;
+                NSDictionary *params;
         if (self.paramModel.SystemType ==0 || self.paramModel.SystemType ==2) {
             params = @{
                                      @"UserID":self.paramModel.UserID,
@@ -437,6 +434,8 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 }
 //添加、编辑和删除当前学生笔记   1添加  0编辑  3 删除
 - (RACSignal *)operatedNoteWithParams:(id)params{
+    
+    
     
     
    // 学习小助手 和后期提供给平台集成的整体版本，[ResourceID]和[MaterialID]这两个值都赋值为SystemID

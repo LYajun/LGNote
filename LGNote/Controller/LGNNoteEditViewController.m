@@ -59,7 +59,7 @@
     
     
     self.sourceModel.UserID = self.paramModel.UserID;
-    self.sourceModel.SystemID = self.paramModel.SystemID;
+    //self.sourceModel.SystemID = self.paramModel.SystemID;
     self.sourceModel.UserName = self.paramModel.UserName;
     self.sourceModel.SchoolID = self.paramModel.SchoolID;
 
@@ -168,8 +168,6 @@
     }
 
     [kMBAlert showIndeterminateWithStatus:@"正在进行，请稍等..."];
-
-    
 
 
     [self.viewModel.operateCommand execute:[self.sourceModel mj_keyValues]];

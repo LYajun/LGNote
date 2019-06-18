@@ -65,6 +65,8 @@ HPTextViewTapGestureRecognizerDelegate
 @property (nonatomic,strong) NSString * ResourceIOSLink;
 //记录是否需要销毁通知
 @property (nonatomic,assign) BOOL  isNeed;
+//时时编辑的数据图片
+@property (nonatomic, copy) NSArray *NowimgaeUrls;
 @end
 
 @implementation LGNNoteEditView
@@ -273,10 +275,8 @@ HPTextViewTapGestureRecognizerDelegate
     
     self.contentTextView.attributedText = viewModel.dataSourceModel.NoteContent_Att;
 
-    //讲图片总数同步
+    //将图片总数同步
     self.viewModel.dataSourceModel.imageAllCont =self.viewModel.dataSourceModel.imgaeUrls.count;
-
-    
 
     
     viewModel.dataSourceModel.SubjectName = IsStrEmpty(viewModel.dataSourceModel.SubjectName) ? @"英语":viewModel.dataSourceModel.SubjectName;
@@ -358,11 +358,23 @@ HPTextViewTapGestureRecognizerDelegate
 }
 
 - (NSArray *)configureUrls:(NSString*)urlStr{
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:self.viewModel.dataSourceModel.imgaeUrls.count];
     
-    for (int i = 0; i < self.viewModel.dataSourceModel.imgaeUrls.count; i ++) {
+    
+    NSArray * imageArr = [NSArray array];
+    
+    if(!IsArrEmpty(_NowimgaeUrls)){
+        
+       imageArr = _NowimgaeUrls;
+    }else{
+      imageArr =self.viewModel.dataSourceModel.imgaeUrls;
+    }
+   
+    
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:imageArr.count];
+    
+    for (int i = 0; i < imageArr.count; i ++) {
         YBImageBrowseCellData *data = [YBImageBrowseCellData new];
-        data.url = self.viewModel.dataSourceModel.imgaeUrls[i];
+        data.url = imageArr[i];
        NSString *str1 = [data.url absoluteString];;
      if([str1 containsString:urlStr]){
          //保存照片index
@@ -527,7 +539,39 @@ HPTextViewTapGestureRecognizerDelegate
         
         _contentTextView.placeholder=@"";
         [self settingImageAttributes:image imageFTPPath:x];
+        
+        NSMutableArray *imageUrls = [self filterImageUrlWithHtml:self.viewModel.dataSourceModel.NoteContent];
+        // 保存时时图片数组
+          self.NowimgaeUrls = imageUrls;
+        
+        
     }];
+}
+
+
+- (NSMutableArray *)filterImageUrlWithHtml:(NSString *)html{
+    NSMutableArray *resultArray = [NSMutableArray array];
+    NSRegularExpression *regular = [NSRegularExpression regularExpressionWithPattern:@"<(img|IMG)(.*?)(/>|></img>|>)" options:NSRegularExpressionAllowCommentsAndWhitespace error:nil];
+    NSArray *result = [regular matchesInString:html options:NSMatchingReportCompletion range:NSMakeRange(0, html.length)];
+    for (NSTextCheckingResult *item in result) {
+        NSString *imgHtml = [html substringWithRange:[item rangeAtIndex:0]];
+        NSArray *tmpArray = nil;
+        if ([imgHtml rangeOfString:@"src=\""].location != NSNotFound) {
+            tmpArray = [imgHtml componentsSeparatedByString:@"src=\""];
+        } else if ([imgHtml rangeOfString:@"src="].location != NSNotFound) {
+            tmpArray = [imgHtml componentsSeparatedByString:@"src="];
+        }
+        
+        if (tmpArray.count >= 2) {
+            NSString *src = tmpArray[1];
+            NSUInteger loc = [src rangeOfString:@"\""].location;
+            if (loc != NSNotFound) {
+                src = [src substringToIndex:loc];
+                [resultArray addObject:src];
+            }
+        }
+    }
+    return resultArray;
 }
 
 #pragma mark HPTextViewTapGestureRecognizerDelegate
