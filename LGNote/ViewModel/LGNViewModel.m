@@ -575,7 +575,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
             
             NSString *imagePath = [dataArray objectAtIndex:0];
             
-            [kMBAlert showSuccessWithStatus:@"上传成功"];
+           // [kMBAlert showSuccessWithStatus:@"上传成功"];
             [subscriber sendNext:imagePath];
             [subscriber sendCompleted];
             

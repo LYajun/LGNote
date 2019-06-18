@@ -55,8 +55,12 @@
         self.contentLabel.backgroundColor = kSeletedColor;
         self.contentLabel.textColor = kSeletedLabelTextColor;
     } else {
-        self.contentLabel.backgroundColor = kUnseleterColor;
-        self.contentLabel.textColor = kColorWithHex(0x989898);
+       // self.contentLabel.backgroundColor = kUnseleterColor;
+       // self.contentLabel.textColor = kColorWithHex(0x989898);
+        self.contentLabel.backgroundColor =LGRGB(242, 242, 242);
+        self.contentLabel.textColor = LGRGB(37, 37, 37);
+        
+        
     }
 }
 

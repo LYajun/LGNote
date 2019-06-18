@@ -26,6 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LGNSearchToolView : UIView
 
+@property (nonatomic, strong, readwrite) UIButton *filterBtn;
+
 @property (nonatomic, weak) id <SearchToolViewDelegate> delegate;
 
 /**

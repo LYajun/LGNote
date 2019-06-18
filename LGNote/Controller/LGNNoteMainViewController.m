@@ -50,6 +50,11 @@ SearchToolViewDelegate
     [self lg_commonInit];
     [self creatSubViews];
     [self lg_bindData];
+    
+
+    
+   
+    
 }
 
 
@@ -163,6 +168,9 @@ SearchToolViewDelegate
 }
 
 - (void)filterEvent{
+    
+    
+  
     LGNNoteFilterViewController *filterController = [[LGNNoteFilterViewController alloc] init];
     filterController.filterStyle = FilterStyleCustom;
     filterController.delegate = self;
@@ -186,6 +194,17 @@ SearchToolViewDelegate
     self.viewModel.paramModel.C_SystemID = systemID;
     self.tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
     [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
+    
+    
+    if([subjecID isEqualToString:@"All"] && [systemID isEqualToString:@"All"]){
+        
+          [self.toolView.filterBtn setImage:[NSBundle lg_imagePathName:@"note_filter"] forState:UIControlStateNormal];
+    }else{
+        
+          [self.toolView.filterBtn setImage:[NSBundle lg_imagePathName:@"note_filter_sel"] forState:UIControlStateNormal];
+    }
+    
+    
 }
 
 - (void)remarkEvent:(BOOL)remark{

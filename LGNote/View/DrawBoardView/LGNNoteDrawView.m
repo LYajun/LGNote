@@ -86,13 +86,12 @@
         [self addSubview:_bgImgView];
         
         _composeView = [UIImageView new];
-        _composeView.frame = self.bounds;
+       _composeView.frame = self.bounds;
         //        _composeView.image = [self getAlphaImg];
-        [self addSubview:_composeView];
+         [self addSubview:_composeView];
         
         _canvasView = [LGNDrawBoardCanvas new];
         _canvasView.frame = _composeView.bounds;
-        
         [_composeView addSubview:_canvasView];
         
         _brushColor = LSDEF_BRUSH_COLOR;
@@ -469,7 +468,8 @@
 - (void)layoutSubviews{
     _bgImgView.frame = self.bounds;
     _composeView.frame = self.bounds;
-    _canvasView.frame = self.bounds;
+   _canvasView.frame = self.bounds;
+  
 }
 
 - (void)drawNextPackage{

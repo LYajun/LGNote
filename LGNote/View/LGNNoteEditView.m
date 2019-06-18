@@ -564,7 +564,7 @@ HPTextViewTapGestureRecognizerDelegate
     if (sender.selected) {
         self.viewModel.dataSourceModel.IsKeyPoint = @"1";
        
-        [[LGNoteMBAlert shareMBAlert] showSuccessWithStatus:@"已标记为重点"];
+        [[LGNoteMBAlert shareMBAlert] showSuccessWithStatus:@"已标记重点"];
         
     } else {
         self.viewModel.dataSourceModel.IsKeyPoint = @"0";

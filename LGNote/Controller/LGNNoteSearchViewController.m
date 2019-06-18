@@ -12,7 +12,7 @@
 #import "LGNoteBaseTextField.h"
 #import "LGNoteConfigure.h"
 
-@interface LGNNoteSearchViewController () <LGNoteBaseTextFieldDelegate>
+@interface LGNNoteSearchViewController () <LGNoteBaseTextFieldDelegate,UITextFieldDelegate>
 
 @property (nonatomic, strong) LGNoteBaseTextField *searchBar;
 @property (nonatomic, strong) LGNNoteMainTableView *tableView;
@@ -125,6 +125,15 @@
     [self.viewModel.searchCommand execute:self.viewModel.paramModel];
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    [self.searchBar resignFirstResponder];
+
+    [self searchEvent];
+    return YES;
+}
+
+
 #pragma mark - lazy
 - (LGNoteBaseTextField *)searchBar{
     if (!_searchBar) {
@@ -135,6 +144,8 @@
     _searchBar.clearButtonMode=UITextFieldViewModeAlways;
         _searchBar.limitType = LGTextFiledKeyBoardInputTypeNoneEmoji;
         _searchBar.placeholder = @"请输入笔记标题/来源关键字搜索";
+        _searchBar.delegate = self;
+        _searchBar.returnKeyType = UIReturnKeySearch;
         _searchBar.lgDelegate = self;
     }
     return _searchBar;

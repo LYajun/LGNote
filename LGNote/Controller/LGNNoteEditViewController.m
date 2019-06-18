@@ -19,6 +19,7 @@
 @property (nonatomic, strong) LGNNoteModel *sourceModel;
 @property (nonatomic, strong) LGNNoteEditView *contentView;
 @property (nonatomic,strong) NSString * NotoContent;
+@property (nonatomic,strong) NSString * NotoTitle;
 @property (nonatomic,strong) NSString * OldSystemID;
 @property (nonatomic,strong) NSString * OldSubjectID;
 @end
@@ -41,7 +42,7 @@
     [self createSubViews];
     
     _NotoContent = self.sourceModel.NoteContent;
-  
+    _NotoTitle = self.sourceModel.NoteTitle;
     if(!self.viewModel.isAddNoteOperation && self.paramModel.SystemType ==SystemType_ASSISTANTER){
     
     [self.viewModel.getDetailNoteCommand execute:self.sourceModel];
@@ -100,12 +101,20 @@
 //    if (self.updateSubject && !self.isNewNote) {
 //        [self.updateSubject sendNext:@"update"];
 //    }
+
     
   
-        if(!IsStrEmpty(self.sourceModel.NoteContent) && ![_NotoContent isEqualToString:self.sourceModel.NoteContent]) {
+        if(!IsStrEmpty(self.sourceModel.NoteContent) && ![_NotoContent isEqualToString:self.sourceModel.NoteContent] ) {
             
             [self exti];
-        }else{
+        }
+        else if (!IsStrEmpty(self.sourceModel.NoteTitle) && ![_NotoTitle isEqualToString:self.sourceModel.NoteTitle]){
+
+              [self exti];
+
+        }
+    
+        else{
             
             
         [[NSNotificationCenter defaultCenter] postNotificationName:@"destroyImageNoti" object:nil userInfo:nil];
@@ -123,14 +132,16 @@
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"保存已输入的内容?" preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"不保存" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        self.paramModel.OperateFlag = self.isNewNote ? 1:0;
+        self.sourceModel.OperateFlag = self.isNewNote ? 1:0;
+        [self operatedNote];
         
-          [self.navigationController popViewControllerAnimated:YES];
     }];
     
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        
-        [self operatedNote];
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"不保存" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+          [self.navigationController popViewControllerAnimated:YES];
+       
     }];
     
     
@@ -144,6 +155,7 @@
 }
 
 - (void)operatedNote{
+    
     NSString *noteTitle = [self.sourceModel.NoteTitle stringByReplacingOccurrencesOfString:@" " withString:@""];
     if (IsStrEmpty(self.sourceModel.NoteTitle) || IsStrEmpty(noteTitle)) {
         [kMBAlert showRemindStatus:@"标题不能为空!"];
@@ -157,9 +169,12 @@
 
     [kMBAlert showIndeterminateWithStatus:@"正在进行，请稍等..."];
 
+    
 
 
     [self.viewModel.operateCommand execute:[self.sourceModel mj_keyValues]];
+    
+    
     
      // [self.viewModel.operateCommand execute:self.sourceModel];
     [[UIApplication sharedApplication].keyWindow endEditing:YES];
