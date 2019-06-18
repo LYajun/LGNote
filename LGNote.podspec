@@ -3,7 +3,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "LGNote"
-  spec.version      = "1.1.0"
+  spec.version      = "1.1.1"
   spec.summary      = "笔记公共工具"
 
   spec.homepage     = "https://github.com/LYajun/LGNote"
