@@ -28,7 +28,13 @@
 - (void)dealloc{
     NSLog(@"销毁了%@",NSStringFromClass([self class]));
 }
-
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    [super viewWillDisappear:YES];
+    
+     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self commonInit];
@@ -101,6 +107,9 @@
             [self exti];
         }else{
             
+            
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"destroyImageNoti" object:nil userInfo:nil];
+            
             [self.navigationController popViewControllerAnimated:YES];
     
             
@@ -121,6 +130,7 @@
     
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         
+        [self operatedNote];
     }];
     
     

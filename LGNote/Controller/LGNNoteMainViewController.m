@@ -149,6 +149,7 @@ SearchToolViewDelegate
 #pragma mark - SearchToolDelegate
 - (void)enterSearchEvent{
     LGNNoteSearchViewController *searchVC = [[LGNNoteSearchViewController alloc] init];
+    searchVC.subjectArray =self.viewModel.subjectArray;
     [searchVC configureParam:self.viewModel.paramModel];
     searchVC.backRefreshSubject = [RACSubject subject];
     [self.navigationController pushViewController:searchVC animated:YES];

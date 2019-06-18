@@ -79,6 +79,9 @@
     self.viewModel.paramModel = [LGNParamModel mj_objectWithKeyValues:param];
     self.viewModel.paramModel.PageSize = 0;
     self.viewModel.paramModel.PageIndex = 0;
+    
+    self.viewModel.subjectArray = _subjectArray;
+
 }
 
 #pragma mark - TextFieldDelegate
@@ -116,6 +119,9 @@
     }
     
     self.tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
+    
+ //   
+    
     [self.viewModel.searchCommand execute:self.viewModel.paramModel];
 }
 
@@ -128,7 +134,7 @@
         _searchBar.borderStyle = UITextBorderStyleNone;
     _searchBar.clearButtonMode=UITextFieldViewModeAlways;
         _searchBar.limitType = LGTextFiledKeyBoardInputTypeNoneEmoji;
-        _searchBar.placeholder = @"请输入搜索内容";
+        _searchBar.placeholder = @"请输入笔记标题/来源关键字搜索";
         _searchBar.lgDelegate = self;
     }
     return _searchBar;
