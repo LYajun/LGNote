@@ -62,7 +62,8 @@
     //self.sourceModel.SystemID = self.paramModel.SystemID;
     self.sourceModel.UserName = self.paramModel.UserName;
     self.sourceModel.SchoolID = self.paramModel.SchoolID;
-
+    
+    
 }
 
 - (void)addRightNavigationBar{
