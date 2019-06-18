@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) RACSubject *backRefreshSubject;
 @property (nonatomic, strong) LGNParamModel *paramModel;
+@property (nonatomic,strong) NSArray * subjectArray;
 
 - (void)configureParam:(LGNParamModel *)paramModel;
 

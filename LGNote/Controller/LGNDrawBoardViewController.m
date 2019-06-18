@@ -189,6 +189,8 @@
 //    }
     
     [self.drawView saveCompletion:^(UIImage * _Nonnull image, NSString * _Nonnull msg) {
+        
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:LGNoteDrawBoardViewControllerFinishedDrawNotification object:nil userInfo:@{@"image":image}];
     }];
     [self dismissTopViewController:YES];

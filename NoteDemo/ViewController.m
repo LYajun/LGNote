@@ -8,7 +8,6 @@
 
 #import "ViewController.h"
 #import "LGNNoteMainViewController.h"
-
 @interface ViewController ()
 
 @end
@@ -27,6 +26,7 @@
 
 
 - (void)enterNoteViewController:(UIButton *)sender {
+
     LGNNoteMainViewController *noteController = [[LGNNoteMainViewController alloc] initWithNaviBarLeftItemStyle:NoteMainViewControllerNaviBarStyleBack systemType:SystemUsedTypeAssistanter];
     // 配置笔记首页所需参数
     noteController.paramModel = [self configureParams];
@@ -44,6 +44,8 @@
     
   //  S27-508-EC82==B0CB1115-EA45-49E7-A0D4-88EF2995251D==g3==2==g3姓名==http://192.168.3.158:10103//===
     
+  //  S0-506-D0B7==AD03B2B4-2194-4551-91DA-57C7FF2BF26D==stu001==2==stu001==http://192.168.129.131:10105//=
+    
     params.SystemID = @"S21";
     params.SubjectID = @"All";
     params.C_SystemID = @"All";
@@ -53,17 +55,17 @@
     params.MaterialCount = 10;
     params.SubjectName = @"";
     params.IsKeyPoint = @"-1";
-    params.SchoolID = @"S27-508-EC82";
-    params.Token = @"B0CB1115-EA45-49E7-A0D4-88EF2995251D";
+    params.SchoolID = @"S0-506-D0B7";
+    params.Token = @"AD03B2B4-2194-4551-91DA-57C7FF2BF26D";
     params.ResourceName = @"我的笔记";
     params.ResourceID = @"";
     params.MaterialName = @"";
     params.MaterialTotal = @"-1";
     params.ResourceIOSLink = @"";
-    params.UserID = @"g3";
+    params.UserID = @"stu001";
     params.UserType = 2;
-    params.UserName = @"g3姓名";
-    params.CPBaseUrl = @"http://192.168.3.158:10103//";
+    params.UserName = @"stu001";
+    params.CPBaseUrl = @"http://192.168.129.131:10105//";
     params.SystemType = SystemType_ASSISTANTER;
     
     return params;

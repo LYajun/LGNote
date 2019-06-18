@@ -63,6 +63,8 @@ HPTextViewTapGestureRecognizerDelegate
 @property (nonatomic,assign) int  photoIndex;
 
 @property (nonatomic,strong) NSString * ResourceIOSLink;
+//记录是否需要销毁通知
+@property (nonatomic,assign) BOOL  isNeed;
 @end
 
 @implementation LGNNoteEditView
@@ -70,6 +72,20 @@ HPTextViewTapGestureRecognizerDelegate
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+- (void)willMoveToWindow:(UIWindow *)newWindow {
+    
+    
+    if (newWindow == nil) {
+       
+        if(_isNeed){
+            //移除通知
+             [[NSNotificationCenter defaultCenter] removeObserver:self];
+        }
+      
+    }
+}
+
 
 - (instancetype)initWithFrame:(CGRect)frame{
     return [self initWithFrame:frame headerViewStyle:NoteEditViewHeaderStyleNoHidden];
@@ -86,10 +102,23 @@ HPTextViewTapGestureRecognizerDelegate
 }
 
 - (void)registNotifications{
+    
+    _isNeed = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewKeyBoardDidShowNotification:) name:LGTextViewKeyBoardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewKeyBoardWillHiddenNotification:) name:LGTextViewKeyBoardWillHiddenNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(postImageView:) name:LGNoteDrawBoardViewControllerFinishedDrawNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(destroyImageNoti) name:@"destroyImageNoti" object:nil];
 }
+
+- (void)destroyImageNoti{
+    
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+}
+
+
 
 - (void)createSubviews{
     switch (_style) {
@@ -259,6 +288,8 @@ HPTextViewTapGestureRecognizerDelegate
     //    去除全部与其他学科
     self.subjectArray = [self.viewModel configureSubjectPickerDataSource];
     
+    
+    
     NSLog(@"%@",viewModel.dataSourceModel.ResourceName);
     
     
@@ -350,6 +381,8 @@ HPTextViewTapGestureRecognizerDelegate
 
 - (void)lg_textViewPhotoEvent:(LGNoteBaseTextView *)textView{
     
+  
+    
     if(self.viewModel.dataSourceModel.imageAllCont ==9 ||self.viewModel.dataSourceModel.imageAllCont>9){
         [[LGNoteMBAlert shareMBAlert] showErrorWithStatus:@"仅允许最多上传9张图片!"];
         
@@ -359,11 +392,15 @@ HPTextViewTapGestureRecognizerDelegate
     if (![LGNImagePickerViewController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
         [[LGNoteMBAlert shareMBAlert] showErrorWithStatus:@"没有打开相册权限"];
     }
+      _isNeed = NO;
+
     LGNImagePickerViewController *picker = [[LGNImagePickerViewController alloc] init];
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     @weakify(self);
     [picker pickerPhotoCompletion:^(UIImage * _Nonnull image) {
         @strongify(self);
+        self.isNeed = NO;
+        
         LGNCutImageViewController *cutController = [[LGNCutImageViewController alloc] init];
         cutController.image = image;
         [self.ownController presentViewController:cutController animated:YES completion:nil];
@@ -383,11 +420,15 @@ HPTextViewTapGestureRecognizerDelegate
     if (![LGNImagePickerViewController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         [[LGNoteMBAlert shareMBAlert] showErrorWithStatus:@"没有打开照相机权限"];
     }
+    
+      _isNeed = NO;
     LGNImagePickerViewController *picker = [[LGNImagePickerViewController alloc] init];
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     @weakify(self);
     [picker pickerPhotoCompletion:^(UIImage * _Nonnull image) {
         @strongify(self);
+        
+         self.isNeed = NO;
         LGNCutImageViewController *cutController = [[LGNCutImageViewController alloc] init];
         cutController.image = image;
         [self.ownController presentViewController:cutController animated:YES completion:nil];
@@ -403,7 +444,7 @@ HPTextViewTapGestureRecognizerDelegate
         return;
     }
     
-    
+      _isNeed = NO;
     LGNDrawBoardViewController *drawController = [[LGNDrawBoardViewController alloc] init];
     drawController.style = LGNoteDrawBoardViewControllerStyleDraw;
     [self.ownController presentViewController:drawController animated:YES completion:nil];
@@ -418,9 +459,11 @@ HPTextViewTapGestureRecognizerDelegate
     CGFloat height = image.size.height;
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width - kNoteImageOffset;
     // 固定宽度
-    width = width > screenW ? screenW:width;
+   width = width > screenW ? screenW:width;
    // 固定高度
-    height = height >= 220 ? 220:height;
+   // height = height >= 220 ? 220:height;
+    
+    
     
     NSString *imgStr = [NSString stringWithFormat:@"<img src=\"%@\" width=\"%.f\" height=\"%.f\"/>",path,width,height];
     NSMutableAttributedString *currentAttr = [[NSMutableAttributedString alloc] initWithAttributedString:self.contentTextView.attributedText];
@@ -440,8 +483,6 @@ HPTextViewTapGestureRecognizerDelegate
 
    [self.imgAttr addAttributes:attributes range:NSMakeRange(0, self.imgAttr.length)];
   //  [self.imgAttr addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]} range:NSMakeRange(0, self.imgAttr.length)];
-    
-  
     
     [self.viewModel.dataSourceModel updateImageInfo:@{@"src":path,@"width":[NSString stringWithFormat:@"%.f",width],@"height":[NSString stringWithFormat:@"%.f",height]} imageAttr:self.imgAttr];
     self.currentLocation = [self.contentTextView offsetFromPosition:self.contentTextView.beginningOfDocument toPosition:self.contentTextView.selectedTextRange.start];
@@ -473,11 +514,14 @@ HPTextViewTapGestureRecognizerDelegate
 
 - (void)postImageView:(NSNotification *)notification{
     UIImage *image = notification.userInfo[@"image"];
+    
+    _isNeed = YES;
+    
     @weakify(self);
     [[self.viewModel uploadImages:@[image]] subscribeNext:^(id  _Nullable x) {
         @strongify(self);
         if (!x) {
-            [[LGNoteMBAlert shareMBAlert] showErrorWithStatus:@"上传失败，上传地址为空"];
+            [[LGNoteMBAlert shareMBAlert] showErrorWithStatus:@"上传失败，请检查网络后再重试!"];
             return ;
         }
         
@@ -520,7 +564,7 @@ HPTextViewTapGestureRecognizerDelegate
     if (sender.selected) {
         self.viewModel.dataSourceModel.IsKeyPoint = @"1";
        
-        [[LGNoteMBAlert shareMBAlert] showSuccessWithStatus:@"已标记为重点"];
+        [[LGNoteMBAlert shareMBAlert] showSuccessWithStatus:@"已标记重点"];
         
     } else {
         self.viewModel.dataSourceModel.IsKeyPoint = @"0";

@@ -439,19 +439,21 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 - (RACSignal *)operatedNoteWithParams:(id)params{
     
     
-    NSLog(@"%@",params);
-    
-    
-
-    if(IsStrEmpty(params[@"MaterialID"])){
-
-        [params setValue:params[@"SystemID"] forKey:@"MaterialID"];
+   // 学习小助手 和后期提供给平台集成的整体版本，[ResourceID]和[MaterialID]这两个值都赋值为SystemID
+    if (self.paramModel.SystemType ==0 || self.paramModel.SystemType ==2) {
+        
+        if(IsStrEmpty(params[@"MaterialID"])){
+            
+            [params setValue:params[@"SystemID"] forKey:@"MaterialID"];
+        }
+        
+        if(IsStrEmpty(params[@"ResourceID"])){
+            
+            [params setValue:params[@"SystemID"] forKey:@"ResourceID"];
+        }
     }
 
-    if(IsStrEmpty(params[@"ResourceID"])){
-
-        [params setValue:params[@"SystemID"] forKey:@"ResourceID"];
-    }
+   
 
     
     
@@ -551,6 +553,8 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         [kNetwork.setRequestUrl(url).setRequestType(UPLOAD).setUploadDatas(uploadDatas) startSendRequestWithProgress:^(NSProgress *progress) {
             [kMBAlert showBarDeterminateWithProgress:progress.fractionCompleted];
         } success:^(id respone) {
+            
+            
             if (![respone[kErrorcode] hasSuffix:kSuccess]) {
                 [kMBAlert showErrorWithStatus:respone[kReason]];
                 [subscriber sendNext:nil];
@@ -563,12 +567,15 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
             
             if (IsArrEmpty(dataArray)) {
                 
+                [subscriber sendNext:nil];
+                [subscriber sendCompleted];
+                
                 return;
             }
             
             NSString *imagePath = [dataArray objectAtIndex:0];
             
-            [kMBAlert showSuccessWithStatus:@"上传成功"];
+           // [kMBAlert showSuccessWithStatus:@"上传成功"];
             [subscriber sendNext:imagePath];
             [subscriber sendCompleted];
             
