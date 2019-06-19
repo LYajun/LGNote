@@ -358,11 +358,11 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
           params = @{
                                      @"UserID":self.paramModel.UserID,
                                      @"UserType":@(self.paramModel.UserType),
-                                     @"ResourceID":self.paramModel.ResourceID,
+                                     @"ResourceID":@"",
                                      @"SubjectID":subjectID,
                                      @"SecretKey":self.paramModel.Secret,
                                      @"SchoolID":schoolID,
-                                     @"MaterialID":self.paramModel.MaterialID,
+                                     @"MaterialID":@"",
                                      @"IsKeyPoint":self.paramModel.IsKeyPoint,
                                      @"SysID":systemID,
                                      @"Keycon":keycon,
