@@ -28,6 +28,9 @@
 @property (nonatomic, strong) LGNNoteDrawSettingView *drawToolView;
 @property (nonatomic, strong) LGNNoteDrawSettingButtonView *buttonView;
 
+@property (nonatomic,assign)  CGFloat ImagWidth;
+@property (nonatomic,assign)  CGFloat ImagHeigt;
+
 @end
 
 @implementation LGNDrawBoardViewController
@@ -50,7 +53,21 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
     self.title = @"画板";
+    CGFloat width = _drawBgImage.size.width;
+    CGFloat height = _drawBgImage.size.height;
+    CGFloat screenW = [UIScreen mainScreen].bounds.size.width - 10;
+    CGFloat screenH = [UIScreen mainScreen].bounds.size.height - 100;
+    // 固定宽度
+    width = width > screenW ? screenW:width;
+    height = height >= screenH ? screenH:height;
+    
+    _ImagWidth = width;
+    _ImagHeigt = height;
+    
     [self createSubViews];
+    
+    
+    
 }
 
 - (void)createSubViews{
@@ -59,6 +76,8 @@
     [self.view addSubview:self.buttonView];
     [self.view addSubview:self.drawView];
     [self setupSubviewsContraints];
+    
+    
 }
 
 - (void)setupSubviewsContraints{
@@ -74,11 +93,29 @@
         make.left.right.bottom.equalTo(self.view);
         make.height.mas_equalTo(50);
     }];
-    [self.drawView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self.view);
-        make.top.equalTo(self.cancelBtn.mas_bottom);
-        make.bottom.equalTo(self.buttonView.mas_top);
-    }];
+    
+    if(self.style == LGNoteDrawBoardViewControllerStyleDefault){
+        
+        [self.drawView mas_makeConstraints:^(MASConstraintMaker *make) {
+            //make.left.equalTo(self.view);
+            make.height.mas_equalTo(_ImagHeigt);
+            make.width.mas_equalTo(_ImagWidth);
+            make.centerY.equalTo(self.view);
+            make.centerX.equalTo(self.view);
+        }];
+        
+    }else{
+        [self.drawView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.equalTo(self.view);
+            make.top.equalTo(self.cancelBtn.mas_bottom);
+           make.bottom.equalTo(self.buttonView.mas_top);
+            
+        }];
+        
+    }
+    
+  
+   
 }
 
 #pragma mark - NoteDrawSettingViewDelegate

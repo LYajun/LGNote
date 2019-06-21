@@ -476,7 +476,6 @@ HPTextViewTapGestureRecognizerDelegate
    // height = height >= 220 ? 220:height;
     
     
-    
     NSString *imgStr = [NSString stringWithFormat:@"<img src=\"%@\" width=\"%.f\" height=\"%.f\"/>",path,width,height];
     NSMutableAttributedString *currentAttr = [[NSMutableAttributedString alloc] initWithAttributedString:self.contentTextView.attributedText];
     self.imgAttr = imgStr.lg_changeforMutableAtttrubiteString;
@@ -499,7 +498,8 @@ HPTextViewTapGestureRecognizerDelegate
     [self.viewModel.dataSourceModel updateImageInfo:@{@"src":path,@"width":[NSString stringWithFormat:@"%.f",width],@"height":[NSString stringWithFormat:@"%.f",height]} imageAttr:self.imgAttr];
     self.currentLocation = [self.contentTextView offsetFromPosition:self.contentTextView.beginningOfDocument toPosition:self.contentTextView.selectedTextRange.start];
     [currentAttr insertAttributedString:self.imgAttr atIndex:self.currentLocation];
-//    [currentAttr insertAttributedString:[[NSAttributedString alloc] initWithString:@"\n"] atIndex:currentAttr.length];
+//    添加图片后加个行内容 方便输入
+    [currentAttr insertAttributedString:[[NSAttributedString alloc] initWithString:@"\n"] atIndex:currentAttr.length];
     self.contentTextView.attributedText = currentAttr;
     self.isInsert = YES;
     [self lg_textViewDidChange:self.contentTextView];
@@ -762,8 +762,6 @@ HPTextViewTapGestureRecognizerDelegate
         _sourceBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
         [_sourceBtn setTitleColor:kColorInitWithRGB(249, 102, 2, 1) forState:UIControlStateNormal];
         [_sourceBtn addTarget:self action:@selector(sourceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        
-        
     }
     return _sourceBtn;
 }
@@ -806,7 +804,7 @@ HPTextViewTapGestureRecognizerDelegate
         _contentTextView = [[LGNoteBaseTextView alloc] initWithFrame:CGRectZero];
         _contentTextView.placeholder = @"请输入笔记内容";
         _contentTextView.placeholderColor = LGRGB(201, 201, 206);
-        
+//        _contentTextView.contentSize = CGSizeMake(kMain_Screen_Width, kMain_Screen_Height+500);
         _contentTextView.inputType = LGTextViewKeyBoardTypeEmojiLimit;
         _contentTextView.toolBarStyle = LGTextViewToolBarStyleDrawBoard;
         _contentTextView.maxLength = 50000;

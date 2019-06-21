@@ -163,6 +163,7 @@ SearchToolViewDelegate
         @strongify(self);
         self.viewModel.paramModel.PageIndex = 1;
         [self reSettingParams];
+        self.tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
         [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
     }];
 }
@@ -209,8 +210,13 @@ SearchToolViewDelegate
 
 - (void)remarkEvent:(BOOL)remark{
     // 是否是查看重点笔记；1表示查看重点笔记，-1是查看全部笔记
+    
     self.viewModel.paramModel.IsKeyPoint = remark ? @"1":@"-1";
+    //筛选时重置PageIndex为1 查看全部的.
+    self.viewModel.paramModel.PageIndex = 1;
     self.tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
+    
+    
     [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
 }
 
@@ -222,6 +228,8 @@ SearchToolViewDelegate
     } else {
         self.viewModel.paramModel.C_SystemID = self.viewModel.paramModel.SystemID;
     }
+    
+     [self.toolView.filterBtn setImage:[NSBundle lg_imagePathName:@"note_filter"] forState:UIControlStateNormal];
     self.viewModel.paramModel.IsKeyPoint = @"-1";
     [self.toolView reSettingRemarkButtonUnSelected];
 }

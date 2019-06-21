@@ -80,7 +80,7 @@
         
         _bgImgView = [UIImageView new];
         _bgImgView.frame = self.bounds;
-        _bgImgView.contentMode = UIViewContentModeScaleAspectFit;
+        _bgImgView.contentMode = UIViewContentModeScaleToFill;
         
 
         [self addSubview:_bgImgView];

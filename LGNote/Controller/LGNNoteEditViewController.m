@@ -20,6 +20,9 @@
 @property (nonatomic, strong) LGNNoteEditView *contentView;
 @property (nonatomic,strong) NSString * NotoContent;
 @property (nonatomic,strong) NSString * NotoTitle;
+@property (nonatomic,strong) NSString * IsKeyPoint;
+@property (nonatomic,strong) NSString * SubjectName;
+
 @property (nonatomic,strong) NSString * OldSystemID;
 @property (nonatomic,strong) NSString * OldSubjectID;
 @end
@@ -43,6 +46,11 @@
     
     _NotoContent = self.sourceModel.NoteContent;
     _NotoTitle = self.sourceModel.NoteTitle;
+    _IsKeyPoint = self.sourceModel.IsKeyPoint;
+    _SubjectName = self.sourceModel.SubjectName;
+    
+    
+    
     if(!self.viewModel.isAddNoteOperation && self.paramModel.SystemType ==SystemType_ASSISTANTER){
     
     [self.viewModel.getDetailNoteCommand execute:self.sourceModel];
@@ -113,6 +121,12 @@
 
               [self exti];
 
+        }else if (![_SubjectName isEqualToString:self.sourceModel.SubjectName]){
+            
+             [self exti];
+        }else if (![_IsKeyPoint isEqualToString:self.sourceModel.IsKeyPoint]){
+            
+            [self exti];
         }
     
         else{
@@ -169,6 +183,10 @@
     }
 
     [kMBAlert showIndeterminateWithStatus:@"正在进行，请稍等..."];
+    
+    
+    
+  
 
 
     [self.viewModel.operateCommand execute:[self.sourceModel mj_keyValues]];
