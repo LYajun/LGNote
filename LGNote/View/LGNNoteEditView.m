@@ -762,8 +762,6 @@ HPTextViewTapGestureRecognizerDelegate
         _sourceBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
         [_sourceBtn setTitleColor:kColorInitWithRGB(249, 102, 2, 1) forState:UIControlStateNormal];
         [_sourceBtn addTarget:self action:@selector(sourceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        
-        
     }
     return _sourceBtn;
 }
@@ -806,7 +804,7 @@ HPTextViewTapGestureRecognizerDelegate
         _contentTextView = [[LGNoteBaseTextView alloc] initWithFrame:CGRectZero];
         _contentTextView.placeholder = @"请输入笔记内容";
         _contentTextView.placeholderColor = LGRGB(201, 201, 206);
-        
+//        _contentTextView.contentSize = CGSizeMake(kMain_Screen_Width, kMain_Screen_Height+500);
         _contentTextView.inputType = LGTextViewKeyBoardTypeEmojiLimit;
         _contentTextView.toolBarStyle = LGTextViewToolBarStyleDrawBoard;
         _contentTextView.maxLength = 50000;

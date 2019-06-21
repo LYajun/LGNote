@@ -80,7 +80,7 @@
         
         _bgImgView = [UIImageView new];
         _bgImgView.frame = self.bounds;
-        _bgImgView.contentMode = UIViewContentModeScaleAspectFit;
+        _bgImgView.contentMode = UIViewContentModeScaleToFill;
         
 
         [self addSubview:_bgImgView];
@@ -89,8 +89,6 @@
        _composeView.frame = self.bounds;
         //        _composeView.image = [self getAlphaImg];
          [self addSubview:_composeView];
-        
-    
         
         _canvasView = [LGNDrawBoardCanvas new];
         _canvasView.frame = _composeView.bounds;
@@ -104,7 +102,7 @@
         //linyl
         _dwawFile = [DrawBoardFile new];
         _dwawFile.packageArray = [NSMutableArray new];
-    
+        
     }
     return self;
 }

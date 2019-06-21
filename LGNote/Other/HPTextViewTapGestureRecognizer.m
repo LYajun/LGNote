@@ -93,6 +93,8 @@
     [super setState:state];
     if (state == UIGestureRecognizerStateRecognized)
     {
+        
+        
         if (_textAttachment)
         {
             if ([self.delegate respondsToSelector:@selector(gestureRecognizer:handleTapOnTextAttachment:inRange:)])
