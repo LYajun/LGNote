@@ -90,6 +90,8 @@
         //        _composeView.image = [self getAlphaImg];
          [self addSubview:_composeView];
         
+    
+        
         _canvasView = [LGNDrawBoardCanvas new];
         _canvasView.frame = _composeView.bounds;
         [_composeView addSubview:_canvasView];
@@ -102,7 +104,7 @@
         //linyl
         _dwawFile = [DrawBoardFile new];
         _dwawFile.packageArray = [NSMutableArray new];
-        
+    
     }
     return self;
 }
