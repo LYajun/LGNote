@@ -60,15 +60,21 @@
     // 图片宽、高
     NSString *imageWidth = attributes[@"width"];
     NSString *imageHeight = attributes[@"height"];
+    
+    
     if ([imageWidth containsString:@"px"]) {
         imageWidth = [imageWidth stringByReplacingOccurrencesOfString:@"px" withString:@""];
     }
+    
+    
     if ([imageHeight containsString:@"px"]) {
         imageHeight = [imageHeight stringByReplacingOccurrencesOfString:@"px" withString:@""];
     }
     
     CGFloat imgW = [imageWidth floatValue];
     CGFloat imgH = [imageHeight floatValue];
+    
+    
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
     CGFloat screenReferW = screenW-kNoteImageOffset;
     if (imgW == 0 || imgW > screenReferW) {
@@ -79,6 +85,8 @@
         
         NSString *imgWStr = [NSString stringWithFormat:@"%.f",screenReferW];
         NSString *imgHtStr = [NSString stringWithFormat:@"%.f",screenReferW/scale];
+        //NSString *imgHtStr = [NSString stringWithFormat:@"%.f",imgH];
+        
         if ([[attributes allKeys] containsObject:@"width"]) {
             NSString *imgSrcReferStr = [NSString stringWithFormat:@"width=%@ height=%@",attributes[@"width"],attributes[@"height"]];
             if (![html containsString:imgSrcReferStr]) {

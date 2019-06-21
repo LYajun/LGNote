@@ -476,7 +476,6 @@ HPTextViewTapGestureRecognizerDelegate
    // height = height >= 220 ? 220:height;
     
     
-    
     NSString *imgStr = [NSString stringWithFormat:@"<img src=\"%@\" width=\"%.f\" height=\"%.f\"/>",path,width,height];
     NSMutableAttributedString *currentAttr = [[NSMutableAttributedString alloc] initWithAttributedString:self.contentTextView.attributedText];
     self.imgAttr = imgStr.lg_changeforMutableAtttrubiteString;
@@ -499,7 +498,8 @@ HPTextViewTapGestureRecognizerDelegate
     [self.viewModel.dataSourceModel updateImageInfo:@{@"src":path,@"width":[NSString stringWithFormat:@"%.f",width],@"height":[NSString stringWithFormat:@"%.f",height]} imageAttr:self.imgAttr];
     self.currentLocation = [self.contentTextView offsetFromPosition:self.contentTextView.beginningOfDocument toPosition:self.contentTextView.selectedTextRange.start];
     [currentAttr insertAttributedString:self.imgAttr atIndex:self.currentLocation];
-//    [currentAttr insertAttributedString:[[NSAttributedString alloc] initWithString:@"\n"] atIndex:currentAttr.length];
+//    添加图片后加个行内容 方便输入
+    [currentAttr insertAttributedString:[[NSAttributedString alloc] initWithString:@"\n"] atIndex:currentAttr.length];
     self.contentTextView.attributedText = currentAttr;
     self.isInsert = YES;
     [self lg_textViewDidChange:self.contentTextView];

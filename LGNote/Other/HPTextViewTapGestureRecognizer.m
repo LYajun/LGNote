@@ -71,6 +71,8 @@
     
     
     _textAttachment = [textView.attributedText attribute:NSAttachmentAttributeName atIndex:characterIndex effectiveRange:&_range];
+    
+    
     if (_textAttachment)
     {
         return;
