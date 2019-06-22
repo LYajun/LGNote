@@ -108,12 +108,17 @@ SearchToolViewDelegate
     @weakify(self,editController);
     [editController.updateSubject subscribeNext:^(id  _Nullable x) {
         @strongify(self);
+    
         [self reSettingParams];
+        self.viewModel.paramModel.PageIndex = 1;
         self.tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
         [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
     }];
     
+    
     [RACObserve(self.viewModel, subjectArray) subscribeNext:^(id  _Nullable x) {
+        
+        
         @strongify(editController);
         editController.subjectArray = x;
     }];

@@ -22,6 +22,7 @@ typedef NS_ENUM(NSInteger, LGNoteDrawBoardViewControllerStyle) {
 /** 绘画背景 */
 @property (nonatomic, strong) UIImage *drawBgImage;
 
+@property (nonatomic,assign) BOOL  isHeng;
 @end
 
 NS_ASSUME_NONNULL_END

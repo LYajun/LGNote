@@ -187,6 +187,9 @@
     @weakify(self);
     [editVC.updateSubject subscribeNext:^(id  _Nullable x) {
         @strongify(self);
+        
+         self.viewModel.paramModel.PageIndex = 1;
+        
         self.requestStatus = LGBaseTableViewRequestStatusStartLoading;
         [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
     }];

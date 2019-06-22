@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UIButton *sureBtn;
 @property (nonatomic, strong) UIButton *cancelBtn;
 
+@property (nonatomic,assign) BOOL  isHeng;
 @end
 
 @implementation LGNCutImageViewController
@@ -30,6 +31,18 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
     [self createSubViews];
+    
+    CGFloat width = _image.size.width;
+    CGFloat height = _image.size.height;
+    
+    if(width > height  && _isCamera){
+        
+        _isHeng = YES;
+    }else{
+        _isHeng = NO;
+    }
+    
+ 
 }
 
 - (void)createSubViews{
@@ -62,7 +75,7 @@
     LGNDrawBoardViewController *drawController = [[LGNDrawBoardViewController alloc] init];
     drawController.style = LGNoteDrawBoardViewControllerStyleDefault;
     drawController.drawBgImage = [self.cutImageView currentCroppedImage];
-    
+    drawController.isHeng = _isHeng;
     
     
     [self presentViewController:drawController animated:YES completion:nil];

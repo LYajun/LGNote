@@ -415,6 +415,7 @@ HPTextViewTapGestureRecognizerDelegate
         
         LGNCutImageViewController *cutController = [[LGNCutImageViewController alloc] init];
         cutController.image = image;
+        cutController.isCamera = NO;
         [self.ownController presentViewController:cutController animated:YES completion:nil];
     }];
     [self.ownController presentViewController:picker animated:YES completion:nil];
@@ -442,7 +443,9 @@ HPTextViewTapGestureRecognizerDelegate
         
          self.isNeed = NO;
         LGNCutImageViewController *cutController = [[LGNCutImageViewController alloc] init];
+        cutController.isCamera = YES;
         cutController.image = image;
+        
         [self.ownController presentViewController:cutController animated:YES completion:nil];
     }];
     [self.ownController presentViewController:picker animated:YES completion:nil];
@@ -543,8 +546,8 @@ HPTextViewTapGestureRecognizerDelegate
         NSMutableArray *imageUrls = [self filterImageUrlWithHtml:self.viewModel.dataSourceModel.NoteContent];
         // 保存时时图片数组
           self.NowimgaeUrls = imageUrls;
-        
-        
+
+         [self.contentTextView becomeFirstResponder];
     }];
 }
 
