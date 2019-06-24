@@ -36,11 +36,15 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    
+    
     [super touchesBegan:touches withEvent:event];
     if (self.state == UIGestureRecognizerStateFailed) return;
     
     UITouch *touch = [touches anyObject];
     UITextView *textView = (UITextView*) self.view;
+    
+    
     
     NSAssert([textView isKindOfClass:UITextView.class], @"View must be UITextView");
     
@@ -49,6 +53,8 @@
     
     const CGPoint point = [textView hp_pointFromTouch:touch];
     NSUInteger characterIndex = [layoutManager characterIndexForPoint:point inTextContainer:textContainer fractionOfDistanceBetweenInsertionPoints:nil];
+    
+  
     
     if (characterIndex >= textView.text.length)
     {
@@ -66,8 +72,6 @@
         }
     }
     
-    
-    //NSLog(@"%@",textView.attributedText);
     
     
     _textAttachment = [textView.attributedText attribute:NSAttachmentAttributeName atIndex:characterIndex effectiveRange:&_range];

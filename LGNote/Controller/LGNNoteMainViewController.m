@@ -51,9 +51,6 @@ SearchToolViewDelegate
     [self creatSubViews];
     [self lg_bindData];
     
-
-    
-   
     
 }
 
@@ -111,12 +108,17 @@ SearchToolViewDelegate
     @weakify(self,editController);
     [editController.updateSubject subscribeNext:^(id  _Nullable x) {
         @strongify(self);
+    
         [self reSettingParams];
+        self.viewModel.paramModel.PageIndex = 1;
         self.tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
         [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
     }];
     
+    
     [RACObserve(self.viewModel, subjectArray) subscribeNext:^(id  _Nullable x) {
+        
+        
         @strongify(editController);
         editController.subjectArray = x;
     }];
@@ -194,6 +196,9 @@ SearchToolViewDelegate
     self.viewModel.paramModel.C_SubjectID = subjecID;
     self.viewModel.paramModel.C_SystemID = systemID;
     self.tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
+    
+    //筛选时重置PageIndex为1 查看全部的.
+    self.viewModel.paramModel.PageIndex = 1;
     [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
     
     

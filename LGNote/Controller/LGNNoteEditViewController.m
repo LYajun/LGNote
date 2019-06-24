@@ -107,9 +107,7 @@
 
 
 - (void)back:(UIBarButtonItem *)sender{
-//    if (self.updateSubject && !self.isNewNote) {
-//        [self.updateSubject sendNext:@"update"];
-//    }
+
 
     
   
@@ -131,6 +129,10 @@
     
         else{
             
+            
+                if (self.updateSubject) {
+                   [self.updateSubject sendNext:@"update"];
+                }
             
         [[NSNotificationCenter defaultCenter] postNotificationName:@"destroyImageNoti" object:nil userInfo:nil];
             
@@ -155,6 +157,13 @@
     }];
     
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"不保存" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        if (self.updateSubject ) {
+            [self.updateSubject sendNext:@"update"];
+    
+        }
+       
+        
+        
           [self.navigationController popViewControllerAnimated:YES];
        
     }];

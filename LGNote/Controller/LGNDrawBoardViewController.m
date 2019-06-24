@@ -61,6 +61,13 @@
     width = width > screenW ? screenW:width;
     height = height >= screenH ? screenH:height;
     
+    
+    
+    if(_isHeng && height >= screenH){
+        
+        height =250;
+    }
+    
     _ImagWidth = width;
     _ImagHeigt = height;
     
@@ -93,6 +100,8 @@
         make.left.right.bottom.equalTo(self.view);
         make.height.mas_equalTo(50);
     }];
+    
+    
     
     if(self.style == LGNoteDrawBoardViewControllerStyleDefault){
         
