@@ -147,16 +147,17 @@
 
 - (void)exti{
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"保存已输入的内容?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"保存已修改的内容?" preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+    
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         self.paramModel.OperateFlag = self.isNewNote ? 1:0;
         self.sourceModel.OperateFlag = self.isNewNote ? 1:0;
         [self operatedNote];
         
     }];
     
-    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"不保存" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"不保存" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         if (self.updateSubject ) {
             [self.updateSubject sendNext:@"update"];
     
@@ -168,9 +169,9 @@
        
     }];
     
-    
-    [alert addAction:action];
     [alert addAction:action1];
+    [alert addAction:action];
+    
     
     [self presentViewController:alert animated:YES completion:nil];
     
