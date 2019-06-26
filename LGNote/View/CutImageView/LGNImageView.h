@@ -33,4 +33,6 @@ typedef NS_ENUM(NSInteger, TKCropAreaCornerStyle) {
 @property (assign, nonatomic) BOOL cornerBorderInImage;
 @property (assign, nonatomic) CGFloat initialScaleFactor;
 - (UIImage *)currentCroppedImage;
+
+- (CGSize)currnetImageSize;
 @end
