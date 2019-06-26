@@ -47,8 +47,14 @@
     _NotoContent = self.sourceModel.NoteContent;
     _NotoTitle = self.sourceModel.NoteTitle;
     _IsKeyPoint = self.sourceModel.IsKeyPoint;
+    
+    
     _SubjectName = self.sourceModel.SubjectName;
     
+    if (self.viewModel.isAddNoteOperation) {
+        _IsKeyPoint = @"0";
+        self.sourceModel.IsKeyPoint = @"0";
+    }
     
     
     if(!self.viewModel.isAddNoteOperation && self.paramModel.SystemType ==SystemType_ASSISTANTER){
@@ -70,6 +76,8 @@
     //self.sourceModel.SystemID = self.paramModel.SystemID;
     self.sourceModel.UserName = self.paramModel.UserName;
     self.sourceModel.SchoolID = self.paramModel.SchoolID;
+    
+    
     
     
 }
@@ -119,10 +127,14 @@
 
               [self exti];
 
-        }else if (![_SubjectName isEqualToString:self.sourceModel.SubjectName]){
-            
+        }
+        else if (![_SubjectName isEqualToString:self.sourceModel.SubjectName]){
+
              [self exti];
-        }else if (![_IsKeyPoint isEqualToString:self.sourceModel.IsKeyPoint]){
+        }
+    
+    
+        else if (![_IsKeyPoint isEqualToString:self.sourceModel.IsKeyPoint]  ){
             
             [self exti];
         }
