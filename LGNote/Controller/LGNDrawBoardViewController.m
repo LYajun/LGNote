@@ -68,8 +68,10 @@
         height =250;
     }
     
-    _ImagWidth = width;
-    _ImagHeigt = height;
+//    _ImagWidth = width;
+//    _ImagHeigt = height;
+    _ImagWidth = self.size.width;
+    _ImagHeigt = self.size.height;
     
     [self createSubViews];
     

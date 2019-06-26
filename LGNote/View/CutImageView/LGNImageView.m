@@ -565,6 +565,8 @@ typedef NS_ENUM(NSInteger, TKMidLineType) {
     switch (pinchGesture.state) {
         case UIGestureRecognizerStateBegan: {
             _pinchOriSize = _cropAreaView.frame.size;
+            
+            
             break;
         }
         case UIGestureRecognizerStateChanged: {
@@ -711,6 +713,9 @@ typedef NS_ENUM(NSInteger, TKMidLineType) {
 - (void)resetCropAreaOnCornersFrameChanged {
     
     _cropAreaView.frame = CGRectMake(MINX(_topLeftCorner) + self.cornerMargin, MINY(_topLeftCorner) + self.cornerMargin, MAXX(_topRightCorner) - MINX(_topLeftCorner) - self.cornerMargin * 2, MAXY(_bottomLeftCorner) - MINY(_topLeftCorner) - self.cornerMargin * 2);
+    
+   
+    
     
 }
 - (void)resetMinSpaceIfNeeded {
@@ -1136,9 +1141,17 @@ typedef NS_ENUM(NSInteger, TKMidLineType) {
     
     CGFloat scaleFactor = WIDTH(_imageView) / _toCropImage.size.width;
     
+
+//     return [_toCropImage imageAtRect: CGRectMake((MINX(_cropAreaView) + _cropAreaBorderLineWidth) / scaleFactor, (MINY(_cropAreaView) + _cropAreaBorderLineWidth) / scaleFactor, _cropAreaView.frame.size.width, _cropAreaView.frame.size.height)];
     
-    return [_toCropImage imageAtRect: CGRectMake((MINX(_cropAreaView) + _cropAreaBorderLineWidth) / scaleFactor, (MINY(_cropAreaView) + _cropAreaBorderLineWidth) / scaleFactor, (WIDTH(_cropAreaView) - 2 * _cropAreaBorderLineWidth) / scaleFactor, (HEIGHT(_cropAreaView) - 2 * _cropAreaBorderLineWidth) / scaleFactor)];
+     return [_toCropImage imageAtRect: CGRectMake((MINX(_cropAreaView) + _cropAreaBorderLineWidth) / scaleFactor, (MINY(_cropAreaView) + _cropAreaBorderLineWidth) / scaleFactor, (WIDTH(_cropAreaView) - 2 * _cropAreaBorderLineWidth) / scaleFactor, (HEIGHT(_cropAreaView) - 2 * _cropAreaBorderLineWidth) / scaleFactor)];
     
+}
+- (CGSize)currnetImageSize{
+    
+    CGSize  size = CGSizeMake(_cropAreaView.frame.size.width, _cropAreaView.frame.size.height);
+    
+    return size;
 }
 @end
 

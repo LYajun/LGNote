@@ -41,7 +41,8 @@
     LGNParamModel *params = [[LGNParamModel alloc] init];
     
  //   S27-508-EC82==EF3DFC6C-B95F-431D-ABED-301B4037EAB3==g1==2==g1姓名==http://192.168.3.158:10103//===
-//S27-508-EC82==0A33CAF1-3279-4D2A-8DD5-9B3BDF20A788==g3==2==g3姓名==http://192.168.3.158:10103//===
+
+  //  S14-888-D60F==816699EA-8A71-4FA6-9EB1-44E3BF68D1CC==zxstu62==2==张雯雯==http://192.168.129.130:10103//===
     
     params.SystemID = @"S21";
     params.SubjectID = @"All";
@@ -52,17 +53,17 @@
     params.MaterialCount = 10;
     params.SubjectName = @"";
     params.IsKeyPoint = @"-1";
-    params.SchoolID = @"S27-508-EC82";
-    params.Token = @"0A33CAF1-3279-4D2A-8DD5-9B3BDF20A788";
+    params.SchoolID = @"S14-888-D60F";
+    params.Token = @"816699EA-8A71-4FA6-9EB1-44E3BF68D1CC";
     params.ResourceName = @"我的笔记";
     params.ResourceID = @"";
     params.MaterialName = @"";
     params.MaterialTotal = @"-1";
     params.ResourceIOSLink = @"";
-    params.UserID = @"g3";
+    params.UserID = @"zxstu62";
     params.UserType = 2;
-    params.UserName = @"g3姓名";
-    params.CPBaseUrl = @"http://192.168.3.158:10103//";
+    params.UserName = @"张雯雯";
+    params.CPBaseUrl = @"http://192.168.129.130:10103//";
     params.SystemType = SystemType_ASSISTANTER;
     
     return params;
