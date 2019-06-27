@@ -58,6 +58,9 @@ typedef NS_ENUM(NSInteger, DrawBoardShapeType){
 typedef void(^DrawViewActionCompletionBlock)(UIImage *image, NSString *msg);
 
 @interface LGNNoteDrawView : UIView
+//类型
+
+@property (nonatomic, assign) NSInteger style;
 
 /** 颜色 */
 @property (nonatomic, strong) UIColor *brushColor;

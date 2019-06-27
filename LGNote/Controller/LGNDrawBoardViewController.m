@@ -53,25 +53,28 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
     self.title = @"画板";
-    CGFloat width = _drawBgImage.size.width;
-    CGFloat height = _drawBgImage.size.height;
-    CGFloat screenW = [UIScreen mainScreen].bounds.size.width - 10;
+    CGFloat width = self.size.width;
+    CGFloat height = self.size.height;
+    CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
     CGFloat screenH = [UIScreen mainScreen].bounds.size.height - 100;
     // 固定宽度
-    width = width > screenW ? screenW:width;
+   width = width > screenW ? screenW:width;
+    
     height = height >= screenH ? screenH:height;
+//    if(height == screenH){
+//        width= self.size.width-30;
+//    }
     
     
+//    if(_isHeng && height >= screenH){
+//
+//        height =250;
+//    }
     
-    if(_isHeng && height >= screenH){
-        
-        height =250;
-    }
     
-//    _ImagWidth = width;
-//    _ImagHeigt = height;
-    _ImagWidth = self.size.width;
-    _ImagHeigt = self.size.height;
+    _ImagWidth = width;
+    _ImagHeigt = height;
+
     
     [self createSubViews];
     
@@ -315,6 +318,7 @@
         _drawView.brushColor = [UIColor redColor];
         _drawView.brushWidth = 2.4;
         _drawView.shapeType = DrawBoardShapeCurve;
+        _drawView.style = self.style;
         _drawView.backgroundImage = (self.style == LGNoteDrawBoardViewControllerStyleDefault) ? self.drawBgImage:bgImgView.image;
         
     }

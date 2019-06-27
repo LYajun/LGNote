@@ -326,6 +326,8 @@ HPTextViewTapGestureRecognizerDelegate
     [kMBAlert showAlertControllerOn:self.ownController title:@"提示:" message:@"您确定要清空吗?" oneTitle:@"确定" oneHandle:^(UIAlertAction * _Nonnull one) {
         @strongify(self);
         self.contentTextView.text = @"";
+        
+        
         [self lg_textViewDidChange:self.contentTextView];
     } twoTitle:@"取消" twoHandle:^(UIAlertAction * _Nonnull two) {
         
@@ -345,6 +347,10 @@ HPTextViewTapGestureRecognizerDelegate
     
     
     [self.viewModel.dataSourceModel updateText:self.contentTextView.attributedText];
+    
+    
+    
+    
     
 }
 
