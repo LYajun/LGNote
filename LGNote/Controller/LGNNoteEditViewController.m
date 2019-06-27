@@ -117,11 +117,17 @@
 - (void)back:(UIBarButtonItem *)sender{
 
 
+    NSLog(@"%@===%@",_NotoContent,self.sourceModel.NoteContent);
+    
     
 
         if(!IsStrEmpty(_NotoContent) && ![_NotoContent isEqualToString:self.sourceModel.NoteContent] ) {
             
             [self exti];
+        }else if (!IsStrEmpty(self.sourceModel.NoteContent) && ![_NotoContent isEqualToString:self.sourceModel.NoteContent] ){
+            
+            [self exti];
+            
         }
         else if (!IsStrEmpty(self.sourceModel.NoteTitle) && ![_NotoTitle isEqualToString:self.sourceModel.NoteTitle]){
 
