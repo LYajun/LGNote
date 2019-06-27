@@ -78,10 +78,7 @@
     drawController.drawBgImage = [self.cutImageView currentCroppedImage];
     drawController.size = [self.cutImageView currnetImageSize];
     drawController.isHeng = _isHeng;
-    
 
-    
-    
     [self presentViewController:drawController animated:YES completion:nil];
 }
 

@@ -347,11 +347,7 @@ HPTextViewTapGestureRecognizerDelegate
     
     
     [self.viewModel.dataSourceModel updateText:self.contentTextView.attributedText];
-    
-    
-    
-    
-    
+
 }
 
 - (BOOL)lg_textViewShouldInteractWithTextAttachment:(LGNoteBaseTextView *)textView{
@@ -512,7 +508,12 @@ HPTextViewTapGestureRecognizerDelegate
     self.contentTextView.attributedText = currentAttr;
     self.isInsert = YES;
     [self lg_textViewDidChange:self.contentTextView];
-    [self becomeFirstResponder];
+    
+    
+    NSRange rg = _contentTextView.selectedRange;
+      rg.location = _contentTextView.text.length;
+     _contentTextView.selectedRange = NSMakeRange(rg.location, 0);
+    _contentTextView.font = [UIFont systemFontOfSize:16];
 }
 
 #pragma mark - NSNotification action

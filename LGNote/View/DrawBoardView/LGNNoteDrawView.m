@@ -113,14 +113,15 @@
 - (void)setStyle:(NSInteger)style{
     
     _style = style;
+    _bgImgView.contentMode = UIViewContentModeScaleToFill;
     
     
-    if(style ==1){
-        _bgImgView.contentMode = UIViewContentModeScaleAspectFill;
-        
-    }else{
-        _bgImgView.contentMode = UIViewContentModeScaleAspectFit;
-    }
+//    if(style ==1){
+//        _bgImgView.contentMode = UIViewContentModeScaleAspectFill;
+//
+//    }else{
+//        _bgImgView.contentMode = UIViewContentModeScaleAspectFit;
+//    }
     
     
     
