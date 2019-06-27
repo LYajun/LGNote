@@ -80,8 +80,8 @@
         
         _bgImgView = [UIImageView new];
         _bgImgView.frame = self.bounds;
-        //_bgImgView.contentMode = UIViewContentModeScaleToFill;
-        _bgImgView.contentMode = UIViewContentModeScaleAspectFit;
+      
+       
         
         
         
@@ -108,6 +108,23 @@
         
     }
     return self;
+}
+
+- (void)setStyle:(NSInteger)style{
+    
+    _style = style;
+    _bgImgView.contentMode = UIViewContentModeScaleToFill;
+    
+    
+//    if(style ==1){
+//        _bgImgView.contentMode = UIViewContentModeScaleAspectFill;
+//
+//    }else{
+//        _bgImgView.contentMode = UIViewContentModeScaleAspectFit;
+//    }
+    
+    
+    
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

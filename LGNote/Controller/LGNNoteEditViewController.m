@@ -47,8 +47,14 @@
     _NotoContent = self.sourceModel.NoteContent;
     _NotoTitle = self.sourceModel.NoteTitle;
     _IsKeyPoint = self.sourceModel.IsKeyPoint;
+    
+    
     _SubjectName = self.sourceModel.SubjectName;
     
+    if (self.viewModel.isAddNoteOperation) {
+        _IsKeyPoint = @"0";
+        self.sourceModel.IsKeyPoint = @"0";
+    }
     
     
     if(!self.viewModel.isAddNoteOperation && self.paramModel.SystemType ==SystemType_ASSISTANTER){
@@ -70,6 +76,8 @@
     //self.sourceModel.SystemID = self.paramModel.SystemID;
     self.sourceModel.UserName = self.paramModel.UserName;
     self.sourceModel.SchoolID = self.paramModel.SchoolID;
+    
+    
     
     
 }
@@ -110,8 +118,8 @@
 
 
     
-  
-        if(!IsStrEmpty(self.sourceModel.NoteContent) && ![_NotoContent isEqualToString:self.sourceModel.NoteContent] ) {
+
+        if(!IsStrEmpty(_NotoContent) && ![_NotoContent isEqualToString:self.sourceModel.NoteContent] ) {
             
             [self exti];
         }
@@ -119,10 +127,14 @@
 
               [self exti];
 
-        }else if (![_SubjectName isEqualToString:self.sourceModel.SubjectName]){
-            
+        }
+        else if (![_SubjectName isEqualToString:self.sourceModel.SubjectName]){
+
              [self exti];
-        }else if (![_IsKeyPoint isEqualToString:self.sourceModel.IsKeyPoint]){
+        }
+    
+    
+        else if (![_IsKeyPoint isEqualToString:self.sourceModel.IsKeyPoint]  ){
             
             [self exti];
         }
@@ -147,7 +159,7 @@
 
 - (void)exti{
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"保存已修改的内容?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"保存当前笔记内容?" preferredStyle:UIAlertControllerStyleAlert];
     
     
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -250,6 +262,8 @@
         _contentView = [[LGNNoteEditView alloc] initWithFrame:CGRectZero headerViewStyle:style];
         _contentView.ownController = self;
         [_contentView bindViewModel:self.viewModel];
+        
+    
         
      
     }
