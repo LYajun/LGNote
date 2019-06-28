@@ -326,9 +326,12 @@ HPTextViewTapGestureRecognizerDelegate
     [kMBAlert showAlertControllerOn:self.ownController title:@"提示:" message:@"您确定要清空吗?" oneTitle:@"确定" oneHandle:^(UIAlertAction * _Nonnull one) {
         @strongify(self);
         self.contentTextView.text = @"";
-        NSRange rg = _contentTextView.selectedRange;
-        rg.location = _contentTextView.text.length;
-        _contentTextView.selectedRange = NSMakeRange(rg.location, 0);
+        
+        [self.contentTextView resignFirstResponder];
+        NSRange rg = self.contentTextView.selectedRange;
+        rg.location = self.contentTextView.text.length;
+        self.contentTextView.selectedRange = NSMakeRange(rg.location, 0);
+        
         
         [self lg_textViewDidChange:self.contentTextView];
     } twoTitle:@"取消" twoHandle:^(UIAlertAction * _Nonnull two) {
