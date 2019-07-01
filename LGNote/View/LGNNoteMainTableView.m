@@ -15,10 +15,14 @@
 #import "LGNNoteMainImageTableViewCell.h"
 #import "LGNNoteMoreImageTableViewCell.h"
 
-@interface LGNNoteMainTableView () <UITableViewDataSource,UITableViewDelegate>
+@interface LGNNoteMainTableView () <UITableViewDataSource,UITableViewDelegate>{
+    
+     NSInteger  _allCount;
+}
 
-@property (nonatomic, strong) NSArray *dataArray;
+
 @property (nonatomic, strong) LGNViewModel *viewModel;
+@property (nonatomic, strong) NSMutableArray *dataArray;
 
 @end
 
@@ -33,9 +37,14 @@
         [self registerClass:[LGNNoteMainImageTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LGNNoteMainImageTableViewCell class])];
         [self registerClass:[LGNNoteMoreImageTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LGNNoteMoreImageTableViewCell class])];
         [self allocInitRefreshHeader:YES allocInitFooter:YES];
+        
+         
     }
     return self;
 }
+
+
+    
 
 - (void)lg_bindViewModel:(id)viewModel{
     self.viewModel = viewModel;
@@ -49,6 +58,10 @@
             NSInteger papge;
            papge = self.viewModel.paramModel.PageIndex;
             NSInteger size  = self.viewModel.paramModel.PageSize;
+            
+            if(papge ==1){
+                _allCount = 0;
+            }
             
             //预防搜索内容编辑修改返回page==0崩溃
             if(papge == 0){
@@ -74,6 +87,7 @@
         if (x) {
             self.requestStatus = LGBaseTableViewRequestStatusStartLoading;
             [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
+            _allCount = 0;
         }
     }];
 
@@ -82,6 +96,7 @@
         self.dataArray = x;
         self.requestStatus = IsArrEmpty(x) ? LGBaseTableViewRequestStatusNoData:LGBaseTableViewRequestStatusNormal;
         [self reloadData];
+        _allCount = 0;
     }];
     
 }
@@ -104,6 +119,7 @@
         LGNNoteMainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMainTableViewCell class]) forIndexPath:indexPath];
         cell.searchContent =_searchContent;
         cell.isSearchVC = _isSearchVC;
+        
         [cell configureCellForDataSource:model indexPath:indexPath];
         return cell;
     } else if (model.imgaeUrls > 0 && model.mixTextImage) {
@@ -111,17 +127,42 @@
         cell.searchContent =_searchContent;
         cell.isSearchVC = _isSearchVC;
         [cell configureCellForDataSource:model indexPath:indexPath];
-    
+        
         return cell;
     } else {
         LGNNoteMoreImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMoreImageTableViewCell class]) forIndexPath:indexPath];
         cell.searchContent =_searchContent;
         cell.isSearchVC = _isSearchVC;
         [cell configureCellForDataSource:model indexPath:indexPath];
-    
+        
         return cell;
     }
 }
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    if(indexPath.section>3 ||_allCount>=6){
+        return;
+    }
+    
+    _allCount +=indexPath.section;
+    
+    CGRect cellFrameStart = cell.contentView.frame;
+    cellFrameStart.origin.x = cellFrameStart.size.width;
+    cell.contentView.frame = cellFrameStart;
+    NSTimeInterval time = indexPath.section*0.1;
+    
+    
+    [UIView animateWithDuration:0.6 delay:time options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        CGRect cellFrameEnd = cell.contentView.frame;
+        cellFrameEnd.origin.x = 0;
+        cell.contentView.frame = cellFrameEnd;
+    } completion:^(BOOL finisahed){
+        
+    }];
+}
+
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     return nil;
@@ -157,7 +198,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         LGNNoteModel *model = self.dataArray[indexPath.section];
         @weakify(self);
-        [kMBAlert showAlertControllerOn:self.ownerController title:@"提示:" message:@"您确定要删除该条笔记数据吗?" oneTitle:@"确定" oneHandle:^(UIAlertAction * _Nonnull one) {
+        [kMBAlert showAlertControllerOn:self.ownerController title:@"提示" message:@"您确定要删除该条笔记吗?" oneTitle:@"确定" oneHandle:^(UIAlertAction * _Nonnull one) {
             @strongify(self);
             self.requestStatus = LGBaseTableViewRequestStatusStartLoading;
             NSDictionary *param = [self configureOperatedModel:model];
@@ -175,7 +216,6 @@
     editVC.updateSubject = [RACSubject subject];
     LGNNoteModel *model = self.dataArray[indexPath.section];
     
-    NSLog(@"%@",self.viewModel.subjectArray);
     
     NSDictionary *param = [self.viewModel.paramModel mj_keyValues];
     editVC.paramModel = [LGNParamModel mj_objectWithKeyValues:param];
@@ -202,6 +242,7 @@
     model.OperateFlag = self.viewModel.paramModel.OperateFlag = 3;
     return [model mj_keyValues];
 }
+
 
 
 @end

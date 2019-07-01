@@ -200,16 +200,38 @@
 - (void)operatedNote{
     
     NSString *noteTitle = [self.sourceModel.NoteTitle stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+      NSString *noteContent = [self.contentView.contentTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+     NSString *noteContent1 = [noteContent stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+
+    
     if (IsStrEmpty(self.sourceModel.NoteTitle) || IsStrEmpty(noteTitle)) {
         [kMBAlert showRemindStatus:@"标题不能为空!"];
         return;
     }
     
+    
+    
+    
     if (IsStrEmpty(self.sourceModel.NoteContent)) {
         [kMBAlert showRemindStatus:@"内容不能为空!"];
         return;
     }
+    
+ if(IsStrEmpty(noteContent)&&self.sourceModel.imageAllCont==0){
+        [kMBAlert showRemindStatus:@"内容不能为空!"];
+        return;
+    }
+    
+ if(IsStrEmpty(noteContent1)&&self.sourceModel.imageAllCont==0){
+        [kMBAlert showRemindStatus:@"内容不能为空!"];
+        return;
+    }
+    
 
+    
     [kMBAlert showIndeterminateWithStatus:@"正在进行，请稍等..."];
     
     
@@ -232,6 +254,9 @@
         }
     }];
 }
+
+
+
 
 #pragma mark - lazy
 - (LGNViewModel *)viewModel{

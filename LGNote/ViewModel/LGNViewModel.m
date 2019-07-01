@@ -486,11 +486,11 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
             
             NSString *message;
             if (self.paramModel.OperateFlag == 1) {
-                message = @"添加成功";
+                message = @"新建笔记成功";
             } else if (self.paramModel.OperateFlag == 0) {
-                message = @"保存成功";
+                message = @"编辑笔记成功";
             } else {
-                message = @"删除成功";
+                message = @"删除笔记成功";
             }
             [kMBAlert showSuccessWithStatus:message afterDelay:1 completetion:^{
                 [subscriber sendNext:message];

@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger, LGTextFiledKeyBoardInputType) {
 
 - (void)lg_textFieldDidEndEditing:(LGNoteBaseTextField *)textField;
 - (void)lg_textFieldDidChange:(LGNoteBaseTextField *)textField;
+
 /** 字数达到最大限制时触发 */
 - (void)lg_textFieldShowMaxTextLengthWarning;
 
@@ -43,4 +44,5 @@ typedef NS_ENUM(NSInteger, LGTextFiledKeyBoardInputType) {
 @property (nonatomic, assign) NSInteger maxLength;
 @property (nonatomic, assign) LGTextFiledKeyBoardInputType limitType;
 
+@property (nonatomic,strong) UIBarButtonItem * letItem;
 @end

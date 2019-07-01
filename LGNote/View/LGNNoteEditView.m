@@ -10,7 +10,6 @@
 #import "LGNViewModel.h"
 #import "LGNSubjectPickerView.h"
 #import "LGNoteBaseTextField.h"
-#import "LGNoteBaseTextView.h"
 #import "LGNoteConfigure.h"
 #import "LGNNoteSourceDetailView.h"
 #import "YBImageBrowser.h"
@@ -42,7 +41,7 @@ HPTextViewTapGestureRecognizerDelegate
 @property (nonatomic, strong) UIView *line;
 
 @property (nonatomic, strong) LGNoteBaseTextField *titleTextF;
-@property (nonatomic, strong) LGNoteBaseTextView *contentTextView;
+
 @property (nonatomic, strong) NSMutableAttributedString *imgAttr;
 @property (nonatomic, assign) NSInteger currentLocation;
 @property (nonatomic, assign) BOOL isInsert;
@@ -310,9 +309,21 @@ HPTextViewTapGestureRecognizerDelegate
 
         LGNNoteModel * model = x;
         
-    self.ResourceIOSLink = model.ResourceIOSLink;
-        
+    self.ResourceIOSLink = model.ResourceIOSLink;        
+        //可以点击标注下划线
       
+        if(!IsStrEmpty(model.ResourceIOSLink)){
+            
+            NSMutableAttributedString*str = [[NSMutableAttributedString alloc]initWithString:self.sourceBtn.titleLabel.text];
+            NSRange strRange = {0,[str length]};
+            [str addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle]range:strRange];
+            
+            [self.sourceBtn setAttributedTitle:str forState:UIControlStateNormal];
+
+
+        }
+        
+        
     }];
     
     
@@ -323,7 +334,7 @@ HPTextViewTapGestureRecognizerDelegate
     if(self.contentTextView.text.length == 0)  return;
     
     @weakify(self);
-    [kMBAlert showAlertControllerOn:self.ownController title:@"提示:" message:@"您确定要清空吗?" oneTitle:@"确定" oneHandle:^(UIAlertAction * _Nonnull one) {
+    [kMBAlert showAlertControllerOn:self.ownController title:@"提示" message:@"您确定要清空所有笔记内容吗?" oneTitle:@"确定" oneHandle:^(UIAlertAction * _Nonnull one) {
         @strongify(self);
         self.contentTextView.text = @"";
         
@@ -614,7 +625,7 @@ HPTextViewTapGestureRecognizerDelegate
 }
 
 - (void)lg_textFieldShowMaxTextLengthWarning{
-    [[LGNoteMBAlert shareMBAlert] showRemindStatus:@"字数已达限制"];
+    [[LGNoteMBAlert shareMBAlert] showRemindStatus:@"   标题最多只能输入50个字符哦!"];
 }
 
 #pragma mark - buttonClick
@@ -623,12 +634,12 @@ HPTextViewTapGestureRecognizerDelegate
     if (sender.selected) {
         self.viewModel.dataSourceModel.IsKeyPoint = @"1";
        
-        [[LGNoteMBAlert shareMBAlert] showSuccessWithStatus:@"已标记重点"];
+        [[LGNoteMBAlert shareMBAlert] showSuccessWithStatus:@"已标记为重点"];
         
     } else {
         self.viewModel.dataSourceModel.IsKeyPoint = @"0";
      
-         [[LGNoteMBAlert shareMBAlert] showSuccessWithStatus:@"已取消标记"];
+         [[LGNoteMBAlert shareMBAlert] showSuccessWithStatus:@"  已取消标记  "];
     }
 }
 
@@ -636,6 +647,9 @@ HPTextViewTapGestureRecognizerDelegate
     if (IsStrEmpty(_ResourceIOSLink)) {
         return;
     }
+    
+    NSLog(@"%@",_ResourceIOSLink);
+    
     sender.selected = !sender.selected;
     
     if (sender.selected) {
@@ -652,15 +666,69 @@ HPTextViewTapGestureRecognizerDelegate
         [pickerView showPickerViewMenuForDataSource:self.materialArray matchIndex:self.currentSelectedTopicIndex];
     } else {
     
+        
+        
+        [self openUrl:_ResourceIOSLink showErrorInfo:@"无法启动" needInstallAppName:@""];
+        
     
-        @weakify(self);
-        [[LGNNoteSourceDetailView showSourceDatailView] loadDataWithUrl:_ResourceIOSLink didShowCompletion:^{
-            @strongify(self);
-            self.sourceBtn.selected = NO;
-            self.sourceTipImageView.transform = CGAffineTransformMakeRotation(0);
-        }];
+//        @weakify(self);
+//        [[LGNNoteSourceDetailView showSourceDatailView] loadDataWithUrl:_ResourceIOSLink didShowCompletion:^{
+//            @strongify(self);
+//            self.sourceBtn.selected = NO;
+//            self.sourceTipImageView.transform = CGAffineTransformMakeRotation(0);
+//        }];
     }
 }
+
+
+- (void)openUrl:(NSString *)url showErrorInfo:(NSString *)errorInfo needInstallAppName:(NSString *)appName{
+    NSURL *schemUrl = [NSURL URLWithString:[url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]];
+    
+    
+    [kMBAlert showIndeterminateWithStatus:@"请稍等..."];
+    if ([[UIApplication sharedApplication] canOpenURL:schemUrl]) {
+        // 如果能打开应用的话，隐藏工作已经放到APPDelegate程序进入后台的backgroud方法中
+        if (@available(iOS 10.0, *)) {
+            [[UIApplication sharedApplication] openURL:schemUrl options:@{} completionHandler:nil];
+        } else {
+            [[UIApplication sharedApplication] openURL:schemUrl];
+        }
+        [kMBAlert hide];
+        
+    } else if (!IsStrEmpty(url)){
+        [kMBAlert hide];
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"应用尚未安装，是否前去App Store下载?" preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if (@available(iOS 10.0, *)) {
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com"] options:@{} completionHandler:nil];
+            } else {
+                [[UIApplication sharedApplication] openURL:schemUrl];
+            }
+            
+        }];
+        
+        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            
+            
+            
+        }];
+        
+        [alert addAction:action1];
+        [alert addAction:action];
+        
+        
+        [self.ownController presentViewController:alert animated:YES completion:nil];
+        
+        
+    } else {
+        [kMBAlert showRemindStatus:errorInfo];
+    }
+}
+
+
 
 - (void)subjectBtnClick:(UIButton *)sender{
     sender.selected = !sender.selected;

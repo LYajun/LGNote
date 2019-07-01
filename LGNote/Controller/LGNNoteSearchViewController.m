@@ -103,6 +103,8 @@
     
 }
 
+
+
 - (void)searchBtnEvent:(UIButton *)sender{
         
     [self.searchBar resignFirstResponder];
@@ -134,6 +136,17 @@
 }
 
 
+-(BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    
+    self.viewModel.paramModel.SearchKeycon =@"ResultEr-ro=r+C&ode";
+    
+    [self searchEvent];
+
+    
+    return YES;
+}
+
 #pragma mark - lazy
 - (LGNoteBaseTextField *)searchBar{
     if (!_searchBar) {
@@ -144,6 +157,11 @@
     _searchBar.clearButtonMode=UITextFieldViewModeAlways;
         _searchBar.limitType = LGTextFiledKeyBoardInputTypeNoneEmoji;
         _searchBar.placeholder = @"请输入笔记标题/来源关键字搜索";
+        
+        _searchBar.letItem.enabled = NO;
+        _searchBar.letItem.title = @"";
+        
+        
         _searchBar.delegate = self;
         _searchBar.returnKeyType = UIReturnKeySearch;
         _searchBar.lgDelegate = self;

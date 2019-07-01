@@ -41,6 +41,7 @@ NSString  *const LGTextFieldKeyBoardWillHiddenNotification = @"LGTextFieldKeyBoa
     return self;
 }
 
+
 - (void)commonInit{
     self.inputAccessoryView = self.toolBarView;
     
@@ -276,6 +277,8 @@ NSString  *const LGTextFieldKeyBoardWillHiddenNotification = @"LGTextFieldKeyBoa
         _toolBarView = [[UIToolbar alloc]initWithFrame:(CGRect){0,0,width,40}];
         _toolBarView.barTintColor = [UIColor whiteColor];
         UIBarButtonItem *clear = [[UIBarButtonItem alloc]initWithTitle:@"清空" style:UIBarButtonItemStyleDone target:self action:@selector(clearAction)];
+        self.letItem = clear;
+      
         UIBarButtonItem *space = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithTitle:@"收起" style:UIBarButtonItemStyleDone target:self action:@selector(done)];
         [_toolBarView setItems:@[clear,space,done]];
