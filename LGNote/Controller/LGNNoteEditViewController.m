@@ -62,6 +62,11 @@
     [self.viewModel.getDetailNoteCommand execute:self.sourceModel];
     }
     
+    if(!self.viewModel.isAddNoteOperation && self.paramModel.SystemType ==SystemType_YPT){
+        
+        [self.viewModel.getDetailNoteCommand execute:self.sourceModel];
+    }
+    
 }
 
 - (void)commonInit{
@@ -281,7 +286,15 @@
                 //小助手新建笔记需要隐藏来源选项
                style = NoteEditViewHeaderStyleHideSource;
                 
+            }
+            else if (self.paramModel.SystemType ==SystemType_YPT &&_isNewNote){
+                //云平台新建笔记需要隐藏来源选项
+
+                style = NoteEditViewHeaderStyleHideSource;
             }else if (self.paramModel.SystemType ==SystemType_ASSISTANTER){
+                
+                style = NoteEditViewHeaderStyleNoHiddenCanTouch;
+            }else if (self.paramModel.SystemType ==SystemType_YPT){
                 
                 style = NoteEditViewHeaderStyleNoHiddenCanTouch;
             }else{
