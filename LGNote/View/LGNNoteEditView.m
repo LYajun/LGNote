@@ -731,17 +731,27 @@ HPTextViewTapGestureRecognizerDelegate
 
 
 - (void)subjectBtnClick:(UIButton *)sender{
-    sender.selected = !sender.selected;
-    if (sender.selected) {
-        sender.imageView.transform = CGAffineTransformMakeRotation(-M_PI);
-    } else {
-        sender.imageView.transform = CGAffineTransformMakeRotation(0);
+    NSLog(@"%@",self.viewModel.paramModel.SystemID);
+    
+   // 对于系统ID为：S21、S22、000，笔记编辑的时候允许调整学科。
+
+    if([self.viewModel.paramModel.SystemID isEqualToString:@"S21"] ||[self.viewModel.paramModel.SystemID isEqualToString:@"S22"]||[self.viewModel.paramModel.SystemID isEqualToString:@"000"]){
+        
+        sender.selected = !sender.selected;
+        if (sender.selected) {
+            sender.imageView.transform = CGAffineTransformMakeRotation(-M_PI);
+        } else {
+            sender.imageView.transform = CGAffineTransformMakeRotation(0);
+        }
+        
+        [[UIApplication sharedApplication].keyWindow endEditing:YES];
+        LGNSubjectPickerView *pickerView = [LGNSubjectPickerView showPickerView];
+        pickerView.delegate = self;
+        [pickerView showPickerViewMenuForDataSource:self.subjectArray matchIndex:self.currentSelectedSubjectIndex];
     }
     
-    [[UIApplication sharedApplication].keyWindow endEditing:YES];
-    LGNSubjectPickerView *pickerView = [LGNSubjectPickerView showPickerView];
-    pickerView.delegate = self;
-    [pickerView showPickerViewMenuForDataSource:self.subjectArray matchIndex:self.currentSelectedSubjectIndex];
+    
+    
 }
 
 #pragma mark - pickerDelegate
