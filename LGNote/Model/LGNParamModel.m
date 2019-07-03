@@ -143,9 +143,16 @@
         case SystemType_ASSISTANTER:
             _SystemName = @"学习小助手";
             break;
-        default:
-            _SystemName = @"全部系统";
+         case SystemType_CNT:
+            _SystemName = @"重难题辅导";
             break;
+        case SystemType_YPT:
+            _SystemName = @"蓝鸽云平台";
+            break;
+        default:
+            _SystemName = @"重难题辅导";
+            break;
+            
     }
 }
 //- (SystemType)SystemType{

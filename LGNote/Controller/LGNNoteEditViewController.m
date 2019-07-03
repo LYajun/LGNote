@@ -62,6 +62,11 @@
     [self.viewModel.getDetailNoteCommand execute:self.sourceModel];
     }
     
+    if(!self.viewModel.isAddNoteOperation && self.paramModel.SystemType ==SystemType_YPT){
+        
+        [self.viewModel.getDetailNoteCommand execute:self.sourceModel];
+    }
+    
 }
 
 - (void)commonInit{
@@ -200,16 +205,38 @@
 - (void)operatedNote{
     
     NSString *noteTitle = [self.sourceModel.NoteTitle stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+      NSString *noteContent = [self.contentView.contentTextView.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+     NSString *noteContent1 = [noteContent stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+
+    
     if (IsStrEmpty(self.sourceModel.NoteTitle) || IsStrEmpty(noteTitle)) {
         [kMBAlert showRemindStatus:@"标题不能为空!"];
         return;
     }
     
+    
+    
+    
     if (IsStrEmpty(self.sourceModel.NoteContent)) {
         [kMBAlert showRemindStatus:@"内容不能为空!"];
         return;
     }
+    
+ if(IsStrEmpty(noteContent)&&self.sourceModel.imageAllCont==0){
+        [kMBAlert showRemindStatus:@"内容不能为空!"];
+        return;
+    }
+    
+ if(IsStrEmpty(noteContent1)&&self.sourceModel.imageAllCont==0){
+        [kMBAlert showRemindStatus:@"内容不能为空!"];
+        return;
+    }
+    
 
+    
     [kMBAlert showIndeterminateWithStatus:@"正在进行，请稍等..."];
     
     
@@ -232,6 +259,9 @@
         }
     }];
 }
+
+
+
 
 #pragma mark - lazy
 - (LGNViewModel *)viewModel{
@@ -256,7 +286,15 @@
                 //小助手新建笔记需要隐藏来源选项
                style = NoteEditViewHeaderStyleHideSource;
                 
+            }
+            else if (self.paramModel.SystemType ==SystemType_YPT &&_isNewNote){
+                //云平台新建笔记需要隐藏来源选项
+
+                style = NoteEditViewHeaderStyleHideSource;
             }else if (self.paramModel.SystemType ==SystemType_ASSISTANTER){
+                
+                style = NoteEditViewHeaderStyleNoHiddenCanTouch;
+            }else if (self.paramModel.SystemType ==SystemType_YPT){
                 
                 style = NoteEditViewHeaderStyleNoHiddenCanTouch;
             }else{

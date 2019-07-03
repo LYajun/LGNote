@@ -40,30 +40,31 @@
 - (LGNParamModel *)configureParams{
     LGNParamModel *params = [[LGNParamModel alloc] init];
     
- //   S27-508-EC82==EF3DFC6C-B95F-431D-ABED-301B4037EAB3==g1==2==g1姓名==http://192.168.3.158:10103//===
-
-  //  S14-888-D60F==816699EA-8A71-4FA6-9EB1-44E3BF68D1CC==zxstu62==2==张雯雯==http://192.168.129.130:10103//===
+ 
     
-    params.SystemID = @"S21";
+    //S27-508-EC82==684C8D5E-F197-4DD9-BCC5-2FE8A0DFC248==g2==2==g2姓名==http://192.168.3.158:10103//===
+    
+    params.SystemID = @"S22";
     params.SubjectID = @"All";
     params.C_SystemID = @"All";
     params.PageSize = 10;
     params.PageIndex = 1;
     params.MaterialIndex = -1;
     params.MaterialCount = 10;
-    params.SubjectName = @"";
+    params.SubjectName = @"我的笔记";
     params.IsKeyPoint = @"-1";
-    params.SchoolID = @"S14-888-D60F";
-    params.Token = @"816699EA-8A71-4FA6-9EB1-44E3BF68D1CC";
+    params.SchoolID = @"S27-508-EC82";
+    params.Token = @"684C8D5E-F197-4DD9-BCC5-2FE8A0DFC248";
     params.ResourceName = @"我的笔记";
-    params.ResourceID = @"";
+    params.ResourceID = @"S22";
     params.MaterialName = @"";
+    params.MaterialID = @"S22";
     params.MaterialTotal = @"-1";
     params.ResourceIOSLink = @"";
-    params.UserID = @"zxstu62";
+    params.UserID = @"g2";
     params.UserType = 2;
-    params.UserName = @"张雯雯";
-    params.CPBaseUrl = @"http://192.168.129.130:10103//";
+    params.UserName = @"g2姓名";
+    params.CPBaseUrl = @"http://192.168.3.158:10103//";
     params.SystemType = SystemType_ASSISTANTER;
     
     return params;
