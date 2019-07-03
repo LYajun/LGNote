@@ -170,7 +170,7 @@
 
 - (void)exti{
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"保存当前笔记内容?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"保存当前笔记内容吗?" preferredStyle:UIAlertControllerStyleAlert];
     
     
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

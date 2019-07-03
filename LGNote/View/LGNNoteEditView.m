@@ -273,6 +273,8 @@ HPTextViewTapGestureRecognizerDelegate
     self.titleTextF.text = viewModel.dataSourceModel.NoteTitle;
     
     self.contentTextView.attributedText = viewModel.dataSourceModel.NoteContent_Att;
+    
+    
 
     //将图片总数同步
     self.viewModel.dataSourceModel.imageAllCont =self.viewModel.dataSourceModel.imgaeUrls.count;
@@ -731,11 +733,13 @@ HPTextViewTapGestureRecognizerDelegate
 
 
 - (void)subjectBtnClick:(UIButton *)sender{
-    NSLog(@"%@",self.viewModel.paramModel.SystemID);
     
-   // 对于系统ID为：S21、S22、000，笔记编辑的时候允许调整学科。
+   // 对于系统ID为：S21、S22、000,B30,笔记编辑的时候允许调整学科。
+    NSLog(@"%@==%@",    self.viewModel.dataSourceModel.SystemID
+          ,self.viewModel.paramModel.SystemID);
 
-    if([self.viewModel.paramModel.SystemID isEqualToString:@"S21"] ||[self.viewModel.paramModel.SystemID isEqualToString:@"S22"]||[self.viewModel.paramModel.SystemID isEqualToString:@"000"]){
+    
+    if([self.viewModel.dataSourceModel.SystemID isEqualToString:@"S21"] ||[self.viewModel.dataSourceModel.SystemID isEqualToString:@"S22"]||[self.viewModel.dataSourceModel.SystemID isEqualToString:@"000"]||[self.viewModel.dataSourceModel.SystemID isEqualToString:@"B30"]){
         
         sender.selected = !sender.selected;
         if (sender.selected) {
