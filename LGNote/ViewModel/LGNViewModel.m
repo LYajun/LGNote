@@ -332,7 +332,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         
         
                 NSDictionary *params;
-        if (self.paramModel.SystemType ==0 || self.paramModel.SystemType ==2) {
+        if (self.paramModel.SystemType ==SystemType_ALL || self.paramModel.SystemType ==SystemType_ASSISTANTER ||self.paramModel.SystemType ==SystemType_YPT) {
             params = @{
                                      @"UserID":self.paramModel.UserID,
                                      @"UserType":@(self.paramModel.UserType),
@@ -444,7 +444,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     
     
    // 学习小助手 和后期提供给平台集成的整体版本，[ResourceID]和[MaterialID]这两个值都赋值为SystemID
-    if (self.paramModel.SystemType ==0 || self.paramModel.SystemType ==2) {
+    if (self.paramModel.SystemType ==SystemType_ALL || self.paramModel.SystemType ==SystemType_ASSISTANTER ||self.paramModel.SystemType ==SystemType_YPT) {
         
         if(IsStrEmpty(params[@"MaterialID"])){
             

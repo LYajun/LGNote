@@ -44,20 +44,21 @@
     
     //S27-508-EC82==684C8D5E-F197-4DD9-BCC5-2FE8A0DFC248==g2==2==g2姓名==http://192.168.3.158:10103//===
     
-    params.SystemID = @"S21";
+    params.SystemID = @"S22";
     params.SubjectID = @"All";
     params.C_SystemID = @"All";
     params.PageSize = 10;
     params.PageIndex = 1;
     params.MaterialIndex = -1;
     params.MaterialCount = 10;
-    params.SubjectName = @"";
+    params.SubjectName = @"我的笔记";
     params.IsKeyPoint = @"-1";
     params.SchoolID = @"S27-508-EC82";
     params.Token = @"684C8D5E-F197-4DD9-BCC5-2FE8A0DFC248";
     params.ResourceName = @"我的笔记";
-    params.ResourceID = @"";
+    params.ResourceID = @"S22";
     params.MaterialName = @"";
+    params.MaterialID = @"S22";
     params.MaterialTotal = @"-1";
     params.ResourceIOSLink = @"";
     params.UserID = @"g2";
