@@ -33,14 +33,9 @@
     
     [self.navigationController pushViewController:noteController animated:YES];
 }
-/*
- {"SchoolID":"S27-410-731E","UserID":"tcstu105","IsKeyPoint":"-1","SubjectName":"英语","SystemType":0,"MaterialCount":10,"UserName":"userName_null","OperateFlag":0,"SystemID":"630","PageSize":10,"SearchKeycon":"","PageIndex":1,"Token":"22F1C394-6599-438E-9590-ED16A6E4D20C","StartTime":"","CPBaseUrl":"http:\/\/192.168.3.151:10103\/\/","ResourceID":"YXRW-tcldy1-00000000000000000000000000000000000005-7592b5ae-c958-4456-a2f0-3dcbc82f1192","MaterialID":"Local1","Skip":0,"ResourceName":"第五课教学方案_课前预习","UserType":2,"EndTime":"","Secret":"","C_SubjectID":"S2-English","SubjectID":"S2-English","C_SystemID":"630"}
- 
- */
+
 - (LGNParamModel *)configureParams{
     LGNParamModel *params = [[LGNParamModel alloc] init];
-    
- 
     
     //S27-508-EC82==684C8D5E-F197-4DD9-BCC5-2FE8A0DFC248==g2==2==g2姓名==http://192.168.3.158:10103//===
     
@@ -74,6 +69,8 @@
     
     
     
+    
+    
     // 系统ID，传All表示获取全部系统的数据
     params.SystemID = @"630";
     // 学科ID，传All表示获取全部学科数据
@@ -100,6 +97,8 @@
     params.MaterialID = @"Local1";
     params.MaterialName = @"Local1";
     params.ResourceIOSLink = @"";
+    params.ResourcePCLink = @"";
+    params.ResourceAndroidLink = @"";
     params.MaterialTotal = @"-1";
     // 用户ID
     params.UserID = @"tcstu105";
@@ -112,11 +111,14 @@
     params.MaterialCount = 10;
     // 调用的系统类型
     /*
+     SystemType_ALL,              // 全部
      SystemType_HOME,             // 课后
      SystemType_ASSISTANTER,      // 小助手
      SystemType_KQ,               // 课前
      SystemType_CP,               // 基础平台
-     SystemType_KT                // 课堂
+     SystemType_KT,                // 课堂
+     SystemType_ZNT ,               //重难题辅导
+     SystemType_YPT                 //云平台
      */
     params.SystemType = SystemType_KQ;
     

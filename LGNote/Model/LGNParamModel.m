@@ -143,7 +143,7 @@
         case SystemType_ASSISTANTER:
             _SystemName = @"学习小助手";
             break;
-         case SystemType_CNT:
+         case SystemType_ZNT:
             _SystemName = @"重难题辅导";
             break;
         case SystemType_YPT:

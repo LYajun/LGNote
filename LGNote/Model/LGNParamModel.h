@@ -18,8 +18,8 @@ typedef NS_ENUM(NSInteger, SystemType) {
     SystemType_KQ,               // 课前
     SystemType_CP,               // 基础平台
     SystemType_KT,                // 课堂
-    SystemType_CNT ,                //重难题辅导
-    SystemType_YPT                  //云平台
+    SystemType_ZNT ,               //重难题辅导
+    SystemType_YPT                 //云平台
     
 };
 

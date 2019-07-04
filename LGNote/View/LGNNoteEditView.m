@@ -9,7 +9,6 @@
 #import "LGNNoteEditView.h"
 #import "LGNViewModel.h"
 #import "LGNSubjectPickerView.h"
-#import "LGNoteBaseTextField.h"
 #import "LGNoteConfigure.h"
 #import "LGNNoteSourceDetailView.h"
 #import "YBImageBrowser.h"
@@ -40,7 +39,7 @@ HPTextViewTapGestureRecognizerDelegate
 /** 标题下的线(0.7高度) */
 @property (nonatomic, strong) UIView *line;
 
-@property (nonatomic, strong) LGNoteBaseTextField *titleTextF;
+
 
 @property (nonatomic, strong) NSMutableAttributedString *imgAttr;
 @property (nonatomic, assign) NSInteger currentLocation;

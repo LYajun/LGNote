@@ -214,6 +214,8 @@
     
     if (IsStrEmpty(self.sourceModel.NoteTitle) || IsStrEmpty(noteTitle)) {
         [kMBAlert showRemindStatus:@"标题不能为空!"];
+          [self.contentView.titleTextF becomeFirstResponder];
+        
         return;
     }
     
@@ -222,16 +224,21 @@
     
     if (IsStrEmpty(self.sourceModel.NoteContent)) {
         [kMBAlert showRemindStatus:@"内容不能为空!"];
+          [self.contentView.contentTextView becomeFirstResponder];
         return;
     }
     
  if(IsStrEmpty(noteContent)&&self.sourceModel.imageAllCont==0){
         [kMBAlert showRemindStatus:@"内容不能为空!"];
+     
+     [self.contentView.contentTextView becomeFirstResponder];
+
         return;
     }
     
  if(IsStrEmpty(noteContent1)&&self.sourceModel.imageAllCont==0){
         [kMBAlert showRemindStatus:@"内容不能为空!"];
+       [self.contentView.contentTextView becomeFirstResponder];
         return;
     }
     

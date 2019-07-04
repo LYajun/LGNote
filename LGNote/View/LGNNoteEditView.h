@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "LGNoteBaseTextView.h"
+#import "LGNoteBaseTextField.h"
 
 NS_ASSUME_NONNULL_BEGIN
 @class LGNViewModel;
@@ -40,6 +41,7 @@ typedef NS_ENUM(NSInteger, NoteEditViewHeaderStyle) {
 - (void)bindViewModel:(LGNViewModel *)viewModel;
 
 @property (nonatomic, strong) LGNoteBaseTextView *contentTextView;
+@property (nonatomic, strong) LGNoteBaseTextField *titleTextF;
 @end
 
 NS_ASSUME_NONNULL_END
