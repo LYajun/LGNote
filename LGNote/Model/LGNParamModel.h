@@ -62,6 +62,10 @@ typedef NS_ENUM(NSInteger, SystemType) {
 @property (nonatomic, copy) NSString *MaterialName;
 /** 跳转笔记来源链接 对应学习任务详情IOS端地址 */
 @property (nonatomic, copy) NSString *ResourceIOSLink;
+/** 跳转笔记来源链接 对应学习任务详情PC端地址 */
+@property (nonatomic, copy) NSString *ResourcePCLink;
+/** 跳转笔记来源链接 对应学习任务详情Android端地址 */
+@property (nonatomic, copy) NSString *ResourceAndroidLink;
 /** 题目大题数量 */
 @property (nonatomic, assign) NSInteger MaterialCount;
 /** 该份学习资料的总题目数  如无传 -1  */

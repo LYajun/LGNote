@@ -61,11 +61,13 @@
     params.MaterialID = @"S22";
     params.MaterialTotal = @"-1";
     params.ResourceIOSLink = @"";
+    params.ResourcePCLink = @"";
+    params.ResourceAndroidLink=@"";
     params.UserID = @"g2";
     params.UserType = 2;
     params.UserName = @"g2姓名";
     params.CPBaseUrl = @"http://192.168.3.158:10103//";
-    params.SystemType = SystemType_ASSISTANTER;
+    params.SystemType = SystemType_KQ;
     
     return params;
     

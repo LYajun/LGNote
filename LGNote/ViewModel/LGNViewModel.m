@@ -600,6 +600,14 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         
       //  NSLog(@"SystemType:%@===ResourceID:%@==MaterialID:%@===ResourceName:%@==MaterialName:%@==ResourceIOSLink:%@==MaterialTotal:%@",[NSString stringWithFormat:@"%zd",self.paramModel.SystemType],self.paramModel.ResourceID,self.paramModel.MaterialID,self.paramModel.ResourceName,self.paramModel.MaterialName,self.paramModel.ResourceIOSLink,self.paramModel.MaterialTotal);
         
+        if(IsStrEmpty(self.paramModel.ResourceAndroidLink)){
+            
+            self.paramModel.ResourceAndroidLink=@"";
+        }
+        if(IsStrEmpty(self.paramModel.ResourcePCLink)){
+            
+            self.paramModel.ResourcePCLink=@"";
+        }
         
         
         NSDictionary *params = @{
@@ -608,9 +616,9 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                                  @"MaterialID":self.paramModel.MaterialID,
                                  @"ResourceName":self.paramModel.ResourceName,
                                  @"MaterialName":self.paramModel.MaterialName,
-                                 @"ResourcePCLink":@"",
+                                 @"ResourcePCLink":self.paramModel.ResourcePCLink,
                                  @"ResourceIOSLink":self.paramModel.ResourceIOSLink,
-                                 @"ResourceAndroidLink":@"",
+                                 @"ResourceAndroidLink":self.paramModel.ResourceAndroidLink,
                                  @"MaterialURL":@"",
                                  @"MaterialContent":@"",
                                  @"MaterialTotal":self.paramModel.MaterialTotal
