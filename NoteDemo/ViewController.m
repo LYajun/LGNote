@@ -97,8 +97,8 @@
     params.MaterialID = @"Local1";
     params.MaterialName = @"Local1";
     params.ResourceIOSLink = @"";
-    params.ResourcePCLink = @"";
-    params.ResourceAndroidLink = @"";
+//    params.ResourcePCLink = @"";
+//    params.ResourceAndroidLink = @"";
     params.MaterialTotal = @"-1";
     // 用户ID
     params.UserID = @"tcstu105";

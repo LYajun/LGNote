@@ -598,15 +598,18 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/UploadNoteSourceInfo"];
         
-      //  NSLog(@"SystemType:%@===ResourceID:%@==MaterialID:%@===ResourceName:%@==MaterialName:%@==ResourceIOSLink:%@==MaterialTotal:%@",[NSString stringWithFormat:@"%zd",self.paramModel.SystemType],self.paramModel.ResourceID,self.paramModel.MaterialID,self.paramModel.ResourceName,self.paramModel.MaterialName,self.paramModel.ResourceIOSLink,self.paramModel.MaterialTotal);
+        
         
         if(IsStrEmpty(self.paramModel.ResourceAndroidLink)){
             
             self.paramModel.ResourceAndroidLink=@"";
+            
+            
         }
         if(IsStrEmpty(self.paramModel.ResourcePCLink)){
             
             self.paramModel.ResourcePCLink=@"";
+            
         }
         
         

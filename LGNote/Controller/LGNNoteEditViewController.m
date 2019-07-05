@@ -152,10 +152,14 @@
     
         else{
             
-            
+            if(!_isSearchNote){
+                
+             
                 if (self.updateSubject) {
-                   [self.updateSubject sendNext:@"update"];
+                    [self.updateSubject sendNext:@"update"];
                 }
+                
+            }
             
         [[NSNotificationCenter defaultCenter] postNotificationName:@"destroyImageNoti" object:nil userInfo:nil];
             
@@ -262,6 +266,14 @@
         @strongify(self);
         if (x && self.updateSubject) {
             [self.navigationController popViewControllerAnimated:YES];
+            
+            NSLog(@"%@",_searchContent);
+            
+            
+            if(_isSearchNote && !IsStrEmpty(_searchContent)){
+                return ;
+            }
+            
             [self.updateSubject sendNext:@"成功"];
         }
     }];

@@ -31,6 +31,16 @@
     [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];
     _iscomeblack = NO;
     [self.searchBar becomeFirstResponder];
+ 
+    
+    if (!IsStrEmpty(self.searchBar.text) ) {
+        self.viewModel.paramModel.SearchKeycon =self.searchBar.text;
+
+        
+        [self searchEvent];
+
+    }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -40,6 +50,8 @@
     _iscomeblack = YES;
     
     [self.searchBar resignFirstResponder];
+    
+  
 
 }
 
@@ -57,6 +69,8 @@
     
     [self createSubViews];
     
+
+  
     
 }
 
@@ -120,10 +134,14 @@
         return;
     }
     
+    
+    NSLog(@"%@", self.viewModel.paramModel.SearchKeycon);
+    
+    
+    
     self.tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
     
- //   
-    
+ 
     [self.viewModel.searchCommand execute:self.viewModel.paramModel];
 }
 
@@ -160,7 +178,6 @@
         
         _searchBar.letItem.enabled = NO;
         _searchBar.letItem.title = @"";
-        
         
         _searchBar.delegate = self;
         _searchBar.returnKeyType = UIReturnKeySearch;

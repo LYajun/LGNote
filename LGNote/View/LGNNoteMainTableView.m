@@ -220,6 +220,8 @@
     NSDictionary *param = [self.viewModel.paramModel mj_keyValues];
     editVC.paramModel = [LGNParamModel mj_objectWithKeyValues:param];
     editVC.isNewNote = NO;
+    editVC.isSearchNote = _isSearchVC;
+    editVC.searchContent= _searchContent;
     editVC.subjectArray = self.viewModel.subjectArray;
     [editVC editNoteWithDataSource:model];
 
