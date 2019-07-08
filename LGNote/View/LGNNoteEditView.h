@@ -42,6 +42,10 @@ typedef NS_ENUM(NSInteger, NoteEditViewHeaderStyle) {
 
 @property (nonatomic, strong) LGNoteBaseTextView *contentTextView;
 @property (nonatomic, strong) LGNoteBaseTextField *titleTextF;
+@property (nonatomic, strong) UIButton *remarkBtn;
+@property (nonatomic, strong) UIButton *subjectBtn;
+
+@property (nonatomic,assign) BOOL  canEditing;
 @end
 
 NS_ASSUME_NONNULL_END

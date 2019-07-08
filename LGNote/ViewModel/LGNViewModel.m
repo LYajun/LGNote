@@ -49,6 +49,8 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                 if (!IsStrEmpty(url)) {
                     [[NSUserDefaults standardUserDefaults] setObject:url forKey:CheckNoteBaseUrlKey];
                     self.paramModel.NoteBaseUrl = url;
+                    
+                    
                     [self p_getData];
                 } else {
                     [self.refreshSubject sendNext:@[]];
@@ -611,6 +613,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
             self.paramModel.ResourcePCLink=@"";
             
         }
+        
         
         
         NSDictionary *params = @{

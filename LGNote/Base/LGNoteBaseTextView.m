@@ -304,6 +304,11 @@ static const void *LGTextViewToolBarStyleKey          = &LGTextViewToolBarStyleK
     }
 }
 
+
+
+
+
+
 - (void)textViewDidEndEditing:(UITextView *)textView{
     if (self.lgDelegate && [self.lgDelegate respondsToSelector:@selector(lg_textViewDidEndEditing:)]) {
         [self.lgDelegate lg_textViewDidEndEditing:self];
