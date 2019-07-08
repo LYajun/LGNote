@@ -133,11 +133,25 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 - (void)p_getData{
     
     //上传笔记来源信息
-    RACSignal *uploadSignal = [self uploadNoteSourceInfo:@""];
-
-    [uploadSignal subscribeNext:^(id  _Nullable x) {
+    //上传笔记相关联来源详细信息接口只在提供给各应用系统集成时，在他们的系统内启动笔记工具时调用。（学习小助手和提供给云平台的版本可以不调用）调用时如果判断ResourceID为空，可以直接不调用
+    
+    if(self.paramModel.SystemType == SystemType_ASSISTANTER ||self.paramModel.SystemType == SystemType_YPT){
         
-    }];
+    }else{
+        
+        if(!IsStrEmpty(self.paramModel.ResourceID)){
+          
+            RACSignal *uploadSignal = [self uploadNoteSourceInfo:@""];
+            
+            [uploadSignal subscribeNext:^(id  _Nullable x) {
+                
+            }];
+        }
+        
+       
+    }
+    
+   
     
     
     
