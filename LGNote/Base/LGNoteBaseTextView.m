@@ -167,6 +167,10 @@ static const void *LGTextViewToolBarStyleKey          = &LGTextViewToolBarStyleK
 
 - (BOOL)canBecomeFirstResponder{
 
+    if (self.lgDelegate && [self.lgDelegate respondsToSelector:@selector(lg_textViewShouldBeginEditing:)]) {
+        return [self.lgDelegate lg_textViewShouldBeginEditing:self];
+    }
+    
     return YES;
 
 }
@@ -294,8 +298,6 @@ static const void *LGTextViewToolBarStyleKey          = &LGTextViewToolBarStyleK
     //获取光标位置
     _cursorPosition = textView.selectedRange.location;
     
-    
-    
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView{
@@ -320,6 +322,7 @@ static const void *LGTextViewToolBarStyleKey          = &LGTextViewToolBarStyleK
         [self.lgDelegate lg_textViewDidChange:self];
     }
 }
+
 
 
 
@@ -427,6 +430,7 @@ static const void *LGTextViewToolBarStyleKey          = &LGTextViewToolBarStyleK
 
 #pragma mark - 通知：获取键盘高度
 - (void)keyboardDidAppear:(NSNotification *)notification{
+    
     _keyboardHeight = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     if (self.isFirstResponder) {
         [[NSNotificationCenter defaultCenter] postNotificationName:LGTextViewKeyBoardDidShowNotification object:nil];

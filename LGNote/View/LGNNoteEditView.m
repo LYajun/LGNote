@@ -374,10 +374,16 @@ HPTextViewTapGestureRecognizerDelegate
     return YES;
 }
 //
-//- (BOOL)lg_textViewShouldBeginEditing:(LGNoteBaseTextView *)textView{
-//    
-//    return NO;
-//}
+- (BOOL)lg_textViewShouldBeginEditing:(LGNoteBaseTextView *)textView{
+    
+    if(_canEditing){
+        
+        return YES;
+
+    }
+    
+    return NO;
+}
 
 - (NSArray *)configureUrls:(NSString*)urlStr{
     
@@ -552,6 +558,11 @@ HPTextViewTapGestureRecognizerDelegate
 
 #pragma mark - NSNotification action
 - (void)textViewKeyBoardDidShowNotification:(NSNotification *)notification{
+    
+    if(!_canEditing){
+        return;
+    }
+    
     [self.contentTextView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.line.mas_bottom);
         make.centerX.equalTo(self);
@@ -561,6 +572,8 @@ HPTextViewTapGestureRecognizerDelegate
 }
 
 - (void)textViewKeyBoardWillHiddenNotification:(NSNotification *)notification{
+    
+    
     [self.contentTextView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.line.mas_bottom);
         make.centerX.bottom.equalTo(self);

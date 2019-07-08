@@ -77,8 +77,11 @@
         [self.contentView.contentTextView setEditable:NO];
         self.contentView.canEditing = NO;
         self.contentView.remarkBtn.enabled = NO;
-        
         self.contentView.subjectBtn.enabled = NO;
+    }else{
+        
+        self.contentView.canEditing = YES;
+
     }
     
 }
@@ -130,23 +133,6 @@
 
 
 #pragma mark - 导航栏右按钮触发事件
-
-- (void)rightBtnLisetener:(UIButton*)btn{
-    
-     btn.selected = !btn.selected;
-    
-    if (btn.selected) {
-        //编辑笔记
-        
-    }else{
-        
-        //查看笔记
-        
-    }
-
-    
-    
-}
 
 - (void)rightBarButtonItem:(UIBarButtonItem *)sender{
     
