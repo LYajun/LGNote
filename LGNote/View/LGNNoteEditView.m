@@ -29,9 +29,7 @@ HPTextViewTapGestureRecognizerDelegate
 @property (nonatomic, strong) UIView *headerView;
 /** 灰线(10高度) */
 @property (nonatomic, strong) UIView *bottomView;
-@property (nonatomic, strong) UIButton *remarkBtn;
 @property (nonatomic, strong) UIButton *sourceBtn;
-@property (nonatomic, strong) UIButton *subjectBtn;
 @property (nonatomic, strong) UIImageView *subjTipImageView;
 @property (nonatomic, strong) UIImageView *sourceTipImageView;
 @property (nonatomic,strong) UIScrollView * bgScrollView;
@@ -335,7 +333,7 @@ HPTextViewTapGestureRecognizerDelegate
     if(self.contentTextView.text.length == 0)  return;
     
     @weakify(self);
-    [kMBAlert showAlertControllerOn:self.ownController title:@"提示" message:@"您确定要清空所有笔记内容吗?" oneTitle:@"确定" oneHandle:^(UIAlertAction * _Nonnull one) {
+    [kMBAlert showAlertControllerOn:self.ownController title:@"提示" message:@"您确定要清空当前笔记内容吗?" oneTitle:@"确定" oneHandle:^(UIAlertAction * _Nonnull one) {
         @strongify(self);
         self.contentTextView.text = @"";
         
@@ -374,6 +372,17 @@ HPTextViewTapGestureRecognizerDelegate
 //    [browser show];
     
     return YES;
+}
+//
+- (BOOL)lg_textViewShouldBeginEditing:(LGNoteBaseTextView *)textView{
+    
+    if(_canEditing){
+        
+        return YES;
+
+    }
+    
+    return NO;
 }
 
 - (NSArray *)configureUrls:(NSString*)urlStr{
@@ -483,6 +492,20 @@ HPTextViewTapGestureRecognizerDelegate
     drawController.style = LGNoteDrawBoardViewControllerStyleDraw;
     [self.ownController presentViewController:drawController animated:YES completion:nil];
 }
+//-(BOOL)textViewShouldBeginEditing:(UITextView *)textView
+//
+//{
+//    //
+//    //    if(_canEditing){
+//    //
+//    //        return YES;
+//    //
+//    //    }
+//    
+//    return NO;
+//    
+//}
+
 
 - (void)settingImageAttributes:(UIImage *)image imageFTPPath:(NSString *)path{
     
@@ -535,6 +558,11 @@ HPTextViewTapGestureRecognizerDelegate
 
 #pragma mark - NSNotification action
 - (void)textViewKeyBoardDidShowNotification:(NSNotification *)notification{
+    
+    if(!_canEditing){
+        return;
+    }
+    
     [self.contentTextView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.line.mas_bottom);
         make.centerX.equalTo(self);
@@ -544,6 +572,8 @@ HPTextViewTapGestureRecognizerDelegate
 }
 
 - (void)textViewKeyBoardWillHiddenNotification:(NSNotification *)notification{
+    
+    
     [self.contentTextView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.line.mas_bottom);
         make.centerX.bottom.equalTo(self);
@@ -751,6 +781,9 @@ HPTextViewTapGestureRecognizerDelegate
         LGNSubjectPickerView *pickerView = [LGNSubjectPickerView showPickerView];
         pickerView.delegate = self;
         [pickerView showPickerViewMenuForDataSource:self.subjectArray matchIndex:self.currentSelectedSubjectIndex];
+    }else{
+        
+         [self.subjectBtn setImage:nil forState:UIControlStateNormal];
     }
     
     

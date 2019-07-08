@@ -62,7 +62,7 @@
     params.UserType = 2;
     params.UserName = @"g2姓名";
     params.CPBaseUrl = @"http://192.168.3.158:10103//";
-    params.SystemType = SystemType_KQ;
+    params.SystemType = SystemType_ASSISTANTER;
     
     return params;
     
@@ -120,7 +120,7 @@
      SystemType_ZNT ,               //重难题辅导
      SystemType_YPT                 //云平台
      */
-    params.SystemType = SystemType_KQ;
+    params.SystemType = SystemType_ASSISTANTER;
     
     return params;
 }

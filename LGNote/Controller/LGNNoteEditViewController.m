@@ -44,6 +44,8 @@
     [self commonInit];
     [self createSubViews];
     
+    
+    
     _NotoContent = self.sourceModel.NoteContent;
     _NotoTitle = self.sourceModel.NoteTitle;
     _IsKeyPoint = self.sourceModel.IsKeyPoint;
@@ -67,10 +69,25 @@
         [self.viewModel.getDetailNoteCommand execute:self.sourceModel];
     }
     
+    if(!_isNewNote){
+        
+        //禁止编辑  //禁止选择重难点
+        
+        self.contentView.titleTextF.enabled = NO;
+        [self.contentView.contentTextView setEditable:NO];
+        self.contentView.canEditing = NO;
+        self.contentView.remarkBtn.enabled = NO;
+        self.contentView.subjectBtn.enabled = NO;
+    }else{
+        
+        self.contentView.canEditing = YES;
+
+    }
+    
 }
 
 - (void)commonInit{
-    self.title = self.isNewNote ? @"新建笔记":@"编辑笔记";
+    self.title = self.isNewNote ? @"新建笔记":@"查看笔记";
 }
 
 - (void)editNoteWithDataSource:(LGNNoteModel *)dataSource{
@@ -88,9 +105,13 @@
 }
 
 - (void)addRightNavigationBar{
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStyleDone target:self action:@selector(rightBarButtonItem:)];
-    [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
     
+ 
+    NSString * title = self.isNewNote ? @"完成":@"编辑";
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStyleDone target:self action:@selector(rightBarButtonItem:)];
+    [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
+ 
 }
 
 - (void)addLeftNavigationBar{
@@ -112,9 +133,30 @@
 
 
 #pragma mark - 导航栏右按钮触发事件
+
 - (void)rightBarButtonItem:(UIBarButtonItem *)sender{
+    
+    if(!self.contentView.canEditing){
+        
+        self.title = @"编辑笔记";
+     self.navigationItem.rightBarButtonItem.title=@"完成";
+        self.contentView.titleTextF.enabled = YES;
+        [self.contentView.contentTextView setEditable:YES];
+        self.contentView.canEditing = YES;
+        self.contentView.remarkBtn.enabled = YES;
+        if(self.paramModel.SystemType ==SystemType_ASSISTANTER ||self.paramModel.SystemType ==SystemType_YPT ){
+        self.contentView.subjectBtn.enabled = YES;
+        }
+       
+        return;
+    }
+    
+
     self.paramModel.OperateFlag = self.isNewNote ? 1:0;
     self.sourceModel.OperateFlag = self.isNewNote ? 1:0;
+    
+   
+    
     [self operatedNote];
 }
 
@@ -278,6 +320,7 @@
         }
     }];
 }
+
 
 
 
