@@ -271,6 +271,18 @@ HPTextViewTapGestureRecognizerDelegate
     
     self.contentTextView.attributedText = viewModel.dataSourceModel.NoteContent_Att;
     
+    if([self.viewModel.dataSourceModel.SystemID isEqualToString:@"S21"] ||[self.viewModel.dataSourceModel.SystemID isEqualToString:@"S22"]||[self.viewModel.dataSourceModel.SystemID isEqualToString:@"000"]||[self.viewModel.dataSourceModel.SystemID isEqualToString:@"B30"]){
+        
+        self.subjectBtn.hidden = NO;
+        self.subjectBtn.enabled = YES;
+        
+    }else{
+        
+        self.subjectBtn.hidden = NO;
+        self.subjectBtn.enabled = NO;
+        [self.subjectBtn setImage:nil forState:UIControlStateNormal];
+    }
+    
     
 
     //将图片总数同步
@@ -764,9 +776,7 @@ HPTextViewTapGestureRecognizerDelegate
 - (void)subjectBtnClick:(UIButton *)sender{
     
    // 对于系统ID为：S21、S22、000,B30,笔记编辑的时候允许调整学科。
-    NSLog(@"%@==%@",    self.viewModel.dataSourceModel.SystemID
-          ,self.viewModel.paramModel.SystemID);
-
+   
     
     if([self.viewModel.dataSourceModel.SystemID isEqualToString:@"S21"] ||[self.viewModel.dataSourceModel.SystemID isEqualToString:@"S22"]||[self.viewModel.dataSourceModel.SystemID isEqualToString:@"000"]||[self.viewModel.dataSourceModel.SystemID isEqualToString:@"B30"]){
         
@@ -781,9 +791,6 @@ HPTextViewTapGestureRecognizerDelegate
         LGNSubjectPickerView *pickerView = [LGNSubjectPickerView showPickerView];
         pickerView.delegate = self;
         [pickerView showPickerViewMenuForDataSource:self.subjectArray matchIndex:self.currentSelectedSubjectIndex];
-    }else{
-        
-         [self.subjectBtn setImage:nil forState:UIControlStateNormal];
     }
     
     

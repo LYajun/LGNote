@@ -81,7 +81,7 @@
     }else{
         
         self.contentView.canEditing = YES;
-
+        
     }
     
 }
