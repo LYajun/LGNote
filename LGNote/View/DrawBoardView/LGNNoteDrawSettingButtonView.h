@@ -28,6 +28,11 @@ NS_ASSUME_NONNULL_BEGIN
 /** 完成 */
 - (void)chooseFinishForButtonTag:(NSInteger)butonTag;
 
+
+/** 裁剪 */
+- (void)choosecutImageButtonTag:(NSInteger)butonTag;
+
+
 @end
 
 
@@ -61,6 +66,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)lastButtonSeleted;
 /** 下步按钮选中 */
 - (void)nextButtonSeleted;
+/** 裁剪 */
+- (void)cutImageSeleted;
 
 @end
 

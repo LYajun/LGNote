@@ -57,6 +57,11 @@
     CGFloat height = self.size.height;
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
     CGFloat screenH = [UIScreen mainScreen].bounds.size.height - 100;
+    
+    if (_isCamera && width > height) {
+        height =250;
+        
+    }
     // 固定宽度
    width = width > screenW ? screenW:width;
     
@@ -71,6 +76,7 @@
 //        height =250;
 //    }
     
+ 
     
     _ImagWidth = width;
     _ImagHeigt = height;
@@ -133,6 +139,8 @@
 }
 
 #pragma mark - NoteDrawSettingViewDelegate
+
+
 - (void)drawSettingViewSelectedPenFontButton:(NSInteger)buttonTag{
     [self.buttonView penFontButtonSeleted];
     
@@ -232,6 +240,38 @@
     [self.drawView reDo];
 }
 
+//裁剪
+- (void)choosecutImageButtonTag:(NSInteger)butonTag{
+    
+   // @weakify(self);
+    
+    
+//    LGNCutImageViewController *cutController = [[LGNCutImageViewController alloc] init];
+//    cutController.image = _drawBgImage;
+//    cutController.isCamera = NO;
+//    [self presentViewController:cutController animated:YES completion:nil];
+    
+
+    [self.drawView saveCompletion:^(UIImage * _Nonnull image, NSString * _Nonnull msg) {
+
+    
+        _drawBgImage = image;
+        
+        
+        LGNCutImageViewController *cutController = [[LGNCutImageViewController alloc] init];
+        cutController.image = _drawBgImage;
+        cutController.isCamera = NO;
+        [self presentViewController:cutController animated:YES completion:nil];
+    }];
+    
+    
+   
+    
+
+    
+    
+}
+
 - (void)chooseFinishForButtonTag:(NSInteger)butonTag{
     [self.drawSettingWindow hiddenAnimationWithDurationTime:0.25];
 //    if (self.style == LGNoteDrawBoardViewControllerStyleDraw) {
@@ -271,9 +311,9 @@
         
         if (self.style == LGNoteDrawBoardViewControllerStyleDefault) {
             
-             _buttonView = [[LGNNoteDrawSettingButtonView alloc] initWithFrame:CGRectZero buttonNorImages:@[@"note_pencil_unselected",@"note_color_unselected",@"note_pho_newunselected",@"note_last_unselected",@"note_next_unselected"] buttonSelectedImages:@[@"note_pencil_selected",@"note_color_selected",@"note_pho_newunselected",@"note_last_selected",@"note_next_selected"] singleTitle:@"完成" ];
+             _buttonView = [[LGNNoteDrawSettingButtonView alloc] initWithFrame:CGRectZero buttonNorImages:@[@"note_pencil_unselected",@"note_color_unselected",@"note_pho_newunselected",@"note_last_unselected",@"note_next_unselected",@"lg_notetool_image_ic_clik_checked"] buttonSelectedImages:@[@"note_pencil_selected",@"note_color_selected",@"note_pho_newunselected",@"note_last_selected",@"note_next_selected",@"lg_notetool_image_ic_clik_checked"] singleTitle:@"完成" ];
         }else{
-             _buttonView = [[LGNNoteDrawSettingButtonView alloc] initWithFrame:CGRectZero buttonNorImages:@[@"note_pencil_unselected",@"note_color_unselected",@"note_pho_newunselected",@"note_last_unselected",@"note_next_unselected"] buttonSelectedImages:@[@"note_pencil_selected",@"note_color_selected",@"note_Newpho_selected",@"note_last_selected",@"note_next_selected"] singleTitle:@"完成" ];
+             _buttonView = [[LGNNoteDrawSettingButtonView alloc] initWithFrame:CGRectZero buttonNorImages:@[@"note_pencil_unselected",@"note_color_unselected",@"note_pho_newunselected",@"note_last_unselected",@"note_next_unselected",@"lg_notetool_image_ic_clik_checked"] buttonSelectedImages:@[@"note_pencil_selected",@"note_color_selected",@"note_Newpho_selected",@"note_last_selected",@"note_next_selected",@"lg_notetool_image_ic_clik_checked"] singleTitle:@"完成" ];
         }
         
        

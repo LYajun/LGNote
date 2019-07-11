@@ -139,7 +139,10 @@
     if(!self.contentView.canEditing){
         
         self.title = @"编辑笔记";
-     self.navigationItem.rightBarButtonItem.title=@"完成";
+    
+       
+      
+        self.navigationItem.rightBarButtonItem.title=@"完成";
         self.contentView.titleTextF.enabled = YES;
         [self.contentView.contentTextView setEditable:YES];
         self.contentView.canEditing = YES;
@@ -147,6 +150,9 @@
         if(self.paramModel.SystemType ==SystemType_ASSISTANTER ||self.paramModel.SystemType ==SystemType_YPT ){
         self.contentView.subjectBtn.enabled = YES;
         }
+        
+        [self.contentView.titleTextF becomeFirstResponder];
+
        
         return;
     }

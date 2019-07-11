@@ -453,10 +453,20 @@ HPTextViewTapGestureRecognizerDelegate
         @strongify(self);
         self.isNeed = NO;
         
-        LGNCutImageViewController *cutController = [[LGNCutImageViewController alloc] init];
-        cutController.image = image;
-        cutController.isCamera = NO;
-        [self.ownController presentViewController:cutController animated:YES completion:nil];
+//        LGNCutImageViewController *cutController = [[LGNCutImageViewController alloc] init];
+//        cutController.image = image;
+//        cutController.isCamera = NO;
+//        [self.ownController presentViewController:cutController animated:YES completion:nil];
+        
+        LGNDrawBoardViewController *drawController = [[LGNDrawBoardViewController alloc] init];
+        drawController.style = LGNoteDrawBoardViewControllerStyleDefault;
+        drawController.isCamera = NO;
+          drawController.size = image.size;
+        drawController.drawBgImage =image ;
+        
+        
+        [self.ownController presentViewController:drawController animated:YES completion:nil];
+        
     }];
     [self.ownController presentViewController:picker animated:YES completion:nil];
 }
@@ -482,11 +492,18 @@ HPTextViewTapGestureRecognizerDelegate
         @strongify(self);
         
          self.isNeed = NO;
-        LGNCutImageViewController *cutController = [[LGNCutImageViewController alloc] init];
-        cutController.isCamera = YES;
-        cutController.image = image;
+//        LGNCutImageViewController *cutController = [[LGNCutImageViewController alloc] init];
+//        cutController.isCamera = YES;
+//        cutController.image = image;
         
-        [self.ownController presentViewController:cutController animated:YES completion:nil];
+        LGNDrawBoardViewController *drawController = [[LGNDrawBoardViewController alloc] init];
+        drawController.style = LGNoteDrawBoardViewControllerStyleDefault;
+        drawController.isCamera = YES;
+        drawController.drawBgImage =image ;
+        drawController.size = image.size;
+
+        
+        [self.ownController presentViewController:drawController animated:YES completion:nil];
     }];
     [self.ownController presentViewController:picker animated:YES completion:nil];
 }
