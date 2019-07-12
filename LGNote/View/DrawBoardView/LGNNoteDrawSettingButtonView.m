@@ -46,7 +46,7 @@
         [self addSubview:button];
         [button mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self);
-            make.size.mas_equalTo(CGSizeMake(40, 30));
+            make.size.mas_equalTo(CGSizeMake(32, 30));
             CGFloat offset1 = kMain_Screen_Width < 375 ? 10:22;
             CGFloat offset2 = kMain_Screen_Width < 375 ? 8:15;
             if (i == 0) {
@@ -104,7 +104,15 @@
         if (self.delegate && [self.delegate respondsToSelector:@selector(chooseFinishForButtonTag:)]) {
             [self.delegate chooseFinishForButtonTag:sender.tag];
         }
-    } else{
+    }else if (sender.tag == 105){
+        if (self.delegate && [self.delegate respondsToSelector:@selector(choosecutImageButtonTag:)]) {
+            [self.delegate choosecutImageButtonTag:sender.tag];
+        }
+        
+    }
+    
+    
+    else{
         
     }
     
@@ -149,4 +157,9 @@
     [self refreshButtonSelectedWithSelectedType:104];
 }
 
+- (void)cutImageSeleted{
+    
+    
+    [self refreshButtonSelectedWithSelectedType:105];
+}
 @end

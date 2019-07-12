@@ -33,6 +33,8 @@
         self.delegate = self;
         self.dataSource = self;
         self.rowHeight = 170;
+
+        
         [self registerClass:[LGNNoteMainTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LGNNoteMainTableViewCell class])];
         [self registerClass:[LGNNoteMainImageTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LGNNoteMainImageTableViewCell class])];
         [self registerClass:[LGNNoteMoreImageTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LGNNoteMoreImageTableViewCell class])];
@@ -121,20 +123,24 @@
         cell.isSearchVC = _isSearchVC;
         
         [cell configureCellForDataSource:model indexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleGray;
+
         return cell;
     } else if (model.imgaeUrls > 0 && model.mixTextImage) {
         LGNNoteMainImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMainImageTableViewCell class]) forIndexPath:indexPath];
         cell.searchContent =_searchContent;
         cell.isSearchVC = _isSearchVC;
         [cell configureCellForDataSource:model indexPath:indexPath];
-        
+         cell.selectionStyle = UITableViewCellSelectionStyleGray;
         return cell;
     } else {
         LGNNoteMoreImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMoreImageTableViewCell class]) forIndexPath:indexPath];
         cell.searchContent =_searchContent;
         cell.isSearchVC = _isSearchVC;
         [cell configureCellForDataSource:model indexPath:indexPath];
-        
+         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        //self.selectionStyle = UITableViewCellSelectionStyleNone;
+
         return cell;
     }
 }
@@ -187,6 +193,30 @@
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
     return @"删除";
 }
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"删除" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+   
+        LGNNoteModel *model = self.dataArray[indexPath.section];
+        @weakify(self);
+        [kMBAlert showAlertControllerOn:self.ownerController title:@"提示" message:@"您确定要删除该条笔记吗?" oneTitle:@"确定" oneHandle:^(UIAlertAction * _Nonnull one) {
+            @strongify(self);
+            self.requestStatus = LGBaseTableViewRequestStatusStartLoading;
+            NSDictionary *param = [self configureOperatedModel:model];
+            [self.viewModel.operateCommand execute:param];
+        } twoTitle:@"取消" twoHandle:^(UIAlertAction * _Nonnull two) {
+            
+        } completion:^{
+            
+        }];
+       
+    }];
+    
+    UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
+    config.performsFirstActionWithFullSwipe = NO;
+    return config;
+}
+
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
     return UITableViewCellEditingStyleDelete;
@@ -212,6 +242,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+
+    
     LGNNoteEditViewController *editVC = [[LGNNoteEditViewController alloc] init];
     editVC.updateSubject = [RACSubject subject];
     LGNNoteModel *model = self.dataArray[indexPath.section];

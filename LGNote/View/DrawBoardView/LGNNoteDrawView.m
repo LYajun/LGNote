@@ -82,9 +82,6 @@
         _bgImgView.frame = self.bounds;
       
        
-        
-        
-        
 
         [self addSubview:_bgImgView];
         
@@ -482,6 +479,8 @@
     if (backgroundImage){
         _bgImgView.image = backgroundImage;
 //        _drawCallBackImage = backgroundImage;
+        
+        
     }
 }
 

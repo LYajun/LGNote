@@ -25,6 +25,8 @@ typedef NS_ENUM(NSInteger, LGNoteDrawBoardViewControllerStyle) {
 @property (nonatomic,assign) CGSize  size;
 
 @property (nonatomic,assign) BOOL  isHeng;
+@property (nonatomic,assign) BOOL  isCamera;
+
 @end
 
 NS_ASSUME_NONNULL_END
