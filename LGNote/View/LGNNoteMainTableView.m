@@ -56,7 +56,16 @@
         self.dataArray = x;
         if (IsArrEmpty(self.dataArray)) {
             self.requestStatus = LGBaseTableViewRequestStatusNoData;
+            
+            if(self.notoDataCall){
+            self.notoDataCall(0);
+            }
+            
         } else {
+            if(self.notoDataCall){
+                self.notoDataCall(1);
+            }
+            
             NSInteger papge;
            papge = self.viewModel.paramModel.PageIndex;
             NSInteger size  = self.viewModel.paramModel.PageSize;

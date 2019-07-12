@@ -16,7 +16,7 @@
 
 @property (nonatomic, strong, readwrite) LGNoteBaseTextField *searchBar;
 @property (nonatomic, strong, readwrite) UIButton *enterSearchBtn;
-@property (nonatomic, strong, readwrite) UIButton *remarkBtn;
+
 
 @property (nonatomic, strong, readwrite) LGNSearchToolViewConfigure *configure;
 

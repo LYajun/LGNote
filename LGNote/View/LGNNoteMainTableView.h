@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 //搜索
 @property (nonatomic,assign) BOOL  isSearchVC;
 @property (nonatomic,strong) NSString * searchContent;
+
+@property (nonatomic, copy) void (^notoDataCall)(NSInteger page);
 @end
 
 NS_ASSUME_NONNULL_END
