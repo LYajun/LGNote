@@ -44,7 +44,7 @@
 #endif
 
 
-@interface XMLDictionaryParser () <NSXMLParserDelegate>
+@interface NoteXMLDictionaryParser () <NSXMLParserDelegate>
 
 @property (nonatomic, strong) NSMutableDictionary *root;
 @property (nonatomic, strong) NSMutableArray *stack;
@@ -53,15 +53,15 @@
 @end
 
 
-@implementation XMLDictionaryParser
+@implementation NoteXMLDictionaryParser
 
-+ (XMLDictionaryParser *)sharedInstance
++ (NoteXMLDictionaryParser *)sharedInstance
 {
     static dispatch_once_t once;
-    static XMLDictionaryParser *sharedInstance;
+    static NoteXMLDictionaryParser *sharedInstance;
     dispatch_once(&once, ^{
         
-        sharedInstance = [[XMLDictionaryParser alloc] init];
+        sharedInstance = [[NoteXMLDictionaryParser alloc] init];
     });
     return sharedInstance;
 }
@@ -70,31 +70,31 @@
 {
     if ((self = [super init]))
     {
-        _collapseTextNodes = YES;
-        _stripEmptyNodes = YES;
-        _trimWhiteSpace = YES;
-        _alwaysUseArrays = NO;
-        _preserveComments = NO;
-        _wrapRootNode = NO;
+        _NotecollapseTextNodes = YES;
+        _NotestripEmptyNodes = YES;
+        _NotetrimWhiteSpace = YES;
+        _NotealwaysUseArrays = NO;
+        _NotepreserveComments = NO;
+        _NotewrapRootNode = NO;
     }
     return self;
 }
 
 - (id)copyWithZone:(NSZone *)zone
 {
-    XMLDictionaryParser *copy = [[[self class] allocWithZone:zone] init];
-    copy.collapseTextNodes = _collapseTextNodes;
-    copy.stripEmptyNodes = _stripEmptyNodes;
-    copy.trimWhiteSpace = _trimWhiteSpace;
-    copy.alwaysUseArrays = _alwaysUseArrays;
-    copy.preserveComments = _preserveComments;
+    NoteXMLDictionaryParser *copy = [[[self class] allocWithZone:zone] init];
+    copy.NotecollapseTextNodes = _NotecollapseTextNodes;
+    copy.NotestripEmptyNodes = _NotestripEmptyNodes;
+    copy.NotetrimWhiteSpace = _NotetrimWhiteSpace;
+    copy.NotealwaysUseArrays = _NotealwaysUseArrays;
+    copy.NotepreserveComments = _NotepreserveComments;
     copy.attributesMode = _attributesMode;
     copy.nodeNameMode = _nodeNameMode;
-    copy.wrapRootNode = _wrapRootNode;
+    copy.NotewrapRootNode = _NotewrapRootNode;
     return copy;
 }
 
-- (NSDictionary *)dictionaryWithParser:(NSXMLParser *)parser
+- (NSDictionary *)NotedictionaryWithParser:(NSXMLParser *)parser
 {
     [parser setDelegate:self];
     [parser parse];
@@ -105,45 +105,45 @@
     return result;
 }
 
-- (NSDictionary *)dictionaryWithData:(NSData *)data
+- (NSDictionary *)NotedictionaryWithData:(NSData *)data
 {
 	NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
-    return [self dictionaryWithParser:parser];
+    return [self NotedictionaryWithParser:parser];
 }
 
-- (NSDictionary *)dictionaryWithString:(NSString *)string
+- (NSDictionary *)NotedictionaryWithString:(NSString *)string
 {
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    return [self dictionaryWithData:data];
+    return [self NotedictionaryWithData:data];
 }
 
-- (NSDictionary *)dictionaryWithFile:(NSString *)path
+- (NSDictionary *)NotedictionaryWithFile:(NSString *)path
 {	
 	NSData *data = [NSData dataWithContentsOfFile:path];
-	return [self dictionaryWithData:data];
+	return [self NotedictionaryWithData:data];
 }
 
-+ (NSString *)XMLStringForNode:(id)node withNodeName:(NSString *)nodeName
++ (NSString *)NoteXMLStringForNode:(id)node withNodeName:(NSString *)nodeName
 {	
     if ([node isKindOfClass:[NSArray class]])
     {
         NSMutableArray *nodes = [NSMutableArray arrayWithCapacity:[node count]];
         for (id individualNode in node)
         {
-            [nodes addObject:[self XMLStringForNode:individualNode withNodeName:nodeName]];
+            [nodes addObject:[self NoteXMLStringForNode:individualNode withNodeName:nodeName]];
         }
         return [nodes componentsJoinedByString:@"\n"];
     }
     else if ([node isKindOfClass:[NSDictionary class]])
     {
-        NSDictionary *attributes = [(NSDictionary *)node attributes];
+        NSDictionary *attributes = [(NSDictionary *)node Noteattributes];
         NSMutableString *attributeString = [NSMutableString string];
         for (NSString *key in [attributes allKeys])
         {
-            [attributeString appendFormat:@" %@=\"%@\"", [[key description] XMLEncodedString], [[attributes[key] description] XMLEncodedString]];
+            [attributeString appendFormat:@" %@=\"%@\"", [[key description] NoteXMLEncodedString], [[attributes[key] description] NoteXMLEncodedString]];
         }
         
-        NSString *innerXML = [node innerXML];
+        NSString *innerXML = [node NoteinnerXML];
         if ([innerXML length])
         {
             return [NSString stringWithFormat:@"<%1$@%2$@>%3$@</%1$@>", nodeName, attributeString, innerXML];
@@ -155,31 +155,31 @@
     }
     else
     {
-        return [NSString stringWithFormat:@"<%1$@>%2$@</%1$@>", nodeName, [[node description] XMLEncodedString]];
+        return [NSString stringWithFormat:@"<%1$@>%2$@</%1$@>", nodeName, [[node description] NoteXMLEncodedString]];
     }
 }
 
 - (void)endText
 {
-	if (_trimWhiteSpace)
+	if (_NotetrimWhiteSpace)
 	{
 		_text = [[_text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] mutableCopy];
 	}
 	if ([_text length])
 	{
         NSMutableDictionary *top = [_stack lastObject];
-		id existing = top[XMLDictionaryTextKey];
+		id existing = top[NoteXMLDictionaryTextKey];
         if ([existing isKindOfClass:[NSArray class]])
         {
             [existing addObject:_text];
         }
         else if (existing)
         {
-            top[XMLDictionaryTextKey] = [@[existing, _text] mutableCopy];
+            top[NoteXMLDictionaryTextKey] = [@[existing, _text] mutableCopy];
         }
 		else
 		{
-			top[XMLDictionaryTextKey] = _text;
+			top[NoteXMLDictionaryTextKey] = _text;
 		}
 	}
 	_text = nil;
@@ -204,20 +204,20 @@
 	NSMutableDictionary *node = [NSMutableDictionary dictionary];
 	switch (_nodeNameMode)
 	{
-        case XMLDictionaryNodeNameModeRootOnly:
+        case NoteXMLDictionaryNodeNameModeRootOnly:
         {
             if (!_root)
             {
-                node[XMLDictionaryNodeNameKey] = elementName;
+                node[NoteXMLDictionaryNodeNameKey] = elementName;
             }
             break;
         }
-        case XMLDictionaryNodeNameModeAlways:
+        case NoteXMLDictionaryNodeNameModeAlways:
         {
-            node[XMLDictionaryNodeNameKey] = elementName;
+            node[NoteXMLDictionaryNodeNameKey] = elementName;
             break;
         }
-        case XMLDictionaryNodeNameModeNever:
+        case NoteXMLDictionaryNodeNameModeNever:
         {
             break;
         }
@@ -227,25 +227,25 @@
 	{
         switch (_attributesMode)
         {
-            case XMLDictionaryAttributesModePrefixed:
+            case NoteXMLDictionaryAttributesModePrefixed:
             {
                 for (NSString *key in [attributeDict allKeys])
                 {
-                    node[[XMLDictionaryAttributePrefix stringByAppendingString:key]] = attributeDict[key];
+                    node[[NoteXMLDictionaryAttributePrefix stringByAppendingString:key]] = attributeDict[key];
                 }
                 break;
             }
-            case XMLDictionaryAttributesModeDictionary:
+            case NoteXMLDictionaryAttributesModeDictionary:
             {
-                node[XMLDictionaryAttributesKey] = attributeDict;
+                node[NoteXMLDictionaryAttributesKey] = attributeDict;
                 break;
             }
-            case XMLDictionaryAttributesModeUnprefixed:
+            case NoteXMLDictionaryAttributesModeUnprefixed:
             {
                 [node addEntriesFromDictionary:attributeDict];
                 break;
             }
-            case XMLDictionaryAttributesModeDiscard:
+            case NoteXMLDictionaryAttributesModeDiscard:
             {
                 break;
             }
@@ -256,7 +256,7 @@
 	{
         _root = node;
         _stack = [NSMutableArray arrayWithObject:node];
-        if (_wrapRootNode)
+        if (_NotewrapRootNode)
         {
             _root = [NSMutableDictionary dictionaryWithObject:_root forKey:elementName];
             [_stack insertObject:_root atIndex:0];
@@ -274,7 +274,7 @@
         {
             top[elementName] = [@[existing, node] mutableCopy];
         }
-        else if (_alwaysUseArrays)
+        else if (_NotealwaysUseArrays)
         {
             top[elementName] = [NSMutableArray arrayWithObject:node];
         }
@@ -288,9 +288,9 @@
 
 - (NSString *)nameForNode:(NSDictionary *)node inDictionary:(NSDictionary *)dict
 {
-	if (node.nodeName)
+	if (node.NotenodeName)
 	{
-		return node.nodeName;
+		return node.NotenodeName;
 	}
 	else
 	{
@@ -317,25 +317,25 @@
     NSMutableDictionary *top = [_stack lastObject];
     [_stack removeLastObject];
     
-	if (!top.attributes && !top.childNodes && !top.comments)
+	if (!top.Noteattributes && !top.NotechildNodes && !top.Notecomments)
     {
         NSMutableDictionary *newTop = [_stack lastObject];
         NSString *nodeName = [self nameForNode:top inDictionary:newTop];
         if (nodeName)
         {
             id parentNode = newTop[nodeName];
-            if (top.innerText && _collapseTextNodes)
+            if (top.NoteinnerText && _NotecollapseTextNodes)
             {
                 if ([parentNode isKindOfClass:[NSArray class]])
                 {
-                    parentNode[[parentNode count] - 1] = top.innerText;
+                    parentNode[[parentNode count] - 1] = top.NoteinnerText;
                 }
                 else
                 {
-                    newTop[nodeName] = top.innerText;
+                    newTop[nodeName] = top.NoteinnerText;
                 }
             }
-            else if (!top.innerText && _stripEmptyNodes)
+            else if (!top.NoteinnerText && _NotestripEmptyNodes)
             {
                 if ([parentNode isKindOfClass:[NSArray class]])
                 {
@@ -346,9 +346,9 @@
                     [newTop removeObjectForKey:nodeName];
                 }
             }
-            else if (!top.innerText && !_collapseTextNodes && !_stripEmptyNodes)
+            else if (!top.NoteinnerText && !_NotecollapseTextNodes && !_NotestripEmptyNodes)
             {
-                top[XMLDictionaryTextKey] = @"";
+                top[NoteXMLDictionaryTextKey] = @"";
             }
         }
 	}
@@ -366,14 +366,14 @@
 
 - (void)parser:(__unused NSXMLParser *)parser foundComment:(NSString *)comment
 {
-	if (_preserveComments)
+	if (_NotepreserveComments)
 	{
         NSMutableDictionary *top = [_stack lastObject];
-		NSMutableArray *comments = top[XMLDictionaryCommentsKey];
+		NSMutableArray *comments = top[NoteXMLDictionaryCommentsKey];
 		if (!comments)
 		{
 			comments = [@[comment] mutableCopy];
-			top[XMLDictionaryCommentsKey] = comments;
+			top[NoteXMLDictionaryCommentsKey] = comments;
 		}
 		else
 		{
@@ -385,31 +385,31 @@
 @end
 
 
-@implementation NSDictionary(XMLDictionary)
+@implementation NSDictionary(NoteXMLDictionary)
 
-+ (NSDictionary *)dictionaryWithXMLParser:(NSXMLParser *)parser
++ (NSDictionary *)NotedictionaryWithXMLParser:(NSXMLParser *)parser
 {
-	return [[[XMLDictionaryParser sharedInstance] copy] dictionaryWithParser:parser];
+	return [[[NoteXMLDictionaryParser sharedInstance] copy] NotedictionaryWithParser:parser];
 }
 
-+ (NSDictionary *)dictionaryWithXMLData:(NSData *)data
++ (NSDictionary *)NotedictionaryWithXMLData:(NSData *)data
 {
-	return [[[XMLDictionaryParser sharedInstance] copy] dictionaryWithData:data];
+	return [[[NoteXMLDictionaryParser sharedInstance] copy] NotedictionaryWithData:data];
 }
 
-+ (NSDictionary *)dictionaryWithXMLString:(NSString *)string
++ (NSDictionary *)NotedictionaryWithXMLString:(NSString *)string
 {
-	return [[[XMLDictionaryParser sharedInstance] copy] dictionaryWithString:string];
+	return [[[NoteXMLDictionaryParser sharedInstance] copy] NotedictionaryWithString:string];
 }
 
-+ (NSDictionary *)dictionaryWithXMLFile:(NSString *)path
++ (NSDictionary *)NotedictionaryWithXMLFile:(NSString *)path
 {
-	return [[[XMLDictionaryParser sharedInstance] copy] dictionaryWithFile:path];
+	return [[[NoteXMLDictionaryParser sharedInstance] copy] NotedictionaryWithFile:path];
 }
 
-- (NSDictionary *)attributes
+- (NSDictionary *)Noteattributes
 {
-	NSDictionary *attributes = self[XMLDictionaryAttributesKey];
+	NSDictionary *attributes = self[NoteXMLDictionaryAttributesKey];
 	if (attributes)
 	{
 		return [attributes count]? attributes: nil;
@@ -417,13 +417,13 @@
 	else
 	{
 		NSMutableDictionary *filteredDict = [NSMutableDictionary dictionaryWithDictionary:self];
-        [filteredDict removeObjectsForKeys:@[XMLDictionaryCommentsKey, XMLDictionaryTextKey, XMLDictionaryNodeNameKey]];
+        [filteredDict removeObjectsForKeys:@[NoteXMLDictionaryCommentsKey, NoteXMLDictionaryTextKey, NoteXMLDictionaryNodeNameKey]];
         for (NSString *key in [filteredDict allKeys])
         {
             [filteredDict removeObjectForKey:key];
-            if ([key hasPrefix:XMLDictionaryAttributePrefix])
+            if ([key hasPrefix:NoteXMLDictionaryAttributePrefix])
             {
-                filteredDict[[key substringFromIndex:[XMLDictionaryAttributePrefix length]]] = self[key];
+                filteredDict[[key substringFromIndex:[NoteXMLDictionaryAttributePrefix length]]] = self[key];
             }
         }
         return [filteredDict count]? filteredDict: nil;
@@ -431,13 +431,13 @@
 	return nil;
 }
 
-- (NSDictionary *)childNodes
+- (NSDictionary *)NotechildNodes
 {	
 	NSMutableDictionary *filteredDict = [self mutableCopy];
-	[filteredDict removeObjectsForKeys:@[XMLDictionaryAttributesKey, XMLDictionaryCommentsKey, XMLDictionaryTextKey, XMLDictionaryNodeNameKey]];
+	[filteredDict removeObjectsForKeys:@[NoteXMLDictionaryAttributesKey, NoteXMLDictionaryCommentsKey, NoteXMLDictionaryTextKey, NoteXMLDictionaryNodeNameKey]];
 	for (NSString *key in [filteredDict allKeys])
     {
-        if ([key hasPrefix:XMLDictionaryAttributePrefix])
+        if ([key hasPrefix:NoteXMLDictionaryAttributePrefix])
         {
             [filteredDict removeObjectForKey:key];
         }
@@ -445,19 +445,19 @@
     return [filteredDict count]? filteredDict: nil;
 }
 
-- (NSArray *)comments
+- (NSArray *)Notecomments
 {
-	return self[XMLDictionaryCommentsKey];
+	return self[NoteXMLDictionaryCommentsKey];
 }
 
-- (NSString *)nodeName
+- (NSString *)NotenodeName
 {
-	return self[XMLDictionaryNodeNameKey];
+	return self[NoteXMLDictionaryNodeNameKey];
 }
 
-- (id)innerText
+- (id)NoteinnerText
 {	
-	id text = self[XMLDictionaryTextKey];
+	id text = self[NoteXMLDictionaryTextKey];
 	if ([text isKindOfClass:[NSArray class]])
 	{
 		return [text componentsJoinedByString:@"\n"];
@@ -468,44 +468,44 @@
 	}
 }
 
-- (NSString *)innerXML
+- (NSString *)NoteinnerXML
 {	
 	NSMutableArray *nodes = [NSMutableArray array];
 	
-	for (NSString *comment in [self comments])
+	for (NSString *comment in [self Notecomments])
 	{
-        [nodes addObject:[NSString stringWithFormat:@"<!--%@-->", [comment XMLEncodedString]]];
+        [nodes addObject:[NSString stringWithFormat:@"<!--%@-->", [comment NoteXMLEncodedString]]];
 	}
     
-    NSDictionary *childNodes = [self childNodes];
+    NSDictionary *childNodes = [self NotechildNodes];
 	for (NSString *key in childNodes)
 	{
-		[nodes addObject:[XMLDictionaryParser XMLStringForNode:childNodes[key] withNodeName:key]];
+		[nodes addObject:[NoteXMLDictionaryParser NoteXMLStringForNode:childNodes[key] withNodeName:key]];
 	}
 	
-    NSString *text = [self innerText];
+    NSString *text = [self NoteinnerText];
     if (text)
     {
-        [nodes addObject:[text XMLEncodedString]];
+        [nodes addObject:[text NoteXMLEncodedString]];
     }
 	
 	return [nodes componentsJoinedByString:@"\n"];
 }
 
-- (NSString *)XMLString
+- (NSString *)NoteXMLString
 {
-    if ([self count] == 1 && ![self nodeName])
+    if ([self count] == 1 && ![self NotenodeName])
     {
         //ignore outermost dictionary
-        return [self innerXML];
+        return [self NoteinnerXML];
     }
     else
     {
-        return [XMLDictionaryParser XMLStringForNode:self withNodeName:[self nodeName] ?: @"root"];
+        return [NoteXMLDictionaryParser NoteXMLStringForNode:self withNodeName:[self NotenodeName] ?: @"root"];
     }
 }
 
-- (NSArray *)arrayValueForKeyPath:(NSString *)keyPath
+- (NSArray *)NotearrayValueForKeyPath:(NSString *)keyPath
 {
     id value = [self valueForKeyPath:keyPath];
     if (value && ![value isKindOfClass:[NSArray class]])
@@ -515,7 +515,7 @@
     return value;
 }
 
-- (NSString *)stringValueForKeyPath:(NSString *)keyPath
+- (NSString *)NotestringValueForKeyPath:(NSString *)keyPath
 {
     id value = [self valueForKeyPath:keyPath];
     if ([value isKindOfClass:[NSArray class]])
@@ -524,12 +524,12 @@
     }
     if ([value isKindOfClass:[NSDictionary class]])
     {
-        return [(NSDictionary *)value innerText];
+        return [(NSDictionary *)value NoteinnerText];
     }
     return value;
 }
 
-- (NSDictionary *)dictionaryValueForKeyPath:(NSString *)keyPath
+- (NSDictionary *)NotedictionaryValueForKeyPath:(NSString *)keyPath
 {
     id value = [self valueForKeyPath:keyPath];
     if ([value isKindOfClass:[NSArray class]])
@@ -538,7 +538,7 @@
     }
     if ([value isKindOfClass:[NSString class]])
     {
-        return @{XMLDictionaryTextKey: value};
+        return @{NoteXMLDictionaryTextKey: value};
     }
     return value;
 }
@@ -546,9 +546,9 @@
 @end
 
 
-@implementation NSString (XMLDictionary)
+@implementation NSString (NoteXMLDictionary)
 
-- (NSString *)XMLEncodedString
+- (NSString *)NoteXMLEncodedString
 {	
 	return [[[[[self stringByReplacingOccurrencesOfString:@"&" withString:@"&amp;"]
                stringByReplacingOccurrencesOfString:@"<" withString:@"&lt;"]

@@ -204,10 +204,15 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.CPBaseUrl stringByAppendingFormat:@"/Base/WS/Service_Basic.asmx/WS_G_GetSubSystemServerInfo?sysID=%@&subjectID=",@"S22"];
         [kNetwork.setRequestUrl(url).setRequestType(GETXML)starSendRequestSuccess:^(id respone) {
-            NSDictionary *dic = [NSDictionary dictionaryWithXMLString:respone];
+            
+            
+            NSDictionary *dic = [NSDictionary NotedictionaryWithXMLString:respone];
+            
             // 配置笔记工具Uurl
-            NSArray *noteSystemAllkey = [dic arrayValueForKeyPath:@"string"];
+            NSArray *noteSystemAllkey = [dic NotearrayValueForKeyPath:@"string"];
             NSString *baseUrl = IsArrEmpty(noteSystemAllkey) ? @"":[noteSystemAllkey lastObject];
+            
+            
             [subscriber sendNext:baseUrl];
             [subscriber sendCompleted];
         } failure:^(NSError *error) {
