@@ -104,6 +104,8 @@
 
     [self.viewModel.searchSubject subscribeNext:^(id  _Nullable x) {
         @strongify(self);
+        
+        
         self.dataArray = x;
         self.requestStatus = IsArrEmpty(x) ? LGBaseTableViewRequestStatusNoData:LGBaseTableViewRequestStatusNormal;
         [self reloadData];

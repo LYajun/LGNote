@@ -27,7 +27,7 @@
 
 - (void)enterNoteViewController:(UIButton *)sender {
 
-    LGNNoteMainViewController *noteController = [[LGNNoteMainViewController alloc] initWithNaviBarLeftItemStyle:NoteMainViewControllerNaviBarStyleBack systemType:SystemUsedTypeAssistanter];
+    LGNNoteMainViewController *noteController = [[LGNNoteMainViewController alloc] initWithNaviBarLeftItemStyle:NoteMainViewControllerNaviBarStyleBack systemType:SystemUsedTypeOther];
     // 配置笔记首页所需参数
     noteController.paramModel = [self configureParams];
     
@@ -39,30 +39,31 @@
     
     //S27-508-EC82==684C8D5E-F197-4DD9-BCC5-2FE8A0DFC248==g2==2==g2姓名==http://192.168.3.158:10103//===
     
-    params.SystemID = @"S22";
-    params.SubjectID = @"All";
-    params.C_SystemID = @"All";
+    params.SystemID = @"630";
+    params.SubjectID = @"S1-English";
+    params.C_SystemID = @"630";
     params.PageSize = 10;
     params.PageIndex = 1;
     params.MaterialIndex = -1;
     params.MaterialCount = 10;
-    params.SubjectName = @"我的笔记";
+    params.SubjectName = @"英语";
     params.IsKeyPoint = @"-1";
-    params.SchoolID = @"S27-508-EC82";
-    params.Token = @"684C8D5E-F197-4DD9-BCC5-2FE8A0DFC248";
-    params.ResourceName = @"我的笔记";
-    params.ResourceID = @"S22";
-    params.MaterialName = @"";
-    params.MaterialID = @"S22";
+    params.SchoolID = @"S14-411-F5DE";
+    params.Token = @"E490FADF-D97B-4B17-9F84-E3DA3F2EB09C";
+    params.ResourceName = @"071901_课前预习";
+    params.ResourceID = @"YXRW-tcxzl1-00000000000000000000000000000000000033-eb5e4f7e-d8d5-4d75-ab67-e2100d5f08cf";
+    params.MaterialName = @"4f166e3330c43040bfc3ba24c89d7050.jpeg";
+    params.MaterialID = @"";
     params.MaterialTotal = @"-1";
     params.ResourceIOSLink = @"";
     params.ResourcePCLink = @"";
     params.ResourceAndroidLink=@"";
-    params.UserID = @"g2";
+    params.UserID = @"tcstu161";
     params.UserType = 2;
-    params.UserName = @"g2姓名";
-    params.CPBaseUrl = @"http://192.168.3.158:10103//";
-    params.SystemType = SystemType_ASSISTANTER;
+    params.UserName = @"林进添";
+    params.CPBaseUrl = @"http://192.168.129.8:10103//";
+  
+    params.SystemType = SystemType_KQ;
     
     return params;
     

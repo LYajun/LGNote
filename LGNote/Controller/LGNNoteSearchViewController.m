@@ -11,7 +11,6 @@
 #import "LGNNoteMainTableView.h"
 #import "LGNoteBaseTextField.h"
 #import "LGNoteConfigure.h"
-
 @interface LGNNoteSearchViewController () <LGNoteBaseTextFieldDelegate,UITextFieldDelegate>
 
 @property (nonatomic, strong) LGNoteBaseTextField *searchBar;
@@ -122,7 +121,7 @@
 - (void)searchBtnEvent:(UIButton *)sender{
         
     [self.searchBar resignFirstResponder];
-    [self searchEvent];
+//   [self searchEvent];
 }
 
 // 搜索
@@ -134,15 +133,14 @@
         return;
     }
     
-    
-    NSLog(@"%@", self.viewModel.paramModel.SearchKeycon);
-    
-    
-    
     self.tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
+
+    
+      [self.viewModel.searchCommand execute:self.viewModel.paramModel];
+    
     
  
-    [self.viewModel.searchCommand execute:self.viewModel.paramModel];
+  
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
