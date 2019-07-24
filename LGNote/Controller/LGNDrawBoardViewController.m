@@ -284,7 +284,7 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:LGNoteDrawBoardViewControllerFinishedDrawNotification object:nil userInfo:@{@"image":image}];
     }];
-    [self dismissTopViewController:YES];
+    [self dismissTopViewController:NO];
     
 }
 
@@ -330,7 +330,7 @@
         @weakify(self);
         [[_cancelBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             @strongify(self);
-            [self dismissTopViewController:YES];
+            [self dismissTopViewController:NO];
         }];
     }
     return _cancelBtn;

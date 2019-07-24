@@ -40,9 +40,9 @@ PODS:
   - MJExtension (3.0.15.1)
   - MJRefresh (3.1.15.7)
   - ReactiveObjC (3.0.0)
-  - SDWebImage (3.8.2):
-    - SDWebImage/Core (= 3.8.2)
-  - SDWebImage/Core (3.8.2)
+  - SDWebImage (4.0.0):
+    - SDWebImage/Core (= 4.0.0)
+  - SDWebImage/Core (4.0.0)
   - TFHpple (2.0.0)
   - YJExtensions (1.0.7):
     - YJExtensions/Foundation (= 1.0.7)
@@ -63,7 +63,7 @@ DEPENDENCIES:
   - MJExtension
   - MJRefresh
   - ReactiveObjC (~> 3.0.0)
-  - SDWebImage (~> 3.8.2)
+  - SDWebImage (~> 4.0.0)
   - TFHpple (~> 2.0.0)
   - YYImage (~> 1.0.4)
 
@@ -89,11 +89,11 @@ SPEC CHECKSUMS:
   MJExtension: 19bc33ce2eee2d319760f5622562cf581a6ff756
   MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
   ReactiveObjC: ce79989e8684b9086b5f8d0c74bc7b81a8729c9e
-  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   TFHpple: a916fe0799eb30aa29b2670d14d5868cdd3a5b81
   YJExtensions: 8c5fa569ce35af2f91da505e1ea75ee10083cce0
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
 
-PODFILE CHECKSUM: 256cb1645b69a7f199828c848b29bb6e5609290a
+PODFILE CHECKSUM: d999918475b29c6b928b75f749f8f6a8e5faa9ce
 
-COCOAPODS: 1.7.0.beta.3
+COCOAPODS: 1.7.2

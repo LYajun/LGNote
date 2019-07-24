@@ -34,77 +34,77 @@
 #pragma GCC diagnostic ignored "-Wobjc-missing-property-synthesis"
 
 
-typedef NS_ENUM(NSInteger, XMLDictionaryAttributesMode)
+typedef NS_ENUM(NSInteger, NoteXMLDictionaryAttributesMode)
 {
-    XMLDictionaryAttributesModePrefixed = 0, //default
-    XMLDictionaryAttributesModeDictionary,
-    XMLDictionaryAttributesModeUnprefixed,
-    XMLDictionaryAttributesModeDiscard
+    NoteXMLDictionaryAttributesModePrefixed = 0, //default
+    NoteXMLDictionaryAttributesModeDictionary,
+    NoteXMLDictionaryAttributesModeUnprefixed,
+    NoteXMLDictionaryAttributesModeDiscard
 };
 
 
-typedef NS_ENUM(NSInteger, XMLDictionaryNodeNameMode)
+typedef NS_ENUM(NSInteger, NoteXMLDictionaryNodeNameMode)
 {
-    XMLDictionaryNodeNameModeRootOnly = 0, //default
-    XMLDictionaryNodeNameModeAlways,
-    XMLDictionaryNodeNameModeNever
+    NoteXMLDictionaryNodeNameModeRootOnly = 0, //default
+    NoteXMLDictionaryNodeNameModeAlways,
+    NoteXMLDictionaryNodeNameModeNever
 };
 
 
-static NSString *const XMLDictionaryAttributesKey   = @"__attributes";
-static NSString *const XMLDictionaryCommentsKey     = @"__comments";
-static NSString *const XMLDictionaryTextKey         = @"__text";
-static NSString *const XMLDictionaryNodeNameKey     = @"__name";
-static NSString *const XMLDictionaryAttributePrefix = @"_";
+static NSString *const NoteXMLDictionaryAttributesKey   = @"__attributes";
+static NSString *const NoteXMLDictionaryCommentsKey     = @"__comments";
+static NSString *const NoteXMLDictionaryTextKey         = @"__text";
+static NSString *const NoteXMLDictionaryNodeNameKey     = @"__name";
+static NSString *const NoteXMLDictionaryAttributePrefix = @"_";
 
 
-@interface XMLDictionaryParser : NSObject <NSCopying>
+@interface NoteXMLDictionaryParser : NSObject <NSCopying>
 
-+ (XMLDictionaryParser *)sharedInstance;
++ (NoteXMLDictionaryParser *)sharedInstance;
 
-@property (nonatomic, assign) BOOL collapseTextNodes; // defaults to YES
-@property (nonatomic, assign) BOOL stripEmptyNodes;   // defaults to YES
-@property (nonatomic, assign) BOOL trimWhiteSpace;    // defaults to YES
-@property (nonatomic, assign) BOOL alwaysUseArrays;   // defaults to NO
-@property (nonatomic, assign) BOOL preserveComments;  // defaults to NO
-@property (nonatomic, assign) BOOL wrapRootNode;      // defaults to NO
+@property (nonatomic, assign) BOOL NotecollapseTextNodes; // defaults to YES
+@property (nonatomic, assign) BOOL NotestripEmptyNodes;   // defaults to YES
+@property (nonatomic, assign) BOOL NotetrimWhiteSpace;    // defaults to YES
+@property (nonatomic, assign) BOOL NotealwaysUseArrays;   // defaults to NO
+@property (nonatomic, assign) BOOL NotepreserveComments;  // defaults to NO
+@property (nonatomic, assign) BOOL NotewrapRootNode;      // defaults to NO
 
-@property (nonatomic, assign) XMLDictionaryAttributesMode attributesMode;
-@property (nonatomic, assign) XMLDictionaryNodeNameMode nodeNameMode;
+@property (nonatomic, assign) NoteXMLDictionaryAttributesMode attributesMode;
+@property (nonatomic, assign) NoteXMLDictionaryNodeNameMode nodeNameMode;
 
-- (NSDictionary *)dictionaryWithParser:(NSXMLParser *)parser;
-- (NSDictionary *)dictionaryWithData:(NSData *)data;
-- (NSDictionary *)dictionaryWithString:(NSString *)string;
-- (NSDictionary *)dictionaryWithFile:(NSString *)path;
+- (NSDictionary *)NotedictionaryWithParser:(NSXMLParser *)parser;
+- (NSDictionary *)NotedictionaryWithData:(NSData *)data;
+- (NSDictionary *)NotedictionaryWithString:(NSString *)string;
+- (NSDictionary *)NotedictionaryWithFile:(NSString *)path;
 
 @end
 
 
-@interface NSDictionary (XMLDictionary)
+@interface NSDictionary (NoteXMLDictionary)
 
-+ (NSDictionary *)dictionaryWithXMLParser:(NSXMLParser *)parser;
-+ (NSDictionary *)dictionaryWithXMLData:(NSData *)data;
-+ (NSDictionary *)dictionaryWithXMLString:(NSString *)string;
-+ (NSDictionary *)dictionaryWithXMLFile:(NSString *)path;
++ (NSDictionary *)NotedictionaryWithXMLParser:(NSXMLParser *)parser;
++ (NSDictionary *)NotedictionaryWithXMLData:(NSData *)data;
++ (NSDictionary *)NotedictionaryWithXMLString:(NSString *)string;
++ (NSDictionary *)NotedictionaryWithXMLFile:(NSString *)path;
 
-- (NSDictionary *)attributes;
-- (NSDictionary *)childNodes;
-- (NSArray *)comments;
-- (NSString *)nodeName;
-- (NSString *)innerText;
-- (NSString *)innerXML;
-- (NSString *)XMLString;
+- (NSDictionary *)Noteattributes;
+- (NSDictionary *)NotechildNodes;
+- (NSArray *)Notecomments;
+- (NSString *)NotenodeName;
+- (NSString *)NoteinnerText;
+- (NSString *)NoteinnerXML;
+- (NSString *)NoteXMLString;
 
-- (NSArray *)arrayValueForKeyPath:(NSString *)keyPath;
-- (NSString *)stringValueForKeyPath:(NSString *)keyPath;
-- (NSDictionary *)dictionaryValueForKeyPath:(NSString *)keyPath;
+- (NSArray *)NotearrayValueForKeyPath:(NSString *)keyPath;
+- (NSString *)NotestringValueForKeyPath:(NSString *)keyPath;
+- (NSDictionary *)NotedictionaryValueForKeyPath:(NSString *)keyPath;
 
 @end
 
 
-@interface NSString (XMLDictionary)
+@interface NSString (NoteXMLDictionary)
 
-- (NSString *)XMLEncodedString;
+- (NSString *)NoteXMLEncodedString;
 
 @end
 

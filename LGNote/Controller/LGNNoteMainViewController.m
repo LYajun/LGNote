@@ -167,6 +167,7 @@ SearchToolViewDelegate
         [self reSettingParams];
         self.tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
         [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
+       
     }];
 }
 
@@ -253,7 +254,28 @@ SearchToolViewDelegate
         _tableView.ownerController = self;
         _tableView.cusDelegate = self;
         _tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
-        [_tableView lg_bindViewModel:self.viewModel];
+    [_tableView lg_bindViewModel:self.viewModel];
+    
+        @weakify(self);
+
+        self.tableView.notoDataCall = ^(NSInteger page) {
+            
+            if(page ==0 && self.viewModel.paramModel.PageIndex==1){
+                if([self.viewModel.paramModel.C_SubjectID isEqualToString:@"All"] && [self.viewModel.paramModel.C_SystemID isEqualToString:@"All"]&& [self.viewModel.paramModel.IsKeyPoint isEqualToString:@"-1"]){
+                    
+                    self_weak_.toolView.filterBtn.hidden = YES;
+                    self_weak_.toolView.remarkBtn.hidden = YES;
+                    
+                }
+            }else{
+                self_weak_.toolView.filterBtn.hidden = NO;
+                self_weak_.toolView.remarkBtn.hidden = NO;
+            }
+            
+           
+            
+        } ;
+    
     }
     return _tableView;
 }
