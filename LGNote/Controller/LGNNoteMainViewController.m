@@ -222,7 +222,6 @@ SearchToolViewDelegate
     self.viewModel.paramModel.PageIndex = 1;
     self.tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
     
-    
     [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
 }
 

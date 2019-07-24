@@ -203,6 +203,7 @@
         [_searchBgView addSubview:self.searchBtn];
         _searchBar.frame = CGRectMake(0, 0, _searchBgView.frame.size.width - 40, 30);
         _searchBtn.frame = CGRectMake(_searchBar.frame.size.width + 5, 0, 35, 30);
+        
     }
     return _searchBgView;
 }
