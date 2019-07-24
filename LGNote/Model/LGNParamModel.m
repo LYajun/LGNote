@@ -149,6 +149,10 @@
         case SystemType_YPT:
             _SystemName = @"蓝鸽云平台";
             break;
+        case SystemType_DZJC:
+            _SystemName = @"电子教材";
+            break;
+            
         default:
             _SystemName = @"重难题辅导";
             break;
