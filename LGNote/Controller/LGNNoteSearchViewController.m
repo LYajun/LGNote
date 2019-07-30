@@ -180,6 +180,9 @@
         _searchBar.delegate = self;
         _searchBar.returnKeyType = UIReturnKeySearch;
         _searchBar.lgDelegate = self;
+        _searchBar.tintColor= [UIColor lightGrayColor];
+
+        
     }
     return _searchBar;
 }
