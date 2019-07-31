@@ -152,6 +152,9 @@
         case SystemType_DZJC:
             _SystemName = @"电子教材";
             break;
+        case SystemType_XYTJ:
+            _SystemName = @"学友推荐";
+            break;
             
         default:
             _SystemName = @"重难题辅导";

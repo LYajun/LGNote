@@ -400,7 +400,6 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         
         [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(self.paramModel.UserID).setToken(self.paramModel.Token).setParameters(params)starSendRequestSuccess:^(id respone) {
             
-            NSLog(@"==%@==",respone);
             
             
             if (![respone[kErrorcode] hasSuffix:kSuccess]) {
@@ -452,6 +451,8 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
             [subscriber sendCompleted];
             
         } failure:^(NSError *error) {
+           
+
             [subscriber sendNext:nil];
             [subscriber sendCompleted];
         }];

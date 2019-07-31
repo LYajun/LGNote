@@ -220,6 +220,7 @@ HPTextViewTapGestureRecognizerDelegate
             [self.sourceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.right.equalTo(self.sourceTipImageView.mas_left).offset(-1);
                 make.centerY.equalTo(self.headerView);
+                make.width.mas_equalTo(kMain_Screen_Width/2-50);
             }];
             [self.titleTextF mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.equalTo(self.bottomView.mas_bottom);
@@ -912,8 +913,13 @@ HPTextViewTapGestureRecognizerDelegate
         _sourceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _sourceBtn.frame = CGRectZero;
         [_sourceBtn setTitle:@"来源:听句子选择" forState:UIControlStateNormal];
+        [_sourceBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+
         _sourceBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
+        _sourceBtn.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+
         [_sourceBtn setTitleColor:kColorInitWithRGB(249, 102, 2, 1) forState:UIControlStateNormal];
+        
         [_sourceBtn addTarget:self action:@selector(sourceBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _sourceBtn;
@@ -927,6 +933,7 @@ HPTextViewTapGestureRecognizerDelegate
         [_subjectBtn setTitle:@"英语" forState:UIControlStateNormal];
         [_subjectBtn setImage:[NSBundle lg_imageName:@"note_subject_unselected"] forState:UIControlStateNormal];
         _subjectBtn.titleLabel.font = [UIFont systemFontOfSize:14.f];
+
         [_subjectBtn setTitleColor:kColorWithHex(0x0099ff) forState:UIControlStateNormal];
         [_subjectBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
       [_subjectBtn addTarget:self action:@selector(subjectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
