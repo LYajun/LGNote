@@ -148,8 +148,9 @@
         
         NSRange searchRange = NSMakeRange(0, [allStr length]);
         NSRange range;
-        NSString *singleStr = [keyWords substringWithRange:NSMakeRange(j, 1)];
-        
+       // NSString *singleStr = [keyWords substringWithRange:NSMakeRange(j, 1)];
+        NSString *singleStr =keyWords;
+
         while
             ((range = [allStr rangeOfString:singleStr options:NSLiteralSearch range:searchRange]).location != NSNotFound) {
                 //改变多次搜索时searchRange的位置
