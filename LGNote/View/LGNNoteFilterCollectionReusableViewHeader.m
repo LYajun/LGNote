@@ -39,7 +39,7 @@
         make.left.equalTo(self).offset(12);
         make.bottom.equalTo(self).offset(-10);
 //        make.height.equalTo(self.mas_height);
-        make.width.mas_equalTo(40);
+        make.width.mas_equalTo(80);
     }];
     
     [self.contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -19,7 +19,8 @@ typedef NS_ENUM(NSInteger, NoteNaviBarLeftItemStyle) {
 /** 使用的系统类型 */
 typedef NS_ENUM(NSInteger, SystemUsedType) {
     SystemUsedTypeAssistanter,       // 小助手/基础平台系统使用
-    SystemUsedTypeOther              // 其他平台使用
+    SystemUsedTypeOther  ,  // 其他平台使用
+     SystemUsedTypeNew
 };
 
 /** 左按钮时间(可能是返回事件/也可能是用户点击事件) */

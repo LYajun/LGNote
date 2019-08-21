@@ -43,10 +43,23 @@
 #define kMain_Screen_Bounds               [[UIScreen mainScreen] bounds]
 #define kSYSTEMFONT(FONTSIZE)             [UIFont systemFontOfSize:FONTSIZE]
 
+// 判断是否是iPhone X系列机型
+#define NoteiPhoneXs (([[UIApplication sharedApplication] statusBarFrame].size.height == 44.0f) ? (YES):(NO))
+// 状态栏高度
+#define NoteSTATUS_HEIGHT (NoteiPhoneXs ? 44.f : 20.f)
+// 导航栏高度
+#define NoteNAVIGATION_HEIGHT (NoteiPhoneXs ? 88.f : 64.f)
+
+
+
 /** 数组是否为空 */
 #define IsArrEmpty(_ref)    (((_ref) == nil) || ([(_ref) isEqual:[NSNull null]]) ||([(_ref) count] == 0))
 
 #define IsStrEmpty(_ref)    (((_ref) == nil) || ([(_ref) isEqual:[NSNull null]]) ||([(_ref)isEqualToString:@""]))
+
+#define IsObjEmpty(_ref)    (((_ref) == nil) || ([(_ref) isEqual:[NSNull null]]))
+
+#define Note_HandleParams(_ref)    (IsObjEmpty(_ref) ? @"" : _ref)
 
 /** 弱引用 */
 #define weakSelf(wSelf)  __weak __typeof(&*self)wSelf = self

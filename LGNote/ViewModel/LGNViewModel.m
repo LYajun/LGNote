@@ -80,7 +80,9 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     
     self.nextPageCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
         @strongify(self);
-        RACSignal *mainSignal = [self getNotesWithUserID:self.paramModel.UserID systemID:self.paramModel.C_SystemID subjectID:self.paramModel.C_SubjectID schoolID:self.paramModel.SchoolID pageIndex:self.paramModel.PageIndex pageSize:self.paramModel.PageSize keycon:self.paramModel.SearchKeycon];
+        
+        
+        RACSignal *mainSignal = [self getNotesWithUserID: Note_HandleParams(self.paramModel.UserID) systemID:Note_HandleParams(self.paramModel.C_SystemID) subjectID: Note_HandleParams(self.paramModel.C_SubjectID) schoolID: Note_HandleParams(self.paramModel.SchoolID) pageIndex:self.paramModel.PageIndex pageSize:self.paramModel.PageSize keycon: Note_HandleParams(self.paramModel.SearchKeycon)];
         
         [mainSignal subscribeNext:^(id  _Nullable x) {
             @strongify(self);
@@ -122,8 +124,10 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         
 
         
+
         
-        RACSignal * mainSignal = [self getOneNoteInfoWithNoteID: inputModel.NoteID];
+        
+        RACSignal * mainSignal = [self getOneNoteInfoWithNoteID: Note_HandleParams(inputModel.NoteID)];
         
         [mainSignal subscribeNext:^(id  _Nullable x) {
             @strongify(self);
@@ -135,7 +139,10 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     self.searchSubject = [RACSubject subject];
     self.searchCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
         @strongify(self);
-        RACSignal *mainSignal = [self getNotesWithUserID:self.paramModel.UserID systemID:self.paramModel.C_SystemID subjectID:self.paramModel.C_SubjectID schoolID:self.paramModel.SchoolID pageIndex:0 pageSize:0 keycon:self.paramModel.SearchKeycon];
+        
+        
+        
+        RACSignal *mainSignal = [self getNotesWithUserID:Note_HandleParams(self.paramModel.UserID) systemID: Note_HandleParams(self.paramModel.C_SystemID) subjectID:Note_HandleParams(self.paramModel.C_SubjectID) schoolID: Note_HandleParams(self.paramModel.SchoolID) pageIndex:0 pageSize:0 keycon:Note_HandleParams(self.paramModel.SearchKeycon)];
         
         [mainSignal subscribeNext:^(id  _Nullable x) {
             @strongify(self);
@@ -160,7 +167,6 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         
         if(!IsStrEmpty(self.paramModel.ResourceID)){
           
-            //先隐藏上传笔记来源信息,看看是不是这里导致慢
             
             RACSignal *uploadSignal = [self uploadNoteSourceInfo:@""];
             
@@ -173,17 +179,32 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     }
     
 
-    
-    
+   
     
     //获取当前学生笔记列表
-    RACSignal *mainSignal = [self getNotesWithUserID:self.paramModel.UserID systemID:self.paramModel.C_SystemID subjectID:self.paramModel.C_SubjectID schoolID:self.paramModel.SchoolID pageIndex:self.paramModel.PageIndex pageSize:self.paramModel.PageSize keycon:self.paramModel.SearchKeycon];
+    RACSignal *mainSignal = [self getNotesWithUserID: Note_HandleParams(self.paramModel.UserID) systemID:Note_HandleParams(self.paramModel.C_SystemID) subjectID:Note_HandleParams(self.paramModel.C_SubjectID) schoolID:Note_HandleParams(self.paramModel.SchoolID) pageIndex:self.paramModel.PageIndex pageSize:self.paramModel.PageSize keycon:Note_HandleParams(self.paramModel.SearchKeycon)];
     
     
     //获取当前学生学科列表
-    RACSignal *subjectSignal = [self getAllSubjectInfo];
+    RACSignal *subjectSignal ;
    // 获取系统列表
-    RACSignal *getSystemSigal = [self getAllSystemInfo];
+    RACSignal *getSystemSigal ;
+    
+    //课前课后不获取学科列表和系统列表接口
+    
+    if(self.paramModel.SystemType == SystemType_KQ ||self.paramModel.SystemType == SystemType_HOME){
+        
+        self.paramModel.Skip = -1;
+    }else{
+         //获取当前学生学科列表
+        subjectSignal = [self getAllSubjectInfo];
+        // 获取系统列表
+         getSystemSigal = [self getAllSystemInfo];
+    }
+   
+    
+    
+    
     
     // 如果skip == -1 的则表示跳过了 获取学科或者系统这两个接口
     @weakify(self);
@@ -255,18 +276,19 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetSubjectInfo"];
         
         NSLog(@"%@",url);
-        
-        
+       // Note_HandleParams(self.paramModel.Token)
+       
         NSDictionary *params = @{
-                                 @"UserID":self.paramModel.UserID,
+                                 @"UserID":Note_HandleParams(self.paramModel.UserID),
                                  @"UserType":@(self.paramModel.UserType),
-                                 @"SecretKey":self.paramModel.Secret,
-                                 @"SchoolID":self.paramModel.SchoolID,
-                                 @"Token":self.paramModel.Token,
+                                 @"SecretKey": Note_HandleParams(self.paramModel.Secret),
+                                 @"SchoolID":Note_HandleParams(self.paramModel.SchoolID),
+                                 @"Token":Note_HandleParams(self.paramModel.Token),
                                  @"BackUpOne":@"",
                                  @"BackUpTwo":@""
                                  };
-        [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(self.paramModel.UserID).setToken(self.paramModel.Token).setParameters(params)starSendRequestSuccess:^(id respone) {
+       
+       [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(Note_HandleParams(self.paramModel.UserID)).setToken( Note_HandleParams(self.paramModel.Token)).setParameters(params)starSendRequestSuccess:^(id respone) {
             
             NSLog(@"==UserID%@==Token%@==Secret%@==SchoolID%@",self.paramModel.UserID,self.paramModel.Token,self.paramModel.Secret,self.paramModel.SchoolID);
             
@@ -299,15 +321,19 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 - (RACSignal *)getAllSystemInfo{
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetSystemInfo"];
+        
+        
         NSDictionary *params = @{
-                                 @"UserID":self.paramModel.UserID,
+                                
+                                 
+                                 @"UserID":Note_HandleParams(self.paramModel.UserID),
                                  @"UserType":@(self.paramModel.UserType),
-                                 @"SecretKey":self.paramModel.Secret,
-                                 @"Token":self.paramModel.Token,
+                                 @"SecretKey": Note_HandleParams(self.paramModel.Secret),
+                                 @"Token":Note_HandleParams(self.paramModel.Token),
                                  @"BackUpOne":@"",
                                  @"BackUpTwo":@""
                                  };
-        [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(self.paramModel.UserID).setToken(self.paramModel.Token).setParameters(params)starSendRequestSuccess:^(id respone) {
+       [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey( Note_HandleParams(self.paramModel.UserID)).setToken( Note_HandleParams(self.paramModel.Token)).setParameters(params)starSendRequestSuccess:^(id respone) {
             
             if (![respone[kErrorcode] hasSuffix:kSuccess]) {
                 [subscriber sendNext:nil];
@@ -335,15 +361,17 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNoteInfoByID"];
+        
+       
         NSDictionary *params = @{
-                                 @"UserID":self.paramModel.UserID,
+                                 @"UserID":Note_HandleParams(self.paramModel.UserID),
                                  @"UserType":@(self.paramModel.UserType),
                                  @"NoteID":noteID,
-                                 @"SecretKey":self.paramModel.Secret,
+                                 @"SecretKey": Note_HandleParams(self.paramModel.Secret),
                                  @"BackUpOne":@"",
                                  @"BackUpTwo":@""
                                  };
-        [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(self.paramModel.UserID).setToken(self.paramModel.Token).setParameters(params)starSendRequestSuccess:^(id respone) {
+         [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(Note_HandleParams(self.paramModel.UserID)).setToken( Note_HandleParams(self.paramModel.Token)).setParameters(params)starSendRequestSuccess:^(id respone) {
             
             NSLog(@"%@",respone);
             
@@ -380,19 +408,19 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                 NSDictionary *params;
         if (self.paramModel.SystemType ==SystemType_ALL || self.paramModel.SystemType ==SystemType_ASSISTANTER ||self.paramModel.SystemType ==SystemType_YPT) {
             params = @{
-                                     @"UserID":self.paramModel.UserID,
+                                     @"UserID":Note_HandleParams(self.paramModel.UserID),
                                      @"UserType":@(self.paramModel.UserType),
-                                     @"ResourceID":self.paramModel.ResourceID,
+                                     @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
                                      @"SubjectID":subjectID,
-                                     @"SecretKey":self.paramModel.Secret,
+                                     @"SecretKey":Note_HandleParams(self.paramModel.Secret),
                                      @"SchoolID":schoolID,
-                                     @"MaterialID":self.paramModel.MaterialID,
-                                     @"IsKeyPoint":self.paramModel.IsKeyPoint,
+                                     @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
+                                     @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
                                      @"SysID":systemID,
                                      @"Keycon":keycon,
                                      @"Page":@(pageIndex),
-                                     @"StartTime":self.paramModel.StartTime,
-                                     @"EndTime":self.paramModel.EndTime,
+                                     @"StartTime":Note_HandleParams(self.paramModel.StartTime),
+                                     @"EndTime":Note_HandleParams(self.paramModel.EndTime),
                                      
                                      @"Size":@(size),
                                      @"BackUpOne":@"All",
@@ -402,19 +430,19 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         }else{
             
           params = @{
-                                     @"UserID":self.paramModel.UserID,
+                                     @"UserID": Note_HandleParams(self.paramModel.UserID),
                                      @"UserType":@(self.paramModel.UserType),
                                      @"ResourceID":@"",
                                      @"SubjectID":subjectID,
-                                     @"SecretKey":self.paramModel.Secret,
+                                     @"SecretKey": Note_HandleParams(self.paramModel.Secret),
                                      @"SchoolID":schoolID,
                                      @"MaterialID":@"",
-                                     @"IsKeyPoint":self.paramModel.IsKeyPoint,
+                                     @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
                                      @"SysID":systemID,
                                      @"Keycon":keycon,
                                      @"Page":@(pageIndex),
-                                     @"StartTime":self.paramModel.StartTime,
-                                     @"EndTime":self.paramModel.EndTime,
+                                     @"StartTime":Note_HandleParams(self.paramModel.StartTime),
+                                     @"EndTime":Note_HandleParams(self.paramModel.EndTime),
                                      
                                      @"Size":@(size),
                                      @"BackUpOne":@"",
@@ -423,7 +451,8 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
             
         }
         
-        [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(self.paramModel.UserID).setToken(self.paramModel.Token).setParameters(params)starSendRequestSuccess:^(id respone) {
+       
+        [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey( Note_HandleParams(self.paramModel.UserID)).setToken(Note_HandleParams(self.paramModel.Token)).setParameters(params)starSendRequestSuccess:^(id respone) {
             
             
             
@@ -511,7 +540,9 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/OperateNote"];
-        [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(self.paramModel.UserID).setToken(self.paramModel.Token).setParameters(params)starSendRequestSuccess:^(id respone) {
+       
+        
+        [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(Note_HandleParams(self.paramModel.UserID)).setToken( Note_HandleParams(self.paramModel.Token)).setParameters(params)starSendRequestSuccess:^(id respone) {
             
      
         
@@ -663,19 +694,19 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         
         NSDictionary *params = @{
                                  @"SystemType":[NSString stringWithFormat:@"%zd",self.paramModel.SystemType],
-                                 @"ResourceID":self.paramModel.ResourceID,
-                                 @"MaterialID":self.paramModel.MaterialID,
-                                 @"ResourceName":self.paramModel.ResourceName,
-                                 @"MaterialName":self.paramModel.MaterialName,
-                                 @"ResourcePCLink":self.paramModel.ResourcePCLink,
-                                 @"ResourceIOSLink":self.paramModel.ResourceIOSLink,
-                                 @"ResourceAndroidLink":self.paramModel.ResourceAndroidLink,
+                                 @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
+                                 @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
+                                 @"ResourceName": Note_HandleParams(self.paramModel.ResourceName),
+                                 @"MaterialName":Note_HandleParams(self.paramModel.MaterialName),
+                                 @"ResourcePCLink":Note_HandleParams(self.paramModel.ResourcePCLink),
+                                 @"ResourceIOSLink":Note_HandleParams(self.paramModel.ResourceIOSLink),
+                                 @"ResourceAndroidLink":Note_HandleParams(self.paramModel.ResourceAndroidLink),
                                  @"MaterialURL":@"",
                                  @"MaterialContent":@"",
-                                 @"MaterialTotal":self.paramModel.MaterialTotal
+                                 @"MaterialTotal":Note_HandleParams(self.paramModel.MaterialTotal)
                                  };
         
- [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(self.paramModel.UserID).setToken(self.paramModel.Token).setParameters(params)starSendRequestSuccess:^(id respone) {
+ [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(Note_HandleParams(self.paramModel.UserID)).setToken(Note_HandleParams(self.paramModel.Token)).setParameters(params)starSendRequestSuccess:^(id respone) {
             
             
             

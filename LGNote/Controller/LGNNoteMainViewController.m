@@ -14,16 +14,22 @@
 #import "LGNNoteEditViewController.h"
 #import "LGNoteConfigure.h"
 #import "LGNSearchToolView.h"
-
+#import "LGNNewSearchToolView.h"
+#import "LGNNewSeleteDataView.h"
 @interface LGNNoteMainViewController ()
 <
 LGNoteBaseTableViewCustomDelegate,
 LGFilterViewControllerDelegate,
-SearchToolViewDelegate
+SearchToolViewDelegate,
+NewSearchToolViewDelegate,
+LGNNewSeleteDataViewDelegate
 >
 
 @property (nonatomic, strong) LGNViewModel *viewModel;
 @property (nonatomic, strong) LGNSearchToolView *toolView;
+@property (nonatomic, strong) LGNNewSearchToolView *newToolView;
+@property (nonatomic, strong) LGNNewSeleteDataView *seleteDataView;
+
 @property (nonatomic, assign) NoteNaviBarLeftItemStyle style;
 @property (nonatomic, assign) SystemUsedType systemType;
 @property (nonatomic, copy)   LeftNaviBarItemBlock leftItemBlock;
@@ -61,20 +67,47 @@ SearchToolViewDelegate
 }
 
 - (void)creatSubViews{
-    [self.view addSubview:self.toolView];
-    [self.view addSubview:self.tableView];
-    [self setupSubViewsContraints];
+    if(self.systemType == SystemUsedTypeNew){
+          [self.view addSubview: self.newToolView];
+           [self.view addSubview:self.tableView];
+         self.seleteDataView = [[LGNNewSeleteDataView alloc] init];
+        
+        self.seleteDataView.dataSource =@[@"近一周",@"近一个月",@"本学期",@"自定义"];
+         self.seleteDataView.delegate = self;
+      
+        [self.newToolView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.centerX.top.equalTo(self.view);
+            make.height.mas_equalTo(45);
+        }];
+        
+        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.equalTo(self.view);
+             make.top.equalTo(self.newToolView.mas_bottom);
+        }];
+    }else{
+          [self.view addSubview:self.toolView];
+        [self.view addSubview:self.tableView];
+        
+            [self.toolView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.centerX.top.equalTo(self.view);
+                make.height.mas_equalTo(45);
+            }];
+            [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.bottom.equalTo(self.view);
+                make.top.equalTo(self.toolView.mas_bottom);
+            }];
+        
+    }
+    
+  
+ 
+   // [self setupSubViewsContraints];
 }
 
 - (void)setupSubViewsContraints{
-    [self.toolView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.centerX.top.equalTo(self.view);
-        make.height.mas_equalTo(45);
-    }];
-    [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.equalTo(self.view);
-        make.top.equalTo(self.toolView.mas_bottom);
-    }];
+
+    
+   
 }
 
 
@@ -190,7 +223,56 @@ SearchToolViewDelegate
     }];
     [self.navigationController pushViewController:filterController animated:YES];
 }
+#pragma mark - NewSearchToolViewDelegate
+- (void)NewenterSearchEvent{
+    LGNNoteSearchViewController *searchVC = [[LGNNoteSearchViewController alloc] init];
+    searchVC.subjectArray =self.viewModel.subjectArray;
+    [searchVC configureParam:self.viewModel.paramModel];
+    searchVC.backRefreshSubject = [RACSubject subject];
+    [self.navigationController pushViewController:searchVC animated:YES];
+    @weakify(self);
+    [searchVC.backRefreshSubject subscribeNext:^(id  _Nullable x) {
+        @strongify(self);
+        self.viewModel.paramModel.PageIndex = 1;
+        [self reSettingParams];
+        self.tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
+        [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
+        
+    }];
+}
 
+- (void)NewfilterEvent{
+    
+    
+    
+    LGNNoteFilterViewController *filterController = [[LGNNoteFilterViewController alloc] init];
+    filterController.filterStyle = FilterStyleCustom;
+    filterController.delegate = self;
+    [filterController bindViewModelParam:@[self.viewModel.paramModel.C_SubjectID,self.viewModel.paramModel.C_SystemID]];
+    @weakify(filterController);
+    [RACObserve(self.viewModel, subjectArray) subscribeNext:^(id  _Nullable x) {
+        @strongify(filterController);
+        filterController.subjectArray = x;
+    }];
+    [RACObserve(self.viewModel, systemArray) subscribeNext:^(id  _Nullable x) {
+        @strongify(filterController);
+        filterController.systemArray = x;
+    }];
+    [self.navigationController pushViewController:filterController animated:YES];
+}
+
+- (void)NewSeleteEvent:(BOOL)selete{
+     [self.seleteDataView showView];
+    
+    NSLog(@"选择时间");
+}
+
+#pragma mark -LGNNewSeleteDataViewDelegate
+- (void)filterViewDidChooseCallBack:(NSString *)time starTime:(NSString *)starTime endTime:(NSString *)endTime{
+    
+    
+    
+}
 
 #pragma mark - FilterDelegate
 - (void)filterViewDidChooseCallBack:(NSString *)subjecID systemID:(NSString *)systemID{
@@ -294,6 +376,18 @@ SearchToolViewDelegate
         _toolView.delegate = self;
     }
     return _toolView;
+}
+
+- (LGNNewSearchToolView *)newToolView{
+    
+    if (!_newToolView) {
+        LGNSearchToolViewConfigure *configure = [[LGNSearchToolViewConfigure alloc] init];
+        configure.style = (_systemType == SystemUsedTypeAssistanter) ? SearchToolViewStyleFilter:SearchToolViewStyleDefault;
+        _newToolView = [[LGNNewSearchToolView alloc] initWithFrame:CGRectZero configure:configure];
+        _newToolView.delegate = self;
+    }
+    return _newToolView;
+    
 }
 
 

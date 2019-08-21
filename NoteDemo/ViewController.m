@@ -27,7 +27,7 @@
 
 - (void)enterNoteViewController:(UIButton *)sender {
 
-    LGNNoteMainViewController *noteController = [[LGNNoteMainViewController alloc] initWithNaviBarLeftItemStyle:NoteMainViewControllerNaviBarStyleBack systemType:SystemUsedTypeOther];
+    LGNNoteMainViewController *noteController = [[LGNNoteMainViewController alloc] initWithNaviBarLeftItemStyle:NoteMainViewControllerNaviBarStyleBack systemType:SystemUsedTypeAssistanter];
     // 配置笔记首页所需参数
     noteController.paramModel = [self configureParams];
     
@@ -63,9 +63,9 @@
     params.UserName = @"林进添";
     params.CPBaseUrl = @"http://192.168.129.130:10103//";
     
-   // params.NoteBaseUrl= @"http://192.168.129.8:10154/";
+    params.NoteBaseUrl= @"http://192.168.129.8:10154/";
   
-    params.SystemType = SystemType_ASSISTANTER;
+    params.SystemType = SystemType_HOME;
     
     return params;
     
