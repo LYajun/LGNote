@@ -27,7 +27,7 @@
 
 - (void)enterNoteViewController:(UIButton *)sender {
 
-    LGNNoteMainViewController *noteController = [[LGNNoteMainViewController alloc] initWithNaviBarLeftItemStyle:NoteMainViewControllerNaviBarStyleBack systemType:SystemUsedTypeAssistanter];
+    LGNNoteMainViewController *noteController = [[LGNNoteMainViewController alloc] initWithNaviBarLeftItemStyle:NoteMainViewControllerNaviBarStyleBack systemType:SystemUsedTypeNew];
     // 配置笔记首页所需参数
     noteController.paramModel = [self configureParams];
     
@@ -37,7 +37,7 @@
 - (LGNParamModel *)configureParams{
     LGNParamModel *params = [[LGNParamModel alloc] init];
     
-    //S27-508-EC82==684C8D5E-F197-4DD9-BCC5-2FE8A0DFC248==g2==2==g2姓名==http://192.168.3.158:10103//===
+    //S0-0129-CE46==2168943E-A8C0-4E46-890A-4746C3CC0E1A==bkstu152==2==黎清微==http://192.168.129.129:10103//===
     
     params.SystemID = @"S21";
     params.SubjectID = @"All";
@@ -48,8 +48,8 @@
     params.MaterialCount = 10;
     params.SubjectName = @"英语";
     params.IsKeyPoint = @"-1";
-    params.SchoolID = @"S14-411-F5DE";
-    params.Token = @"E490FADF-D97B-4B17-9F84-E3DA3F2EB09C";
+    params.SchoolID = @"S0-0129-CE46";
+    params.Token = @"2168943E-A8C0-4E46-890A-4746C3CC0E1A";
     params.ResourceName = @"我的笔记";
     params.ResourceID = @"YXRW-tcxzl1-00000000000000000000000000000000000033-eb5e4f7e-d8d5-4d75-ab67-e2100d5f08cf";
     params.MaterialName = @"4f166e3330c43040bfc3ba24c89d7050.jpeg";
@@ -58,14 +58,14 @@
     params.ResourceIOSLink = @"";
     params.ResourcePCLink = @"";
     params.ResourceAndroidLink=@"";
-    params.UserID = @"tcstu161";
+    params.UserID = @"bkstu152";
     params.UserType = 2;
-    params.UserName = @"林进添";
-    params.CPBaseUrl = @"http://192.168.129.130:10103//";
+    params.UserName = @"黎清微";
+    params.CPBaseUrl = @"http://192.168.129.129:10103//";
     
-    params.NoteBaseUrl= @"http://192.168.129.8:10154/";
+    //params.NoteBaseUrl= @"http://192.168.129.8:10154/";
   
-    params.SystemType = SystemType_HOME;
+    params.SystemType = SystemType_ASSISTANTER;
     
     return params;
     

@@ -16,15 +16,22 @@
 #import "LGNSearchToolView.h"
 #import "LGNNewSearchToolView.h"
 #import "LGNNewSeleteDataView.h"
+#import "AppDelegate.h"
+#import "LGNNewFilterViewController.h"
+
 @interface LGNNoteMainViewController ()
 <
 LGNoteBaseTableViewCustomDelegate,
 LGFilterViewControllerDelegate,
 SearchToolViewDelegate,
 NewSearchToolViewDelegate,
-LGNNewSeleteDataViewDelegate
+LGNNewSeleteDataViewDelegate,
+LGNNewFilterDelegate
 >
 
+@property (nonatomic,strong) LGNNewFilterViewController* filterViewController;
+// 记录遮盖按钮
+@property (nonatomic, strong) UIButton *corverBtn;
 @property (nonatomic, strong) LGNViewModel *viewModel;
 @property (nonatomic, strong) LGNSearchToolView *toolView;
 @property (nonatomic, strong) LGNNewSearchToolView *newToolView;
@@ -33,6 +40,11 @@ LGNNewSeleteDataViewDelegate
 @property (nonatomic, assign) NoteNaviBarLeftItemStyle style;
 @property (nonatomic, assign) SystemUsedType systemType;
 @property (nonatomic, copy)   LeftNaviBarItemBlock leftItemBlock;
+
+//选择时间类型
+@property (nonatomic,strong) NSString * DateType;
+@property (nonatomic,strong) NSString * starTime;
+@property (nonatomic,strong) NSString * endTime;
 
 @end
 
@@ -71,8 +83,10 @@ LGNNewSeleteDataViewDelegate
           [self.view addSubview: self.newToolView];
            [self.view addSubview:self.tableView];
          self.seleteDataView = [[LGNNewSeleteDataView alloc] init];
+    
+        self.DateType = @"全   部";
         
-        self.seleteDataView.dataSource =@[@"近一周",@"近一个月",@"本学期",@"自定义"];
+        self.seleteDataView.dataSource =@[@"近一周",@"本   月",@"本学期",@"自定义"];
          self.seleteDataView.delegate = self;
       
         [self.newToolView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -118,6 +132,8 @@ LGNNewSeleteDataViewDelegate
 }
 
 - (void)addLeftNavigationBar{
+    
+    
     UIImage *image = [NSBundle lg_imagePathName:@"note_back"];
     _leftBarItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(leftNavigationBar:)];
     if (_style != NoteMainViewControllerNaviBarStyleUserIcon) {
@@ -133,6 +149,9 @@ LGNNewSeleteDataViewDelegate
 
 #pragma mark - AddNote
 - (void)rightNavigationBar:(UIBarButtonItem *)sender{
+     [self.seleteDataView hideViewForCelerity];
+    self.newToolView.seleteBtn.selected = NO;
+    
     LGNNoteEditViewController *editController = [[LGNNoteEditViewController alloc] init];
     editController.isNewNote = YES;
     editController.paramModel = self.paramModel;
@@ -158,6 +177,10 @@ LGNNewSeleteDataViewDelegate
 }
 
 - (void)leftNavigationBar:(UIBarButtonItem *)sender{
+    
+    [self.seleteDataView hideViewForCelerity];
+    self.newToolView.seleteBtn.selected = NO;
+    
     if (_style == NoteMainViewControllerNaviBarStyleBack) {
         [self.navigationController popViewControllerAnimated:YES];
         return;
@@ -188,6 +211,7 @@ LGNNewSeleteDataViewDelegate
 
 #pragma mark - SearchToolDelegate
 - (void)enterSearchEvent{
+    
     LGNNoteSearchViewController *searchVC = [[LGNNoteSearchViewController alloc] init];
     searchVC.subjectArray =self.viewModel.subjectArray;
     [searchVC configureParam:self.viewModel.paramModel];
@@ -205,7 +229,6 @@ LGNNewSeleteDataViewDelegate
 }
 
 - (void)filterEvent{
-    
     
   
     LGNNoteFilterViewController *filterController = [[LGNNoteFilterViewController alloc] init];
@@ -225,6 +248,8 @@ LGNNewSeleteDataViewDelegate
 }
 #pragma mark - NewSearchToolViewDelegate
 - (void)NewenterSearchEvent{
+    [self.seleteDataView hideViewForCelerity];
+    self.newToolView.seleteBtn.selected = NO;
     LGNNoteSearchViewController *searchVC = [[LGNNoteSearchViewController alloc] init];
     searchVC.subjectArray =self.viewModel.subjectArray;
     [searchVC configureParam:self.viewModel.paramModel];
@@ -243,26 +268,142 @@ LGNNewSeleteDataViewDelegate
 
 - (void)NewfilterEvent{
     
+   [self.seleteDataView hideViewForCelerity];
+    self.newToolView.seleteBtn.selected = NO;
     
     
-    LGNNoteFilterViewController *filterController = [[LGNNoteFilterViewController alloc] init];
-    filterController.filterStyle = FilterStyleCustom;
-    filterController.delegate = self;
-    [filterController bindViewModelParam:@[self.viewModel.paramModel.C_SubjectID,self.viewModel.paramModel.C_SystemID]];
-    @weakify(filterController);
-    [RACObserve(self.viewModel, subjectArray) subscribeNext:^(id  _Nullable x) {
-        @strongify(filterController);
-        filterController.subjectArray = x;
+    if (self.filterViewController == nil) {
+          LGNNewFilterViewController *filterController = [[LGNNewFilterViewController alloc] init];
+               filterController.view.frame = CGRectMake(kMain_Screen_Width, 0, kMain_Screen_Width-50, kMain_Screen_Height);
+        
+        self.filterViewController = filterController;
+        
+        filterController.filterStyle = FilterStyleCustom;
+        filterController.delegate = self;
+        [filterController bindViewModelParam:@[self.viewModel.paramModel.C_SubjectID,self.viewModel.paramModel.C_SystemID]];
+        @weakify(filterController);
+        [RACObserve(self.viewModel, subjectArray) subscribeNext:^(id  _Nullable x) {
+            @strongify(filterController);
+            filterController.subjectArray = x;
+        }];
+        [RACObserve(self.viewModel, systemArray) subscribeNext:^(id  _Nullable x) {
+            @strongify(filterController);
+            filterController.systemArray = x;
+        }];
+       // [self.navigationController pushViewController:filterController animated:YES];
+        
+        
+        [UIView animateWithDuration:0.25 animations:^{
+                        filterController.view.frame = CGRectMake(50, 0, kMain_Screen_Width-50, kMain_Screen_Height);
+            
+                    }];
+        
+        //        // 创建拖拽手势对象
+                UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panRecognizer:)];
+        
+        //        // 将手势对象添加图片上
+                [filterController.view addGestureRecognizer:panRecognizer];
+                AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+                [tempAppDelegate.window addSubview:filterController.view];
+        
+        
+        // 创建遮盖按钮
+                if (self.corverBtn == nil) {
+                    UIButton *corverBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, kMain_Screen_Height)];
+                    corverBtn.backgroundColor = [UIColor blackColor];
+                    corverBtn.alpha = 0.2;
+                    self.corverBtn = corverBtn;
+                    [corverBtn addTarget:self action:@selector(corverBtnLisenter:) forControlEvents:UIControlEventTouchUpInside];
+                    [tempAppDelegate.window addSubview:corverBtn];
+                }else{
+                    self.corverBtn.hidden = NO;
+                }
+            }
+            //如果不为空，将其加载出来
+            else
+            {
+                [UIView animateWithDuration:0.25 animations:^{
+                    self.filterViewController.view.frame = CGRectMake(50, 0, kMain_Screen_Width-50, kMain_Screen_Height);
+                    // self.chooseVC = nil;
+                    self.corverBtn.hidden = NO;
+                }];
+        
+        
+        
+    }
+  
+    
+   
+}
+# pragma mark - LGNNewFilterDelegate
+
+- (void)NewfilterViewDidChooseCallBack:(NSString *)subjecID systemID:(NSString *)systemID{
+    
+    [self corverBtnLisenter:self.corverBtn];
+    
+    self.viewModel.paramModel.C_SubjectID = subjecID;
+    self.viewModel.paramModel.C_SystemID = systemID;
+    self.tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
+    
+    //筛选时重置PageIndex为1 查看全部的.
+    self.viewModel.paramModel.PageIndex = 1;
+    [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
+    
+    
+    if([subjecID isEqualToString:@"All"] && [systemID isEqualToString:@"All"]){
+        
+        [self.toolView.filterBtn setImage:[NSBundle lg_imagePathName:@"note_filter"] forState:UIControlStateNormal];
+    }else{
+        
+        [self.toolView.filterBtn setImage:[NSBundle lg_imagePathName:@"note_filter_sel"] forState:UIControlStateNormal];
+    }
+    
+}
+
+
+# pragma mark - 遮盖按钮的点击事件
+- (void)corverBtnLisenter:(UIButton *)button{
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.filterViewController.view.frame = CGRectMake(kMain_Screen_Width, 0, kMain_Screen_Width-100, kMain_Screen_Height);
+        //        self.chooseCarVC = nil;
     }];
-    [RACObserve(self.viewModel, systemArray) subscribeNext:^(id  _Nullable x) {
-        @strongify(filterController);
-        filterController.systemArray = x;
-    }];
-    [self.navigationController pushViewController:filterController animated:YES];
+    button.hidden = YES;
+}
+
+/**
+ *  监听拖拽手势回调
+ */
+- (void)panRecognizer:(UIPanGestureRecognizer *)panRecognizer{
+//    // 获得移动点，以第一个点作为参考点
+//   // CGPoint point = [panRecognizer translationInView:self.rightView];
+//    //        NSLog(@"%f--%f",point.x,point.y);
+//    if (panRecognizer.state == UIGestureRecognizerStateEnded && point.x < -5) {
+//    }else if (panRecognizer.state == UIGestureRecognizerStateEnded && point.x > 10){
+//        [UIView animateWithDuration:0.25 animations:^{
+//            self.filterViewController.view.frame = CGRectMake(kMain_Screen_Width, 0, kMain_Screen_Width-100, kMain_Screen_Height);
+//            self.filterViewController = nil;
+//            self.corverBtn.hidden = YES;
+//        }];
+//    }
 }
 
 - (void)NewSeleteEvent:(BOOL)selete{
-     [self.seleteDataView showView];
+    
+    if(selete){
+        
+        //[self.seleteDataView bindViewModelParam:_DateType];
+        
+        [self.seleteDataView bindViewModelParam:_DateType starTime:_starTime endTime:_endTime];
+        
+       [self.seleteDataView showView];
+        
+    }else{
+        
+         [self.seleteDataView hideView];
+    }
+    
+    
     
     NSLog(@"选择时间");
 }
@@ -270,8 +411,28 @@ LGNNewSeleteDataViewDelegate
 #pragma mark -LGNNewSeleteDataViewDelegate
 - (void)filterViewDidChooseCallBack:(NSString *)time starTime:(NSString *)starTime endTime:(NSString *)endTime{
     
+    _DateType = time;
+    _starTime = starTime;
+    _endTime = endTime;
     
+     [self.newToolView.seleteBtn setTitle:time forState:UIControlStateNormal];
     
+    [self.seleteDataView hideView];
+     self.newToolView.seleteBtn.selected = NO;
+}
+
+- (void)ClickresetBtn{
+    
+    _DateType =@"全   部";
+    [self.newToolView.seleteBtn setTitle:@"全   部" forState:UIControlStateNormal];
+    self.newToolView.seleteBtn.selected = NO;
+    
+     [self.seleteDataView hideView];
+}
+
+- (void)ClickMBL{
+    
+     self.newToolView.seleteBtn.selected = NO;
 }
 
 #pragma mark - FilterDelegate

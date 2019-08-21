@@ -124,7 +124,7 @@
         
         _tipsImageView = [[UIImageView alloc]init];
         
-        _tipsImageView.image = [NSBundle lg_imagePathName:@"note_subject"];
+        _tipsImageView.image = [NSBundle lg_imagePathName:@"lgN_timesift"];
         
     }
     
@@ -136,13 +136,13 @@
     if (!_seleteBtn) {
         _seleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _seleteBtn.frame = CGRectZero;
-        [_seleteBtn setTitle:@"近一周" forState:UIControlStateNormal];
+        [_seleteBtn setTitle:@"全   部" forState:UIControlStateNormal];
         _seleteBtn.titleLabel.font = LGFontSize(13);
         _seleteBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         
 
-        [_seleteBtn setImage:[NSBundle lg_imagePathName:@"note_source_selected"] forState:UIControlStateNormal];
-        [_seleteBtn setImage:[NSBundle lg_imagePathName:@"note_source_selected"] forState:UIControlStateSelected];
+        [_seleteBtn setImage:[NSBundle lg_imagePathName:@"lgN_pull"] forState:UIControlStateNormal];
+        [_seleteBtn setImage:[NSBundle lg_imagePathName:@"lgN_up"] forState:UIControlStateSelected];
         
         _seleteBtn.imageEdgeInsets= UIEdgeInsetsMake(0, 47, 0, 0);
         _seleteBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -5, 0, 10);
@@ -166,7 +166,7 @@
     if (!_filterBtn) {
         _filterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _filterBtn.frame = CGRectZero;
-        [_filterBtn setImage:[NSBundle lg_imagePathName:@"note_filter"] forState:UIControlStateNormal];
+        [_filterBtn setImage:[NSBundle lg_imagePathName:@"lgN_mroebg"] forState:UIControlStateNormal];
         [_filterBtn addTarget:self action:@selector(filterBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _filterBtn;
@@ -176,7 +176,7 @@
 - (LGNoteBaseTextField *)searchBar{
     if (!_searchBar) {
         _searchBar = [[LGNoteBaseTextField alloc] init];
-        _searchBar.layer.cornerRadius = 15;
+        _searchBar.layer.cornerRadius = 12;
         _searchBar.layer.masksToBounds = YES;
         _searchBar.borderStyle = UITextBorderStyleNone;
         _searchBar.placeholder = @"请输入关键词搜索";

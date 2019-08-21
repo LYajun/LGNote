@@ -20,7 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)filterViewDidChooseCallBack:(NSString *)time starTime:(NSString *)starTime endTime:(NSString *)endTime;
 
 //点击重置
+- (void)ClickresetBtn;
 
+//点击毛玻璃
+- (void)ClickMBL;
 @end
 
 @interface LGNNewSeleteDataView : UIView
@@ -33,8 +36,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)hideView;
 
+//快速隐藏
 
+- (void)hideViewForCelerity;
 
+/** 传入VM的参数 */
+- (void)bindViewModelParam:(NSString*)type starTime:(NSString*)starT endTime:(NSString*)endT;
 @end
 
 NS_ASSUME_NONNULL_END
