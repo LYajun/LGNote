@@ -41,6 +41,10 @@ UIKIT_EXTERN NSString *const CheckNoteBaseUrlKey;
 @property (nonatomic, strong) RACCommand *getDetailNoteCommand;
 @property (nonatomic, strong) RACSubject *getDetailNoteSubject;
 
+/** 获取本学期开始和截止时间 */
+@property (nonatomic, strong) RACCommand *getTermTimeCommand;
+@property (nonatomic, strong) RACSubject *getTermTimeSubject;
+
 
 /** 数据总数 */
 @property (nonatomic, assign) NSInteger totalCount;

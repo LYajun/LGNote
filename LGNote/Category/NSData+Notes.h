@@ -11,7 +11,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+
 @interface NSData (Notes)
+
+
+
 
 /**
  压缩data

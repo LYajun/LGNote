@@ -11,6 +11,8 @@
 
 @implementation NSData (Notes)
 
+
+
 - (NSData *)zipData{
     if ([self length] == 0) return self;
     

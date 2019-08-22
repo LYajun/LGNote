@@ -108,6 +108,20 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         return [RACSignal empty];
     }];
     
+   /** 获取本学期开始和截止时间 */
+    self.getTermTimeSubject = [RACSubject subject];
+    self.getTermTimeCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
+        
+        @strongify(self);
+        [[self getTermTimeWithParams:input] subscribeNext:^(id  _Nullable x) {
+            @strongify(self);
+            [self.getTermTimeSubject sendNext:x];
+        }];
+        return [RACSignal empty];
+    }];
+    
+    
+    
 //    self.deletedSubject = [RACSubject subject];
 //    self.deletedCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(NoteModel * _Nullable inputModel) {
 //        @strongify(self);
@@ -513,6 +527,59 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         return nil;
     }];
 }
+
+/** 获取本学期开始和截止时间 */
+
+- (RACSignal *)getTermTimeWithParams:(id)params{
+    
+    
+    return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+        NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetTermInformation"];
+        
+        NSLog(@"%@",url);
+        
+        
+        // Note_HandleParams(self.paramModel.Token)
+        
+        NSDictionary *params = @{
+                                 @"UserID":Note_HandleParams(self.paramModel.UserID),
+                                 @"UserType":@(self.paramModel.UserType),
+                                 @"SecretKey": Note_HandleParams(self.paramModel.Secret),
+                                 @"SchoolID":Note_HandleParams(self.paramModel.SchoolID),
+                                 
+                                 @"BackUpOne":@"",
+                                 @"BackUpTwo":@""
+                                 };
+        
+        [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(Note_HandleParams(self.paramModel.UserID)).setToken( Note_HandleParams(self.paramModel.Token)).setParameters(params)starSendRequestSuccess:^(id respone) {
+            
+          
+            
+            if (![respone[kErrorcode] hasSuffix:kSuccess]) {
+                [subscriber sendNext:nil];
+                [subscriber sendCompleted];
+                return;
+            }
+
+            
+            
+            self.paramModel.TermStartTime = respone[@"Result"][@"TermStartDate"];
+            self.paramModel.TermEndTime = respone[@"Result"][@"TermEndDate"];
+
+            
+            [subscriber sendNext:nil];
+            [subscriber sendCompleted];
+            
+        } failure:^(NSError *error) {
+            [subscriber sendNext:nil];
+            [subscriber sendCompleted];
+        }];
+        return nil;
+    }];
+}
+
+
+
 //添加、编辑和删除当前学生笔记   1添加  0编辑  3 删除
 - (RACSignal *)operatedNoteWithParams:(id)params{
     

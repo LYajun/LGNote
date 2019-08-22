@@ -24,7 +24,7 @@ typedef NS_ENUM(NSInteger, NewFilterStyle) {
  @param subjecID <#subjecID description#>
  @param systemID <#systemID description#>
  */
-- (void)NewfilterViewDidChooseCallBack:(NSString *)subjecID systemID:(NSString *)systemID;
+- (void)NewfilterViewDidChooseCallBack:(NSString *)subjecID systemID:(NSString *)systemID remake:(BOOL)remake;
 
 @end
 

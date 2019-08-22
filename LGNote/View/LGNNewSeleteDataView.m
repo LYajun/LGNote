@@ -10,6 +10,7 @@
 #import "LGNConfigure.h"
 #import "LGNNoteFilterCollectionViewCell.h"
 #import "LGNNoteFilterCollectionReusableViewHeader.h"
+
 @interface LGNNewSeleteDataView ()<
 UICollectionViewDelegate,
 UICollectionViewDataSource,
@@ -58,6 +59,10 @@ UICollectionViewDelegateFlowLayout
     return self;
 }
 
+- (void)dealloc{
+    
+    NSLog(@"销毁了LGNNewSeleteDataView");
+}
 
 - (void)layoutUI {
     
@@ -298,6 +303,8 @@ UICollectionViewDelegateFlowLayout
     
      [self endEditing:YES];
     
+    
+    
     if([self.currentTimeID isEqualToString:@"自定义"]){
         
         if(IsStrEmpty(self.starTimeF.text) ){
@@ -317,9 +324,46 @@ UICollectionViewDelegateFlowLayout
     }
     
     
+    
+    NSString * startTime;
+     NSString * endTime;
+    
+    if([self.currentTimeID isEqualToString:@"近一周"]){
+        
+        
+        startTime = [[[self currentThisWeekInNowDate:[self currentDateNow] atDateType:NoteDateTypeWeek]componentsSeparatedByString:@"~"] firstObject];
+        
+        endTime =[[[self currentThisWeekInNowDate:[self currentDateNow] atDateType:NoteDateTypeWeek]componentsSeparatedByString:@"~"] lastObject];
+        
+        
+    }else if ([self.currentTimeID isEqualToString:@"本   月"]){
+        
+        startTime = [[[self currentThisWeekInNowDate:[self currentDateNow] atDateType:NoteDateTypeMonth]componentsSeparatedByString:@"~"] firstObject];
+        
+        endTime =[[[self currentThisWeekInNowDate:[self currentDateNow] atDateType:NoteDateTypeMonth]componentsSeparatedByString:@"~"] lastObject];
+    }else if ([self.currentTimeID isEqualToString:@"自定义"]){
+        
+        startTime =self.starTimeF.text;
+        endTime =self.endTimeF.text;
+        
+    }else if ([self.currentTimeID isEqualToString:@"全   部"]){
+        
+        startTime =@"";
+        endTime =@"";
+        
+    }
+    else{
+        //本学期
+        
+        startTime = @"2019-02-15";
+        endTime =@"2019-07-01";
+    }
+    
+    
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(filterViewDidChooseCallBack:starTime:endTime:)]) {
        
-        [self.delegate filterViewDidChooseCallBack:_currentTimeID starTime:self.starTimeF.text endTime:self.endTimeF.text];
+        [self.delegate filterViewDidChooseCallBack:_currentTimeID starTime:startTime endTime:endTime];
       
     }
 }
@@ -444,6 +488,64 @@ UICollectionViewDelegateFlowLayout
     }else{
         self.endTimeF.text = [fmt stringFromDate:date];
     }
+}
+
+- (NSDate *)currentDateNow{
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+    
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];
+    
+    [formatter setTimeZone:timeZone];
+    NSDate *date = [[NSDate alloc] init];
+    
+    return date;
+}
+
+
+-(NSString *)currentThisWeekInNowDate:(NSDate *)nowDate atDateType:(NoteDateType)atDateType{
+    NSInteger type;
+    switch (atDateType) {
+        case NoteDateTypeWeek:{
+            type = NSCalendarUnitWeekOfMonth;
+        }
+            break;
+        case NoteDateTypeMonth:{
+            type = NSCalendarUnitMonth;
+        }
+            break;
+        case NoteDateTypeYear:{
+            type = NSCalendarUnitYear;
+        }
+            break;
+        default:
+            break;
+    }
+    
+    if (!nowDate) {
+        nowDate = [NSDate date];
+    }
+    double interval = 0;
+    NSDate *beginDate = nil;
+    NSDate *endDate = nil;
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    [calendar setFirstWeekday:2];
+    BOOL isOK = [calendar rangeOfUnit:type startDate:&beginDate interval:&interval forDate:nowDate];
+    if (!isOK) {
+        return @"时间出现错误";
+    }
+    endDate = [beginDate dateByAddingTimeInterval:interval-1];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *beginString = [dateFormatter stringFromDate:beginDate];
+    NSString *endString = [dateFormatter stringFromDate:endDate];
+    NSString *dateStr = [NSString stringWithFormat:@"%@~%@",beginString,endString];
+    return dateStr;
 }
 
 @end

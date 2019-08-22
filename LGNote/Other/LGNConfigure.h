@@ -21,4 +21,5 @@
 #import "UIButton+Notes.h"
 #import "NSString+Notes.h"
 #import "LGNSingleTool.h"
+#import "NSData+Notes.h"
 #endif /* Configure_h */

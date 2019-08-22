@@ -50,8 +50,10 @@ UICollectionViewDelegateFlowLayout
     [self creatSubviews];
 }
 - (void)bindViewModelParam:(NSArray *)param{
-    self.currentSubjectID = [param firstObject];
-    self.currenSystemID = [param lastObject];
+    self.currentSubjectID = param[0];
+    self.currenSystemID = param [1];
+    
+    self.RemarkBtn.on =[param [2] isEqualToString:@"1"]?YES:NO;
 }
 
 - (void)creatSubviews{
@@ -207,8 +209,10 @@ UICollectionViewDelegateFlowLayout
 
 #pragma mark - 确认选项
 - (void)sureBtnClick:(UIButton *)sender{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(NewfilterViewDidChooseCallBack:systemID:)]) {
-        [self.delegate NewfilterViewDidChooseCallBack:self.currentSubjectID systemID:self.currenSystemID];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(NewfilterViewDidChooseCallBack:systemID:remake:)]) {
+        [self.delegate NewfilterViewDidChooseCallBack:self.currentSubjectID systemID:self.currenSystemID remake:self.RemarkBtn.on];
+        
+        
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

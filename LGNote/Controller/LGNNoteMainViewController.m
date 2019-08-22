@@ -145,6 +145,7 @@ LGNNewFilterDelegate
 - (void)lg_bindData{
     self.viewModel.paramModel = self.paramModel;
     [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
+    
 }
 
 #pragma mark - AddNote
@@ -280,7 +281,7 @@ LGNNewFilterDelegate
         
         filterController.filterStyle = FilterStyleCustom;
         filterController.delegate = self;
-        [filterController bindViewModelParam:@[self.viewModel.paramModel.C_SubjectID,self.viewModel.paramModel.C_SystemID]];
+        [filterController bindViewModelParam:@[self.viewModel.paramModel.C_SubjectID,self.viewModel.paramModel.C_SystemID,self.viewModel.paramModel.IsKeyPoint]];
         @weakify(filterController);
         [RACObserve(self.viewModel, subjectArray) subscribeNext:^(id  _Nullable x) {
             @strongify(filterController);
@@ -337,9 +338,12 @@ LGNNewFilterDelegate
 }
 # pragma mark - LGNNewFilterDelegate
 
-- (void)NewfilterViewDidChooseCallBack:(NSString *)subjecID systemID:(NSString *)systemID{
-    
+- (void)NewfilterViewDidChooseCallBack:(NSString *)subjecID systemID:(NSString *)systemID remake:(BOOL)remake{
     [self corverBtnLisenter:self.corverBtn];
+    
+    // 是否是查看重点笔记；1表示查看重点笔记，-1是查看全部笔记
+    
+    self.viewModel.paramModel.IsKeyPoint = remake ? @"1":@"-1";
     
     self.viewModel.paramModel.C_SubjectID = subjecID;
     self.viewModel.paramModel.C_SystemID = systemID;
@@ -349,15 +353,22 @@ LGNNewFilterDelegate
     self.viewModel.paramModel.PageIndex = 1;
     [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
     
+
     
-    if([subjecID isEqualToString:@"All"] && [systemID isEqualToString:@"All"]){
-        
-        [self.toolView.filterBtn setImage:[NSBundle lg_imagePathName:@"note_filter"] forState:UIControlStateNormal];
-    }else{
-        
-        [self.toolView.filterBtn setImage:[NSBundle lg_imagePathName:@"note_filter_sel"] forState:UIControlStateNormal];
-    }
+//    if([subjecID isEqualToString:@"All"] && [systemID isEqualToString:@"All"]){
+//
+//        [self.toolView.filterBtn setImage:[NSBundle lg_imagePathName:@"note_filter"] forState:UIControlStateNormal];
+//    }else{
+//
+//        [self.toolView.filterBtn setImage:[NSBundle lg_imagePathName:@"note_filter_sel"] forState:UIControlStateNormal];
+//    }
     
+    
+}
+
+- (void)NewfilterViewDidChooseCallBack:(NSString *)subjecID systemID:(NSString *)systemID{
+    
+  
 }
 
 
@@ -366,7 +377,9 @@ LGNNewFilterDelegate
     
     [UIView animateWithDuration:0.25 animations:^{
         self.filterViewController.view.frame = CGRectMake(kMain_Screen_Width, 0, kMain_Screen_Width-100, kMain_Screen_Height);
-        //        self.chooseCarVC = nil;
+            self.filterViewController = nil;
+        
+       // [self.filterViewController removeFromParentViewController];
     }];
     button.hidden = YES;
 }
@@ -392,11 +405,14 @@ LGNNewFilterDelegate
     
     if(selete){
         
-        //[self.seleteDataView bindViewModelParam:_DateType];
-        
         [self.seleteDataView bindViewModelParam:_DateType starTime:_starTime endTime:_endTime];
         
        [self.seleteDataView showView];
+        
+        
+     if(IsStrEmpty(self.viewModel.paramModel.TermStartTime)){
+            [self.viewModel.getTermTimeCommand execute:self.viewModel.paramModel];
+        }
         
     }else{
         
@@ -415,19 +431,52 @@ LGNNewFilterDelegate
     _starTime = starTime;
     _endTime = endTime;
     
+    if([time isEqualToString:@"本学期"]){
+        
+        _starTime = self.viewModel.paramModel.TermStartTime;
+        _endTime = self.viewModel.paramModel.TermEndTime;
+    }
+      
+    
+    
      [self.newToolView.seleteBtn setTitle:time forState:UIControlStateNormal];
     
     [self.seleteDataView hideView];
      self.newToolView.seleteBtn.selected = NO;
+    
+      //根据时间请求数据
+    self.viewModel.paramModel.StartTime = _starTime;
+    self.viewModel.paramModel.EndTime = _endTime;
+    
+    self.tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
+    
+    //筛选时重置PageIndex为1 查看全部的.
+    self.viewModel.paramModel.PageIndex = 1;
+    [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
+    
 }
 
 - (void)ClickresetBtn{
     
     _DateType =@"全   部";
+    //重置时间为空
+    
+ 
+    
     [self.newToolView.seleteBtn setTitle:@"全   部" forState:UIControlStateNormal];
     self.newToolView.seleteBtn.selected = NO;
     
      [self.seleteDataView hideView];
+    
+    self.viewModel.paramModel.StartTime = @"";
+    self.viewModel.paramModel.EndTime = @"";
+    
+    self.tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
+    
+    //筛选时重置PageIndex为1 查看全部的.
+    self.viewModel.paramModel.PageIndex = 1;
+    [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
+    
 }
 
 - (void)ClickMBL{
@@ -480,6 +529,17 @@ LGNNewFilterDelegate
      [self.toolView.filterBtn setImage:[NSBundle lg_imagePathName:@"note_filter"] forState:UIControlStateNormal];
     self.viewModel.paramModel.IsKeyPoint = @"-1";
     [self.toolView reSettingRemarkButtonUnSelected];
+    
+    if(self.systemType ==SystemUsedTypeNew){
+        
+        //重置时间
+        self.viewModel.paramModel.StartTime = @"";
+        self.viewModel.paramModel.EndTime = @"";
+        self.DateType = @"全   部";
+        [self.newToolView.seleteBtn setTitle:@"全   部" forState:UIControlStateNormal];
+    }
+    
+    
 }
 
 #pragma mark - setter

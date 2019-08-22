@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
+typedef NS_ENUM(NSInteger,  NoteDateType) {
+    NoteDateTypeWeek,  // 本周
+    NoteDateTypeMonth, // 本月
+    NoteDateTypeYear   // 本年
+};
+
 
 @protocol LGNNewSeleteDataViewDelegate <NSObject>
 

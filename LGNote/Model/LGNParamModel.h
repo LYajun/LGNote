@@ -76,6 +76,11 @@ typedef NS_ENUM(NSInteger, SystemType) {
 @property (nonatomic, copy) NSString *IsKeyPoint;
 @property (nonatomic, copy) NSString *StartTime;
 @property (nonatomic, copy) NSString *EndTime;
+/** 本学期开始时间 */
+@property (nonatomic, copy) NSString *TermStartTime;
+/** 本学期结束日期 */
+@property (nonatomic, copy) NSString *TermEndTime;
+
 
 /** 用户类型 */
 @property (nonatomic, assign) NSInteger UserType;
