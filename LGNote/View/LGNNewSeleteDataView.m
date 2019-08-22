@@ -14,7 +14,8 @@
 @interface LGNNewSeleteDataView ()<
 UICollectionViewDelegate,
 UICollectionViewDataSource,
-UICollectionViewDelegateFlowLayout
+UICollectionViewDelegateFlowLayout,
+UITextFieldDelegate
 >
 
 @property (nonatomic, strong) UIWindow *window;
@@ -283,6 +284,10 @@ UICollectionViewDelegateFlowLayout
         
         self.endTimeF.text = endT;
         self.starTimeF.text = starT;
+    }else{
+        self.endTimeF.text = @"";
+        self.starTimeF.text = @"";
+        
     }
     
     [self.collectionView reloadData];
@@ -433,6 +438,8 @@ UICollectionViewDelegateFlowLayout
         _starTimeF.backgroundColor =LGRGB(247, 247, 247);
         _starTimeF.textAlignment = NSTextAlignmentCenter;
         _starTimeF.placeholder = @"起始时间";
+        _starTimeF.delegate = self;
+      //  _starTimeF.borderStyle = UITextBorderStyleRoundedRect;
         _starTimeF.font = LGFontSize(15);
         [_starTimeF setValue:LGRGB(194, 194, 194) forKeyPath:@"_placeholderLabel.textColor"];
          _starTimeF.textColor = LGRGB(138, 138, 138);
@@ -450,6 +457,7 @@ UICollectionViewDelegateFlowLayout
         _endTimeF.backgroundColor =LGRGB(247, 247, 247);
         _endTimeF.textAlignment = NSTextAlignmentCenter;
         _endTimeF.placeholder = @"结束时间";
+        _endTimeF.delegate = self;
         _endTimeF.font = LGFontSize(15);
         [_endTimeF setValue:LGRGB(194, 194, 194) forKeyPath:@"_placeholderLabel.textColor"];
         _endTimeF.textColor = LGRGB(138, 138, 138);
@@ -475,8 +483,23 @@ UICollectionViewDelegateFlowLayout
     return _dataPicker;
 }
 
+-(void)textFieldDidBeginEditing:(UITextField*)textField
+{
+    
+    
+    if(![self.currentTimeID isEqualToString:@"自定义"]){
+        
+        _currentTimeID = @"自定义";
+        
+        [self.collectionView reloadData];
+    }
+    
+}
+
 #pragma mark - 监听值的改变
 - (void)datePickerValueChanged:(UIDatePicker *)datePicker{
+    
+    
     // 获得时间
     NSDate *date = datePicker.date;
     // 格式化时间

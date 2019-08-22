@@ -111,7 +111,12 @@
         
         _bgImageView = [[UIImageView alloc]init];
         
-        _bgImageView.image = [NSBundle lg_imagePathName:@"note_navi"];
+//        if(NoteiPhoneXs){
+//            _bgImageView.image = [NSBundle lg_imagePathName:@"note_navi_Xs"];
+//        }else{
+            _bgImageView.image = [NSBundle lg_imagePathName:@"note_navi"];
+//        }
+      
         
     }
     

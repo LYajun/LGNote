@@ -34,7 +34,9 @@
     self.navigationBar.titleTextAttributes = titleAttr;
     UIImage *imageName;
     if (IS_IPHONE_X) {
-        imageName = [NSBundle lg_imageName:@"note_navi_Xs"];
+        imageName = [NSBundle lg_imageName:@"note_navi"];
+        
+        
     } else {
         imageName = [NSBundle lg_imageName:@"note_navi"];
     }

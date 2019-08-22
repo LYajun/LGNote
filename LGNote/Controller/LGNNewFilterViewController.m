@@ -73,21 +73,23 @@ UICollectionViewDelegateFlowLayout
 //    @property (nonatomic,strong) UISwitch * RemarkBtn;
     
     [self.RemarkBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(35);
+        make.top.equalTo(self.view).offset(NoteSTATUS_HEIGHT+15);
         make.right.equalTo(self.view).offset(-30);
         make.height.mas_equalTo(22);
         make.width.mas_equalTo(35);
     }];
     
+    
+    
     [self.markTipsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(38);
+        make.top.equalTo(self.view).offset(NoteSTATUS_HEIGHT+18);
         // make.centerY.equalTo(self.RemarkBtn);
     make.right.equalTo(self.RemarkBtn.mas_left).offset(-15);
         make.height.mas_equalTo(25);
     }];
     
     [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(79);
+        make.top.equalTo(self.view).offset(NoteSTATUS_HEIGHT+59);
         
         make.left.equalTo(self.view).offset(10); make.right.equalTo(self.view).offset(-10);
         make.height.mas_equalTo(1);
@@ -103,7 +105,7 @@ UICollectionViewDelegateFlowLayout
     }];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
-        make.top.equalTo(self.view).offset(80);
+        make.top.equalTo(self.view).offset(NoteSTATUS_HEIGHT+60);
         make.bottom.equalTo(self.sureBtn.mas_top);
     }];
 }
