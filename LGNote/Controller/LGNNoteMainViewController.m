@@ -561,9 +561,12 @@ LGNNewFilterDelegate
         @weakify(self);
 
         self.tableView.notoDataCall = ^(NSInteger page) {
+           
+        @strongify(self);
+//            [self.viewModel.paramModel.C_SubjectID isEqualToString:@"All"] && [self.viewModel.paramModel.C_SystemID isEqualToString:@"All"]&&
             
             if(page ==0 && self.viewModel.paramModel.PageIndex==1){
-                if([self.viewModel.paramModel.C_SubjectID isEqualToString:@"All"] && [self.viewModel.paramModel.C_SystemID isEqualToString:@"All"]&& [self.viewModel.paramModel.IsKeyPoint isEqualToString:@"-1"]){
+                if([self.viewModel.paramModel.IsKeyPoint isEqualToString:@"-1"]){
                     
                     self_weak_.toolView.filterBtn.hidden = YES;
                     self_weak_.toolView.remarkBtn.hidden = YES;
