@@ -67,7 +67,7 @@ UITextFieldDelegate
 
 - (void)layoutUI {
     
-   // self.window = UIApplication.sharedApplication.keyWindow;
+    self.window = UIApplication.sharedApplication.keyWindow;
     self.frame = CGRectMake(0, NoteNAVIGATION_HEIGHT+45, kMain_Screen_Width, kMain_Screen_Height-(NoteNAVIGATION_HEIGHT+45));
     self.backgroundColor = UIColor.clearColor;
     

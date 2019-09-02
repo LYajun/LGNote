@@ -284,6 +284,8 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:LGNoteDrawBoardViewControllerFinishedDrawNotification object:nil userInfo:@{@"image":image}];
     }];
+    
+    
     [self dismissTopViewController:YES];
     
 }

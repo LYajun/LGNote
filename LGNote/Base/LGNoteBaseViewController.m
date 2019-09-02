@@ -32,7 +32,45 @@
             topViewController = presentVC;
             presentVC = presentVC.presentingViewController;
         }
-        [topViewController dismissViewControllerAnimated:YES completion:nil];
+
+        
+        if([topViewController isKindOfClass:NSClassFromString(@"AIESideNavigationController")]){
+            
+            
+            UIViewController * presentingViewController = self.presentingViewController;
+            
+            do {
+                
+                if ([presentingViewController isKindOfClass:NSClassFromString(@"LGTMNavigationViewController")]||[presentingViewController isKindOfClass:NSClassFromString(@"LGStuTabBarController")]||[presentingViewController isKindOfClass:NSClassFromString(@"AIESideNavigationController")]) {
+                    
+                    
+                    break;
+                }
+                
+                
+                presentingViewController = presentingViewController.presentingViewController;
+                
+                
+                
+            } while (presentingViewController.presentingViewController);
+            
+            
+            [presentingViewController dismissViewControllerAnimated:YES completion:nil];
+            
+            
+            
+            
+        }else{
+            
+            
+            [topViewController dismissViewControllerAnimated:YES completion:nil];
+            
+            
+        }
+        
+        
+        
+       
     } else {
         [self dismissViewControllerAnimated:YES completion:nil];
     }
