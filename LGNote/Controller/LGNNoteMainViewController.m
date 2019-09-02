@@ -297,19 +297,9 @@ LGNNewFilterDelegate
                         filterController.view.frame = CGRectMake(50, 0, kMain_Screen_Width-50, kMain_Screen_Height);
             
                     }];
-        
-        //        // 创建拖拽手势对象
-               // UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panRecognizer:)];
-        
-        
-        
-        
-        //        // 将手势对象添加图片上
-//                [filterController.view addGestureRecognizer:panRecognizer];
-             //   AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+
         
         [[UIApplication sharedApplication].keyWindow addSubview:filterController.view];
-               // [tempAppDelegate.window addSubview:filterController.view];
         
         
         // 创建遮盖按钮
@@ -319,7 +309,7 @@ LGNNewFilterDelegate
                     corverBtn.alpha = 0.2;
                     self.corverBtn = corverBtn;
                     [corverBtn addTarget:self action:@selector(corverBtnLisenter:) forControlEvents:UIControlEventTouchUpInside];
-                   // [tempAppDelegate.window addSubview:corverBtn];
+   
                     [[UIApplication sharedApplication].keyWindow addSubview:corverBtn];
                     
                 }else{
