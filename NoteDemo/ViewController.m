@@ -65,7 +65,7 @@
     
     //params.NoteBaseUrl= @"http://192.168.129.8:10154/";
   
-    params.SystemType = SystemType_KQ;
+    params.SystemType = SystemType_ASSISTANTER;
     
     return params;
     
