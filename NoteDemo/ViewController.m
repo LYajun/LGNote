@@ -30,7 +30,8 @@
     LGNNoteMainViewController *noteController = [[LGNNoteMainViewController alloc] initWithNaviBarLeftItemStyle:NoteMainViewControllerNaviBarStyleBack systemType:SystemUsedTypeOther];
     // 配置笔记首页所需参数
     noteController.paramModel = [self configureParams];
-    
+                                 
+  
     [self.navigationController pushViewController:noteController animated:YES];
 }
 
