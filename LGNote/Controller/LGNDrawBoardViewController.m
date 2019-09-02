@@ -243,7 +243,7 @@
 //裁剪
 - (void)choosecutImageButtonTag:(NSInteger)butonTag{
     
-   // @weakify(self);
+    @weakify(self);
     
     
 //    LGNCutImageViewController *cutController = [[LGNCutImageViewController alloc] init];
@@ -253,7 +253,7 @@
     
 
     [self.drawView saveCompletion:^(UIImage * _Nonnull image, NSString * _Nonnull msg) {
-
+  @strongify(self);
     
         _drawBgImage = image;
         
@@ -284,7 +284,7 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:LGNoteDrawBoardViewControllerFinishedDrawNotification object:nil userInfo:@{@"image":image}];
     }];
-    [self dismissTopViewController:NO];
+    [self dismissTopViewController:YES];
     
 }
 
@@ -330,7 +330,7 @@
         @weakify(self);
         [[_cancelBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
             @strongify(self);
-            [self dismissTopViewController:NO];
+            [self dismissTopViewController:YES];
         }];
     }
     return _cancelBtn;
