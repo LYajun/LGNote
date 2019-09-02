@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		28172C16230CDD4300F371AF /* LGNNewSearchToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28172C15230CDD4300F371AF /* LGNNewSearchToolView.m */; };
-		28172C19230CEF4800F371AF /* LGNNewSeleteDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28172C18230CEF4800F371AF /* LGNNewSeleteDataView.m */; };
-		28172C1C230D78E900F371AF /* LGNNewFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28172C1B230D78E900F371AF /* LGNNewFilterViewController.m */; };
 		282B719D22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 282B719C22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m */; };
 		28EF5B3022A754C100EA94DB /* LGNSingleTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 28EF5B2F22A754C100EA94DB /* LGNSingleTool.m */; };
 		320D4E8F224372EA0013872A /* LGNNoteMoreImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 320D4E8E224372EA0013872A /* LGNNoteMoreImageTableViewCell.m */; };
@@ -145,12 +142,6 @@
 
 /* Begin PBXFileReference section */
 		1327CF5CEE302EAC89AC964E /* Pods-NoteDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoteDemo.release.xcconfig"; path = "Target Support Files/Pods-NoteDemo/Pods-NoteDemo.release.xcconfig"; sourceTree = "<group>"; };
-		28172C14230CDD4300F371AF /* LGNNewSearchToolView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LGNNewSearchToolView.h; sourceTree = "<group>"; };
-		28172C15230CDD4300F371AF /* LGNNewSearchToolView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LGNNewSearchToolView.m; sourceTree = "<group>"; };
-		28172C17230CEF4800F371AF /* LGNNewSeleteDataView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LGNNewSeleteDataView.h; sourceTree = "<group>"; };
-		28172C18230CEF4800F371AF /* LGNNewSeleteDataView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LGNNewSeleteDataView.m; sourceTree = "<group>"; };
-		28172C1A230D78E900F371AF /* LGNNewFilterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LGNNewFilterViewController.h; sourceTree = "<group>"; };
-		28172C1B230D78E900F371AF /* LGNNewFilterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LGNNewFilterViewController.m; sourceTree = "<group>"; };
 		282B719B22AE848C006691C5 /* HPTextViewTapGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewTapGestureRecognizer.h; sourceTree = "<group>"; };
 		282B719C22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewTapGestureRecognizer.m; sourceTree = "<group>"; };
 		28EF5B2E22A754C100EA94DB /* LGNSingleTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LGNSingleTool.h; sourceTree = "<group>"; };
@@ -711,8 +702,6 @@
 				32B6BE8D224880FE001F9E10 /* LGNImagePickerViewController.m */,
 				32D72AA02249B9FC00FFB9B4 /* LGNCutImageViewController.h */,
 				32D72AA12249B9FC00FFB9B4 /* LGNCutImageViewController.m */,
-				28172C1A230D78E900F371AF /* LGNNewFilterViewController.h */,
-				28172C1B230D78E900F371AF /* LGNNewFilterViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -740,16 +729,12 @@
 				324FF7BC22290FEF008EF565 /* LGNNoteCustomWindow.m */,
 				3246AD01222FC8E200940E2D /* LGNSearchToolView.h */,
 				3246AD02222FC8E200940E2D /* LGNSearchToolView.m */,
-				28172C14230CDD4300F371AF /* LGNNewSearchToolView.h */,
-				28172C15230CDD4300F371AF /* LGNNewSearchToolView.m */,
 				3246AD04222FC97200940E2D /* LGNSearchToolViewConfigure.h */,
 				3246AD05222FC97200940E2D /* LGNSearchToolViewConfigure.m */,
 				321156F1223637900000A054 /* LGNNoteEditView.h */,
 				321156F2223637900000A054 /* LGNNoteEditView.m */,
 				32DA50BA224DC4450064787C /* LGNNoteSourceDetailView.h */,
 				32DA50BB224DC4450064787C /* LGNNoteSourceDetailView.m */,
-				28172C17230CEF4800F371AF /* LGNNewSeleteDataView.h */,
-				28172C18230CEF4800F371AF /* LGNNewSeleteDataView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1054,7 +1039,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28172C1C230D78E900F371AF /* LGNNewFilterViewController.m in Sources */,
 				3213BC3C225B46B90065E2DD /* YBVideoBrowseActionBar.m in Sources */,
 				32326481216E265D005CC784 /* LGNoteMBAlert.m in Sources */,
 				325BC3B0216EF7B800D077F5 /* LGNNoteFilterCollectionReusableViewHeader.m in Sources */,
@@ -1118,11 +1102,9 @@
 				3232648D216E2C94005CC784 /* LGNoteBaseViewController.m in Sources */,
 				3213BC4A225B46B90065E2DD /* YBIBLayoutDirectionManager.m in Sources */,
 				32D72AA22249B9FC00FFB9B4 /* LGNCutImageViewController.m in Sources */,
-				28172C16230CDD4300F371AF /* LGNNewSearchToolView.m in Sources */,
 				3213BCA3225C6E950065E2DD /* UIButton+WebCache.m in Sources */,
 				3213BC40225B46B90065E2DD /* YBImageBrowserToolBar.m in Sources */,
 				3213BC9B225C6E950065E2DD /* NSData+ImageContentType.m in Sources */,
-				28172C19230CEF4800F371AF /* LGNNewSeleteDataView.m in Sources */,
 				32B6BE6222485BD0001F9E10 /* LGNPenFontBallView.m in Sources */,
 				3213BC3F225B46B90065E2DD /* YBImageBrowserProgressView.m in Sources */,
 				3213BC94225C6E950065E2DD /* UIImage+MultiFormat.m in Sources */,

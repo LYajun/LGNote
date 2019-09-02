@@ -14,27 +14,27 @@
 #import "LGNNoteEditViewController.h"
 #import "LGNoteConfigure.h"
 #import "LGNSearchToolView.h"
-#import "LGNNewSearchToolView.h"
-#import "LGNNewSeleteDataView.h"
-#import "LGNNewFilterViewController.h"
+//#import "LGNNewSearchToolView.h"
+//#import "LGNNewSeleteDataView.h"
+//#import "LGNNewFilterViewController.h"
 
 @interface LGNNoteMainViewController ()
 <
 LGNoteBaseTableViewCustomDelegate,
 LGFilterViewControllerDelegate,
-SearchToolViewDelegate,
-NewSearchToolViewDelegate,
-LGNNewSeleteDataViewDelegate,
-LGNNewFilterDelegate
+SearchToolViewDelegate
+//NewSearchToolViewDelegate,
+//LGNNewSeleteDataViewDelegate,
+//LGNNewFilterDelegate
 >
 
-@property (nonatomic,strong) LGNNewFilterViewController* filterViewController;
+//@property (nonatomic,strong) LGNNewFilterViewController* filterViewController;
 // 记录遮盖按钮
 @property (nonatomic, strong) UIButton *corverBtn;
 @property (nonatomic, strong) LGNViewModel *viewModel;
 @property (nonatomic, strong) LGNSearchToolView *toolView;
-@property (nonatomic, strong) LGNNewSearchToolView *newToolView;
-@property (nonatomic, strong) LGNNewSeleteDataView *seleteDataView;
+//@property (nonatomic, strong) LGNNewSearchToolView *newToolView;
+//@property (nonatomic, strong) LGNNewSeleteDataView *seleteDataView;
 
 @property (nonatomic, assign) NoteNaviBarLeftItemStyle style;
 @property (nonatomic, assign) SystemUsedType systemType;
@@ -79,24 +79,24 @@ LGNNewFilterDelegate
 
 - (void)creatSubViews{
     if(self.systemType == SystemUsedTypeNew){
-          [self.view addSubview: self.newToolView];
+          //[self.view addSubview: self.newToolView];
            [self.view addSubview:self.tableView];
-         self.seleteDataView = [[LGNNewSeleteDataView alloc] init];
+         //self.seleteDataView = [[LGNNewSeleteDataView alloc] init];
     
         self.DateType = @"全   部";
         
-        self.seleteDataView.dataSource =@[@"近一周",@"本   月",@"本学期",@"自定义"];
-         self.seleteDataView.delegate = self;
+        //self.seleteDataView.dataSource =@[@"近一周",@"本   月",@"本学期",@"自定义"];
+        // self.seleteDataView.delegate = self;
       
-        [self.newToolView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.centerX.top.equalTo(self.view);
-            make.height.mas_equalTo(45);
-        }];
-        
-        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.bottom.equalTo(self.view);
-             make.top.equalTo(self.newToolView.mas_bottom);
-        }];
+//        [self.newToolView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.centerX.top.equalTo(self.view);
+//            make.height.mas_equalTo(45);
+//        }];
+//
+//        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.right.bottom.equalTo(self.view);
+//             make.top.equalTo(self.newToolView.mas_bottom);
+//        }];
     }else{
           [self.view addSubview:self.toolView];
         [self.view addSubview:self.tableView];
@@ -149,8 +149,8 @@ LGNNewFilterDelegate
 
 #pragma mark - AddNote
 - (void)rightNavigationBar:(UIBarButtonItem *)sender{
-     [self.seleteDataView hideViewForCelerity];
-    self.newToolView.seleteBtn.selected = NO;
+//     [self.seleteDataView hideViewForCelerity];
+//    self.newToolView.seleteBtn.selected = NO;
     
     LGNNoteEditViewController *editController = [[LGNNoteEditViewController alloc] init];
     editController.isNewNote = YES;
@@ -178,8 +178,8 @@ LGNNewFilterDelegate
 
 - (void)leftNavigationBar:(UIBarButtonItem *)sender{
     
-    [self.seleteDataView hideViewForCelerity];
-    self.newToolView.seleteBtn.selected = NO;
+//    [self.seleteDataView hideViewForCelerity];
+//    self.newToolView.seleteBtn.selected = NO;
     
     if (_style == NoteMainViewControllerNaviBarStyleBack) {
         [self.navigationController popViewControllerAnimated:YES];
@@ -248,8 +248,8 @@ LGNNewFilterDelegate
 }
 #pragma mark - NewSearchToolViewDelegate
 - (void)NewenterSearchEvent{
-    [self.seleteDataView hideViewForCelerity];
-    self.newToolView.seleteBtn.selected = NO;
+//    [self.seleteDataView hideViewForCelerity];
+//    self.newToolView.seleteBtn.selected = NO;
     LGNNoteSearchViewController *searchVC = [[LGNNoteSearchViewController alloc] init];
     searchVC.subjectArray =self.viewModel.subjectArray;
     [searchVC configureParam:self.viewModel.paramModel];
@@ -268,68 +268,68 @@ LGNNewFilterDelegate
 
 - (void)NewfilterEvent{
     
-   [self.seleteDataView hideViewForCelerity];
-    self.newToolView.seleteBtn.selected = NO;
-    
-    
-    if (self.filterViewController == nil) {
-          LGNNewFilterViewController *filterController = [[LGNNewFilterViewController alloc] init];
-               filterController.view.frame = CGRectMake(kMain_Screen_Width, 0, kMain_Screen_Width-50, kMain_Screen_Height);
-        
-        self.filterViewController = filterController;
-        
-        filterController.filterStyle = FilterStyleCustom;
-        filterController.delegate = self;
-        [filterController bindViewModelParam:@[self.viewModel.paramModel.C_SubjectID,self.viewModel.paramModel.C_SystemID,self.viewModel.paramModel.IsKeyPoint]];
-        @weakify(filterController);
-        [RACObserve(self.viewModel, subjectArray) subscribeNext:^(id  _Nullable x) {
-            @strongify(filterController);
-            filterController.subjectArray = x;
-        }];
-        [RACObserve(self.viewModel, systemArray) subscribeNext:^(id  _Nullable x) {
-            @strongify(filterController);
-            filterController.systemArray = x;
-        }];
-       // [self.navigationController pushViewController:filterController animated:YES];
-        
-        
-        [UIView animateWithDuration:0.25 animations:^{
-                        filterController.view.frame = CGRectMake(50, 0, kMain_Screen_Width-50, kMain_Screen_Height);
-            
-                    }];
-
-        
-      //  [[UIApplication sharedApplication].keyWindow addSubview:filterController.view];
-        
-        
-        // 创建遮盖按钮
-                if (self.corverBtn == nil) {
-                    UIButton *corverBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, kMain_Screen_Height)];
-                    corverBtn.backgroundColor = [UIColor blackColor];
-                    corverBtn.alpha = 0.2;
-                    self.corverBtn = corverBtn;
-                    [corverBtn addTarget:self action:@selector(corverBtnLisenter:) forControlEvents:UIControlEventTouchUpInside];
-   
-                  //  [[UIApplication sharedApplication].keyWindow addSubview:corverBtn];
-                    
-                }else{
-                    self.corverBtn.hidden = NO;
-                }
-            }
-            //如果不为空，将其加载出来
-            else
-            {
-                [UIView animateWithDuration:0.25 animations:^{
-                    self.filterViewController.view.frame = CGRectMake(50, 0, kMain_Screen_Width-50, kMain_Screen_Height);
-                    // self.chooseVC = nil;
-                    self.corverBtn.hidden = NO;
-                }];
-        
-        
-        
-    }
-  
-    
+//   [self.seleteDataView hideViewForCelerity];
+//    self.newToolView.seleteBtn.selected = NO;
+//
+//
+//    if (self.filterViewController == nil) {
+//          LGNNewFilterViewController *filterController = [[LGNNewFilterViewController alloc] init];
+//               filterController.view.frame = CGRectMake(kMain_Screen_Width, 0, kMain_Screen_Width-50, kMain_Screen_Height);
+//
+//        self.filterViewController = filterController;
+//
+//        filterController.filterStyle = FilterStyleCustom;
+//        filterController.delegate = self;
+//        [filterController bindViewModelParam:@[self.viewModel.paramModel.C_SubjectID,self.viewModel.paramModel.C_SystemID,self.viewModel.paramModel.IsKeyPoint]];
+//        @weakify(filterController);
+//        [RACObserve(self.viewModel, subjectArray) subscribeNext:^(id  _Nullable x) {
+//            @strongify(filterController);
+//            filterController.subjectArray = x;
+//        }];
+//        [RACObserve(self.viewModel, systemArray) subscribeNext:^(id  _Nullable x) {
+//            @strongify(filterController);
+//            filterController.systemArray = x;
+//        }];
+//       // [self.navigationController pushViewController:filterController animated:YES];
+//
+//
+//        [UIView animateWithDuration:0.25 animations:^{
+//                        filterController.view.frame = CGRectMake(50, 0, kMain_Screen_Width-50, kMain_Screen_Height);
+//
+//                    }];
+//
+//
+//      //  [[UIApplication sharedApplication].keyWindow addSubview:filterController.view];
+//
+//
+//        // 创建遮盖按钮
+//                if (self.corverBtn == nil) {
+//                    UIButton *corverBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, kMain_Screen_Height)];
+//                    corverBtn.backgroundColor = [UIColor blackColor];
+//                    corverBtn.alpha = 0.2;
+//                    self.corverBtn = corverBtn;
+//                    [corverBtn addTarget:self action:@selector(corverBtnLisenter:) forControlEvents:UIControlEventTouchUpInside];
+//
+//                  //  [[UIApplication sharedApplication].keyWindow addSubview:corverBtn];
+//
+//                }else{
+//                    self.corverBtn.hidden = NO;
+//                }
+//            }
+//            //如果不为空，将其加载出来
+//            else
+//            {
+//                [UIView animateWithDuration:0.25 animations:^{
+//                    self.filterViewController.view.frame = CGRectMake(50, 0, kMain_Screen_Width-50, kMain_Screen_Height);
+//                    // self.chooseVC = nil;
+//                    self.corverBtn.hidden = NO;
+//                }];
+//
+//
+//
+//    }
+//
+//
    
 }
 # pragma mark - LGNNewFilterDelegate
@@ -372,8 +372,8 @@ LGNNewFilterDelegate
 - (void)corverBtnLisenter:(UIButton *)button{
     
     [UIView animateWithDuration:0.25 animations:^{
-        self.filterViewController.view.frame = CGRectMake(kMain_Screen_Width, 0, kMain_Screen_Width-100, kMain_Screen_Height);
-            self.filterViewController = nil;
+//        self.filterViewController.view.frame = CGRectMake(kMain_Screen_Width, 0, kMain_Screen_Width-100, kMain_Screen_Height);
+//            self.filterViewController = nil;
         
        // [self.filterViewController removeFromParentViewController];
     }];
@@ -401,9 +401,9 @@ LGNNewFilterDelegate
     
     if(selete){
         
-        [self.seleteDataView bindViewModelParam:_DateType starTime:_starTime endTime:_endTime];
-        
-       [self.seleteDataView showView];
+//        [self.seleteDataView bindViewModelParam:_DateType starTime:_starTime endTime:_endTime];
+//
+//       [self.seleteDataView showView];
         
         
      if(IsStrEmpty(self.viewModel.paramModel.TermStartTime)){
@@ -412,7 +412,7 @@ LGNNewFilterDelegate
         
     }else{
         
-         [self.seleteDataView hideView];
+//         [self.seleteDataView hideView];
     }
     
     
@@ -434,11 +434,11 @@ LGNNewFilterDelegate
     }
       
     
-    
-     [self.newToolView.seleteBtn setTitle:time forState:UIControlStateNormal];
-    
-    [self.seleteDataView hideView];
-     self.newToolView.seleteBtn.selected = NO;
+//
+//     [self.newToolView.seleteBtn setTitle:time forState:UIControlStateNormal];
+//
+//    [self.seleteDataView hideView];
+//     self.newToolView.seleteBtn.selected = NO;
     
       //根据时间请求数据
     self.viewModel.paramModel.StartTime = _starTime;
@@ -459,10 +459,10 @@ LGNNewFilterDelegate
     
  
     
-    [self.newToolView.seleteBtn setTitle:@"全   部" forState:UIControlStateNormal];
-    self.newToolView.seleteBtn.selected = NO;
-    
-     [self.seleteDataView hideView];
+//    [self.newToolView.seleteBtn setTitle:@"全   部" forState:UIControlStateNormal];
+//    self.newToolView.seleteBtn.selected = NO;
+//
+//     [self.seleteDataView hideView];
     
     self.viewModel.paramModel.StartTime = @"";
     self.viewModel.paramModel.EndTime = @"";
@@ -477,7 +477,7 @@ LGNNewFilterDelegate
 
 - (void)ClickMBL{
     
-     self.newToolView.seleteBtn.selected = NO;
+//     self.newToolView.seleteBtn.selected = NO;
 }
 
 #pragma mark - FilterDelegate
@@ -532,7 +532,7 @@ LGNNewFilterDelegate
         self.viewModel.paramModel.StartTime = @"";
         self.viewModel.paramModel.EndTime = @"";
         self.DateType = @"全   部";
-        [self.newToolView.seleteBtn setTitle:@"全   部" forState:UIControlStateNormal];
+//        [self.newToolView.seleteBtn setTitle:@"全   部" forState:UIControlStateNormal];
     }
     
     
@@ -598,17 +598,17 @@ LGNNewFilterDelegate
     return _toolView;
 }
 
-- (LGNNewSearchToolView *)newToolView{
-    
-    if (!_newToolView) {
-        LGNSearchToolViewConfigure *configure = [[LGNSearchToolViewConfigure alloc] init];
-        configure.style = (_systemType == SystemUsedTypeAssistanter) ? SearchToolViewStyleFilter:SearchToolViewStyleDefault;
-        _newToolView = [[LGNNewSearchToolView alloc] initWithFrame:CGRectZero configure:configure];
-        _newToolView.delegate = self;
-    }
-    return _newToolView;
-    
-}
+//- (LGNNewSearchToolView *)newToolView{
+//
+//    if (!_newToolView) {
+//        LGNSearchToolViewConfigure *configure = [[LGNSearchToolViewConfigure alloc] init];
+//        configure.style = (_systemType == SystemUsedTypeAssistanter) ? SearchToolViewStyleFilter:SearchToolViewStyleDefault;
+//        _newToolView = [[LGNNewSearchToolView alloc] initWithFrame:CGRectZero configure:configure];
+//        _newToolView.delegate = self;
+//    }
+//    return _newToolView;
+//
+//}
 
 
 - (LGNParamModel *)paramModel{
