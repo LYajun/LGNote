@@ -52,6 +52,16 @@
     }
 }
 
+- (void)yj_setSubChar:(NSString *)subStr foregroundColor:(UIColor *)color font:(CGFloat)font{
+    for (int i=0; i<self.string.length; i++) {
+        NSString *ch = [self.string substringWithRange:NSMakeRange(i, 1)];
+        if ([ch isEqualToString:subStr]) {
+            [self addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(i, 1)];
+            [self addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:font] range:NSMakeRange(i, 1)];
+        }
+    }
+}
+
 + (NSMutableAttributedString *)yj_AttributedStringByHtmls:(NSArray *)htmls colors:(NSArray *)colors fonts:(NSArray *)fonts{
     NSMutableArray *atts = [NSMutableArray array];
     for (int i = 0; i < htmls.count; i++) {

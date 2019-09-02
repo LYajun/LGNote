@@ -87,11 +87,7 @@
         if ([string length]) {
             [string appendString:@"&"];
         }
-        CFStringRef escaped = CFURLCreateStringByAddingPercentEscapes(NULL,(CFStringRef)[[self objectForKey:key] description],
-                                                                      NULL,(CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                      kCFStringEncodingUTF8);
-        [string appendFormat:@"%@=%@", key, escaped];
-        CFRelease(escaped);
+        [string appendFormat:@"%@=%@", key, [self objectForKey:key]];
     }
     return string;
 }

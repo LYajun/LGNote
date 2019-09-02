@@ -45,6 +45,13 @@ static const void *YJBackButtonHandlerKey = &YJBackButtonHandlerKey;
         }
     }
 }
+- (void)yj_dismissToRootController{
+    UIViewController * presentingViewController = self.presentingViewController;
+    while (presentingViewController.presentingViewController) {
+        presentingViewController = presentingViewController.presentingViewController;
+    }
+    [presentingViewController dismissViewControllerAnimated:NO completion:nil];
+}
 @end
 
 @implementation UINavigationController (ShouldPopItem)

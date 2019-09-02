@@ -29,6 +29,7 @@
 #import "UINavigationBar+YJ.h"
 #import "UIView+YJ.h"
 #import "UIViewController+YJ.h"
+#import "UIWebView+YJ.h"
 #import "UIWindow+YJ.h"
 
 FOUNDATION_EXPORT double YJExtensionsVersionNumber;

@@ -15,6 +15,7 @@ typedef void (^YJBackButtonHandler)(UIViewController *vc);
 
 + (UIViewController *)yj_topControllerForController:(UIViewController *)controller;
 - (void)yj_popViewControllerByName:(NSString *)viewControllerName;
+- (void)yj_dismissToRootController;
 @end
 
 NS_ASSUME_NONNULL_END

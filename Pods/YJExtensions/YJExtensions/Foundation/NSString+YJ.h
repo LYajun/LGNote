@@ -10,6 +10,9 @@
 #import <UIKit/UIKit.h>
 NS_ASSUME_NONNULL_BEGIN
 
+static NSString * const kYJCharactersGeneralDelimitersToEncode = @":#[]@";
+static NSString * const kYJCharactersSubDelimitersToEncode = @"!$&'()*+,;=";
+
 @interface NSString (YJ)
 + (NSString *)yj_Char1;
 + (NSString *)yj_StandardAnswerSeparatedStr;
@@ -35,7 +38,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)yj_replaceStrongFontWithTextColorHex:(NSString *)textColorHex;
 - (NSString *)yj_htmlImgFrameAdjust;
 + (NSString *)yj_filterHTML:(NSString *)html;
-
++ (NSString *)yj_adaptWebViewForHtml:(NSString *)htmlStr;
++ (BOOL)predicateMatchWithText:(NSString *)text matchFormat:(NSString *)matchFormat;
 #pragma mark - 尺寸
 - (CGFloat)yj_widthWithFont:(UIFont *)font;
 - (CGFloat)yj_heightWithFont:(UIFont *)font;
@@ -65,6 +69,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)yj_timeFromTimeInterval:(NSTimeInterval)timeInterval isShowChinese:(BOOL)isShowChinese isRetainMinuter:(BOOL)isRetainMinuter;
 + (NSString *)yj_displayTimeWithCurrentTime:(NSString *)currentTime referTime:(NSString *)referTime;
 
+#pragma mark - 编码、解码
+- (NSString *)yj_URLDecode;
+- (NSString *)yj_URLEncode;
+- (NSString *)yj_URLQueryAllowedCharacterSet;
 @end
 
 @interface NSString (Emo)

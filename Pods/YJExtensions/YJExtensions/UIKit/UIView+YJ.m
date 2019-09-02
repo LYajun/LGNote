@@ -88,6 +88,16 @@
     self.layer.shadowRadius = radius;
     self.layer.shadowOffset = offset;
 }
+- (void)yj_shadowWithCornerRadius:(CGFloat)cRadius borderWidth:(CGFloat)borderWidth borderColor:(UIColor *)borderColor shadowColor:(UIColor *)shadowColor shadowOpacity:(CGFloat)shadowOpacity shadowOffset:(CGSize)shadowOffset roundedRect:(CGRect)roundedRect cornerRadii:(CGSize)cornerRadii rectCorner:(UIRectCorner)rectCorner{
+    self.layer.cornerRadius = cRadius;
+    self.layer.borderWidth = borderWidth;
+    self.layer.borderColor = borderColor.CGColor;
+    self.layer.shadowOpacity = shadowOpacity;
+    self.layer.shadowColor = shadowColor.CGColor;
+    self.layer.shadowOffset =  shadowOffset;
+    UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRoundedRect:roundedRect byRoundingCorners:rectCorner cornerRadii:cornerRadii];
+    self.layer.shadowPath = bezierPath.CGPath;
+}
 #pragma mark - Shake
 - (void)yj_shake {
     [self _yj_shake:10 direction:1 currentTimes:0 withDelta:5 speed:0.03 shakeDirection:YJShakeDirectionHorizontal completion:nil];
@@ -164,7 +174,40 @@
 {
     return self.frame.origin.y;
 }
+- (CGPoint)origin
+{
+    return self.frame.origin;
+}
 
+- (void)setOrigin:(CGPoint)origin
+{
+    CGRect frame = self.frame;
+    frame.origin = origin;
+    self.frame = frame;
+}
+- (CGFloat)centerX
+{
+    return self.center.x;
+}
+
+- (void)setCenterX:(CGFloat)centerX
+{
+    CGPoint center = self.center;
+    center.x = centerX;
+    self.center = center;
+}
+
+- (CGFloat)centerY
+{
+    return self.center.y;
+}
+
+- (void)setCenterY:(CGFloat)centerY
+{
+    CGPoint center = self.center;
+    center.y = centerY;
+    self.center = center;
+}
 - (CGFloat)width
 {
     return self.frame.size.width;
@@ -188,6 +231,48 @@
     CGRect frame = self.frame;
     frame.size.height = height;
     self.frame = frame;
+}
+- (CGSize)size
+{
+    return self.frame.size;
+}
+
+- (void)setSize:(CGSize)size
+{
+    CGRect frame = self.frame;
+    frame.size = size;
+    self.frame = frame;
+}
+- (void)setTop:(CGFloat)t{
+    self.frame = CGRectMake(self.left, t, self.width, self.height);
+}
+
+- (CGFloat)top{
+    return self.frame.origin.y;
+}
+
+- (void)setBottom:(CGFloat)b{
+    self.frame = CGRectMake(self.left, b - self.height, self.width, self.height);
+}
+
+- (CGFloat)bottom{
+    return self.frame.origin.y + self.frame.size.height;
+}
+
+- (void)setLeft:(CGFloat)l{
+    self.frame = CGRectMake(l, self.top, self.width, self.height);
+}
+
+- (CGFloat)left{
+    return self.frame.origin.x;
+}
+
+- (void)setRight:(CGFloat)r{
+    self.frame = CGRectMake(r - self.width, self.top, self.width, self.height);
+}
+
+- (CGFloat)right{
+    return self.frame.origin.x + self.frame.size.width;
 }
 
 - (BOOL)yj_isIPhoneX{
