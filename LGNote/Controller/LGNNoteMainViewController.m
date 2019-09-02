@@ -299,7 +299,7 @@ LGNNewFilterDelegate
                     }];
 
         
-        [[UIApplication sharedApplication].keyWindow addSubview:filterController.view];
+      //  [[UIApplication sharedApplication].keyWindow addSubview:filterController.view];
         
         
         // 创建遮盖按钮
@@ -310,7 +310,7 @@ LGNNewFilterDelegate
                     self.corverBtn = corverBtn;
                     [corverBtn addTarget:self action:@selector(corverBtnLisenter:) forControlEvents:UIControlEventTouchUpInside];
    
-                    [[UIApplication sharedApplication].keyWindow addSubview:corverBtn];
+                  //  [[UIApplication sharedApplication].keyWindow addSubview:corverBtn];
                     
                 }else{
                     self.corverBtn.hidden = NO;
