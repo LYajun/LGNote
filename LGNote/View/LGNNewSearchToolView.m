@@ -184,9 +184,9 @@
         _searchBar.layer.cornerRadius = 12;
         _searchBar.layer.masksToBounds = YES;
         _searchBar.borderStyle = UITextBorderStyleNone;
-        _searchBar.placeholder = @"请输入关键词搜索";
-        [_searchBar setValue:kColorWithHex(0x989898) forKeyPath:@"_placeholderLabel.textColor"];
-        _searchBar.backgroundColor = kColorInitWithRGB(242, 242, 242, 1);
+        _searchBar.placeholder = @"请输入笔记标题/来源搜索";
+        [_searchBar setValue:kColorInitWithRGB(153, 153, 153, 1) forKeyPath:@"_placeholderLabel.textColor"];
+        _searchBar.backgroundColor = kColorInitWithRGB(255, 255, 255, 1);
         _searchBar.userInteractionEnabled = NO;
         _searchBar.leftImageView.image = [NSBundle lg_imageName:@"lg_Newsearch"];
     }

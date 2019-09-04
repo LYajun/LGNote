@@ -85,7 +85,7 @@ LGNNewFilterDelegate
     
         self.DateType = @"全   部";
         
-        self.seleteDataView.dataSource =@[@"近一周",@"本   月",@"本学期",@"自定义"];
+        self.seleteDataView.dataSource =@[@"今天",@"近一周",@"近一月",@"本学期",@"自定义"];
          self.seleteDataView.delegate = self;
       
         [self.newToolView mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -28,6 +28,8 @@ UICollectionViewDelegateFlowLayout
 @property (nonatomic, copy)   NSString *currenSystemID;
 
 //查看重点笔记
+@property (nonatomic,strong)  UILabel* TipsLabel;
+
 @property (nonatomic,strong)  UILabel* markTipsLabel;
 @property (nonatomic,strong) UISwitch * RemarkBtn;
 @property (nonatomic,strong) UIView * lineView;
@@ -59,6 +61,7 @@ UICollectionViewDelegateFlowLayout
 - (void)creatSubviews{
     
 
+    [self.view addSubview:self.TipsLabel];
     [self.view addSubview:self.markTipsLabel];
     [self.view addSubview:self.RemarkBtn];
     [self.view addSubview:self.lineView];
@@ -69,27 +72,36 @@ UICollectionViewDelegateFlowLayout
 }
 
 - (void)setupSubViewsContraints{
-//    @property (nonatomic,strong)  UILabel* markTipsLabel;
-//    @property (nonatomic,strong) UISwitch * RemarkBtn;
+
     
-    [self.RemarkBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(NoteSTATUS_HEIGHT+15);
-        make.right.equalTo(self.view).offset(-30);
-        make.height.mas_equalTo(22);
+    
+    [self.TipsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.top.equalTo(self.view).offset(NoteSTATUS_HEIGHT+30);
+        make.left.equalTo(self.view).offset(13);
+        make.height.mas_equalTo(11);
         make.width.mas_equalTo(35);
     }];
     
+  
     
     
     [self.markTipsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(NoteSTATUS_HEIGHT+18);
-        // make.centerY.equalTo(self.RemarkBtn);
-    make.right.equalTo(self.RemarkBtn.mas_left).offset(-15);
+        make.top.equalTo(self.view).offset(NoteNAVIGATION_HEIGHT+18);
+        
+      make.left.equalTo(self.view).offset(13);
         make.height.mas_equalTo(25);
     }];
     
+    [self.RemarkBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.top.equalTo(self.view).offset(NoteNAVIGATION_HEIGHT+15);
+        make.right.equalTo(self.view).offset(-30);
+//        make.height.mas_equalTo(22);
+//        make.width.mas_equalTo(35);
+    }];
+    
+    
     [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(NoteSTATUS_HEIGHT+59);
+        make.top.equalTo(self.view).offset(NoteNAVIGATION_HEIGHT+59);
         
         make.left.equalTo(self.view).offset(10); make.right.equalTo(self.view).offset(-10);
         make.height.mas_equalTo(1);
@@ -105,7 +117,7 @@ UICollectionViewDelegateFlowLayout
     }];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
-        make.top.equalTo(self.view).offset(NoteSTATUS_HEIGHT+60);
+        make.top.equalTo(self.view).offset(NoteNAVIGATION_HEIGHT+60);
         make.bottom.equalTo(self.sureBtn.mas_top);
     }];
 }
@@ -248,6 +260,27 @@ UICollectionViewDelegateFlowLayout
     return _sureBtn;
 }
 
+
+
+- (UILabel *)TipsLabel{
+    
+    if(!_TipsLabel){
+        
+        _TipsLabel = [[UILabel alloc]init];
+        
+        _TipsLabel .text = @"笔记";
+        
+        _TipsLabel.textAlignment = NSTextAlignmentLeft;
+        _TipsLabel.textColor = LGRGB(152, 152, 152);
+        
+        _TipsLabel.font = LGFontSize(13);
+        
+        
+    }
+    
+    return _TipsLabel;
+}
+
 - (UILabel *)markTipsLabel{
     
     if(!_markTipsLabel){
@@ -256,10 +289,10 @@ UICollectionViewDelegateFlowLayout
         
         _markTipsLabel .text = @"查看重点笔记";
         
-        _markTipsLabel.textAlignment = NSTextAlignmentRight;
+        _markTipsLabel.textAlignment = NSTextAlignmentLeft;
         _markTipsLabel.textColor = LGRGB(37, 37, 37);
         
-        _markTipsLabel.font = LGFontSize(18);
+        _markTipsLabel.font = LGFontSize(14);
         
         
     }
@@ -272,6 +305,8 @@ UICollectionViewDelegateFlowLayout
     if(!_RemarkBtn){
         
         _RemarkBtn = [[UISwitch alloc]init];
+        _RemarkBtn.transform = CGAffineTransformMakeScale(0.92, 0.92);
+
     }
     
     return _RemarkBtn;

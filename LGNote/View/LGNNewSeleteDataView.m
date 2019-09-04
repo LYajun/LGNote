@@ -89,6 +89,14 @@ UITextFieldDelegate
     self.whiteView.backgroundColor = [UIColor whiteColor];
     [self addSubview:self.whiteView];
     
+    self.whiteView.frame = CGRectMake(0, 0,kMain_Screen_Width , 190);
+//    [self.whiteView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.right.equalTo(self);
+//        make.top.equalTo(self);
+//        make.height.mas_equalTo(200);
+//    }];
+    
+    
     [self addSubview:self.collectionView];
     
     //自定义时间
@@ -102,6 +110,7 @@ UITextFieldDelegate
     self.centreLabel.text = @"~";
     self.centreLabel.textAlignment = NSTextAlignmentCenter;
     self.centreLabel.font = LGFontSize(15);
+    self.centreLabel.textColor = LGRGB(102, 102, 102);
     [self addSubview:self.centreLabel];
     
     [self addSubview:self.starTimeF];
@@ -110,15 +119,13 @@ UITextFieldDelegate
     [self addSubview:self.resetBtn];
     [self addSubview:self.sureBtn];
     
+    self.endTimeF.hidden = YES;
+    self.starTimeF.hidden = YES;
+    self.tipsLabel.hidden = YES;
+    self.centreLabel.hidden = YES;
+    
+    
    
-    
-    
-    [self.whiteView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.equalTo(self);
-        make.top.equalTo(self);
-        make.height.mas_equalTo(230);
-    }];
-    
     
     [self.resetBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.whiteView).offset(-15);
@@ -139,7 +146,7 @@ UITextFieldDelegate
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self);
         make.top.equalTo(self);
-        make.height.mas_equalTo(90);
+        make.height.mas_equalTo(140);
     }];
     
     [self.tipsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -250,12 +257,21 @@ UITextFieldDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
    
-    if(indexPath.row !=3){
+    if(indexPath.row !=4){
         
         self.endTimeF.text = @"";
         self.starTimeF.text = @"";
         [self endEditing:YES];
+        //隐藏键盘
+        [self hideViewKet];
+        
+    }else{
+         //出示键盘
+        
+        [self showViewKEy];
+        
     }
+    
     
         [self configureSubjectFilterForCollectionView:collectionView indexPath:indexPath];
     
@@ -302,6 +318,41 @@ UITextFieldDelegate
     
     return headerView;
 }
+
+- (void)showViewKEy {
+    
+    
+    
+ 
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.12 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.endTimeF.hidden = NO;
+        self.starTimeF.hidden = NO;
+        self.tipsLabel.hidden = NO;
+        self.centreLabel.hidden = NO;
+    });
+    
+    [UIView animateWithDuration:0.1 animations:^{
+        self.whiteView.frame = CGRectMake(0, 0,kMain_Screen_Width , 290);
+        
+    }];
+    
+   
+}
+
+- (void)hideViewKet {
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        self.endTimeF.hidden = YES;
+         self.starTimeF.hidden = YES;
+         self.tipsLabel.hidden = YES;
+         self.centreLabel.hidden = YES;
+         self.whiteView.frame = CGRectMake(0, 0,kMain_Screen_Width , 190);
+        
+    } completion:nil];
+}
+
+
 
 #pragma mark - 确认选项
 - (void)sureBtnClick:(UIButton *)sender{
@@ -351,7 +402,14 @@ UITextFieldDelegate
         startTime =self.starTimeF.text;
         endTime =self.endTimeF.text;
         
-    }else if ([self.currentTimeID isEqualToString:@"全   部"]){
+    }else if ([self.currentTimeID isEqualToString:@"今天"]){
+        
+        startTime =[self getDateString];
+        endTime =[self getDateString];
+        
+    }
+    
+    else if ([self.currentTimeID isEqualToString:@"全   部"]){
         
         startTime =@"";
         endTime =@"";
@@ -363,6 +421,8 @@ UITextFieldDelegate
         startTime = @"2019-02-15";
         endTime =@"2019-07-01";
     }
+    
+    
     
     
     
@@ -511,6 +571,19 @@ UITextFieldDelegate
     }else{
         self.endTimeF.text = [fmt stringFromDate:date];
     }
+}
+
+//获取当天日期
+-(NSString*)getDateString{
+    
+    
+    NSDate *currentDate = [NSDate date];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    
+    formatter.dateFormat = @"yyyy-MM-dd";
+    
+    return [formatter stringFromDate:currentDate];
 }
 
 - (NSDate *)currentDateNow{
