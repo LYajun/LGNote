@@ -29,7 +29,7 @@
     [super viewWillAppear:animated];
     [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];
     _iscomeblack = NO;
-    [self.searchBar becomeFirstResponder];
+  
  
     
     if (!IsStrEmpty(self.searchBar.text) ) {
@@ -39,6 +39,12 @@
         [self searchEvent];
 
     }
+    
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+      [self.searchBar becomeFirstResponder];
     
 }
 
@@ -82,6 +88,9 @@
 - (void)createSubViews{
     self.tableView.isSearchVC = YES;
     [self.view addSubview:self.tableView];
+    
+//    self.tableView.frame = CGRectMake(0, 0, kMain_Screen_Width, kMain_Screen_Height);
+//    
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }];

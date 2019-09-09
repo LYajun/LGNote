@@ -10,7 +10,7 @@
 
 
 @class LGNoteBaseTableView;
-typedef void(^LGRefreshBlock)(void);
+typedef void(^LGRefreshBlockLGRefreshBlock)(void);
 
 /** 数据开始加载、加载时、加载后的状态 */
 typedef NS_ENUM(NSInteger, LGBaseTableViewRequestStatus) {

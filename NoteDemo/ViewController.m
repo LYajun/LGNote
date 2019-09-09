@@ -62,7 +62,7 @@
     params.UserID = @"bkstu152";
     params.UserType = 2;
     params.UserName = @"黎清微";
-   // params.CPBaseUrl = @"http://192.168.129.129:10103//";
+    params.CPBaseUrl = @"http://192.168.129.129:10103//";
     
     //params.NoteBaseUrl= @"http://192.168.129.8:10154/";
   
