@@ -76,7 +76,9 @@
         self.contentView.titleTextF.enabled = NO;
         [self.contentView.contentTextView setEditable:NO];
         self.contentView.canEditing = NO;
-        self.contentView.remarkBtn.enabled = NO;
+       // self.contentView.remarkBtn.enabled = NO;
+        self.contentView.remarkBtn.userInteractionEnabled = NO;
+        
         self.contentView.subjectBtn.enabled = NO;
     }else{
         
@@ -146,7 +148,8 @@
         self.contentView.titleTextF.enabled = YES;
         [self.contentView.contentTextView setEditable:YES];
         self.contentView.canEditing = YES;
-        self.contentView.remarkBtn.enabled = YES;
+       // self.contentView.remarkBtn.enabled = YES;
+         self.contentView.remarkBtn.userInteractionEnabled = YES;
         if(self.paramModel.SystemType ==SystemType_ASSISTANTER ||self.paramModel.SystemType ==SystemType_YPT ){
         self.contentView.subjectBtn.enabled = YES;
         }

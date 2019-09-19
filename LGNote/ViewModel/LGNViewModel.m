@@ -386,9 +386,10 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                                  @"BackUpTwo":@""
                                  };
          [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(Note_HandleParams(self.paramModel.UserID)).setToken( Note_HandleParams(self.paramModel.Token)).setParameters(params)starSendRequestSuccess:^(id respone) {
-            
             NSLog(@"%@",respone);
             
+             
+             
             if (![respone[kErrorcode] hasSuffix:kSuccess]) {
                 [subscriber sendNext:nil];
                 [subscriber sendCompleted];
@@ -414,10 +415,10 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 
  //获取当前学生笔记列表
 - (RACSignal *)getNotesWithUserID:(NSString *)userID systemID:(NSString *)systemID subjectID:(NSString *)subjectID schoolID:(NSString *)schoolID pageIndex:(NSInteger)pageIndex pageSize:(NSInteger)size keycon:(NSString *)keycon{
+    
+    
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNotesInformation"];
-        
-        
         
                 NSDictionary *params;
         if (self.paramModel.SystemType ==SystemType_ALL || self.paramModel.SystemType ==SystemType_ASSISTANTER ||self.paramModel.SystemType ==SystemType_YPT) {
@@ -467,7 +468,6 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         
        
         [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey( Note_HandleParams(self.paramModel.UserID)).setToken(Note_HandleParams(self.paramModel.Token)).setParameters(params)starSendRequestSuccess:^(id respone) {
-            
             
             
             if (![respone[kErrorcode] hasSuffix:kSuccess]) {

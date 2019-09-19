@@ -74,9 +74,6 @@
     
     [self createSubViews];
     
-
-  
-    
 }
 
 - (void)addLeftItem{

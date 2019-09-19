@@ -12,7 +12,6 @@
 #import "LGNoteConfigure.h"
 #import "LGNoteMBAlert.h"
 #import "NSBundle+Notes.h"
-
 @interface LGNoteBaseTableView () <UIGestureRecognizerDelegate>
 
 /** 加载中 */

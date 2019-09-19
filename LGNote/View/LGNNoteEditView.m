@@ -294,7 +294,11 @@ HPTextViewTapGestureRecognizerDelegate
     
     
     [self.subjectBtn setTitle:viewModel.dataSourceModel.SubjectName forState:UIControlStateNormal];
+    
+    
     self.remarkBtn.selected = [viewModel.dataSourceModel.IsKeyPoint isEqualToString:@"1"] ? YES:NO;
+    
+    
     self.materialArray = [self.viewModel configureMaterialPickerDataSource];
     //    去除全部与其他学科
     self.subjectArray = [self.viewModel configureSubjectPickerDataSource];

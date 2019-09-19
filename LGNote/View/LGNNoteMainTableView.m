@@ -20,7 +20,7 @@
      NSInteger  _allCount;
 }
 
-
+@property (nonatomic,assign) BOOL  isHvae;
 @property (nonatomic, strong) LGNViewModel *viewModel;
 @property (nonatomic, strong) NSMutableArray *dataArray;
 
@@ -52,6 +52,8 @@
     self.viewModel = viewModel;
     @weakify(self);
     [self.viewModel.refreshSubject subscribeNext:^(NSArray *  _Nullable x) {
+        
+        
         @strongify(self);
         self.dataArray = x;
         if (IsArrEmpty(self.dataArray)) {
@@ -62,6 +64,8 @@
             }
             
         } else {
+            
+            self.isHvae = YES;
             if(self.notoDataCall){
                 self.notoDataCall(1);
             }
@@ -129,7 +133,20 @@
     
     // 判断是不是图文混排类型
     if (model.imgaeUrls.count <= 0) {
+        
+//        static NSString * const MainTableViewCell = @"LGNNoteMainTableViewCell";
+//
+//        LGNNoteMainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMainTableViewCell class]) forIndexPath:indexPath];
+//
+//        if (!cell) {
+//            cell = [[LGNNoteMainTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MainTableViewCell];
+//            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        }
+        
+//
         LGNNoteMainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMainTableViewCell class]) forIndexPath:indexPath];
+        
+      //  cell.tag =1;
         cell.searchContent =_searchContent;
         cell.isSearchVC = _isSearchVC;
         
@@ -138,6 +155,17 @@
 
         return cell;
     } else if (model.imgaeUrls > 0 && model.mixTextImage) {
+        
+//        static NSString * const ImageTableViewCell = @"LGNNoteMainImageTableViewCell";
+//
+//        LGNNoteMainImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMainImageTableViewCell class]) forIndexPath:indexPath];
+//
+//        if (!cell) {
+//            cell = [[LGNNoteMainImageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ImageTableViewCell];
+//            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        }
+        // cell.tag =1;
+        
         LGNNoteMainImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMainImageTableViewCell class]) forIndexPath:indexPath];
         cell.searchContent =_searchContent;
         cell.isSearchVC = _isSearchVC;
@@ -145,6 +173,16 @@
          cell.selectionStyle = UITableViewCellSelectionStyleGray;
         return cell;
     } else {
+        
+//        static NSString * const MoreImageTableViewCell = @"LGNNoteMoreImageTableViewCell";
+//
+//        LGNNoteMoreImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMoreImageTableViewCell class]) forIndexPath:indexPath];
+//
+//        if (!cell) {
+//            cell = [[LGNNoteMoreImageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MoreImageTableViewCell];
+//            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        }
+//        // cell.tag =1;
         LGNNoteMoreImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMoreImageTableViewCell class]) forIndexPath:indexPath];
         cell.searchContent =_searchContent;
         cell.isSearchVC = _isSearchVC;
@@ -159,11 +197,32 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
-    if(indexPath.section>3 ||_allCount>=6){
+//    if(indexPath.section>3 ||_allCount>=10){
+//        return;
+//    }
+    
+//    if(cell.tag == 2){
+//        return;
+//    }
+    
+
+    NSLog(@"==%zd==",indexPath.section);
+    
+    if(self.isHvae == NO){
+        
         return;
     }
     
+    if(indexPath.section == self.dataArray.count-1){
+        
+        self.isHvae = NO;
+    }
+    
+
+    
     _allCount +=indexPath.section;
+    
+    cell.tag = 2;
     
     CGRect cellFrameStart = cell.contentView.frame;
     cellFrameStart.origin.x = cellFrameStart.size.width;
