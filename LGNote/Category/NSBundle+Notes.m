@@ -8,9 +8,9 @@
 
 #import "NSBundle+Notes.h"
 
-@interface BoundleModel : NSObject
+@interface NoteBoundleModel : NSObject
 @end
-@implementation BoundleModel
+@implementation NoteBoundleModel
 @end
 
 @implementation NSBundle (Notes)
@@ -18,7 +18,7 @@
 + (instancetype)lg_noteBundle{
     static NSBundle *noteBundle = nil;
     if (!noteBundle) {
-        noteBundle = [NSBundle bundleWithPath:[[NSBundle bundleForClass:[BoundleModel class]] pathForResource:@"LGNote" ofType:@"bundle"]];
+        noteBundle = [NSBundle bundleWithPath:[[NSBundle bundleForClass:[NoteBoundleModel class]] pathForResource:@"LGNote" ofType:@"bundle"]];
 //        NSString *bundlePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"LGNote.bundle"];
 //        if (![[NSFileManager defaultManager] fileExistsAtPath:bundlePath]) {
 //            bundlePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"LGNote.bundle"];

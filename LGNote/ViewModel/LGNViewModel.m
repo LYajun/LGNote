@@ -263,7 +263,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         NSString *url = [self.paramModel.CPBaseUrl stringByAppendingFormat:@"/Base/WS/Service_Basic.asmx/WS_G_GetSubSystemServerInfo?sysID=%@&subjectID=",@"S22"];
         
         
-        [kNetwork.setRequestUrl(url).setRequestType(GETXML)starSendRequestSuccess:^(id respone) {
+    [kNetwork.setRequestUrl(url).setRequestType(GETXML)starSendRequestSuccess:^(id respone) {
             
             NSDictionary *dic = [NSDictionary NotedictionaryWithXMLString:respone];
             
@@ -624,7 +624,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                 }
                 
                 [kMBAlert showErrorWithStatus:message];
-                [subscriber sendNext:nil];
+                [subscriber sendNext:message];
                 [subscriber sendCompleted];
                 return;
             }
@@ -644,7 +644,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
             
         } failure:^(NSError *error) {
             [kMBAlert showErrorWithStatus:@"操作失败，请检查网络后重试"];
-            [subscriber sendNext:nil];
+            [subscriber sendNext:@"操作失败"];
             [subscriber sendCompleted];
         }];
         return nil;

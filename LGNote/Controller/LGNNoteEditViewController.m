@@ -315,6 +315,8 @@
     @weakify(self);
     [self.viewModel.operateSubject subscribeNext:^(id  _Nullable x) {
         @strongify(self);
+        
+        
         if (x && self.updateSubject) {
             [self.navigationController popViewControllerAnimated:YES];
             

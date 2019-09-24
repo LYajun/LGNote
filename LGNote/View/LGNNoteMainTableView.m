@@ -99,6 +99,13 @@
     
     [self.viewModel.operateSubject subscribeNext:^(id  _Nullable x) {
         @strongify(self);
+        
+        if([x containsString:@"失败"]){
+        self.requestStatus = LGBaseTableViewRequestStatusNormal;
+            [self reloadData];
+            return ;
+        }
+        
         if (x) {
             self.requestStatus = LGBaseTableViewRequestStatusStartLoading;
             [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
@@ -271,6 +278,7 @@
         @weakify(self);
         [kMBAlert showAlertControllerOn:self.ownerController title:@"提示" message:@"您确定要删除该条笔记吗?" oneTitle:@"确定" oneHandle:^(UIAlertAction * _Nonnull one) {
             @strongify(self);
+            
             self.requestStatus = LGBaseTableViewRequestStatusStartLoading;
             NSDictionary *param = [self configureOperatedModel:model];
             [self.viewModel.operateCommand execute:param];
@@ -300,6 +308,8 @@
         @weakify(self);
         [kMBAlert showAlertControllerOn:self.ownerController title:@"提示" message:@"您确定要删除该条笔记吗?" oneTitle:@"确定" oneHandle:^(UIAlertAction * _Nonnull one) {
             @strongify(self);
+            
+            
             self.requestStatus = LGBaseTableViewRequestStatusStartLoading;
             NSDictionary *param = [self configureOperatedModel:model];
             [self.viewModel.operateCommand execute:param];
