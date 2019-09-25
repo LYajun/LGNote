@@ -40,9 +40,9 @@
     
     //S0-0129-CE46==2168943E-A8C0-4E46-890A-4746C3CC0E1A==bkstu152==2==黎清微==http://192.168.129.129:10103//===
     
-    params.SystemID = @"S21";
-    params.SubjectID = @"All";
-    params.C_SystemID = @"All";
+    params.SystemID = @"510";
+    params.SubjectID = @"S1-English";
+    params.C_SystemID = @"510";
     params.PageSize = 10;
     params.PageIndex = 1;
     params.MaterialIndex = -1;
@@ -59,7 +59,7 @@
     params.ResourceIOSLink = @"";
     params.ResourcePCLink = @"";
     params.ResourceAndroidLink=@"";
-    params.UserID = @"bkstu152";
+    params.UserID = @"bkstu36";
     params.UserType = 2;
     params.UserName = @"黎清微";
     params.CPBaseUrl = @"http://192.168.129.129:10103//";

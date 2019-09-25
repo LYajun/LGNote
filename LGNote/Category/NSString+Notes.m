@@ -8,7 +8,7 @@
 
 #import "NSString+Notes.h"
 #import <TFHpple/TFHpple.h>
-
+#import "LGNoteConfigure.h"
 @implementation NSString (Notes)
 
 - (NSMutableAttributedString *)lg_initMutableAtttrubiteString{
@@ -49,6 +49,8 @@
 }
 
 - (NSString *)adjustImgSrcAttributeWithImgElement:(TFHppleElement *) element{
+    
+    
     NSString *html = self.copy;
     NSDictionary *attributes = element.attributes;
     NSString *imgSrc = attributes[@"src"];
@@ -61,6 +63,7 @@
     NSString *imageWidth = attributes[@"width"];
     NSString *imageHeight = attributes[@"height"];
     
+  
     
     if ([imageWidth containsString:@"px"]) {
         imageWidth = [imageWidth stringByReplacingOccurrencesOfString:@"px" withString:@""];
@@ -75,17 +78,25 @@
     CGFloat imgH = [imageHeight floatValue];
     
     
+    
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
     CGFloat screenReferW = screenW-kNoteImageOffset;
+    
+    
     if (imgW == 0 || imgW > screenReferW) {
         CGFloat scale = 1;
         if (imgW > screenReferW) {
             scale = imgW*1.0/imgH;
+            
+         scale = screenReferW / screenW;
+
         }
         
         NSString *imgWStr = [NSString stringWithFormat:@"%.f",screenReferW];
         NSString *imgHtStr = [NSString stringWithFormat:@"%.f",screenReferW/scale];
-        //NSString *imgHtStr = [NSString stringWithFormat:@"%.f",imgH];
+       
+        
+        
         
         if ([[attributes allKeys] containsObject:@"width"]) {
             NSString *imgSrcReferStr = [NSString stringWithFormat:@"width=%@ height=%@",attributes[@"width"],attributes[@"height"]];
@@ -107,6 +118,8 @@
             }
             
             NSString *imgSrcFrameStr = [NSString stringWithFormat:@" width=%@ height=%@",imgWStr,imgHtStr];
+            
+            
             NSString *imgSrcFullStr = [labelStr stringByAppendingString:imgSrcFrameStr];
             html = [html stringByReplacingOccurrencesOfString:labelStr withString:imgSrcFullStr];
         }

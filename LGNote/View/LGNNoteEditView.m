@@ -270,6 +270,7 @@ HPTextViewTapGestureRecognizerDelegate
     self.viewModel = viewModel;
     self.titleTextF.text = viewModel.dataSourceModel.NoteTitle;
     
+    
     self.contentTextView.attributedText = viewModel.dataSourceModel.NoteContent_Att;
     
     if([self.viewModel.dataSourceModel.SystemID isEqualToString:@"S21"] ||[self.viewModel.dataSourceModel.SystemID isEqualToString:@"S22"]||[self.viewModel.dataSourceModel.SystemID isEqualToString:@"000"]||[self.viewModel.dataSourceModel.SystemID isEqualToString:@"B30"]){
@@ -303,13 +304,16 @@ HPTextViewTapGestureRecognizerDelegate
     //    去除全部与其他学科
     self.subjectArray = [self.viewModel configureSubjectPickerDataSource];
     
+
+  if(self.viewModel.paramModel.SystemType==SystemType_HOME){
+        [self.sourceBtn setTitle:viewModel.paramModel.MaterialName forState:UIControlStateNormal];
+    }else{
+        
+        [self.sourceBtn setTitle:viewModel.dataSourceModel.ResourceName forState:UIControlStateNormal];
+    }
     
     
-    NSLog(@"%@",viewModel.dataSourceModel.ResourceName);
-    
-    
-     [self.sourceBtn setTitle:viewModel.dataSourceModel.ResourceName forState:UIControlStateNormal];
-    
+   
     @weakify(self)
     [[self.viewModel getSubjectIDAndPickerSelectedForSubjectArray:viewModel.subjectArray subjectName:viewModel.dataSourceModel.SubjectName] subscribeNext:^(NSArray * _Nullable subjectSelectedData) {
         @strongify(self);

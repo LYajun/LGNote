@@ -142,9 +142,7 @@
         
         self.title = @"编辑笔记";
     
-       
-      
-        self.navigationItem.rightBarButtonItem.title=@"完成";
+     self.navigationItem.rightBarButtonItem.title=@"完成";
         self.contentView.titleTextF.enabled = YES;
         [self.contentView.contentTextView setEditable:YES];
         self.contentView.canEditing = YES;
@@ -174,8 +172,6 @@
 
 
     NSLog(@"%@===%@",_NotoContent,self.sourceModel.NoteContent);
-    
-    
 
         if(!IsStrEmpty(_NotoContent) && ![_NotoContent isEqualToString:self.sourceModel.NoteContent] ) {
             
