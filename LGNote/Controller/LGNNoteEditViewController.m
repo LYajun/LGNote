@@ -79,6 +79,13 @@
        // self.contentView.remarkBtn.enabled = NO;
         self.contentView.remarkBtn.userInteractionEnabled = NO;
         
+        if([self.sourceModel.IsKeyPoint isEqualToString:@"0"]){
+             self.contentView.remarkBtn.hidden = YES;
+        }
+        
+       
+
+        
         self.contentView.subjectBtn.enabled = NO;
     }else{
         
@@ -147,6 +154,8 @@
         [self.contentView.contentTextView setEditable:YES];
         self.contentView.canEditing = YES;
        // self.contentView.remarkBtn.enabled = YES;
+        self.contentView.remarkBtn.hidden = NO;
+        
          self.contentView.remarkBtn.userInteractionEnabled = YES;
         if(self.paramModel.SystemType ==SystemType_ASSISTANTER ||self.paramModel.SystemType ==SystemType_YPT ){
         self.contentView.subjectBtn.enabled = YES;
