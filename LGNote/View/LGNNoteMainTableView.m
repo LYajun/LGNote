@@ -156,8 +156,9 @@
       //  cell.tag =1;
         cell.searchContent =_searchContent;
         cell.isSearchVC = _isSearchVC;
-        
+         cell.MaterialName = self.viewModel.paramModel.MaterialName;
         [cell configureCellForDataSource:model indexPath:indexPath];
+       
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
 
         return cell;
@@ -176,7 +177,9 @@
         LGNNoteMainImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMainImageTableViewCell class]) forIndexPath:indexPath];
         cell.searchContent =_searchContent;
         cell.isSearchVC = _isSearchVC;
+          cell.MaterialName = self.viewModel.paramModel.MaterialName;
         [cell configureCellForDataSource:model indexPath:indexPath];
+        
          cell.selectionStyle = UITableViewCellSelectionStyleGray;
         return cell;
     } else {
@@ -193,7 +196,9 @@
         LGNNoteMoreImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMoreImageTableViewCell class]) forIndexPath:indexPath];
         cell.searchContent =_searchContent;
         cell.isSearchVC = _isSearchVC;
+        cell.MaterialName = self.viewModel.paramModel.MaterialName;
         [cell configureCellForDataSource:model indexPath:indexPath];
+      
          cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         //self.selectionStyle = UITableViewCellSelectionStyleNone;
 

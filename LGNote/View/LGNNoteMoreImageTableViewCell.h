@@ -17,7 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 //搜索
 @property (nonatomic,assign) BOOL  isSearchVC;
 @property (nonatomic,strong) NSString * searchContent;
-
+/** 资料名 */
+@property (nonatomic, copy) NSString *MaterialName;
 @end
 
 NS_ASSUME_NONNULL_END
