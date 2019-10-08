@@ -309,7 +309,14 @@
     UIImage *getImage = UIGraphicsGetImageFromCurrentImageContext();
     
     //    UIImageWriteToSavedPhotosAlbum(getImage, nil, nil, nil);
-    UIImageWriteToSavedPhotosAlbum(getImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    //UIImageWriteToSavedPhotosAlbum(getImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    
+    _drawCallBackImage = getImage;
+    if (self.block) {
+        self.block(getImage,@"");
+    }
+    
+  
     UIGraphicsEndImageContext();
     
     //linyl
