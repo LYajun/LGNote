@@ -11,7 +11,9 @@
 #import "LGNNoteFilterCollectionViewCell.h"
 #import "LGNNoteFilterCollectionReusableViewHeader.h"
 #import "LGNSubjectModel.h"
+#define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 
+#define IS_PAD (UI_USER_INTERFACE_IDIOM()== UIUserInterfaceIdiomPad)
 @interface LGNNewFilterViewController ()
 <
 UICollectionViewDelegate,
@@ -108,13 +110,27 @@ UICollectionViewDelegateFlowLayout
     }];
     
     
+    if(IS_PAD){
+        [self.sureBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.view).offset(-15);
+            make.centerX.equalTo(self.view);
+            make.left.equalTo(self.view).offset(130);
+            make.height.mas_equalTo(80);
+        }];
+        
+    }else{
+        
+        [self.sureBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.bottom.equalTo(self.view).offset(-15);
+            make.centerX.equalTo(self.view);
+            make.left.equalTo(self.view).offset(30);
+            make.height.mas_equalTo(60);
+        }];
+    }
     
-    [self.sureBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view).offset(-15);
-        make.centerX.equalTo(self.view);
-        make.left.equalTo(self.view).offset(30);
-        make.height.mas_equalTo(60);
-    }];
+    
+    
+    
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self.view);
         make.top.equalTo(self.view).offset(NoteNAVIGATION_HEIGHT+60);
@@ -253,7 +269,14 @@ UICollectionViewDelegateFlowLayout
     if (!_sureBtn) {
         _sureBtn = [[UIButton alloc] init];
         [_sureBtn setTitle:@"确定" forState:UIControlStateNormal];
-        _sureBtn.titleEdgeInsets = UIEdgeInsetsMake(-20, 0, 0, 0);
+       
+        if(IS_PAD){
+            
+            _sureBtn.titleEdgeInsets = UIEdgeInsetsMake(-30, 0, 0, 0);
+        }else{
+            
+            _sureBtn.titleEdgeInsets = UIEdgeInsetsMake(-20, 0, 0, 0);
+        }
         [_sureBtn setBackgroundImage:[NSBundle lg_imagePathName:@"note_sureBtn"] forState:UIControlStateNormal];
         [_sureBtn addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }

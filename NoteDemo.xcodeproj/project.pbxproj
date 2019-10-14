@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		282B719D22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 282B719C22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m */; };
+		28810EF2235470FF0003B03A /* UIImage+ImgSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 28810EF1235470FF0003B03A /* UIImage+ImgSize.m */; };
 		28DAA8C7231D09A6006A0570 /* LGNNewSearchToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DAA8C3231D09A5006A0570 /* LGNNewSearchToolView.m */; };
 		28DAA8C8231D09A6006A0570 /* LGNNewSeleteDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DAA8C6231D09A6006A0570 /* LGNNewSeleteDataView.m */; };
 		28DAA8CB231D09B4006A0570 /* LGNNewFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DAA8CA231D09B4006A0570 /* LGNNewFilterViewController.m */; };
@@ -147,6 +148,8 @@
 		1327CF5CEE302EAC89AC964E /* Pods-NoteDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoteDemo.release.xcconfig"; path = "Target Support Files/Pods-NoteDemo/Pods-NoteDemo.release.xcconfig"; sourceTree = "<group>"; };
 		282B719B22AE848C006691C5 /* HPTextViewTapGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewTapGestureRecognizer.h; sourceTree = "<group>"; };
 		282B719C22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewTapGestureRecognizer.m; sourceTree = "<group>"; };
+		28810EF0235470FF0003B03A /* UIImage+ImgSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImgSize.h"; sourceTree = "<group>"; };
+		28810EF1235470FF0003B03A /* UIImage+ImgSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImgSize.m"; sourceTree = "<group>"; };
 		28DAA8C3231D09A5006A0570 /* LGNNewSearchToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGNNewSearchToolView.m; sourceTree = "<group>"; };
 		28DAA8C4231D09A6006A0570 /* LGNNewSeleteDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGNNewSeleteDataView.h; sourceTree = "<group>"; };
 		28DAA8C5231D09A6006A0570 /* LGNNewSearchToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGNNewSearchToolView.h; sourceTree = "<group>"; };
@@ -832,6 +835,8 @@
 		32B6BE7522488002001F9E10 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				28810EF0235470FF0003B03A /* UIImage+ImgSize.h */,
+				28810EF1235470FF0003B03A /* UIImage+ImgSize.m */,
 				32B6BE7622488002001F9E10 /* NSBundle+Notes.h */,
 				32B6BE7E22488002001F9E10 /* NSBundle+Notes.m */,
 				32B6BE7D22488002001F9E10 /* NSString+Notes.h */,
@@ -1152,6 +1157,7 @@
 				3213BC4E225B46B90065E2DD /* YBImageBrowserView.m in Sources */,
 				3213BC9E225C6E950065E2DD /* HDWebImageCodersManager.m in Sources */,
 				3213BC3E225B46B90065E2DD /* YBVideoBrowseCellData.m in Sources */,
+				28810EF2235470FF0003B03A /* UIImage+ImgSize.m in Sources */,
 				3213BC3D225B46B90065E2DD /* YBVideoBrowseTopBar.m in Sources */,
 				32326491216E3796005CC784 /* LGNSubjectPickerView.m in Sources */,
 				3213BC99225C6E950065E2DD /* HDWebImageTransition.m in Sources */,

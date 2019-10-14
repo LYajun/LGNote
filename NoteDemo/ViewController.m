@@ -49,8 +49,8 @@
     params.MaterialCount = 10;
     params.SubjectName = @"英语";
     params.IsKeyPoint = @"-1";
-    params.SchoolID = @"S0-0129-CE46";
-    params.Token = @"2168943E-A8C0-4E46-890A-4746C3CC0E1A";
+    params.SchoolID = @"S15-130-7C54";
+    params.Token = @"E0F00189-4ADB-4A9B-8D3F-61AB1C2C2468";
     params.ResourceName = @"我的笔记";
     params.ResourceID = @"YXRW-tcxzl1-00000000000000000000000000000000000033-eb5e4f7e-d8d5-4d75-ab67-e2100d5f08cf";
     params.MaterialName = @"4f166e3330c43040bfc3ba24c89d7050.jpeg";
@@ -59,10 +59,10 @@
     params.ResourceIOSLink = @"";
     params.ResourcePCLink = @"";
     params.ResourceAndroidLink=@"";
-    params.UserID = @"bkstu36";
+    params.UserID = @"gzstu134";
     params.UserType = 2;
-    params.UserName = @"黎清微";
-    params.CPBaseUrl = @"http://192.168.129.129:10103//";
+    params.UserName = @"罗智坚";
+    params.CPBaseUrl = @"http://192.168.129.130:10102//";
     
     //params.NoteBaseUrl= @"http://192.168.129.8:10154/";
   
