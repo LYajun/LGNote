@@ -127,8 +127,6 @@ static NSString * const TFHppleTextNodeName            = @"text";
   return [[self attributes] objectForKey:theKey];
 }
 
-
-
 - (id) description
 {
   return [node description];

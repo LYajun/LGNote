@@ -16,10 +16,10 @@ typedef NS_ENUM(NSInteger, YJShakeDirection) {
 @interface UIView (YJ)
 
 #pragma mark - 渐变色
-@property(nullable, copy) NSArray *colors;
-@property(nullable, copy) NSArray<NSNumber *> *locations;
-@property CGPoint startPoint;
-@property CGPoint endPoint;
+@property(nullable, copy) NSArray *yjColors;
+@property(nullable, copy) NSArray<NSNumber *> *yjLocations;
+@property CGPoint yjStartPoint;
+@property CGPoint yjEndPoint;
 
 + (UIView *_Nullable)yj_gradientViewWithColors:(NSArray<UIColor *> *_Nullable)colors
                                       locations:(NSArray<NSNumber *> *_Nullable)locations
@@ -69,6 +69,7 @@ typedef NS_ENUM(NSInteger, YJShakeDirection) {
 @property (nonatomic, assign) CGFloat left;
 @property (nonatomic, assign) CGFloat right;
 
+- (BOOL)yj_isIPAD;
 - (BOOL)yj_isIPhoneX;
 - (CGFloat)yj_stateBarSpace;
 - (CGFloat)yj_tabBarSpace;

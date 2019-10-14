@@ -25,52 +25,52 @@
     for (UIColor *color in colors) {
         [colorsM addObject:(__bridge id)color.CGColor];
     }
-    self.colors = [colorsM copy];
-    self.locations = locations;
-    self.startPoint = startPoint;
-    self.endPoint = endPoint;
+    self.yjColors = [colorsM copy];
+    self.yjLocations = locations;
+    self.yjStartPoint = startPoint;
+    self.yjEndPoint = endPoint;
 }
-- (NSArray *)colors {
+- (NSArray *)yjColors {
     return objc_getAssociatedObject(self, _cmd);
 }
 
-- (void)setColors:(NSArray *)colors {
-    objc_setAssociatedObject(self, @selector(colors), colors, OBJC_ASSOCIATION_COPY_NONATOMIC);
+- (void)setYjColors:(NSArray *)yjColors {
+    objc_setAssociatedObject(self, @selector(yjColors), yjColors, OBJC_ASSOCIATION_COPY_NONATOMIC);
     if ([self.layer isKindOfClass:[CAGradientLayer class]]) {
-        [((CAGradientLayer *)self.layer) setColors:self.colors];
+        [((CAGradientLayer *)self.layer) setColors:self.yjColors];
     }
 }
 
-- (NSArray<NSNumber *> *)locations {
+- (NSArray<NSNumber *> *)yjLocations {
     return objc_getAssociatedObject(self, _cmd);
 }
 
-- (void)setLocations:(NSArray<NSNumber *> *)locations {
-    objc_setAssociatedObject(self, @selector(locations), locations, OBJC_ASSOCIATION_COPY_NONATOMIC);
+- (void)setYjLocations:(NSArray<NSNumber *> *)yjLocations {
+    objc_setAssociatedObject(self, @selector(yjLocations), yjLocations, OBJC_ASSOCIATION_COPY_NONATOMIC);
     if ([self.layer isKindOfClass:[CAGradientLayer class]]) {
-        [((CAGradientLayer *)self.layer) setLocations:self.locations];
+        [((CAGradientLayer *)self.layer) setLocations:self.yjLocations];
     }
 }
 
-- (CGPoint)startPoint {
+- (CGPoint)yjStartPoint {
     return [objc_getAssociatedObject(self, _cmd) CGPointValue];
 }
 
-- (void)setStartPoint:(CGPoint)startPoint {
-    objc_setAssociatedObject(self, @selector(startPoint), [NSValue valueWithCGPoint:startPoint], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setYjStartPoint:(CGPoint)yjStartPoint {
+    objc_setAssociatedObject(self, @selector(yjStartPoint), [NSValue valueWithCGPoint:yjStartPoint], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     if ([self.layer isKindOfClass:[CAGradientLayer class]]) {
-        [((CAGradientLayer *)self.layer) setStartPoint:self.startPoint];
+        [((CAGradientLayer *)self.layer) setStartPoint:self.yjStartPoint];
     }
 }
 
-- (CGPoint)endPoint {
+- (CGPoint)yjEndPoint {
     return [objc_getAssociatedObject(self, _cmd) CGPointValue];
 }
 
-- (void)setEndPoint:(CGPoint)endPoint {
-    objc_setAssociatedObject(self, @selector(endPoint), [NSValue valueWithCGPoint:endPoint], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setYjEndPoint:(CGPoint)yjEndPoint {
+    objc_setAssociatedObject(self, @selector(yjEndPoint), [NSValue valueWithCGPoint:yjEndPoint], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     if ([self.layer isKindOfClass:[CAGradientLayer class]]) {
-        [((CAGradientLayer *)self.layer) setEndPoint:self.endPoint];
+        [((CAGradientLayer *)self.layer) setEndPoint:self.yjEndPoint];
     }
 }
 #pragma mark - UIView处理
@@ -275,13 +275,25 @@
     return self.frame.origin.x + self.frame.size.width;
 }
 
-- (BOOL)yj_isIPhoneX{
-    if ((MIN([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) >= 375 &&
-         MAX([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) >= 812)) {
-        return YES;
-    }
-    return NO;
+- (BOOL)yj_isIPAD{
+    BOOL isIpad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
+    return isIpad;
 }
+
+- (BOOL)yj_isIPhoneX{
+    BOOL iPhoneX = NO;
+    if (UIDevice.currentDevice.userInterfaceIdiom != UIUserInterfaceIdiomPhone) {
+        return iPhoneX;
+    }
+    if (@available(iOS 11.0, *)) {
+        UIWindow *mainWindow = [[[UIApplication sharedApplication] delegate] window];
+        if (mainWindow.safeAreaInsets.bottom > 0.0) {
+            iPhoneX = YES;
+        }
+    }
+    return iPhoneX;
+}
+
 - (CGFloat)yj_stateBarSpace{
      return ([self yj_isIPhoneX] ? 24 : 0);
 }

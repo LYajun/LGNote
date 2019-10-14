@@ -1,15 +1,17 @@
 platform :ios,’9.0’
 use_frameworks!
 target ‘NoteDemo’ do
-pod 'AFNetworking'
-pod 'Masonry'
-pod 'ReactiveObjC', '~> 3.0.0'
-pod 'LGAlertHUD', '1.0.3'
-pod 'MJExtension'
-pod 'MJRefresh'
-pod 'BlocksKit'
-pod 'TFHpple', '~> 2.0.0'
-pod 'SDWebImage', '~> 4.0.0'
-pod 'YYImage', '~> 1.0.4'
-pod 'YJBaseModule','~> 1.2.4'
+  pod 'TFHpple', '~> 2.0.0'
+  pod 'YJBaseModule','~> 1.2.4'
+  pod 'BlocksKit'
+  pod 'YYImage', '~> 1.0.4'
+  
+  pod 'AFNetworking'
+  pod 'Masonry'
+  pod 'ReactiveObjC', '~> 3.0.0'
+  pod 'LGAlertHUD', '1.0.3'
+  pod 'MJExtension'
+  pod 'SDWebImage', '~> 4.0.0'
+  pod 'MJRefresh'
+
 end
