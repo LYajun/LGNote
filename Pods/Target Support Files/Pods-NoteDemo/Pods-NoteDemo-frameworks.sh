@@ -170,6 +170,8 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/ReactiveObjC/ReactiveObjC.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TFHpple/TFHpple.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/YJActivityIndicatorView/YJActivityIndicatorView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/YJBaseModule/YJBaseModule.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/YJExtensions/YJExtensions.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/YYImage/YYImage.framework"
 fi
@@ -183,6 +185,8 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/ReactiveObjC/ReactiveObjC.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TFHpple/TFHpple.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/YJActivityIndicatorView/YJActivityIndicatorView.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/YJBaseModule/YJBaseModule.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/YJExtensions/YJExtensions.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/YYImage/YYImage.framework"
 fi

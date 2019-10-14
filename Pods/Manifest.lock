@@ -44,6 +44,31 @@ PODS:
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
   - TFHpple (2.0.0)
+  - YJActivityIndicatorView (1.0.0)
+  - YJBaseModule (1.2.4):
+    - YJBaseModule/Base (= 1.2.4)
+    - YJBaseModule/Manager (= 1.2.4)
+    - YJBaseModule/MarqueeLabel (= 1.2.4)
+    - YJBaseModule/YJBHpple (= 1.2.4)
+    - YJBaseModule/YJBWebView (= 1.2.4)
+  - YJBaseModule/Base (1.2.4):
+    - LGAlertHUD
+    - Masonry
+    - MJExtension
+    - MJRefresh
+    - YJActivityIndicatorView
+    - YJBaseModule/Manager
+    - YJExtensions
+  - YJBaseModule/Manager (1.2.4):
+    - YJExtensions
+  - YJBaseModule/MarqueeLabel (1.2.4)
+  - YJBaseModule/YJBHpple (1.2.4)
+  - YJBaseModule/YJBWebView (1.2.4):
+    - Masonry
+    - YJBaseModule/Manager
+    - YJBaseModule/MarqueeLabel
+    - YJBaseModule/YJBHpple
+    - YJExtensions
   - YJExtensions (1.1.5):
     - YJExtensions/Foundation (= 1.1.5)
     - YJExtensions/UIKit (= 1.1.5)
@@ -65,6 +90,7 @@ DEPENDENCIES:
   - ReactiveObjC (~> 3.0.0)
   - SDWebImage (~> 4.0.0)
   - TFHpple (~> 2.0.0)
+  - YJBaseModule (~> 1.2.4)
   - YYImage (~> 1.0.4)
 
 SPEC REPOS:
@@ -78,6 +104,8 @@ SPEC REPOS:
     - ReactiveObjC
     - SDWebImage
     - TFHpple
+    - YJActivityIndicatorView
+    - YJBaseModule
     - YJExtensions
     - YYImage
 
@@ -91,9 +119,11 @@ SPEC CHECKSUMS:
   ReactiveObjC: ce79989e8684b9086b5f8d0c74bc7b81a8729c9e
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   TFHpple: a916fe0799eb30aa29b2670d14d5868cdd3a5b81
+  YJActivityIndicatorView: f51112fa59d69762bd6147cf0da573ff2a9a0215
+  YJBaseModule: 6c93528dd73380d7e513967d6e3cd0a7c9d47a10
   YJExtensions: e1f7e35f8e851ed41598d8449fc3735ef4b6bddc
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
 
-PODFILE CHECKSUM: d999918475b29c6b928b75f749f8f6a8e5faa9ce
+PODFILE CHECKSUM: b9d2db3f110d6993333899a4de2ddaa1edaf2a53
 
-COCOAPODS: 1.7.2
+COCOAPODS: 1.7.5

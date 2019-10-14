@@ -7,9 +7,10 @@
 //
 
 #import "NSString+Notes.h"
-#import <TFHpple/TFHpple.h>
+//#import <TFHpple/TFHpple.h>
 #import "LGNoteConfigure.h"
 #import "UIImage+ImgSize.h"
+#import <YJBaseModule/YJBHpple.h>
 @implementation NSString (Notes)
 
 - (NSMutableAttributedString *)lg_initMutableAtttrubiteString{
@@ -39,17 +40,21 @@
 - (NSString *)lg_adjustImageHTMLFrame{
     NSString *html = self.copy;
     NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
-    TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:htmlData];
+   // TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:htmlData];
+     YJBHpple *xpathParser = [[YJBHpple alloc] initWithHTMLData:htmlData];
     NSArray *imgArray = [xpathParser searchWithXPathQuery:@"//img"];
     if (imgArray && imgArray.count > 0) {
-        for (TFHppleElement *element in imgArray) {
+//        for (TFHppleElement *element in imgArray) {
+//            html = [html adjustImgSrcAttributeWithImgElement:element];
+//        }
+        for (YJBHppleElement *element in imgArray) {
             html = [html adjustImgSrcAttributeWithImgElement:element];
         }
     }
     return html;
 }
 
-- (NSString *)adjustImgSrcAttributeWithImgElement:(TFHppleElement *) element{
+- (NSString *)adjustImgSrcAttributeWithImgElement:(YJBHppleElement *) element{
     
     // self.isNull = NO;
     NSString *html = self.copy;

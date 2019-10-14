@@ -1,0 +1,6 @@
+framework module YJActivityIndicatorView {
+  umbrella header "YJActivityIndicatorView-umbrella.h"
+
+  export *
+  module * { export * }
+}

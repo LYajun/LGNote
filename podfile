@@ -11,4 +11,5 @@ pod 'BlocksKit'
 pod 'TFHpple', '~> 2.0.0'
 pod 'SDWebImage', '~> 4.0.0'
 pod 'YYImage', '~> 1.0.4'
+pod 'YJBaseModule','~> 1.2.4'
 end

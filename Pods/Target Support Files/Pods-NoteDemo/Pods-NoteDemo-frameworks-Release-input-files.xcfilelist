@@ -8,5 +8,7 @@ ${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework
 ${BUILT_PRODUCTS_DIR}/ReactiveObjC/ReactiveObjC.framework
 ${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
 ${BUILT_PRODUCTS_DIR}/TFHpple/TFHpple.framework
+${BUILT_PRODUCTS_DIR}/YJActivityIndicatorView/YJActivityIndicatorView.framework
+${BUILT_PRODUCTS_DIR}/YJBaseModule/YJBaseModule.framework
 ${BUILT_PRODUCTS_DIR}/YJExtensions/YJExtensions.framework
 ${BUILT_PRODUCTS_DIR}/YYImage/YYImage.framework

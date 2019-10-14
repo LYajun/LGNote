@@ -47,8 +47,7 @@
 //   href  = 'http://peepcode.com'
 //   class = 'highlight'
 @property (nonatomic, strong, readonly) NSDictionary *attributes;
-// 新增
-@property (nonatomic,strong,readonly) NSArray *attibuteArray;
+
 // Returns the children of a given node
 @property (nonatomic, strong, readonly) NSArray *children;
 
