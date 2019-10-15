@@ -7,7 +7,7 @@
 //
 
 #import "NSString+Notes.h"
-#import <TFHpple/TFHpple.h>
+//#import <TFHpple/TFHpple.h>
 #import "LGNoteConfigure.h"
 #import "UIImage+ImgSize.h"
 #import <YJBaseModule/YJBHpple.h>

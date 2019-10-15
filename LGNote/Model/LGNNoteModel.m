@@ -7,7 +7,8 @@
 //
 
 #import "LGNNoteModel.h"
-#import <TFHpple/TFHpple.h>
+//#import <TFHpple/TFHpple.h>
+#import <YJBaseModule/YJBHpple.h>
 #import "NSString+Notes.h"
 
 @implementation LGNNoteModel
@@ -26,8 +27,8 @@
     NSArray *bodyImgArr = [self imageArrayInHTML:html];
     if (bodyImgArr && bodyImgArr.count > 0) {
         for (int i = 0; i < bodyImgArr.count; i++) {
-            TFHppleElement *textHppleElement = textImgArr[i];
-            TFHppleElement *bodyHppleElement = bodyImgArr[i];
+            YJBHppleElement *textHppleElement = textImgArr[i];
+            YJBHppleElement *bodyHppleElement = bodyImgArr[i];
             [self.imageInfo setObject:textHppleElement.attributes forKey:[bodyHppleElement.attributes objectForKey:@"src"]];
         }
     }
@@ -44,10 +45,10 @@
 - (void)updateImageInfo:(NSDictionary *) imageInfo imageAttr:(NSAttributedString *) imageAttr{
     NSString *html = [self deleteBodyInAttr:imageAttr];
     NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
-    TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:htmlData];
+    YJBHpple *xpathParser = [[YJBHpple alloc] initWithHTMLData:htmlData];
     NSArray *imgArray = [xpathParser searchWithXPathQuery:@"//img"];
     if (imgArray && imgArray.count > 0) {
-        TFHppleElement *hppleElement = imgArray.firstObject;
+        YJBHppleElement *hppleElement = imgArray.firstObject;
         NSDictionary *attributes = hppleElement.attributes;
         NSString *src = [attributes objectForKey:@"src"];
         [self.imageInfo setObject:imageInfo forKey:src];
@@ -57,7 +58,7 @@
 // 图片
 - (NSArray *)imageArrayInHTML:(NSString *)html{
     NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
-    TFHpple *tfh = [[TFHpple alloc] initWithHTMLData:htmlData];
+    YJBHpple *tfh = [[YJBHpple alloc] initWithHTMLData:htmlData];
     NSArray *imageArray = [tfh searchWithXPathQuery:@"//img"];
     return imageArray;
 }
@@ -70,10 +71,10 @@
         
         NSData *htmlData = [attr dataFromRange:NSMakeRange(0,attr.length) documentAttributes:exportParams error:nil];
         
-        TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:htmlData];
+        YJBHpple *xpathParser = [[YJBHpple alloc] initWithHTMLData:htmlData];
         NSArray *bodyArray = [xpathParser searchWithXPathQuery:@"//body"];
         if (bodyArray && bodyArray.count > 0) {
-            TFHppleElement *hppleElement = bodyArray.firstObject;
+            YJBHppleElement *hppleElement = bodyArray.firstObject;
             html = hppleElement.raw;
 
             html = [html stringByReplacingOccurrencesOfString:@"<body>\n" withString:@""];
@@ -94,7 +95,7 @@
      _imageAllCont = textImgArr.count;
     if (textImgArr && textImgArr.count > 0) {
         for (int i = 0; i < textImgArr.count; i++) {
-            TFHppleElement *hppleElement = textImgArr[i];
+            YJBHppleElement *hppleElement = textImgArr[i];
             NSDictionary *attrDic = hppleElement.attributes;
             NSString *str1 = [NSString stringWithFormat:@"<img src=\"%@\" alt=\"%@\"/>",attrDic[@"src"],attrDic[@"alt"]];
             NSDictionary *attrDic2 = self.imageInfo[attrDic[@"src"]];
