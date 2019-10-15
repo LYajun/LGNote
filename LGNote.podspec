@@ -46,5 +46,6 @@ Pod::Spec.new do |spec|
   spec.dependency 'YYImage'
   spec.dependency 'SDWebImage'
   spec.dependency 'BlocksKit'
+  spec.dependency 'YJBaseModule'
   
 end
