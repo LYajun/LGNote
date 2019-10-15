@@ -425,7 +425,13 @@ HPTextViewTapGestureRecognizerDelegate
     for (int i = 0; i < imageArr.count; i ++) {
         YBImageBrowseCellData *data = [YBImageBrowseCellData new];
         data.url = imageArr[i];
-       NSString *str1 = [data.url absoluteString];;
+       NSString *str1 = [data.url absoluteString];
+        
+        if ([urlStr containsString:@".jpg"]) {
+            urlStr = [urlStr stringByReplacingOccurrencesOfString:@".png" withString:@""];
+            
+        }
+        
      if([str1 containsString:urlStr]){
          //保存照片index
          _photoIndex = i;
