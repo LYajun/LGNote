@@ -302,6 +302,12 @@
         return;
     }
     
+    if([self.sourceModel.SystemName isEqualToString:@"课后作业"]){
+        
+        self.sourceModel.ResourceName = self.paramModel.MaterialName;
+        self.viewModel.dataSourceModel.ResourceName =self.paramModel.MaterialName;
+    }
+    
 
     
     [kMBAlert showIndeterminateWithStatus:@"正在进行，请稍等..."];
@@ -383,10 +389,10 @@
         }
         _contentView = [[LGNNoteEditView alloc] initWithFrame:CGRectZero headerViewStyle:style];
         _contentView.ownController = self;
+        self.contentView.canEditing = self.isNewNote;
         [_contentView bindViewModel:self.viewModel];
         
-    
-        
+
      
     }
     return _contentView;

@@ -27,7 +27,7 @@
 
 - (void)enterNoteViewController:(UIButton *)sender {
 
-    LGNNoteMainViewController *noteController = [[LGNNoteMainViewController alloc] initWithNaviBarLeftItemStyle:NoteMainViewControllerNaviBarStyleBack systemType:SystemUsedTypeNew];
+    LGNNoteMainViewController *noteController = [[LGNNoteMainViewController alloc] initWithNaviBarLeftItemStyle:NoteMainViewControllerNaviBarStyleBack systemType:SystemUsedTypeOther];
     // 配置笔记首页所需参数
     noteController.paramModel = [self configureParams];
                                  
@@ -124,7 +124,7 @@
      SystemType_ZNT ,               //重难题辅导
      SystemType_YPT                 //云平台
      */
-    params.SystemType = SystemType_ASSISTANTER;
+    params.SystemType = SystemType_ZNT;
     
     return params;
 }

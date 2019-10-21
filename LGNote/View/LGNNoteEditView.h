@@ -46,6 +46,8 @@ typedef NS_ENUM(NSInteger, NoteEditViewHeaderStyle) {
 @property (nonatomic, strong) UIButton *subjectBtn;
 
 @property (nonatomic,assign) BOOL  canEditing;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

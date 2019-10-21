@@ -304,13 +304,14 @@ HPTextViewTapGestureRecognizerDelegate
     //    去除全部与其他学科
     self.subjectArray = [self.viewModel configureSubjectPickerDataSource];
     
-
-  if(self.viewModel.paramModel.SystemType==SystemType_HOME){
+    
+if(self.viewModel.paramModel.SystemType==SystemType_HOME && self.canEditing ==YES){
+        
         [self.sourceBtn setTitle:viewModel.paramModel.MaterialName forState:UIControlStateNormal];
     }else{
-        
         [self.sourceBtn setTitle:viewModel.dataSourceModel.ResourceName forState:UIControlStateNormal];
     }
+    
     
     
    
