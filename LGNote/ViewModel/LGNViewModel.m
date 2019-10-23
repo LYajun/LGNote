@@ -502,7 +502,13 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                 contentString = [contentString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
                 contentString = [contentString stringByReplacingOccurrencesOfString:@"\uFFFC" withString:@""];
                    contentString = [contentString stringByReplacingOccurrencesOfString:@"\U00002028" withString:@""];
+               
+                BOOL isKong = [self isEmpty:contentString];
                 
+                
+                if(isKong == YES){
+                    contentString = @"";
+                }
                 
                 if (!IsArrEmpty(imageUrls) && !IsStrEmpty(contentString)) {
                     model.mixTextImage = YES;
@@ -527,6 +533,25 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         return nil;
     }];
 }
+
+- (BOOL) isEmpty:(NSString *) str {
+         
+        if (!str) {
+                return true;
+            } else {
+               
+                    NSCharacterSet *set = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+                   
+                    NSString *trimedString = [str stringByTrimmingCharactersInSet:set];
+                     
+                    if ([trimedString length] == 0) {
+                            return true;
+                        } else {
+                                return false;
+                            }
+                }
+}
+
 
 /** 获取本学期开始和截止时间 */
 
