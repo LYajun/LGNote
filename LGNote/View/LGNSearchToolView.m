@@ -136,8 +136,10 @@
         _searchBar.layer.masksToBounds = YES;
         _searchBar.borderStyle = UITextBorderStyleNone;
         _searchBar.placeholder = @"请输入笔记标题/来源关键字搜索";
-        [_searchBar setValue:kColorWithHex(0x989898) forKeyPath:@"_placeholderLabel.textColor"];
+       // [_searchBar setValue:kColorWithHex(0x989898) forKeyPath:@"_placeholderLabel.textColor"];
         _searchBar.backgroundColor = kColorInitWithRGB(242, 242, 242, 1);
+        
+         _searchBar.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"请输入笔记标题/来源关键字搜索"attributes:@{NSForegroundColorAttributeName: kColorWithHex(0x989898)}];
         _searchBar.userInteractionEnabled = NO;
         _searchBar.leftImageView.image = [NSBundle lg_imageName:@"lg_Newsearch"];
     }

@@ -155,6 +155,9 @@
         case SystemType_XYTJ:
             _SystemName = @"学友推荐";
             break;
+        case SystemType_ZHJS:
+            _SystemName = @"智慧教室";
+            break;
             
         default:
             _SystemName = @"错难题复习";

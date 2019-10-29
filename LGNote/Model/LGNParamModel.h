@@ -21,8 +21,8 @@ typedef NS_ENUM(NSInteger, SystemType) {
     SystemType_XYTJ,             //学友推荐
     SystemType_KT,                // 课堂
     SystemType_ZNT ,               //重难题辅导
-    SystemType_YPT                 //云平台
-    
+    SystemType_YPT ,                //云平台
+    SystemType_ZHJS                 //智慧教室
 };
 
 @interface LGNParamModel : NSObject

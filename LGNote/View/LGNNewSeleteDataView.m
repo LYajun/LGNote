@@ -501,7 +501,9 @@ UITextFieldDelegate
         _starTimeF.delegate = self;
       //  _starTimeF.borderStyle = UITextBorderStyleRoundedRect;
         _starTimeF.font = LGFontSize(15);
-        [_starTimeF setValue:LGRGB(194, 194, 194) forKeyPath:@"_placeholderLabel.textColor"];
+       // [_starTimeF setValue:LGRGB(194, 194, 194) forKeyPath:@"_placeholderLabel.textColor"];
+         _starTimeF.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"起始时间"attributes:@{NSForegroundColorAttributeName: LGRGB(194, 194, 194)}];
+        
          _starTimeF.textColor = LGRGB(138, 138, 138);
 
     }
@@ -519,7 +521,10 @@ UITextFieldDelegate
         _endTimeF.placeholder = @"结束时间";
         _endTimeF.delegate = self;
         _endTimeF.font = LGFontSize(15);
-        [_endTimeF setValue:LGRGB(194, 194, 194) forKeyPath:@"_placeholderLabel.textColor"];
+       // [_endTimeF setValue:LGRGB(194, 194, 194) forKeyPath:@"_placeholderLabel.textColor"];
+        
+         _endTimeF.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"起始时间"attributes:@{NSForegroundColorAttributeName: LGRGB(194, 194, 194)}];
+        
         _endTimeF.textColor = LGRGB(138, 138, 138);
         
     }
