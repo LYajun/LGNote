@@ -109,6 +109,7 @@
         if (x) {
             self.requestStatus = LGBaseTableViewRequestStatusStartLoading;
             [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
+            [self.mj_footer endRefreshing];
             _allCount = 0;
         }
     }];
@@ -119,6 +120,7 @@
         
         self.dataArray = x;
         self.requestStatus = IsArrEmpty(x) ? LGBaseTableViewRequestStatusNoData:LGBaseTableViewRequestStatusNormal;
+        // [self.mj_footer endRefreshing];
         [self reloadData];
         _allCount = 0;
     }];

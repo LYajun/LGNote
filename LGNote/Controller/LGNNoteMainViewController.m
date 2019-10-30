@@ -594,6 +594,12 @@ LGNNewFilterDelegate
         configure.style = (_systemType == SystemUsedTypeAssistanter) ? SearchToolViewStyleFilter:SearchToolViewStyleDefault;
         _toolView = [[LGNSearchToolView alloc] initWithFrame:CGRectZero configure:configure];
         _toolView.delegate = self;
+        if(_systemType ==SystemUsedTypeAssistanter){
+            _toolView.filterBtn.hidden = YES;
+             _toolView.remarkBtn.hidden = YES;
+        }
+        
+        
     }
     return _toolView;
 }
