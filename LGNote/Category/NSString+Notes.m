@@ -113,7 +113,7 @@
     
     
     CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
-    CGFloat screenReferW = screenW-kNoteImageOffset;
+    CGFloat screenReferW = screenW-kNoteImageOffset-20;
     
     
     if (imgW == 0 || imgW > screenReferW) {
