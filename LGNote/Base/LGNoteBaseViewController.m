@@ -41,7 +41,7 @@
             
             do {
                 
-                if ([presentingViewController isKindOfClass:NSClassFromString(@"LGTMNavigationViewController")]||[presentingViewController isKindOfClass:NSClassFromString(@"LGStuTabBarController")]||[presentingViewController isKindOfClass:NSClassFromString(@"AIESideNavigationController")]) {
+                if ([presentingViewController isKindOfClass:NSClassFromString(@"LGTMNavigationViewController")]||[presentingViewController isKindOfClass:NSClassFromString(@"LGStuTabBarController")]||[presentingViewController isKindOfClass:NSClassFromString(@"AIESideNavigationController")]||[presentingViewController isKindOfClass:NSClassFromString(@"MFBaseNavigationController")]) {
                     
                     
                     break;
