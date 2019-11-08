@@ -964,6 +964,8 @@ if(self.viewModel.paramModel.SystemType==SystemType_HOME && self.canEditing ==YE
         _titleTextF = [[LGNoteBaseTextField alloc] init];
         _titleTextF.borderStyle = UITextBorderStyleNone;
         _titleTextF.backgroundColor = [UIColor whiteColor];
+        _titleTextF.userInteractionEnabled = YES;
+        //_titleTextF.intrinsicContentSize
         _titleTextF.placeholder = @"请输入笔记标题(50字内)";
         _titleTextF.leftView = nil;
         _titleTextF.lgDelegate = self;

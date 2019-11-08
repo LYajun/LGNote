@@ -95,11 +95,34 @@
 - (void)tableViewShowRequestStatus {
     switch (self.requestStatus) {
         case LGBaseTableViewRequestStatusStartLoading:{
+            
+           
             [kMBAlert showIndeterminateWithStatus:@"正在加载..."];
+            
+           
             [self tableViewShowStartLoading];
         }
             break;
+            case LGBaseTableViewRequestDeleteLoading:{
+                       
+                      
+                       [kMBAlert showIndeterminateWithStatus:@"删除中..."];
+                       
+                      
+                       [self tableViewShowStartLoading];
+                   }
+                       break;
+            case LGBaseTableViewRequestSearchLoading:{
+                                  
+                                 
+            [kMBAlert showIndeterminateWithStatus:@"搜索中..."];
+                                  
+                                 
+                                  [self tableViewShowStartLoading];
+                              }
+                                  break;
         case LGBaseTableViewRequestStatusNormal:{
+            _tipsStr=@"";
             [kMBAlert hide];
             [self tableViewShowStartLoading];
             [self tableViewShowEndLoading];
@@ -109,6 +132,7 @@
         case LGBaseTableViewRequestStatusNoData:
         case LGBaseTableViewRequestStatusNoNetwork:
         case LGBaseTableViewRequestStatusOverTime:{
+             _tipsStr=@"";
             [kMBAlert hide];
             [self tableViewShowEndLoading];
             self.viewError.hidden = NO;
@@ -181,11 +205,27 @@
                  _errorImageView.image = [NSBundle lg_imagePathName:@"lg_empty"];
         }
 
-        [_errorImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-          make.centerX.equalTo(self.viewError);
-      make.top.equalTo(self.viewError).offset(kMain_Screen_Height/2-64-49);
+        if(IS_PAD){
             
-        }];
+            [_errorImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.centerX.equalTo(self.viewError);
+                      
+                  make.width.mas_equalTo(kMain_Screen_Width/3);
+                      make.height.mas_equalTo(kMain_Screen_Width/4);
+                  make.top.equalTo(self.viewError).offset(kMain_Screen_Height/2-64-49);
+                      
+                  }];
+        }else{
+            
+            [_errorImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.viewError);
+                      
+            make.top.equalTo(self.viewError).offset(kMain_Screen_Height/2-64-49);
+                      
+                  }];
+        }
+        
+      
         
         
         
@@ -200,7 +240,14 @@
         }
    
         _errorInfoLabel.textColor = kLabelColorLightGray;
-        _errorInfoLabel.font = kSYSTEMFONT(14.f);
+        if(IS_PAD){
+            
+             _errorInfoLabel.font = kSYSTEMFONT(20.f);
+        }else{
+             _errorInfoLabel.font = kSYSTEMFONT(14.f);
+        }
+        
+        //_errorInfoLabel.font = kSYSTEMFONT(14.f);
         [_viewError addSubview:_errorInfoLabel];
         [_errorInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.errorImageView.mas_bottom).offset(15);

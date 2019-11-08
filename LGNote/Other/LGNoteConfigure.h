@@ -27,6 +27,7 @@
 #endif
 #define LGFontSize(size)      [UIFont systemFontOfSize:size]
 
+#define IS_PAD (UI_USER_INTERFACE_IDIOM()== UIUserInterfaceIdiomPad)
 
 /** Label淡灰 */
 #define kLabelColorLightGray     kColorInitWithRGB(152, 152, 152, 1)

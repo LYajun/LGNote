@@ -14,6 +14,8 @@ typedef void(^LGRefreshBlockLGRefreshBlock)(void);
 
 /** 数据开始加载、加载时、加载后的状态 */
 typedef NS_ENUM(NSInteger, LGBaseTableViewRequestStatus) {
+    LGBaseTableViewRequestDeleteLoading,
+     LGBaseTableViewRequestSearchLoading,
     LGBaseTableViewRequestStatusStartLoading,  // 开始请求
     LGBaseTableViewRequestStatusNoData,        // 没有数据
     LGBaseTableViewRequestStatusNoNetwork,     // 没有网络
@@ -46,7 +48,8 @@ typedef NS_ENUM(NSInteger, LGBaseTableViewRequestStatus) {
 
 @property (nonatomic,assign) BOOL  isNotoSearchVC;
 
-
+/** 加载语 */
+@property (nonatomic,strong) NSString * tipsStr;
 
 /** 错误信息 */
 @property (nonatomic, strong) UILabel *errorInfoLabel;

@@ -90,7 +90,7 @@
     }else{
         
         self.contentView.canEditing = YES;
-        
+         [self.contentView.titleTextF becomeFirstResponder];
     }
     
 }
@@ -310,14 +310,14 @@
     
 
     
-    [kMBAlert showIndeterminateWithStatus:@"正在进行，请稍等..."];
+    [kMBAlert showIndeterminateWithStatus:@"正在上传..."];
     
     
     
   
 
 
-    [self.viewModel.operateCommand execute:[self.sourceModel mj_keyValues]];
+   [self.viewModel.operateCommand execute:[self.sourceModel mj_keyValues]];
     
     
     

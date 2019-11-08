@@ -61,9 +61,9 @@
 }
 
 - (void)leftNavigationBar:(id)sender{
-    if (self.backRefreshSubject) {
-        [self.backRefreshSubject sendNext:@"back"];
-    }
+//    if (self.backRefreshSubject) {
+//        [self.backRefreshSubject sendNext:@"back"];
+//    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -139,7 +139,8 @@
         return;
     }
     
-    self.tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
+   
+    self.tableView.requestStatus = LGBaseTableViewRequestSearchLoading;
     
 
     self.viewModel.paramModel.IsKeyPoint =@"-1";

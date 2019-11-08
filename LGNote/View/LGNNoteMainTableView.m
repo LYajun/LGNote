@@ -285,8 +285,9 @@
         @weakify(self);
         [kMBAlert showAlertControllerOn:self.ownerController title:@"提示" message:@"您确定要删除该条笔记吗?" oneTitle:@"确定" oneHandle:^(UIAlertAction * _Nonnull one) {
             @strongify(self);
+           
+            self.requestStatus = LGBaseTableViewRequestDeleteLoading;
             
-            self.requestStatus = LGBaseTableViewRequestStatusStartLoading;
             NSDictionary *param = [self configureOperatedModel:model];
             [self.viewModel.operateCommand execute:param];
         } twoTitle:@"取消" twoHandle:^(UIAlertAction * _Nonnull two) {
@@ -316,8 +317,8 @@
         [kMBAlert showAlertControllerOn:self.ownerController title:@"提示" message:@"您确定要删除该条笔记吗?" oneTitle:@"确定" oneHandle:^(UIAlertAction * _Nonnull one) {
             @strongify(self);
             
-            
-            self.requestStatus = LGBaseTableViewRequestStatusStartLoading;
+           
+            self.requestStatus = LGBaseTableViewRequestDeleteLoading;
             NSDictionary *param = [self configureOperatedModel:model];
             [self.viewModel.operateCommand execute:param];
         } twoTitle:@"取消" twoHandle:^(UIAlertAction * _Nonnull two) {
