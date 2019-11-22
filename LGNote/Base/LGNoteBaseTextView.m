@@ -479,23 +479,34 @@ static const void *LGTextViewToolBarStyleKey          = &LGTextViewToolBarStyleK
         
         UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         
-        UIButton *phoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [phoBtn setImage:[NSBundle lg_imagePathName:@"note_pho_unselected"] forState:UIControlStateNormal];
-        [phoBtn addTarget:self action:@selector(toolBarEvent:) forControlEvents:UIControlEventTouchUpInside];
-        phoBtn.tag = LGToolBarFuntionTypePhoto;
-        UIBarButtonItem *photo = [[UIBarButtonItem alloc] initWithCustomView:phoBtn];
+//        UIButton *phoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [phoBtn setImage:[NSBundle lg_imagePathName:@"note_pho_unselected"] forState:UIControlStateNormal];
+//        [phoBtn addTarget:self action:@selector(toolBarEvent:) forControlEvents:UIControlEventTouchUpInside];
+//        phoBtn.tag = LGToolBarFuntionTypePhoto;
+//        UIBarButtonItem *photo = [[UIBarButtonItem alloc] initWithCustomView:phoBtn];
         
-        UIButton *cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [cameraBtn setImage:[NSBundle lg_imagePathName:@"note_camera"] forState:UIControlStateNormal];
-        [cameraBtn addTarget:self action:@selector(toolBarEvent:) forControlEvents:UIControlEventTouchUpInside];
-        cameraBtn.tag = LGToolBarFuntionTypeCamera;
-        UIBarButtonItem *camera = [[UIBarButtonItem alloc] initWithCustomView:cameraBtn];
+        UIBarButtonItem *photo = [[UIBarButtonItem alloc]initWithImage:[[NSBundle lg_imagePathName:@"note_pho_unselected"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleDone target:self action:@selector(toolBarEvent:)];
+        photo.tag = LGToolBarFuntionTypePhoto;
         
-        UIButton *drawBoardBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [drawBoardBtn setImage:[NSBundle lg_imagePathName:@"note_draw"] forState:UIControlStateNormal];
-        [drawBoardBtn addTarget:self action:@selector(toolBarEvent:) forControlEvents:UIControlEventTouchUpInside];
-        drawBoardBtn.tag = LGToolBarFuntionTypeDrawBoard;
-        UIBarButtonItem *drawBoard = [[UIBarButtonItem alloc] initWithCustomView:drawBoardBtn];
+//        UIButton *cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [cameraBtn setImage:[NSBundle lg_imagePathName:@"note_camera"] forState:UIControlStateNormal];
+//        [cameraBtn addTarget:self action:@selector(toolBarEvent:) forControlEvents:UIControlEventTouchUpInside];
+//        cameraBtn.tag = LGToolBarFuntionTypeCamera;
+       // UIBarButtonItem *camera = [[UIBarButtonItem alloc] initWithCustomView:cameraBtn];
+        
+         UIBarButtonItem *camera = [[UIBarButtonItem alloc]initWithImage:[[NSBundle lg_imagePathName:@"note_camera"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleDone target:self action:@selector(toolBarEvent:)];
+         camera.tag = LGToolBarFuntionTypeCamera;
+        
+        
+//        UIButton *drawBoardBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [drawBoardBtn setImage:[NSBundle lg_imagePathName:@"note_draw"] forState:UIControlStateNormal];
+//        [drawBoardBtn addTarget:self action:@selector(toolBarEvent:) forControlEvents:UIControlEventTouchUpInside];
+//        drawBoardBtn.tag = LGToolBarFuntionTypeDrawBoard;
+       // UIBarButtonItem *drawBoard = [[UIBarButtonItem alloc] initWithCustomView:drawBoardBtn];
+        
+        UIBarButtonItem *drawBoard = [[UIBarButtonItem alloc]initWithImage:[[NSBundle lg_imagePathName:@"note_draw"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleDone target:self action:@selector(toolBarEvent:)];
+    
+        drawBoard.tag = LGToolBarFuntionTypeDrawBoard;
         
         UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithTitle:@"收起" style:UIBarButtonItemStyleDone target:self action:@selector(toolBarEvent:)];
         done.tag = LGToolBarFuntionTypeDone;
