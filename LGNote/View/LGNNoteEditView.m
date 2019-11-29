@@ -308,7 +308,12 @@ HPTextViewTapGestureRecognizerDelegate
 if(self.viewModel.paramModel.SystemType==SystemType_HOME && self.canEditing ==YES){
         
         [self.sourceBtn setTitle:viewModel.paramModel.MaterialName forState:UIControlStateNormal];
-    }else{
+}else if (self.viewModel.paramModel.SystemType==SystemType_DZJCK){
+    
+     [self.sourceBtn setTitle:viewModel.paramModel.MaterialName forState:UIControlStateNormal];
+}
+
+else{
         [self.sourceBtn setTitle:viewModel.dataSourceModel.ResourceName forState:UIControlStateNormal];
     }
     

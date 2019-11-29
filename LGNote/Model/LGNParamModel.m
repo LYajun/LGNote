@@ -158,6 +158,9 @@
         case SystemType_ZHJS:
             _SystemName = @"智慧教室";
             break;
+        case SystemType_DZJCK:
+            _SystemName = @"电子教材库";
+            break;
             
         default:
             _SystemName = @"错难题复习";

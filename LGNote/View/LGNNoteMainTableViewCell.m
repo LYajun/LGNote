@@ -94,9 +94,17 @@
 //        self.sourceLabel.attributedText = att;
 //    }else{
     
+    if([dataSource.SystemID isEqualToString:@"930"]){
+      
+        NSMutableAttributedString *att = [LGNNoteTools attributedStringByStrings:@[subjectName,dataSource.MaterialName] colors:@[kColorInitWithRGB(0, 153, 255, 1),kColorInitWithRGB(0, 153, 255, 1)] fonts:@[@(12),@(12)]];
+        self.sourceLabel.attributedText = att;
+    }else{
         NSMutableAttributedString *att = [LGNNoteTools attributedStringByStrings:@[subjectName,dataSource.ResourceName] colors:@[kColorInitWithRGB(0, 153, 255, 1),kColorInitWithRGB(0, 153, 255, 1)] fonts:@[@(12),@(12)]];
         self.sourceLabel.attributedText = att;
-//    }
+        
+    }
+    
+
     
     
     

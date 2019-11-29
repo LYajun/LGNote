@@ -27,7 +27,7 @@
 
 - (void)enterNoteViewController:(UIButton *)sender {
 
-    LGNNoteMainViewController *noteController = [[LGNNoteMainViewController alloc] initWithNaviBarLeftItemStyle:NoteMainViewControllerNaviBarStyleBack systemType:SystemUsedTypeAssistanter];
+    LGNNoteMainViewController *noteController = [[LGNNoteMainViewController alloc] initWithNaviBarLeftItemStyle:NoteMainViewControllerNaviBarStyleBack systemType:SystemUsedTypeOther];
     // 配置笔记首页所需参数
     noteController.paramModel = [self configureParams];
                                  
@@ -40,33 +40,35 @@
     
     //S0-0129-CE46==2168943E-A8C0-4E46-890A-4746C3CC0E1A==bkstu152==2==黎清微==http://192.168.129.129:10103//===
     
-    params.SystemID = @"510";
+    params.SystemID = @"930";
     params.SubjectID = @"S1-English";
-    params.C_SystemID = @"510";
+    params.C_SystemID = @"930";
     params.PageSize = 10;
     params.PageIndex = 1;
     params.MaterialIndex = -1;
     params.MaterialCount = 10;
     params.SubjectName = @"英语";
     params.IsKeyPoint = @"-1";
-    params.SchoolID = @"S15-130-7C54";
-    params.Token = @"E0F00189-4ADB-4A9B-8D3F-61AB1C2C2468";
-    params.ResourceName = @"我的笔记";
-    params.ResourceID = @"YXRW-tcxzl1-00000000000000000000000000000000000033-eb5e4f7e-d8d5-4d75-ab67-e2100d5f08cf";
-    params.MaterialName = @"4f166e3330c43040bfc3ba24c89d7050.jpeg";
-    params.MaterialID = @"";
+    params.SchoolID = @"S14-111-FBE8";
+    params.Token = @"BBB13E42-9C41-4253-AA62-7EE0142CB4C3";
+
+    params.ResourceName = @"1126高职A教材";
+    params.ResourceID = @"f25aeeef-469d-4660-a097-48fc515af07b";
+    params.MaterialName = @"Ten Reasons to Visit Australia";
+
+    params.MaterialID = @"CFAE29172CIC609MSCb";
     params.MaterialTotal = @"-1";
     params.ResourceIOSLink = @"";
     params.ResourcePCLink = @"";
     params.ResourceAndroidLink=@"";
-    params.UserID = @"gzstu134";
+    params.UserID = @"stu01";
     params.UserType = 2;
-    params.UserName = @"罗智坚";
-    params.CPBaseUrl = @"http://192.168.129.130:10102//";
-    
+    params.UserName = @"stu01";
+    params.CPBaseUrl = @"http://172.16.41.111:10102//";
+
     //params.NoteBaseUrl= @"http://192.168.129.8:10154/";
   
-    params.SystemType = SystemType_HOME;
+    params.SystemType = SystemType_DZJCK;
     
     return params;
     

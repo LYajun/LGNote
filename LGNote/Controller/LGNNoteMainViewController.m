@@ -554,6 +554,13 @@ LGNNewFilterDelegate
         _tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
     [_tableView lg_bindViewModel:self.viewModel];
     
+        if([self.paramModel.SystemID isEqualToString:@"930"]){
+            [self.tableView allocInitRefreshHeader:YES allocInitFooter:NO];
+        }else{
+             [self.tableView allocInitRefreshHeader:YES allocInitFooter:YES];
+        }
+   
+        
         @weakify(self);
 
         self.tableView.notoDataCall = ^(NSInteger page) {

@@ -17,12 +17,13 @@ typedef NS_ENUM(NSInteger, SystemType) {
     SystemType_ASSISTANTER,      // 小助手
     SystemType_KQ,               // 课前
     SystemType_CP,               // 基础平台
-    SystemType_DZJC,             //电子教材
+    SystemType_DZJC,             //电子素材
     SystemType_XYTJ,             //学友推荐
     SystemType_KT,                // 课堂
     SystemType_ZNT ,               //重难题辅导
     SystemType_YPT ,                //云平台
-    SystemType_ZHJS                 //智慧教室
+    SystemType_ZHJS ,                //智慧教室
+     SystemType_DZJCK                //电子教材库
 };
 
 @interface LGNParamModel : NSObject

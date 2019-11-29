@@ -38,7 +38,12 @@
         [self registerClass:[LGNNoteMainTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LGNNoteMainTableViewCell class])];
         [self registerClass:[LGNNoteMainImageTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LGNNoteMainImageTableViewCell class])];
         [self registerClass:[LGNNoteMoreImageTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LGNNoteMoreImageTableViewCell class])];
-        [self allocInitRefreshHeader:YES allocInitFooter:YES];
+        
+  
+//            [self allocInitRefreshHeader:YES allocInitFooter:YES];
+        
+        
+        
         
          
     }
@@ -51,6 +56,9 @@
 - (void)lg_bindViewModel:(id)viewModel{
     self.viewModel = viewModel;
     @weakify(self);
+    
+  
+    
     [self.viewModel.refreshSubject subscribeNext:^(NSArray *  _Nullable x) {
         
         
