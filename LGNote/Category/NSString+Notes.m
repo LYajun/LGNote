@@ -74,7 +74,7 @@
     
     
     
-    if([imageWidth isEqualToString:@"auto"]){
+    if([imageWidth isEqualToString:@"auto"]|| IsStrEmpty(imageWidth)){
         
         //取到图片自身宽高赋值.
         CGSize size = [UIImage getImageSizeWithURL:[NSURL URLWithString:imgSrc]];
@@ -161,7 +161,13 @@
             
             NSString *imgSrcFullStr = [labelStr stringByAppendingString:imgSrcFrameStr];
             
-            html = [html stringByReplacingOccurrencesOfString:labelStr withString:imgSrcFullStr];
+           
+            if(![html containsString:@"width="]){
+                //unselectable="on"
+                html = [html stringByReplacingOccurrencesOfString:@"unselectable=" withString:imgSrcFullStr];
+            }else{
+                html = [html stringByReplacingOccurrencesOfString:labelStr withString:imgSrcFullStr];
+            }
             
         }
         
