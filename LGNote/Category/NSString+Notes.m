@@ -120,10 +120,26 @@
         
         NSString *imgWStr;
         NSString *imgHtStr;
-        CGFloat scale =screenReferW /imgW;
+        if(imgW != 0){
+            
+            CGFloat targetWidth = screenReferW;
+            CGFloat targetHeight = imgH / (imgW / targetWidth);
+            
+                imgWStr = [NSString stringWithFormat:@"%.f",targetWidth];
+            imgHtStr = [NSString stringWithFormat:@"%.f",targetHeight];
+            
+            
+        }else{
+            
+            CGFloat scale =screenReferW /imgW;
+                   
+                imgWStr = [NSString stringWithFormat:@"%.f",screenReferW];
+            imgHtStr = [NSString stringWithFormat:@"%.f",imgH*scale];
+            
+        }
         
-        imgWStr = [NSString stringWithFormat:@"%.f",screenReferW];
-        imgHtStr = [NSString stringWithFormat:@"%.f",imgH*scale];
+       
+       
         
         if ([[attributes allKeys] containsObject:@"width"]) {
             
