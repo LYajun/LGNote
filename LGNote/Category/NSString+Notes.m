@@ -40,6 +40,7 @@
 - (NSString *)lg_adjustImageHTMLFrame{
     NSString *html = self.copy;
     NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
+    
    // TFHpple *xpathParser = [[TFHpple alloc] initWithHTMLData:htmlData];
      YJBHpple *xpathParser = [[YJBHpple alloc] initWithHTMLData:htmlData];
     NSArray *imgArray = [xpathParser searchWithXPathQuery:@"//img"];

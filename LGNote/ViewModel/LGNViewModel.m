@@ -380,7 +380,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         NSDictionary *params = @{
                                  @"UserID":Note_HandleParams(self.paramModel.UserID),
                                  @"UserType":@(self.paramModel.UserType),
-                                 @"NoteID":noteID,
+                                 @"NoteID":Note_HandleParams(noteID),
                                  @"SecretKey": Note_HandleParams(self.paramModel.Secret),
                                  @"BackUpOne":@"",
                                  @"BackUpTwo":@""
@@ -447,13 +447,15 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                                      @"UserID":Note_HandleParams(self.paramModel.UserID),
                                      @"UserType":@(self.paramModel.UserType),
                                      @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
-                                     @"SubjectID":subjectID,
+                                     @"SubjectID":Note_HandleParams(subjectID),
                                      @"SecretKey":Note_HandleParams(self.paramModel.Secret),
-                                     @"SchoolID":schoolID,
+                                     
+                                     @"SchoolID":Note_HandleParams(schoolID),
                                      @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
                                      @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
-                                     @"SysID":systemID,
-                                     @"Keycon":keycon,
+                                     
+                                     @"SysID":Note_HandleParams(systemID),
+                                     @"Keycon":Note_HandleParams(keycon),
                                      @"Page":@(pageIndex),
                                      @"StartTime":Note_HandleParams(self.paramModel.StartTime),
                                      @"EndTime":Note_HandleParams(self.paramModel.EndTime),
@@ -469,11 +471,13 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                        @"UserID": Note_HandleParams(self.paramModel.UserID),
                        @"UserType":@(self.paramModel.UserType),
                        @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
-                       @"SubjectID":subjectID,
+                       
+                       @"SubjectID":Note_HandleParams(subjectID),
                        @"SecretKey": Note_HandleParams(self.paramModel.Secret),
                     @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
                        @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
-                       @"SysID":systemID,
+                       
+                       @"SysID":Note_HandleParams(systemID),
 
                        @"BackUpOne":@"",
                        @"BackUpTwo":@""
@@ -488,13 +492,17 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                                     @"UserID": Note_HandleParams(self.paramModel.UserID),
                                 @"UserType":@(self.paramModel.UserType),
                                 @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
-                                     @"SubjectID":subjectID,
+                                    
+                                     @"SubjectID":Note_HandleParams(subjectID),
                                      @"SecretKey": Note_HandleParams(self.paramModel.Secret),
-                                     @"SchoolID":schoolID,
+                                    
+                                     @"SchoolID":Note_HandleParams(schoolID),
                                 @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
                                      @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
-                                     @"SysID":systemID,
-                                     @"Keycon":keycon,
+                                    
+                                     @"SysID":Note_HandleParams(systemID),
+                                    
+                                     @"Keycon":Note_HandleParams(keycon),
                                      @"Page":@(pageIndex),
                                      @"StartTime":Note_HandleParams(self.paramModel.StartTime),
                                      @"EndTime":Note_HandleParams(self.paramModel.EndTime),
@@ -538,6 +546,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                 
                 // 判断是否是图文混排
                 NSString *contentString = model.NoteContent_Att.string;
+                
                 contentString = [contentString stringByReplacingOccurrencesOfString:@" " withString:@""];
                 contentString = [contentString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
                 contentString = [contentString stringByReplacingOccurrencesOfString:@"\uFFFC" withString:@""];
@@ -719,14 +728,17 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 - (RACSignal *)deletedNoteWithUserID:(NSString *)userID noteID:(NSString *)noteID schoolID:(NSString *)schoolID systemID:(NSString *)systemID subjectID:(NSString *)subjectID{
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/DeleteNote"];
+       
         NSDictionary *params = @{
-                                 @"UserID":self.paramModel.UserID,
+                                 @"UserID": Note_HandleParams(self.paramModel.UserID),
                                  @"UserType":@(self.paramModel.UserType),
-                                 @"SubjectID":subjectID,
-                                 @"SecretKey":self.paramModel.Secret,
-                                 @"SchoolID":self.paramModel.SchoolID,
-                                 @"NoteID":noteID,
-                                 @"SysID":systemID,
+                                 
+                                 @"SubjectID":Note_HandleParams(subjectID),
+                                 @"SecretKey":Note_HandleParams(self.paramModel.Secret),
+                                 @"SchoolID":Note_HandleParams(self.paramModel.SchoolID),
+                                
+                                 @"NoteID":Note_HandleParams(noteID),
+                                 @"SysID": Note_HandleParams(systemID),
                                  @"BackUpOne":@"",
                                  @"BackUpTwo":@""
                                  };
