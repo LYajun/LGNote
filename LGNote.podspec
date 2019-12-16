@@ -3,7 +3,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "LGNote"
-  spec.version      = "1.5.4"
+  spec.version      = "1.5.5"
   spec.summary      = "笔记公共工具"
 
   spec.homepage     = "https://github.com/LYajun/LGNote"
@@ -30,7 +30,7 @@ Pod::Spec.new do |spec|
   spec.source_files  = "LGNote", "LGNote/**/*.{h,m}"
 
   spec.public_header_files = "Helper/YBIBUtilities.h"
-
+  spec.public_header_files = "HDWebImage/UIImage+MemoryCacheCost.h"
 
   spec.resources = "LGNote/Resource/LGNote.bundle"
 
