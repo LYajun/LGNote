@@ -6,7 +6,7 @@
  * file that was distributed with this source code.
  */
 
-#import "UIImage+ForceDecode.h"
+#import "UIImage+HDForceDecode.h"
 #import "HDWebImageCodersManager.h"
 
 @implementation UIImage (ForceDecode)

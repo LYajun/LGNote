@@ -9,7 +9,7 @@
 #import "HDImageCache.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "NSImage+WebCache.h"
-#import "UIImage+MemoryCacheCost.h"
+#import "UIImage+HDMemoryCacheCost.h"
 #import "HDWebImageCodersManager.h"
 
 #define HD_MAX_FILE_EXTENSION_LENGTH (NAME_MAX - CC_MD5_DIGEST_LENGTH * 2 - 1)

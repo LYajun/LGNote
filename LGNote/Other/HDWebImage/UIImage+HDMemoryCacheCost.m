@@ -6,7 +6,7 @@
  * file that was distributed with this source code.
  */
 
-#import "UIImage+MemoryCacheCost.h"
+#import "UIImage+HDMemoryCacheCost.h"
 #import "objc/runtime.h"
 
 FOUNDATION_STATIC_INLINE NSUInteger HDMemoryCacheCostForImage(UIImage *image) {

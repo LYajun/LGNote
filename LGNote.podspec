@@ -27,10 +27,8 @@ Pod::Spec.new do |spec|
   spec.source       = { :git => "https://github.com/LYajun/LGNote.git", :tag => spec.version }
 
 
-  spec.source_files  = "LGNote", "LGNote/**/*.{h,m}"
+  spec.source_files  = "LGNote/**/*.{h,m}"
 
-  spec.public_header_files = "Helper/YBIBUtilities.h"
-  spec.public_header_files = "HDWebImage/UIImage+MemoryCacheCost.h"
 
   spec.resources = "LGNote/Resource/LGNote.bundle"
 
