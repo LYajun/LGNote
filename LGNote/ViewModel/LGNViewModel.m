@@ -420,100 +420,95 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         
         NSString *url;
-        if([self.paramModel.SystemID isEqualToString:@"930"]){
+    NSDictionary *params;
+        if (self.paramModel.SystemType ==SystemType_ALL || self.paramModel.SystemType ==SystemType_ASSISTANTER ||self.paramModel.SystemType ==SystemType_YPT) {
             
-            //搜索keycon为空,证明查询全部的内容
-            if([keycon isEqualToString:@""]){
-                
-                url= [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetAllNotesInformationForOneResource"];
-                //传参也不一样
-            }else{
-                url= [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNotesInformationForOne"];
-            }
+               url= [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNotesInformation"];
+            params = @{
+                                                @"UserID":Note_HandleParams(self.paramModel.UserID),
+                                                @"UserType":@(self.paramModel.UserType),
+                                                @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
+                                                @"SubjectID":Note_HandleParams(subjectID),
+                                                @"SecretKey":Note_HandleParams(self.paramModel.Secret),
+                                                
+                                                @"SchoolID":Note_HandleParams(schoolID),
+                                                @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
+                                                @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
+                                                
+                                                @"SysID":Note_HandleParams(systemID),
+                                                @"Keycon":Note_HandleParams(keycon),
+                                                @"Page":@(pageIndex),
+                                                @"StartTime":Note_HandleParams(self.paramModel.StartTime),
+                                                @"EndTime":Note_HandleParams(self.paramModel.EndTime),
+                                                
+                                                @"Size":@(size),
+                                                @"BackUpOne":@"All",
+                                                @"BackUpTwo":@""
+                                                };
+                       
             
-        
-           
         }else{
-              url= [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNotesInformation"];
+            //其他端集成的
+            
+            if([keycon isEqualToString:@""]){
+                   
+                //获取全部
+            url= [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetAllNotesInformationForOneResource"];
+                
+                params = @{
+                                              @"UserID": Note_HandleParams(self.paramModel.UserID),
+                                              @"UserType":@(self.paramModel.UserType),
+                                              @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
+                                              
+                                              @"SubjectID":Note_HandleParams(subjectID),
+                                              @"SecretKey": Note_HandleParams(self.paramModel.Secret),
+                                           @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
+                                              @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
+                                              
+                                              @"SysID":Note_HandleParams(systemID),
+
+                                              @"BackUpOne":@"",
+                                              @"BackUpTwo":@""
+                                              };
+                
+                          //传参也不一样
+                      }else{
+                          
+                          //搜索的
+                          url= [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNotesInformationForOne"];
+                          params = @{
+                                                            @"UserID": Note_HandleParams(self.paramModel.UserID),
+                                                        @"UserType":@(self.paramModel.UserType),
+                                                        @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
+                                                            
+                                                             @"SubjectID":Note_HandleParams(subjectID),
+                                                             @"SecretKey": Note_HandleParams(self.paramModel.Secret),
+                                                            
+                                                             @"SchoolID":Note_HandleParams(schoolID),
+                                                        @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
+                                                             @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
+                                                            
+                                                             @"SysID":Note_HandleParams(systemID),
+                                                            
+                                                             @"Keycon":Note_HandleParams(keycon),
+                                                             @"Page":@(pageIndex),
+                                                             @"StartTime":Note_HandleParams(self.paramModel.StartTime),
+                                                             @"EndTime":Note_HandleParams(self.paramModel.EndTime),
+                                                             
+                                                             @"Size":@(size),
+                                                             @"BackUpOne":@"",
+                                                             @"BackUpTwo":@""
+                                                             };
+                      }
+                      
         }
-        
+       
         
       
         
-        NSDictionary *params;
+    
         
-        if (self.paramModel.SystemType ==SystemType_ALL || self.paramModel.SystemType ==SystemType_ASSISTANTER ||self.paramModel.SystemType ==SystemType_YPT) {
-            params = @{
-                                     @"UserID":Note_HandleParams(self.paramModel.UserID),
-                                     @"UserType":@(self.paramModel.UserType),
-                                     @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
-                                     @"SubjectID":Note_HandleParams(subjectID),
-                                     @"SecretKey":Note_HandleParams(self.paramModel.Secret),
-                                     
-                                     @"SchoolID":Note_HandleParams(schoolID),
-                                     @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
-                                     @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
-                                     
-                                     @"SysID":Note_HandleParams(systemID),
-                                     @"Keycon":Note_HandleParams(keycon),
-                                     @"Page":@(pageIndex),
-                                     @"StartTime":Note_HandleParams(self.paramModel.StartTime),
-                                     @"EndTime":Note_HandleParams(self.paramModel.EndTime),
-                                     
-                                     @"Size":@(size),
-                                     @"BackUpOne":@"All",
-                                     @"BackUpTwo":@""
-                                     };
-            
-        }else if ([self.paramModel.SystemID isEqualToString:@"930"] && [keycon isEqualToString:@""]){
-            
-            params = @{
-                       @"UserID": Note_HandleParams(self.paramModel.UserID),
-                       @"UserType":@(self.paramModel.UserType),
-                       @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
-                       
-                       @"SubjectID":Note_HandleParams(subjectID),
-                       @"SecretKey": Note_HandleParams(self.paramModel.Secret),
-                    @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
-                       @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
-                       
-                       @"SysID":Note_HandleParams(systemID),
-
-                       @"BackUpOne":@"",
-                       @"BackUpTwo":@""
-                       };
-            
-        }
-        
-        else{
-            
-            
-          params = @{
-                                    @"UserID": Note_HandleParams(self.paramModel.UserID),
-                                @"UserType":@(self.paramModel.UserType),
-                                @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
-                                    
-                                     @"SubjectID":Note_HandleParams(subjectID),
-                                     @"SecretKey": Note_HandleParams(self.paramModel.Secret),
-                                    
-                                     @"SchoolID":Note_HandleParams(schoolID),
-                                @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
-                                     @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
-                                    
-                                     @"SysID":Note_HandleParams(systemID),
-                                    
-                                     @"Keycon":Note_HandleParams(keycon),
-                                     @"Page":@(pageIndex),
-                                     @"StartTime":Note_HandleParams(self.paramModel.StartTime),
-                                     @"EndTime":Note_HandleParams(self.paramModel.EndTime),
-                                     
-                                     @"Size":@(size),
-                                     @"BackUpOne":@"",
-                                     @"BackUpTwo":@""
-                                     };
-            
-        }
-        
+      
       
         [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey( Note_HandleParams(self.paramModel.UserID)).setToken(Note_HandleParams(self.paramModel.Token)).setParameters(params)starSendRequestSuccess:^(id respone) {
             
