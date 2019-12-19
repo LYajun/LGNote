@@ -376,7 +376,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNoteInfoByID"];
         
-       
+//       nsl
         NSDictionary *params = @{
                                  @"UserID":Note_HandleParams(self.paramModel.UserID),
                                  @"UserType":@(self.paramModel.UserType),
