@@ -462,7 +462,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                                               
                                               @"SubjectID":Note_HandleParams(subjectID),
                                               @"SecretKey": Note_HandleParams(self.paramModel.Secret),
-                                           @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
+                                              @"MaterialID":@"",
                                               @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
                                               
                                               @"SysID":Note_HandleParams(systemID),
@@ -485,7 +485,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                                                              @"SecretKey": Note_HandleParams(self.paramModel.Secret),
                                                             
                                                              @"SchoolID":Note_HandleParams(schoolID),
-                                                        @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
+                                                        @"MaterialID":@"",
                                                              @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
                                                             
                                                              @"SysID":Note_HandleParams(systemID),
