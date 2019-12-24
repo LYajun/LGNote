@@ -216,7 +216,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
          getSystemSigal = [self getAllSystemInfo];
     }
    
-    
+    //
     
     
     
