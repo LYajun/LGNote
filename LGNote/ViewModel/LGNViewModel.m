@@ -216,10 +216,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
          getSystemSigal = [self getAllSystemInfo];
     }
    
-    //
-    //
-    //
-    
+
     
     
     // 如果skip == -1 的则表示跳过了 获取学科或者系统这两个接口

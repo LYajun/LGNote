@@ -554,11 +554,16 @@ LGNNewFilterDelegate
         _tableView.requestStatus = LGBaseTableViewRequestStatusStartLoading;
     [_tableView lg_bindViewModel:self.viewModel];
     
-        if([self.paramModel.SystemID isEqualToString:@"930"]){
-            [self.tableView allocInitRefreshHeader:YES allocInitFooter:NO];
+        
+        if (self.paramModel.SystemType ==SystemType_ALL || self.paramModel.SystemType ==SystemType_ASSISTANTER ||self.paramModel.SystemType ==SystemType_YPT) {
+            [self.tableView allocInitRefreshHeader:YES allocInitFooter:YES];
+            
         }else{
-             [self.tableView allocInitRefreshHeader:YES allocInitFooter:YES];
+//            其他集成进来的 不分页  每次加载全部 不支持上拉加载更多
+            [self.tableView allocInitRefreshHeader:YES allocInitFooter:NO];
         }
+        
+ 
    
         
         @weakify(self);
