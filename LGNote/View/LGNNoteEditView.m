@@ -486,10 +486,12 @@ else{
           drawController.size = image.size;
         drawController.drawBgImage =image ;
         
-        
+        drawController.modalPresentationStyle = UIModalPresentationFullScreen;
         [self.ownController presentViewController:drawController animated:YES completion:nil];
         
     }];
+    
+     picker.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.ownController presentViewController:picker animated:YES completion:nil];
 }
 
@@ -524,9 +526,11 @@ else{
         drawController.drawBgImage =image ;
         drawController.size = image.size;
 
-        
+         drawController.modalPresentationStyle = UIModalPresentationFullScreen;
         [self.ownController presentViewController:drawController animated:YES completion:nil];
+        
     }];
+      picker.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.ownController presentViewController:picker animated:YES completion:nil];
 }
 
@@ -541,6 +545,7 @@ else{
       _isNeed = NO;
     LGNDrawBoardViewController *drawController = [[LGNDrawBoardViewController alloc] init];
     drawController.style = LGNoteDrawBoardViewControllerStyleDraw;
+       drawController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self.ownController presentViewController:drawController animated:YES completion:nil];
 }
 //-(BOOL)textViewShouldBeginEditing:(UITextView *)textView
@@ -800,6 +805,7 @@ else{
         
         [alert addAction:action1];
         [alert addAction:action];
+        
         
         
         [self.ownController presentViewController:alert animated:YES completion:nil];

@@ -86,7 +86,8 @@
     drawController.size = [self.cutImageView currnetImageSize];
 
    drawController.isHeng = _isHeng;
-
+   drawController.modalPresentationStyle = UIModalPresentationFullScreen;
+    
     [self presentViewController:drawController animated:YES completion:nil];
 }
 

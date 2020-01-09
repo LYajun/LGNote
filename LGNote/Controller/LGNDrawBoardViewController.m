@@ -261,6 +261,7 @@
         LGNCutImageViewController *cutController = [[LGNCutImageViewController alloc] init];
         cutController.image = _drawBgImage;
         cutController.isCamera = NO;
+         cutController.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:cutController animated:YES completion:nil];
     }];
     
