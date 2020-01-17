@@ -426,7 +426,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
             params = @{
                                                 @"UserID":Note_HandleParams(self.paramModel.UserID),
                                                 @"UserType":@(self.paramModel.UserType),
-                                                @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
+                                                @"ResourceID":@"",
                                                 @"SubjectID":Note_HandleParams(subjectID),
                                                 @"SecretKey":Note_HandleParams(self.paramModel.Secret),
                                                 
