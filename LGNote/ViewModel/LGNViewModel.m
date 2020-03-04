@@ -422,29 +422,33 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     NSDictionary *params;
         if (self.paramModel.SystemType ==SystemType_ALL || self.paramModel.SystemType ==SystemType_ASSISTANTER ||self.paramModel.SystemType ==SystemType_YPT) {
             
-               url= [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNotesInformation"];
+            
+            
+            url= [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNotesInformation"];
             params = @{
-                                                @"UserID":Note_HandleParams(self.paramModel.UserID),
-                                                @"UserType":@(self.paramModel.UserType),
-                                                @"ResourceID":@"",
-                                                @"SubjectID":Note_HandleParams(subjectID),
-                                                @"SecretKey":Note_HandleParams(self.paramModel.Secret),
-                                                
-                                                @"SchoolID":Note_HandleParams(schoolID),
-                                                @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
-                                                @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
-                                                
-                                                @"SysID":Note_HandleParams(systemID),
-                                                @"Keycon":Note_HandleParams(keycon),
-                                                @"Page":@(pageIndex),
-                                                @"StartTime":Note_HandleParams(self.paramModel.StartTime),
-                                                @"EndTime":Note_HandleParams(self.paramModel.EndTime),
-                                                
-                                                @"Size":@(size),
-                                                @"BackUpOne":@"All",
-                                                @"BackUpTwo":@""
-                                                };
+                       @"UserID":Note_HandleParams(self.paramModel.UserID),
+                       @"UserType":@(self.paramModel.UserType),
+                       @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
+                       @"SubjectID":Note_HandleParams(subjectID),
+                       @"SecretKey":Note_HandleParams(self.paramModel.Secret),
                        
+                       @"SchoolID":Note_HandleParams(schoolID),
+                       @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
+                       @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
+                       
+                       @"SysID":@"All",
+                       @"Keycon":Note_HandleParams(keycon),
+                       @"Page":@(pageIndex),
+                       @"StartTime":Note_HandleParams(self.paramModel.StartTime),
+                       @"EndTime":Note_HandleParams(self.paramModel.EndTime),
+                       
+                       @"Size":@(size),
+                       @"BackUpOne":@"All",
+                       @"BackUpTwo":@""
+                       };
+            
+            
+            
             
         }else{
             //其他端集成的

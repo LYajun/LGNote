@@ -117,7 +117,7 @@
     
  
     NSString * title = self.isNewNote ? @"完成":@"编辑";
-    
+  
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStyleDone target:self action:@selector(rightBarButtonItem:)];
     [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
  

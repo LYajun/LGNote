@@ -34,14 +34,19 @@
         }
 
         
-        if([topViewController isKindOfClass:NSClassFromString(@"AIESideNavigationController")]){
+          if([topViewController isKindOfClass:NSClassFromString(@"AIESideNavigationController")]||[topViewController isKindOfClass:NSClassFromString(@"RESideMenu")]){
             
             
             UIViewController * presentingViewController = self.presentingViewController;
             
+              if([presentingViewController isKindOfClass:NSClassFromString(@"RESideMenu")]) {
+                  [self dismissViewControllerAnimated:YES completion:nil];
+                  return;
+              }
+              
             do {
                 
-                if ([presentingViewController isKindOfClass:NSClassFromString(@"LGTMNavigationViewController")]||[presentingViewController isKindOfClass:NSClassFromString(@"LGStuTabBarController")]||[presentingViewController isKindOfClass:NSClassFromString(@"AIESideNavigationController")]||[presentingViewController isKindOfClass:NSClassFromString(@"MFBaseNavigationController")]) {
+                if ([presentingViewController isKindOfClass:NSClassFromString(@"LGTMNavigationViewController")]||[presentingViewController isKindOfClass:NSClassFromString(@"LGStuTabBarController")]||[presentingViewController isKindOfClass:NSClassFromString(@"AIESideNavigationController")]||[presentingViewController isKindOfClass:NSClassFromString(@"MFBaseNavigationController")]||[presentingViewController isKindOfClass:NSClassFromString(@"LGBaseNavigationController")]) {
                     
                     
                     break;
