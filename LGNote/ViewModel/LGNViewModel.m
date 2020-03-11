@@ -436,7 +436,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                        @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
                        @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
                        
-                       @"SysID":@"All",
+                       @"SysID":Note_HandleParams(systemID),
                        @"Keycon":Note_HandleParams(keycon),
                        @"Page":@(pageIndex),
                        @"StartTime":Note_HandleParams(self.paramModel.StartTime),
