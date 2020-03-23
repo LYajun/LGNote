@@ -35,6 +35,7 @@ typedef NS_ENUM(NSInteger, TKMidLineType) {
 //Fix image's rotation
 - (UIImage *)fixOrientation {
     
+    
     if (self.imageOrientation == UIImageOrientationUp)
         return self;
     
@@ -81,6 +82,8 @@ typedef NS_ENUM(NSInteger, TKMidLineType) {
                                              CGImageGetColorSpace(self.CGImage),
                                              CGImageGetBitmapInfo(self.CGImage));
     CGContextConcatCTM(ctx, transform);
+    
+    
     switch (self.imageOrientation) {
         case UIImageOrientationLeft:
         case UIImageOrientationLeftMirrored:
@@ -94,6 +97,8 @@ typedef NS_ENUM(NSInteger, TKMidLineType) {
             break;
     }
     CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
+    
+    
     UIImage *img = [UIImage imageWithCGImage:cgimg];
     CGContextRelease(ctx);
     CGImageRelease(cgimg);
@@ -103,12 +108,55 @@ typedef NS_ENUM(NSInteger, TKMidLineType) {
 - (UIImage *)imageAtRect:(CGRect)rect
 {
     
-    UIImage *fixedImage = [self fixOrientation];
-    CGImageRef imageRef = CGImageCreateWithImageInRect([fixedImage CGImage], rect);
-    UIImage* subImage = [UIImage imageWithCGImage: imageRef];
-    CGImageRelease(imageRef);
     
-    return subImage;
+    UIImage *fixedImage = [self fixOrientation];
+    
+
+    return [self getImageByCuttingImage:fixedImage Rect:rect];
+    
+//    CGImageRef imageRef = CGImageCreateWithImageInRect([fixedImage CGImage], rect);
+//
+//
+//    UIImage* subImage = [UIImage imageWithCGImage: imageRef];
+//
+//
+//    CGImageRelease(imageRef);
+    
+//    return subImage;
+    
+}
+
+- (UIImage *)getImageByCuttingImage:(UIImage *)image Rect:(CGRect)rect{
+    
+    //大图bigImage
+    
+    //定义myImageRect，截图的区域
+    
+    CGRect myImageRect = rect;
+    
+    UIImage* bigImage= image;
+    
+    CGImageRef imageRef = bigImage.CGImage;
+    
+    CGImageRef subImageRef = CGImageCreateWithImageInRect(imageRef, myImageRect);
+    CGSize size;
+    
+    size.width = rect.size.width;
+    
+    size.height = rect.size.height;
+    
+    
+    UIGraphicsBeginImageContext(size);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextDrawImage(context, myImageRect, subImageRef);
+    
+    UIImage* smallImage = [UIImage imageWithCGImage:subImageRef];
+    
+    UIGraphicsEndImageContext();
+    
+    return smallImage;
     
 }
 @end
@@ -571,6 +619,8 @@ typedef NS_ENUM(NSInteger, TKMidLineType) {
         }
         case UIGestureRecognizerStateChanged: {
             [self resetCropAreaByScaleFactor: pinchGesture.scale];
+            
+            
             break;
         }
         default:
@@ -857,6 +907,8 @@ typedef NS_ENUM(NSInteger, TKMidLineType) {
     CGFloat width, height;
     if(_cropAspectRatio == 0) {
         width = (WIDTH(_imageView) - 2 * tmpCornerMargin) * _initialScaleFactor;
+        
+        
         height = (HEIGHT(_imageView) - 2 * tmpCornerMargin) * _initialScaleFactor;
         if(_showMidLines) {
             [self createMidLines];
@@ -1148,9 +1200,10 @@ typedef NS_ENUM(NSInteger, TKMidLineType) {
     
     
     
-
+//
 //     return [_toCropImage imageAtRect: CGRectMake((MINX(_cropAreaView) + _cropAreaBorderLineWidth) / scaleFactor, (MINY(_cropAreaView) + _cropAreaBorderLineWidth) / scaleFactor, _cropAreaView.frame.size.width, _cropAreaView.frame.size.height)];
     
+  
      return [_toCropImage imageAtRect: CGRectMake((MINX(_cropAreaView) + _cropAreaBorderLineWidth) / scaleFactor, (MINY(_cropAreaView) + _cropAreaBorderLineWidth) / scaleFactor, (WIDTH(_cropAreaView) - 2 * _cropAreaBorderLineWidth) / scaleFactor, (HEIGHT(_cropAreaView) - 2 * _cropAreaBorderLineWidth) / scaleFactor)];
     
 }

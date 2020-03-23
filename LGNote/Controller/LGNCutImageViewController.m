@@ -100,6 +100,7 @@
     if (!_cutImageView) {
         _cutImageView = [[LGNImageView alloc] init];
         // 裁剪图片对象
+   
         _cutImageView.toCropImage = self.image;
         // 是否显示中间线
         _cutImageView.showMidLines = YES;

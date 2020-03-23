@@ -46,7 +46,8 @@
               
             do {
                 
-                if ([presentingViewController isKindOfClass:NSClassFromString(@"LGTMNavigationViewController")]||[presentingViewController isKindOfClass:NSClassFromString(@"LGStuTabBarController")]||[presentingViewController isKindOfClass:NSClassFromString(@"AIESideNavigationController")]||[presentingViewController isKindOfClass:NSClassFromString(@"MFBaseNavigationController")]||[presentingViewController isKindOfClass:NSClassFromString(@"LGBaseNavigationController")]||[presentingViewController isKindOfClass:NSClassFromString(@"ETBaseNavigationController")]) {
+                if ([presentingViewController isKindOfClass:NSClassFromString(@"LGTMNavigationViewController")]||[presentingViewController isKindOfClass:NSClassFromString(@"LGStuTabBarController")]||[presentingViewController isKindOfClass:NSClassFromString(@"AIESideNavigationController")]||[presentingViewController isKindOfClass:NSClassFromString(@"MFBaseNavigationController")]||[presentingViewController isKindOfClass:NSClassFromString(@"LGBaseNavigationController")]||[presentingViewController isKindOfClass:NSClassFromString(@"ETBaseNavigationController")]||
+                    [presentingViewController isKindOfClass:NSClassFromString(@"TPFMenuViewController")]) {
                     
                     
                     break;

@@ -300,14 +300,15 @@
 
 - (void)saveCompletion:(DrawViewActionCompletionBlock)completion{
     _block = completion;
-    UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, 0.0);
+//    UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, 0.0);
+    // 设置为0.0时,有些设备为2/3  导致自由截屏不准确
+    UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, 2);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     [self.layer renderInContext:context];
     
     UIImage *getImage = UIGraphicsGetImageFromCurrentImageContext();
-    
     //    UIImageWriteToSavedPhotosAlbum(getImage, nil, nil, nil);
     //UIImageWriteToSavedPhotosAlbum(getImage, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
     

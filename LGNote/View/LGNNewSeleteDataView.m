@@ -397,6 +397,11 @@ UITextFieldDelegate
         startTime = [[[self currentThisWeekInNowDate:[self currentDateNow] atDateType:NoteDateTypeMonth]componentsSeparatedByString:@"~"] firstObject];
         
         endTime =[[[self currentThisWeekInNowDate:[self currentDateNow] atDateType:NoteDateTypeMonth]componentsSeparatedByString:@"~"] lastObject];
+    }else if ([self.currentTimeID isEqualToString:@"近一月"]){
+        
+        startTime = [[[self currentThisWeekInNowDate:[self currentDateNow] atDateType:NoteDateTypeMonth]componentsSeparatedByString:@"~"] firstObject];
+        
+        endTime =[[[self currentThisWeekInNowDate:[self currentDateNow] atDateType:NoteDateTypeMonth]componentsSeparatedByString:@"~"] lastObject];
     }else if ([self.currentTimeID isEqualToString:@"自定义"]){
         
         startTime =self.starTimeF.text;
