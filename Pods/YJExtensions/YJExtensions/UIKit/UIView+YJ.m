@@ -88,6 +88,19 @@
     self.layer.shadowRadius = radius;
     self.layer.shadowOffset = offset;
 }
+- (void)yj_shadowWithBWidth:(CGFloat)bWidth bColor:(UIColor *)bColor sColor:(UIColor *)sColor cRadius:(CGFloat)cRadius sOpacity:(CGFloat)sOpacity sRadius:(CGFloat)sRadius sOffset:(CGSize)sOffset{
+    self.layer.cornerRadius = cRadius;
+    
+    self.layer.borderWidth = bWidth;
+    self.layer.borderColor = bColor.CGColor;
+    
+    self.layer.shadowColor = sColor.CGColor;
+    self.layer.shadowOpacity = sOpacity;
+    self.layer.shadowRadius = sRadius;
+    self.layer.shadowOffset = sOffset;
+    self.layer.masksToBounds = YES;
+    self.clipsToBounds = NO;
+}
 - (void)yj_shadowWithCornerRadius:(CGFloat)cRadius borderWidth:(CGFloat)borderWidth borderColor:(UIColor *)borderColor shadowColor:(UIColor *)shadowColor shadowOpacity:(CGFloat)shadowOpacity shadowOffset:(CGSize)shadowOffset roundedRect:(CGRect)roundedRect cornerRadii:(CGSize)cornerRadii rectCorner:(UIRectCorner)rectCorner{
     self.layer.cornerRadius = cRadius;
     self.layer.borderWidth = borderWidth;

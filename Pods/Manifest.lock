@@ -38,20 +38,20 @@ PODS:
     - YJExtensions
   - Masonry (1.1.0)
   - MJExtension (3.2.1)
-  - MJRefresh (3.2.0)
+  - MJRefresh (3.3.1)
   - ReactiveObjC (3.0.0)
   - SDWebImage (4.0.0):
     - SDWebImage/Core (= 4.0.0)
   - SDWebImage/Core (4.0.0)
   - TFHpple (2.0.0)
   - YJActivityIndicatorView (1.0.0)
-  - YJBaseModule (1.2.4):
-    - YJBaseModule/Base (= 1.2.4)
-    - YJBaseModule/Manager (= 1.2.4)
-    - YJBaseModule/MarqueeLabel (= 1.2.4)
-    - YJBaseModule/YJBHpple (= 1.2.4)
-    - YJBaseModule/YJBWebView (= 1.2.4)
-  - YJBaseModule/Base (1.2.4):
+  - YJBaseModule (1.2.7):
+    - YJBaseModule/Base (= 1.2.7)
+    - YJBaseModule/Manager (= 1.2.7)
+    - YJBaseModule/MarqueeLabel (= 1.2.7)
+    - YJBaseModule/YJBHpple (= 1.2.7)
+    - YJBaseModule/YJBWebView (= 1.2.7)
+  - YJBaseModule/Base (1.2.7):
     - LGAlertHUD
     - Masonry
     - MJExtension
@@ -59,23 +59,25 @@ PODS:
     - YJActivityIndicatorView
     - YJBaseModule/Manager
     - YJExtensions
-  - YJBaseModule/Manager (1.2.4):
+  - YJBaseModule/Manager (1.2.7):
     - YJExtensions
-  - YJBaseModule/MarqueeLabel (1.2.4)
-  - YJBaseModule/YJBHpple (1.2.4)
-  - YJBaseModule/YJBWebView (1.2.4):
+  - YJBaseModule/MarqueeLabel (1.2.7)
+  - YJBaseModule/YJBHpple (1.2.7)
+  - YJBaseModule/YJBWebView (1.2.7):
     - Masonry
     - YJBaseModule/Manager
     - YJBaseModule/MarqueeLabel
     - YJBaseModule/YJBHpple
     - YJExtensions
-  - YJExtensions (1.1.8):
-    - YJExtensions/Foundation (= 1.1.8)
-    - YJExtensions/UIKit (= 1.1.8)
-  - YJExtensions/Foundation (1.1.8):
-    - TFHpple
-  - YJExtensions/UIKit (1.1.8):
+  - YJExtensions (1.2.6):
+    - YJExtensions/Foundation (= 1.2.6)
+    - YJExtensions/UIKit (= 1.2.6)
+    - YJExtensions/YJEHpple (= 1.2.6)
+  - YJExtensions/Foundation (1.2.6):
+    - YJExtensions/YJEHpple
+  - YJExtensions/UIKit (1.2.6):
     - YJExtensions/Foundation
+  - YJExtensions/YJEHpple (1.2.6)
   - YYImage (1.0.4):
     - YYImage/Core (= 1.0.4)
   - YYImage/Core (1.0.4)
@@ -94,7 +96,7 @@ DEPENDENCIES:
   - YYImage (~> 1.0.4)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - AFNetworking
     - BlocksKit
     - LGAlertHUD
@@ -115,15 +117,15 @@ SPEC CHECKSUMS:
   LGAlertHUD: 170243b33b65ec701ffd5c24bcdfac9a209d1b10
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MJExtension: 635f2c663dcb1bf76fa4b715b2570a5710aec545
-  MJRefresh: ed450d6eb9d3346a2cb033ab7eb6de090aeef437
+  MJRefresh: eeda70fbf0ad277f3178cef1cd0c3532591d6237
   ReactiveObjC: ce79989e8684b9086b5f8d0c74bc7b81a8729c9e
   SDWebImage: 76a6348bdc74eb5a55dd08a091ef298e56b55e41
   TFHpple: a916fe0799eb30aa29b2670d14d5868cdd3a5b81
   YJActivityIndicatorView: f51112fa59d69762bd6147cf0da573ff2a9a0215
-  YJBaseModule: 6c93528dd73380d7e513967d6e3cd0a7c9d47a10
-  YJExtensions: 347176cdd074dec883ad11704b5f0518bd0ceee8
+  YJBaseModule: ec45e6b9e806d6c3a0944960eec22d2b69bc6772
+  YJExtensions: b89f368ea244a902ddb02942e7620b3a73fdc649
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
 
 PODFILE CHECKSUM: a0faa63e5a0dece5653f28058609d459230f994e
 
-COCOAPODS: 1.7.0.beta.3
+COCOAPODS: 1.9.1

@@ -21,7 +21,7 @@ typedef void(^MLAnimationCompletionBlock)(BOOL finished);
 // iOS Version check for iOS 8.0.0
 #define SYSTEM_VERSION_IS_8_0_X ([[[UIDevice currentDevice] systemVersion] hasPrefix:@"8.0"])
 
-// Define "a long time" for MLLeft and MLRight types
+// Define "a long time" for YJBLeft and YJBRight types
 #define CGFLOAT_LONG_DURATION 60*60*24*365 // One year in seconds
 
 // Helpers
@@ -231,7 +231,7 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
     [self addSubview:self.subLabel];
     
     // Setup default values
-    _marqueeType = MLContinuous;
+    _marqueeType = YJBContinuous;
     _awayOffset = 0.0f;
     _animationCurve = UIViewAnimationOptionCurveLinear;
     _labelize = NO;
@@ -333,9 +333,9 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
         
         CGRect labelFrame, unusedFrame;
         switch (self.marqueeType) {
-            case MLContinuousReverse:
-            case MLRightLeft:
-            case MLRight:
+            case YJBContinuousReverse:
+            case YJBRightLeft:
+            case YJBRight:
                 CGRectDivide(self.bounds, &unusedFrame, &labelFrame, self.leadingBuffer, CGRectMaxXEdge);
                 labelFrame = CGRectIntegral(labelFrame);
                 break;
@@ -368,10 +368,10 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
     CGFloat minTrailing = MAX(MAX(self.leadingBuffer, self.trailingBuffer), self.fadeLength);
     
     switch (self.marqueeType) {
-        case MLContinuous:
-        case MLContinuousReverse:
+        case YJBContinuous:
+        case YJBContinuousReverse:
         {
-            if (self.marqueeType == MLContinuous) {
+            if (self.marqueeType == YJBContinuous) {
                 self.homeLabelFrame = CGRectIntegral(CGRectMake(self.leadingBuffer, 0.0f, expectedLabelSize.width, self.bounds.size.height));
                 self.awayOffset = -(self.homeLabelFrame.size.width + minTrailing);
             } else {
@@ -391,8 +391,8 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
             break;
         }
             
-        case MLRightLeft:
-        case MLRight:
+        case YJBRightLeft:
+        case YJBRight:
         {
             self.homeLabelFrame = CGRectIntegral(CGRectMake(self.bounds.size.width - (expectedLabelSize.width + self.leadingBuffer), 0.0f, expectedLabelSize.width, self.bounds.size.height));
             self.awayOffset = (expectedLabelSize.width + self.trailingBuffer + self.leadingBuffer) - self.bounds.size.width;
@@ -412,8 +412,8 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
             break;
         }
             
-        case MLLeftRight:
-        case MLLeft:
+        case YJBLeftRight:
+        case YJBLeft:
         {
             self.homeLabelFrame = CGRectIntegral(CGRectMake(self.leadingBuffer, 0.0f, expectedLabelSize.width, self.bounds.size.height));
             self.awayOffset = self.bounds.size.width - (expectedLabelSize.width + self.leadingBuffer + self.trailingBuffer);
@@ -515,12 +515,12 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
 
 - (void)beginScrollWithDelay:(BOOL)delay {
     switch (self.marqueeType) {
-        case MLContinuous:
-        case MLContinuousReverse:
+        case YJBContinuous:
+        case YJBContinuousReverse:
             [self scrollContinuousWithInterval:self.animationDuration after:(delay ? self.animationDelay : 0.0)];
             break;
-        case MLLeft:
-        case MLRight:
+        case YJBLeft:
+        case YJBRight:
             [self scrollAwayWithInterval:self.animationDuration delayAmount:(delay ? self.animationDelay : 0.0) shouldReturn:NO];
             break;
         default:
@@ -618,8 +618,8 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
     
     NSArray *values = nil;
     switch (self.marqueeType) {
-        case MLLeft:
-        case MLRight:
+        case YJBLeft:
+        case YJBRight:
             values = @[[NSValue valueWithCGPoint:homeOrigin],      // Initial location, home
                        [NSValue valueWithCGPoint:homeOrigin],      // Initial delay, at home
                        [NSValue valueWithCGPoint:awayOrigin],      // Animation to away
@@ -779,9 +779,9 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
     NSArray *adjustedColors;
     BOOL trailingFadeNeeded = self.labelShouldScroll;
     switch (self.marqueeType) {
-        case MLContinuousReverse:
-        case MLRightLeft:
-        case MLRight:
+        case YJBContinuousReverse:
+        case YJBRightLeft:
+        case YJBRight:
             adjustedColors = @[(trailingFadeNeeded ? transparent : opaque),
                                opaque,
                                opaque,
@@ -789,8 +789,8 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
             break;
             
         default:
-            // MLContinuous
-            // MLLeftRight
+            // YJBContinuous
+            // YJBLeftRight
             adjustedColors = @[opaque,
                                opaque,
                                opaque,
@@ -844,8 +844,8 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
     
     // Define keyTimes
     switch (self.marqueeType) {
-        case MLLeftRight:
-        case MLRightLeft:
+        case YJBLeftRight:
+        case YJBRightLeft:
             // Calculate total animation duration
             totalDuration = 2.0 * (delayAmount + interval);
             keyTimes = @[@(0.0),                                                        // 1) Initial gradient
@@ -859,8 +859,8 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
                          @(1.0)];                                                       // 9) End of LE fade out, just as scroll home finishes
             break;
             
-        case MLLeft:
-        case MLRight:
+        case YJBLeft:
+        case YJBRight:
             // Calculate total animation duration
             totalDuration = CGFLOAT_MAX;
             keyTimes = @[@(0.0),                                                        // 1) Initial gradient
@@ -870,7 +870,7 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
                          @((delayAmount + interval)/totalDuration),                     // 5) End of TE fade out [TE fade removed]
                          @(1.0)];                                                       
             break;
-        case MLContinuousReverse:
+        case YJBContinuousReverse:
         default:
             // Calculate total animation duration
             totalDuration = delayAmount + interval;
@@ -898,7 +898,7 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
     NSArray *currentValues = currentMask.colors;
     
     switch (self.marqueeType) {
-        case MLContinuousReverse:
+        case YJBContinuousReverse:
             values = @[
                        (currentValues ? currentValues : @[transp, opaque, opaque, opaque]),           // Initial gradient
                        @[transp, opaque, opaque, opaque],           // Begin of fade in
@@ -909,7 +909,7 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
                        ];
             break;
             
-        case MLRight:
+        case YJBRight:
             values = @[
                        (currentValues ? currentValues : @[transp, opaque, opaque, opaque]),           // 1)
                        @[transp, opaque, opaque, opaque],           // 2)
@@ -920,7 +920,7 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
                        ];
             break;
             
-        case MLRightLeft:
+        case YJBRightLeft:
             values = @[
                        (currentValues ? currentValues : @[transp, opaque, opaque, opaque]),           // 1)
                        @[transp, opaque, opaque, opaque],           // 2)
@@ -934,7 +934,7 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
                        ];
             break;
             
-        case MLContinuous:
+        case YJBContinuous:
             values = @[
                        (currentValues ? currentValues : @[opaque, opaque, opaque, transp]),           // Initial gradient
                        @[opaque, opaque, opaque, transp],           // Begin of fade in
@@ -945,7 +945,7 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
                        ];
             break;
             
-        case MLLeft:
+        case YJBLeft:
             values = @[
                        (currentValues ? currentValues : @[opaque, opaque, opaque, transp]),           // 1)
                        @[opaque, opaque, opaque, transp],           // 2)
@@ -956,7 +956,7 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
                        ];
             break;
             
-        case MLLeftRight:
+        case YJBLeftRight:
         default:
             values = @[
                        (currentValues ? currentValues : @[opaque, opaque, opaque, transp]),           // 1)
@@ -993,9 +993,9 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
     // Calculate times based on marqueeType
     NSTimeInterval totalDuration;
     switch (self.marqueeType) {
-        case MLLeftRight:
-        case MLRightLeft:
-            NSAssert(values.count == 5, @"Incorrect number of values passed for MLLeftRight-type animation");
+        case YJBLeftRight:
+        case YJBRightLeft:
+            NSAssert(values.count == 5, @"Incorrect number of values passed for YJBLeftRight-type animation");
             totalDuration = 2.0 * (delayAmount + interval);
             // Set up keyTimes
             animation.keyTimes = @[@(0.0),                                                   // Initial location, home
@@ -1011,9 +1011,9 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
             
             break;
             
-        case MLLeft:
-        case MLRight:
-            NSAssert(values.count == 4, @"Incorrect number of values passed for MLLeft-type animation");
+        case YJBLeft:
+        case YJBRight:
+            NSAssert(values.count == 4, @"Incorrect number of values passed for YJBLeft-type animation");
             totalDuration = CGFLOAT_MAX;
             // Set up keyTimes
             animation.keyTimes = @[@(0.0),                                                   // Initial location, home
@@ -1027,10 +1027,10 @@ CGPoint YJBOffsetCGPoint(CGPoint point, CGFloat offset);
             
             break;
             
-            // MLContinuous
-            // MLContinuousReverse
+            // YJBContinuous
+            // YJBContinuousReverse
         default:
-            NSAssert(values.count == 3, @"Incorrect number of values passed for MLContinous-type animation");
+            NSAssert(values.count == 3, @"Incorrect number of values passed for YJBContinous-type animation");
             totalDuration = delayAmount + interval;
             // Set up keyTimes
             animation.keyTimes = @[@(0.0),                              // Initial location, home
