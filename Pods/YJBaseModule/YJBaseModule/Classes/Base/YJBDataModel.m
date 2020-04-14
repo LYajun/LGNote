@@ -177,7 +177,7 @@
                 noMore = (self.pageSize <= 0) || (dataList.count < self.pageSize);
             }
         }else{
-            if (dataList.count < self.pageSize) {
+            if (dataList.count < self.pageSize || (totalCount > 0 && dataList.count == totalCount)) {
                 noMore = YES;
             }
         }

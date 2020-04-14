@@ -23,13 +23,18 @@
 #import "NSUserDefaults+YJ.h"
 #import "UIButton+YJ.h"
 #import "UIColor+YJ.h"
+#import "UIControl+YJ.h"
 #import "UIDevice+YJ.h"
 #import "UIImage+YJ.h"
 #import "UIImageView+YJ.h"
 #import "UINavigationBar+YJ.h"
+#import "UISegmentedControl+YJ.h"
 #import "UIView+YJ.h"
 #import "UIViewController+YJ.h"
 #import "UIWindow+YJ.h"
+#import "XPathQuery.h"
+#import "YJEHpple.h"
+#import "YJEHppleElement.h"
 
 FOUNDATION_EXPORT double YJExtensionsVersionNumber;
 FOUNDATION_EXPORT const unsigned char YJExtensionsVersionString[];

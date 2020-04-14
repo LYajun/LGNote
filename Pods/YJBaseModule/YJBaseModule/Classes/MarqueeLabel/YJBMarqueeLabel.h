@@ -11,17 +11,17 @@
 /** An enum that defines the types of `YJBMarqueeLabel` scrolling */
 typedef NS_ENUM(NSUInteger, YJBMarqueeType) {
     /** Scrolls left first, then back right to the original position. */
-    MLLeftRight = 0,
+    YJBLeftRight = 0,
     /** Scrolls right first, then back left to the original position. */
-    MLRightLeft = 1,
+    YJBRightLeft = 1,
     /** Continuously scrolls left (with a pause at the original position if animationDelay is set). See the `trailingBuffer` property to define a spacing between the repeating strings.*/
-    MLContinuous = 2,
+    YJBContinuous = 2,
     /** Continuously scrolls right (with a pause at the original position if animationDelay is set). See the `trailingBuffer` property to define a spacing between the repeating strings.*/
-    MLContinuousReverse = 3,
+    YJBContinuousReverse = 3,
     /** Scrolls left first, then does not return to the original position. */
-    MLLeft = 4,
+    YJBLeft = 4,
     /** Scrolls right first, then does not return to the original position. */
-    MLRight = 5
+    YJBRight = 5
 };
 
 
@@ -163,17 +163,17 @@ IB_DESIGNABLE
 
 /** Defines the direction and method in which the `YJBMarqueeLabel` instance scrolls.
  
- `YJBMarqueeLabel` supports four types of scrolling: `MLLeftRight`, `MLRightLeft`, `MLContinuous`, and `MLContinuousReverse`.
+ `YJBMarqueeLabel` supports four types of scrolling: `YJBLeftRight`, `YJBRightLeft`, `YJBContinuous`, and `YJBContinuousReverse`.
  
  Given the nature of how text direction works, the options for the `marqueeType` property require specific text alignments
  and will set the textAlignment property accordingly.
  
- - `MLLeftRight` type is ONLY compatible with a label text alignment of `NSTextAlignmentLeft`.
- - `MLRightLeft` type is ONLY compatible with a label text alignment of `NSTextAlignmentRight`.
- - `MLContinuous` does not require a text alignment (it is effectively centered).
- - `MLContinuousReverse` does not require a text alignment (it is effectively centered).
+ - `YJBLeftRight` type is ONLY compatible with a label text alignment of `NSTextAlignmentLeft`.
+ - `YJBRightLeft` type is ONLY compatible with a label text alignment of `NSTextAlignmentRight`.
+ - `YJBContinuous` does not require a text alignment (it is effectively centered).
+ - `YJBContinuousReverse` does not require a text alignment (it is effectively centered).
  
- Defaults to `MLLeftRight`.
+ Defaults to `YJBLeftRight`.
  
  @see YJBMarqueeType
  @see textAlignment
@@ -188,7 +188,7 @@ IB_DESIGNABLE
 /** Defines the duration of the scrolling animation.
  
  This property sets the amount of time it will take for the scrolling animation to complete a
- scrolling cycle. Note that for `MLLeftRight` and `MLRightLeft`, a cycle consists of the animation away,
+ scrolling cycle. Note that for `YJBLeftRight` and `YJBRightLeft`, a cycle consists of the animation away,
  a pause (if a delay is specified), and the animation back to the original position.
  
  Setting this property will automatically override any value previously set to the `rate` property, and the `rate`
@@ -223,7 +223,7 @@ IB_DESIGNABLE
  @note The value set to this property affects label positioning at all times (including when `labelize` is set to `YES`),
  including when the text string length is short enough that the label does not need to scroll.
  
- @note For `MLContinuous`-type labels, the smallest value of `leadingBuffer`, 'trailingBuffer`, and `fadeLength`
+ @note For `YJBContinuous`-type labels, the smallest value of `leadingBuffer`, 'trailingBuffer`, and `fadeLength`
  is used as spacing between the two label instances. Zero is an allowable value for all three properties.
  
  @see trailingBuffer
@@ -241,7 +241,7 @@ IB_DESIGNABLE
  
  Defaults to `0`.
  
- @note For `MLContinuous`-type labels, the smallest value of `leadingBuffer`, 'trailingBuffer`, and `fadeLength`
+ @note For `YJBContinuous`-type labels, the smallest value of `leadingBuffer`, 'trailingBuffer`, and `fadeLength`
  is used as spacing between the two label instances. Zero is an allowable value for all three properties.
  
  @note The value set to this property has no effect when the `labelize` property is set to `YES`.

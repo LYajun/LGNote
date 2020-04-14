@@ -30,12 +30,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 没有数据 */
 @property (copy, nonatomic) NSString *yj_noDataTitle;
-/** 搜索图片的放大倍数 */
-@property (nonatomic,assign) CGFloat yj_searchScale;
-/** 搜索图片的偏移量 */
-@property (nonatomic,assign) CGFloat yj_searchTranslateY;
+
 /** 图片的偏移量 */
 @property (nonatomic,assign) CGFloat yj_noDataImgOffsetY;
+@property (nonatomic,assign) CGFloat yj_noDataSearchImgOffsetY;
 
 
 /** 是否搜索 */

@@ -113,6 +113,12 @@
                 html = [html stringByReplacingOccurrencesOfString:onclick withString:onclickReplace];
             }else{
                 NSString *onclick = [NSString stringWithFormat:@"src=\"%@\"",imgSrc];
+                if (![html containsString:onclick]) {
+                    onclick = [NSString stringWithFormat:@"src='%@'",imgSrc];
+                    if (![html containsString:onclick]) {
+                        onclick = [NSString stringWithFormat:@"src = '%@'",imgSrc];
+                    }
+                }
                 NSString *onclickReplace = [NSString stringWithFormat:@"%@ onclick=\"yjClickAction('%@')\"",onclick,[imgSrc stringByReplacingOccurrencesOfString:@"\\" withString:@"/"]];
                 html = [html stringByReplacingOccurrencesOfString:onclick withString:onclickReplace];
             }
@@ -163,7 +169,7 @@
     return @"yjclickaction";
 }
 + (NSString *)yj_autoFitTextSizeJSString{
-    return @"var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-width'); document.getElementsByTagName('head')[0].appendChild(meta);";
+    return @"var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0, user-scalable=no'); document.getElementsByTagName('head')[0].appendChild(meta);";
 }
 + (NSString *)yj_autoFitImgSizeJSString{
     return @"var imgs=document.getElementsByTagName('img');var maxwidth=document.body.clientWidth;var length=imgs.length;for(var i=0;i<length;i++){var img=imgs[i];if(img.width > maxwidth){img.style.width = '90%';img.style.height = 'auto';}}";

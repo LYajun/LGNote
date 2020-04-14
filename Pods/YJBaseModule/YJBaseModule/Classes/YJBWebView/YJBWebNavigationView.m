@@ -68,7 +68,7 @@
         _titleLab.textColor = [UIColor darkGrayColor];
         _titleLab.textAlignment = NSTextAlignmentCenter;
         _titleLab.trailingBuffer = 24;
-        _titleLab.marqueeType = MLContinuous;
+        _titleLab.marqueeType = YJBContinuous;
     }
     return _titleLab;
 }

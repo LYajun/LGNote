@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 NS_ASSUME_NONNULL_BEGIN
 
+#define IsIPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+
 @interface YJBManager : NSObject
 /** 加载动图文件夹名 */
 @property (nonatomic,copy) NSString *loadingDirName;
