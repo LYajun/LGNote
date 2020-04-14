@@ -99,7 +99,13 @@
         NSMutableAttributedString *att = [LGNNoteTools attributedStringByStrings:@[subjectName,dataSource.MaterialName] colors:@[kColorInitWithRGB(0, 153, 255, 1),kColorInitWithRGB(0, 153, 255, 1)] fonts:@[@(12),@(12)]];
         self.sourceLabel.attributedText = att;
     }else{
-        NSMutableAttributedString *att = [LGNNoteTools attributedStringByStrings:@[subjectName,dataSource.ResourceName] colors:@[kColorInitWithRGB(0, 153, 255, 1),kColorInitWithRGB(0, 153, 255, 1)] fonts:@[@(12),@(12)]];
+        NSString * ResourceName;
+                           if(IsStrEmpty(dataSource.ResourceName)){
+                               ResourceName = @"我的笔记";
+                           }else{
+                               ResourceName =dataSource.ResourceName;
+                           }
+        NSMutableAttributedString *att = [LGNNoteTools attributedStringByStrings:@[subjectName,ResourceName] colors:@[kColorInitWithRGB(0, 153, 255, 1),kColorInitWithRGB(0, 153, 255, 1)] fonts:@[@(12),@(12)]];
         self.sourceLabel.attributedText = att;
         
     }

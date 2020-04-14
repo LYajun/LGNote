@@ -21,6 +21,7 @@
     [super viewDidLoad];
     self.delegate = self;
 //    self.allowsEditing = YES;
+    
 }
 
 //点击取消按钮

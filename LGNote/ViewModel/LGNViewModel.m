@@ -658,19 +658,22 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     
     
     
-   // 学习小助手 和后期提供给平台集成的整体版本，[ResourceID]和[MaterialID]这两个值都赋值为SystemID
-    if (self.paramModel.SystemType ==SystemType_ALL || self.paramModel.SystemType ==SystemType_ASSISTANTER ||self.paramModel.SystemType ==SystemType_YPT) {
-        
-        if(IsStrEmpty(params[@"MaterialID"])){
-            
-            [params setValue:params[@"SystemID"] forKey:@"MaterialID"];
-        }
-        
-        if(IsStrEmpty(params[@"ResourceID"])){
-            
-            [params setValue:params[@"SystemID"] forKey:@"ResourceID"];
-        }
-    }
+  // 学习小助手 和后期提供给平台集成的整体版本新增笔记时 [ResourceID]和[MaterialID]这两个值都赋值为SystemID
+  if (self.paramModel.SystemType ==SystemType_ALL || self.paramModel.SystemType ==SystemType_ASSISTANTER ||self.paramModel.SystemType ==SystemType_YPT) {
+      
+      if (self.paramModel.OperateFlag == 1) {
+          if(IsStrEmpty(params[@"MaterialID"])){
+
+                    [params setValue:params[@"SystemID"] forKey:@"MaterialID"];
+                }
+
+                if(IsStrEmpty(params[@"ResourceID"])){
+
+                    [params setValue:params[@"SystemID"] forKey:@"ResourceID"];
+                }
+      }
+    
+  }
 
    
 

@@ -41,7 +41,7 @@
     //S0-0129-CE46==2168943E-A8C0-4E46-890A-4746C3CC0E1A==bkstu152==2==黎清微==http://192.168.129.129:10103//===
     
     params.SystemID = @"930";
-    params.SubjectID = @"S1-English";
+    params.SubjectID = @"S2-English";
     params.C_SystemID = @"930";
     params.PageSize = 10;
     params.PageIndex = 1;
@@ -64,8 +64,10 @@
     params.UserID = @"stu01";
     params.UserType = 2;
     params.UserName = @"stu01";
-    params.CPBaseUrl = @"http://172.16.41.111:10102//";
+    params.CPBaseUrl = @"http://192.168.129.130:10104//";
 
+//http://192.168.129.130:10104/Web_FSCModule_Note/api/V2/Notes/OperateNote
+    
     //params.NoteBaseUrl= @"http://192.168.129.8:10154/";
   
     params.SystemType = SystemType_DZJCK;
