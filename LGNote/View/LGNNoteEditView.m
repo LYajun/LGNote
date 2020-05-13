@@ -650,7 +650,7 @@ else{
             return ;
         }
         
-        _contentTextView.placeholder=@"";
+        self.contentTextView.placeholder=@"";
         [self settingImageAttributes:image imageFTPPath:x];
         
         NSMutableArray *imageUrls = [self filterImageUrlWithHtml:self.viewModel.dataSourceModel.NoteContent];
@@ -744,6 +744,13 @@ else{
     } else {
         self.sourceTipImageView.transform = CGAffineTransformMakeRotation(0);
     }
+    
+    if( self.viewModel.paramModel.SystemType ==SystemType_YPT){
+           
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"JYYOpenLink" object:nil userInfo:@{@"ResourceIOSLink":_ResourceIOSLink}];
+
+        return;
+       }
     
     [[UIApplication sharedApplication].keyWindow endEditing:YES];
     // 如果是添加操作的话，给出选择题目，否则直接查看详情
