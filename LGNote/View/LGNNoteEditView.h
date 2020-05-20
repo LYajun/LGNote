@@ -20,7 +20,9 @@ typedef NS_ENUM(NSInteger, NoteEditViewHeaderStyle) {
     NoteEditViewHeaderStyleNoHiddenCanTouch,//都不隐藏,支持点击
     NoteEditViewHeaderStyleHideSource,        // 隐藏来源选项
     NoteEditViewHeaderStyleHideSubject,       // 隐藏学科选项
-    NoteEditViewHeaderStyleHideAll            // 隐藏全部
+    NoteEditViewHeaderStyleHideAll,            // 隐藏全部
+    NoteEditViewHeaderStyleTYJX            // 通用版教学
+
 };
 
 @interface LGNNoteEditView : UIView
@@ -46,6 +48,11 @@ typedef NS_ENUM(NSInteger, NoteEditViewHeaderStyle) {
 @property (nonatomic, strong) UIButton *subjectBtn;
 
 @property (nonatomic,assign) BOOL  canEditing;
+
+//通用版教学
+@property (nonatomic,strong) UILabel * remarkTipsLabel;
+@property (nonatomic,strong) UISwitch * remarkSwitch;
+@property (nonatomic,strong) UIView * remarkLineView;
 
 
 @end

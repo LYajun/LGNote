@@ -17,7 +17,8 @@
 #import "LGNNewSearchToolView.h"
 #import "LGNNewSeleteDataView.h"
 #import "LGNNewFilterViewController.h"
-
+#import "NoteDragView.h"
+#import "NOteDropDownMenuView.h"
 @interface LGNNoteMainViewController ()
 <
 LGNoteBaseTableViewCustomDelegate,
@@ -45,6 +46,17 @@ LGNNewFilterDelegate
 @property (nonatomic,strong) NSString * starTime;
 @property (nonatomic,strong) NSString * endTime;
 
+
+//=======通用教学的适配=======
+//重点笔记筛选按钮
+@property (nonatomic, strong, readwrite) UIButton *remarkBtn;
+//添加笔记
+@property (nonatomic,strong) NoteDragView * dragView;
+
+@property (nonatomic, strong) NOteDropDownMenuView *dropDownMenuView;
+/* CFDropDownMenuView */
+@property (nonatomic, strong) NOteDropDownMenuView *dropDownMenuView2;
+
 @end
 
 @implementation LGNNoteMainViewController
@@ -60,10 +72,28 @@ LGNNewFilterDelegate
     }
     return self;
 }
+- (void)dealloc{
+    [self.dragView removeFromSuperview];
 
+}
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    self.dragView.hidden = NO;
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.dragView.hidden=YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if(self.systemType == SystemUsedTypeTYJX){
+    self.title = @"学习笔记";
+
+    }else{
     self.title = @"我的笔记";
+
+    }
     [self lg_commonInit];
     [self creatSubViews];
     [self lg_bindData];
@@ -78,7 +108,15 @@ LGNNewFilterDelegate
 }
 
 - (void)creatSubViews{
-    if(self.systemType == SystemUsedTypeNew){
+    
+    if(self.systemType == SystemUsedTypeTYJX){
+        
+        
+        [self TYSETUI];
+        
+    }
+    
+    else if(self.systemType == SystemUsedTypeNew){
           [self.view addSubview: self.newToolView];
            [self.view addSubview:self.tableView];
          self.seleteDataView = [[LGNNewSeleteDataView alloc] init];
@@ -116,6 +154,84 @@ LGNNewFilterDelegate
  
    // [self setupSubViewsContraints];
 }
+//通用教学的适配
+- (void)TYSETUI{
+
+
+    NOteDropDownMenuView *dropDownMenuView = [[NOteDropDownMenuView alloc] initWithFrame:CGRectMake(20, 0, 90, 45)];
+
+             dropDownMenuView.dataSourceArr = @[
+
+                                                  @[@"第一单元",@"第二单元",@"第三单元"],
+
+                                                 ].mutableCopy;
+
+             dropDownMenuView.defaulTitleArray = [NSArray arrayWithObjects:@"第一单元", nil];
+
+
+    // 下拉列表 起始y
+           dropDownMenuView.startY = CGRectGetMaxY(dropDownMenuView.frame);
+            __weak typeof(self) weakSelf = self;
+       dropDownMenuView.chooseConditionBlock = ^(NSString *currentTitle, NSArray *currentTitleArray){
+
+
+             };
+        [self.view addSubview:self.dropDownMenuView =dropDownMenuView];
+
+    NOteDropDownMenuView *dropDownMenuView2 = [[NOteDropDownMenuView alloc] initWithFrame:CGRectMake(120, 0, 150, 45)];
+
+                dropDownMenuView2.dataSourceArr = @[
+
+                                                     @[@"全部",@"书面表达",@"课外古诗词阅读"],
+
+                                                    ].mutableCopy;
+
+                dropDownMenuView2.defaulTitleArray = [NSArray arrayWithObjects:@"全部", nil];
+          // 下拉列表 起始y
+              dropDownMenuView2.startY = CGRectGetMaxY(_dropDownMenuView.frame);
+          dropDownMenuView2.chooseConditionBlock = ^(NSString *currentTitle, NSArray *currentTitleArray){
+
+
+                };
+       [self.view addSubview:self.dropDownMenuView2 =dropDownMenuView2];
+
+     self.dragView = [[NoteDragView alloc] initWithFrame:CGRectMake(kMain_Screen_Width-44-15, kMain_Screen_Height-180-NoteSTATUS_HEIGHT, 44, 44)];
+
+    self.dragView.layer.cornerRadius = 22;
+       self.dragView.isKeepBounds = YES;
+
+     self.dragView.imageView.image = [NSBundle lg_imagePathName:@"Note_AndNote"];
+     self.dragView.freeRect = CGRectMake(10, NoteNAVIGATION_HEIGHT+44, kMain_Screen_Width-20, kMain_Screen_Height-220-NoteSTATUS_HEIGHT);
+
+    @weakify(self);
+
+     self.dragView.clickDragViewBlock = ^(NoteDragView *dragView){
+          @strongify(self);
+
+        [self rightNavigationBar];
+     };
+
+
+        UIWindow* currentWindow = [UIApplication sharedApplication].keyWindow;
+
+        [currentWindow addSubview:self.dragView];
+
+        [self.view addSubview:self.remarkBtn];
+
+        [self.view addSubview:self.tableView];
+
+        [self.remarkBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+              make.top.equalTo(self.view).offset(10);
+                make.right.equalTo(self.view).offset(-10);
+
+                make.width.mas_equalTo(85);
+                make.height.mas_equalTo(30);
+                    }];
+        [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.bottom.equalTo(self.view);
+                make.top.equalTo(self.view).offset(45);
+            }];
+}
 
 - (void)setupSubViewsContraints{
 
@@ -125,9 +241,22 @@ LGNNewFilterDelegate
 
 
 - (void)addRightNavigationBar{
-    UIImage *image = [NSBundle lg_imagePathName:@"note_add"];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(rightNavigationBar:)];
-    [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
+    
+    if(self.systemType == SystemUsedTypeTYJX){
+        
+        UIImage *image = [NSBundle lg_imagePathName:@"note_searchbtn"];
+          self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(enterSearchEvent)];
+          [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
+        
+    }else{
+        
+        UIImage *image = [NSBundle lg_imagePathName:@"note_add"];
+          self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(rightNavigationBar)];
+          [self.navigationItem.rightBarButtonItem setTintColor:[UIColor whiteColor]];
+    }
+    
+    
+  
 }
 
 - (void)addLeftNavigationBar{
@@ -148,7 +277,7 @@ LGNNewFilterDelegate
 }
 
 #pragma mark - AddNote
-- (void)rightNavigationBar:(UIBarButtonItem *)sender{
+- (void)rightNavigationBar{
      [self.seleteDataView hideViewForCelerity];
     self.newToolView.seleteBtn.selected = NO;
     
@@ -502,6 +631,55 @@ LGNNewFilterDelegate
     
 }
 
+- (void)clickremarkEvent:(UIButton *)sender{
+    // 是否是查看重点笔记；1表示查看重点笔记，-1是查看全部笔记
+
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+
+      UIAlertAction *action = [UIAlertAction actionWithTitle:@"查看全部笔记" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+
+         [_remarkBtn setTitleColor:LGRGB(37, 37, 37) forState:UIControlStateNormal];
+        [_remarkBtn setTitle:@"全部笔记" forState:UIControlStateNormal];
+         [_remarkBtn setImage:[NSBundle lg_imagePathName:@"note_remark_unselected"] forState:UIControlStateNormal];
+
+          [self remarkEvent:NO];
+
+      }];
+      UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"只看重点笔记" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+
+           [_remarkBtn setTitle:@"重点笔记" forState:UIControlStateNormal];
+         [_remarkBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+        [_remarkBtn setImage:[NSBundle lg_imagePathName:@"note_remark_selected"] forState:UIControlStateNormal];
+
+          [self remarkEvent:YES];
+
+      }];
+
+      UIAlertAction *cancle = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+
+      }];
+
+    if([_remarkBtn.titleLabel.text isEqualToString:@"重点笔记"]){
+         [action setValue:LGRGB(94, 94, 94) forKey:@"titleTextColor"];
+         [action2 setValue:LGRGB(41, 162, 252) forKey:@"titleTextColor"];
+
+    }else{
+         [action setValue:LGRGB(41, 162, 252) forKey:@"titleTextColor"];
+           [action2 setValue:LGRGB(94, 94, 94) forKey:@"titleTextColor"];
+    }
+
+
+      [cancle setValue:LGRGB(94, 94, 94) forKey:@"titleTextColor"];
+
+
+      [alert addAction:action];
+      [alert addAction:action2];
+
+      [alert addAction:cancle];
+      [self presentViewController:alert animated:YES completion:nil];
+
+}
+
 - (void)remarkEvent:(BOOL)remark{
     // 是否是查看重点笔记；1表示查看重点笔记，-1是查看全部笔记
     
@@ -637,4 +815,22 @@ LGNNewFilterDelegate
 }
 
 
+- (UIButton *)remarkBtn{
+    if (!_remarkBtn) {
+        _remarkBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _remarkBtn.frame = CGRectZero;
+        [_remarkBtn setImage:[NSBundle lg_imagePathName:@"note_remark_unselected"] forState:UIControlStateNormal];
+        [_remarkBtn setTitle:@"全部笔记" forState:UIControlStateNormal];
+//        [_remarkBtn setImage:[NSBundle lg_imagePathName:@"note_remark_selected"] forState:UIControlStateSelected];
+        _remarkBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -10/2, 0, 10/2);
+          _remarkBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 10/2, 0, -10/2);
+        _remarkBtn.titleLabel.font = LGFontSize(15);
+
+        _remarkBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        [_remarkBtn setTitleColor:LGRGB(37, 37, 37) forState:UIControlStateNormal];
+
+        [_remarkBtn addTarget:self action:@selector(clickremarkEvent:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _remarkBtn;
+}
 @end

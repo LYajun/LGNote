@@ -37,6 +37,7 @@ HPTextViewTapGestureRecognizerDelegate
 /** 标题下的线(0.7高度) */
 @property (nonatomic, strong) UIView *line;
 
+@property (nonatomic, strong) UIView *line1;
 
 
 @property (nonatomic, strong) NSMutableAttributedString *imgAttr;
@@ -119,69 +120,81 @@ HPTextViewTapGestureRecognizerDelegate
 
 
 - (void)createSubviews{
-    switch (_style) {
-        case NoteEditViewHeaderStyleNoHidden:
-        case NoteEditViewHeaderStyleNoHiddenCanTouch:
-        case NoteEditViewHeaderStyleHideSubject:
-        case NoteEditViewHeaderStyleHideSource:{
-            [self addSubview:self.headerView];
-            [self.headerView addSubview:self.subjectBtn];
-            [self.headerView addSubview:self.sourceBtn];
-            [self.headerView addSubview:self.subjTipImageView];
-            [self addSubview:self.bottomView];
-            
-            if(_style ==NoteEditViewHeaderStyleNoHiddenCanTouch){
-                //小助手
-                self.sourceBtn.hidden = NO;
-                self.sourceBtn.enabled = YES;
-                self.subjectBtn.hidden = NO;
-                self.subjectBtn.enabled = YES;
-                self.sourceTipImageView.hidden =NO;
-                self.subjTipImageView.hidden = NO;
+    
+    if(_style == NoteEditViewHeaderStyleTYJX){
+        
+        //通用版教学的UI
+        
+        [self addSubview:self.line1];
 
-            }
-            if(_style == NoteEditViewHeaderStyleNoHidden){
-                self.sourceBtn.hidden = NO;
-                self.sourceBtn.enabled = NO;
-                self.subjectBtn.hidden = NO;
-                self.subjectBtn.enabled = NO;
-                self.sourceTipImageView.hidden =YES;
-                [self.subjectBtn setImage:nil forState:UIControlStateNormal];
-                }
-            
-            
-            if (_style == NoteEditViewHeaderStyleHideSource) {
-               // [self.subjectBtn setImage:nil forState:UIControlStateNormal];
-                
-            }
-            //self.subjectBtn.userInteractionEnabled = !(_style == NoteEditViewHeaderStyleHideSource);
-            self.subjectBtn.hidden = (_style == NoteEditViewHeaderStyleHideSubject) ? YES:NO;
-            self.sourceBtn.hidden  = (_style == NoteEditViewHeaderStyleHideSource) ? YES:NO;
-            
+        [self addSubview:self.remarkTipsLabel];
+          [self addSubview:self.remarkSwitch];
+          [self addSubview:self.remarkLineView];
+        [self addSubview:self.titleTextF];
+        [self addSubview:self.line];
+        [self addSubview:self.contentTextView];
+        [self setupSubviewsContraintsTXJX];
 
-          
-        }
-            break;
-        case NoteEditViewHeaderStyleHideAll: break;
+    }else{
+        switch (_style) {
+               case NoteEditViewHeaderStyleNoHidden:
+               case NoteEditViewHeaderStyleNoHiddenCanTouch:
+               case NoteEditViewHeaderStyleHideSubject:
+               case NoteEditViewHeaderStyleHideSource:{
+                   [self addSubview:self.headerView];
+                   [self.headerView addSubview:self.subjectBtn];
+                   [self.headerView addSubview:self.sourceBtn];
+                   [self.headerView addSubview:self.subjTipImageView];
+                   [self addSubview:self.bottomView];
+                   
+                   if(_style ==NoteEditViewHeaderStyleNoHiddenCanTouch){
+                       //小助手
+                       self.sourceBtn.hidden = NO;
+                       self.sourceBtn.enabled = YES;
+                       self.subjectBtn.hidden = NO;
+                       self.subjectBtn.enabled = YES;
+                       self.sourceTipImageView.hidden =NO;
+                       self.subjTipImageView.hidden = NO;
+
+                   }
+                   if(_style == NoteEditViewHeaderStyleNoHidden){
+                       self.sourceBtn.hidden = NO;
+                       self.sourceBtn.enabled = NO;
+                       self.subjectBtn.hidden = NO;
+                       self.subjectBtn.enabled = NO;
+                       self.sourceTipImageView.hidden =YES;
+                       [self.subjectBtn setImage:nil forState:UIControlStateNormal];
+                       }
+                   
+                   
+                   if (_style == NoteEditViewHeaderStyleHideSource) {
+                      // [self.subjectBtn setImage:nil forState:UIControlStateNormal];
+                       
+                   }
+                   //self.subjectBtn.userInteractionEnabled = !(_style == NoteEditViewHeaderStyleHideSource);
+                   self.subjectBtn.hidden = (_style == NoteEditViewHeaderStyleHideSubject) ? YES:NO;
+                   self.sourceBtn.hidden  = (_style == NoteEditViewHeaderStyleHideSource) ? YES:NO;
+                   
+
+                 
+               }
+                   break;
+               case NoteEditViewHeaderStyleHideAll: break;
+           }
+           
+               
+           [self addSubview:self.remarkBtn];
+           [self addSubview:self.titleTextF];
+           [self addSubview:self.line];
+           [self addSubview:self.contentTextView];
+           [self addSubview:self.sourceTipImageView];
+           
+           [self setupSubviewsContraints];
     }
     
-    
-//
-//    UIScrollView *bgScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0,kMain_Screen_Width, kMain_Screen_Height-32)];
-//    bgScrollView.contentSize = CGSizeMake(0, kMain_Screen_Height+300);
-//    //bgScrollView.backgroundColor = LGRGB(238, 238, 238);
-//    [self addSubview:self.bgScrollView=bgScrollView];
-
-    
-    
-    [self addSubview:self.remarkBtn];
-    [self addSubview:self.titleTextF];
-    [self addSubview:self.line];
-    [self addSubview:self.contentTextView];
-    [self addSubview:self.sourceTipImageView];
-    
-    [self setupSubviewsContraints];
+   
 }
+
 
 - (void)setupSubviewsContraints{
     CGFloat offsetX = 15.f;
@@ -258,6 +271,65 @@ HPTextViewTapGestureRecognizerDelegate
         make.left.equalTo(self.titleTextF).offset(-5);
         
     }];
+}
+
+//通用教学
+- (void)setupSubviewsContraintsTXJX{
+    
+    CGFloat offsetX = 15.f;
+    
+
+    
+     [self.line1 mas_makeConstraints:^(MASConstraintMaker *make) {
+              make.left.equalTo(self).offset(offsetX);
+              make.right.equalTo(self).offset(-offsetX);
+              make.top.equalTo(self);
+              make.height.mas_equalTo(0.7);
+          }];
+       
+
+    [self.remarkTipsLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self).offset(15);
+        make.left.equalTo(self).offset(offsetX);
+        make.height.mas_equalTo(20);
+        make.width.mas_equalTo(110);
+
+                 }];
+    
+    [self.remarkSwitch mas_makeConstraints:^(MASConstraintMaker *make) {
+               make.centerY.equalTo(self.remarkTipsLabel);
+           make.right.equalTo(self).offset(-offsetX);
+           
+                    }];
+       
+    [self.remarkLineView mas_makeConstraints:^(MASConstraintMaker *make) {
+           make.left.equalTo(self.remarkTipsLabel);
+           make.right.equalTo(self.remarkSwitch);
+        make.top.equalTo(self.remarkTipsLabel.mas_bottom).offset(15);
+           make.height.mas_equalTo(0.7);
+       }];
+    
+    [self.titleTextF mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.remarkLineView.mas_bottom);
+                  make.left.equalTo(self).offset(offsetX);
+                  make.right.equalTo(self.remarkSwitch);
+                  make.height.mas_equalTo(50);
+              }];
+    
+    [self.line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.titleTextF);
+        make.right.equalTo(self.remarkSwitch);
+        make.top.equalTo(self.titleTextF.mas_bottom);
+        make.height.mas_equalTo(0.7);
+    }];
+    
+  
+      [self.contentTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.top.equalTo(self.line.mas_bottom);
+          make.centerX.bottom.equalTo(self);
+          make.left.equalTo(self.titleTextF).offset(-5);
+          
+      }];
 }
 
 - (void)layoutSubviews{
@@ -933,6 +1005,53 @@ else{
     }
     return _line;
 }
+- (UIView *)line1{
+    if (!_line1) {
+        _line1 = [[UIView alloc] init];
+        _line1.backgroundColor = LGRGB(231, 231, 231);
+    }
+    return _line1;
+}
+
+
+- (UIView *)remarkLineView{
+    if (!_remarkLineView) {
+        _remarkLineView = [[UIView alloc] init];
+        _remarkLineView.backgroundColor = LGRGB(231, 231, 231);
+    }
+    return _remarkLineView;
+}
+
+
+- (UISwitch *)remarkSwitch{
+    
+    if(!_remarkSwitch){
+        
+        _remarkSwitch = [[UISwitch alloc]init];
+        _remarkSwitch.transform = CGAffineTransformMakeScale(0.75, 0.75);
+
+    }
+    
+    return _remarkSwitch;
+    
+}
+- (UILabel *)remarkTipsLabel{
+    
+    if(!_remarkTipsLabel){
+        
+        _remarkTipsLabel = [[UILabel alloc]init];
+        _remarkTipsLabel.text = @"重点笔记";
+        _remarkTipsLabel.font = [UIFont systemFontOfSize:16.0f];
+        _remarkTipsLabel.textColor = LGRGB(37, 37, 37);
+        
+    }
+    
+    return _remarkTipsLabel;
+}
+
+//[self addSubview:self.remarkTipsLabel];
+//       [self addSubview:self.remarkSwitch];
+//       [self addSubview:self.remarkLineView];
 
 - (UIView *)bottomView{
     if (!_bottomView) {

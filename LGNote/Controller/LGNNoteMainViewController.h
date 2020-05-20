@@ -20,7 +20,8 @@ typedef NS_ENUM(NSInteger, NoteNaviBarLeftItemStyle) {
 typedef NS_ENUM(NSInteger, SystemUsedType) {
     SystemUsedTypeAssistanter,       // 小助手/基础平台系统使用
     SystemUsedTypeOther  ,  // 其他平台使用
-     SystemUsedTypeNew
+     SystemUsedTypeNew,
+     SystemUsedTypeTYJX //通用教学
 };
 
 /** 左按钮时间(可能是返回事件/也可能是用户点击事件) */

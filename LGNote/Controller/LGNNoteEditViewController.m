@@ -10,6 +10,7 @@
 #import "LGNViewModel.h"
 #import "LGNoteConfigure.h"
 #import "LGNNoteEditView.h"
+#import "NOteDropDownMenuView.h"
 
 
 @interface LGNNoteEditViewController ()
@@ -25,6 +26,11 @@
 
 @property (nonatomic,strong) NSString * OldSystemID;
 @property (nonatomic,strong) NSString * OldSubjectID;
+
+@property (nonatomic, strong) NOteDropDownMenuView *dropDownMenuView;
+/* CFDropDownMenuView */
+@property (nonatomic, strong) NOteDropDownMenuView *dropDownMenuView2;
+
 @end
 
 @implementation LGNNoteEditViewController
@@ -133,9 +139,61 @@
     [self addRightNavigationBar];
     [self addLeftNavigationBar];
     [self.view addSubview:self.contentView];
-    [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view);
-    }];
+    
+if(self.paramModel.SystemType ==SystemType_TYJX){
+    
+    
+    NOteDropDownMenuView *dropDownMenuView = [[NOteDropDownMenuView alloc] initWithFrame:CGRectMake(20, 0, 90, 45)];
+
+             dropDownMenuView.dataSourceArr = @[
+
+                                                  @[@"第一单元",@"第二单元",@"第三单元"],
+
+                                                 ].mutableCopy;
+
+             dropDownMenuView.defaulTitleArray = [NSArray arrayWithObjects:@"第一单元", nil];
+
+
+    // 下拉列表 起始y
+           dropDownMenuView.startY = CGRectGetMaxY(dropDownMenuView.frame);
+            __weak typeof(self) weakSelf = self;
+       dropDownMenuView.chooseConditionBlock = ^(NSString *currentTitle, NSArray *currentTitleArray){
+
+
+             };
+        [self.view addSubview:self.dropDownMenuView =dropDownMenuView];
+
+    NOteDropDownMenuView *dropDownMenuView2 = [[NOteDropDownMenuView alloc] initWithFrame:CGRectMake(120, 0, 150, 45)];
+
+                dropDownMenuView2.dataSourceArr = @[
+
+                                                     @[@"全部",@"书面表达",@"课外古诗词阅读"],
+
+                                                    ].mutableCopy;
+
+                dropDownMenuView2.defaulTitleArray = [NSArray arrayWithObjects:@"全部", nil];
+          // 下拉列表 起始y
+              dropDownMenuView2.startY = CGRectGetMaxY(_dropDownMenuView.frame);
+          dropDownMenuView2.chooseConditionBlock = ^(NSString *currentTitle, NSArray *currentTitleArray){
+
+
+                };
+       [self.view addSubview:self.dropDownMenuView2 =dropDownMenuView2];
+    
+    
+        [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view).offset(50);
+            make.left.right.bottom.equalTo(self.view);
+
+           }];
+        
+    }else{
+        
+        [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+               make.edges.equalTo(self.view);
+           }];
+    }
+   
 }
 
 
@@ -362,7 +420,13 @@
 - (LGNNoteEditView *)contentView{
     if (!_contentView) {
         NSInteger style = NoteEditViewHeaderStyleNoHidden;
-        if ( self.paramModel.SystemType == SystemType_CP ) {
+        if ( self.paramModel.SystemType == SystemType_TYJX ) {
+       style = NoteEditViewHeaderStyleTYJX;
+
+        
+        }
+        
+       else if ( self.paramModel.SystemType == SystemType_CP ) {
             style = NoteEditViewHeaderStyleHideSource;
             
         } else {

@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		282B719D22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 282B719C22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m */; };
 		28810EF2235470FF0003B03A /* UIImage+ImgSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 28810EF1235470FF0003B03A /* UIImage+ImgSize.m */; };
+		288D06C324754CB100775FA9 /* NoteDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 288D06C224754CB100775FA9 /* NoteDragView.m */; };
+		288D06CE2475556E00775FA9 /* CFDropDownMenuView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 288D06C52475556D00775FA9 /* CFDropDownMenuView.bundle */; };
+		288D06CF2475556E00775FA9 /* NoteLabelOnLeftButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 288D06C72475556D00775FA9 /* NoteLabelOnLeftButton.m */; };
+		288D06D02475556E00775FA9 /* NOteDropDownMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 288D06C92475556D00775FA9 /* NOteDropDownMenuView.m */; };
+		288D06D12475556E00775FA9 /* UIView+CFFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 288D06CC2475556D00775FA9 /* UIView+CFFrame.m */; };
 		28DAA8C7231D09A6006A0570 /* LGNNewSearchToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DAA8C3231D09A5006A0570 /* LGNNewSearchToolView.m */; };
 		28DAA8C8231D09A6006A0570 /* LGNNewSeleteDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DAA8C6231D09A6006A0570 /* LGNNewSeleteDataView.m */; };
 		28DAA8CB231D09B4006A0570 /* LGNNewFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DAA8CA231D09B4006A0570 /* LGNNewFilterViewController.m */; };
@@ -150,6 +155,16 @@
 		282B719C22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewTapGestureRecognizer.m; sourceTree = "<group>"; };
 		28810EF0235470FF0003B03A /* UIImage+ImgSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImgSize.h"; sourceTree = "<group>"; };
 		28810EF1235470FF0003B03A /* UIImage+ImgSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImgSize.m"; sourceTree = "<group>"; };
+		288D06C124754CB100775FA9 /* NoteDragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteDragView.h; sourceTree = "<group>"; };
+		288D06C224754CB100775FA9 /* NoteDragView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteDragView.m; sourceTree = "<group>"; };
+		288D06C52475556D00775FA9 /* CFDropDownMenuView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CFDropDownMenuView.bundle; sourceTree = "<group>"; };
+		288D06C72475556D00775FA9 /* NoteLabelOnLeftButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteLabelOnLeftButton.m; sourceTree = "<group>"; };
+		288D06C82475556D00775FA9 /* UIView+CFFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CFFrame.h"; sourceTree = "<group>"; };
+		288D06C92475556D00775FA9 /* NOteDropDownMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NOteDropDownMenuView.m; sourceTree = "<group>"; };
+		288D06CA2475556D00775FA9 /* NOteDropDownMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NOteDropDownMenuView.h; sourceTree = "<group>"; };
+		288D06CB2475556D00775FA9 /* CFMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFMacro.h; sourceTree = "<group>"; };
+		288D06CC2475556D00775FA9 /* UIView+CFFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CFFrame.m"; sourceTree = "<group>"; };
+		288D06CD2475556D00775FA9 /* NoteLabelOnLeftButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteLabelOnLeftButton.h; sourceTree = "<group>"; };
 		28DAA8C3231D09A5006A0570 /* LGNNewSearchToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGNNewSearchToolView.m; sourceTree = "<group>"; };
 		28DAA8C4231D09A6006A0570 /* LGNNewSeleteDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGNNewSeleteDataView.h; sourceTree = "<group>"; };
 		28DAA8C5231D09A6006A0570 /* LGNNewSearchToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGNNewSearchToolView.h; sourceTree = "<group>"; };
@@ -428,6 +443,29 @@
 				1327CF5CEE302EAC89AC964E /* Pods-NoteDemo.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		288D06C42475555D00775FA9 /* NoteDropDownMenuView */ = {
+			isa = PBXGroup;
+			children = (
+				288D06C52475556D00775FA9 /* CFDropDownMenuView.bundle */,
+				288D06C62475556D00775FA9 /* Lib */,
+			);
+			path = NoteDropDownMenuView;
+			sourceTree = "<group>";
+		};
+		288D06C62475556D00775FA9 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				288D06CA2475556D00775FA9 /* NOteDropDownMenuView.h */,
+				288D06C92475556D00775FA9 /* NOteDropDownMenuView.m */,
+				288D06CD2475556D00775FA9 /* NoteLabelOnLeftButton.h */,
+				288D06C72475556D00775FA9 /* NoteLabelOnLeftButton.m */,
+				288D06CB2475556D00775FA9 /* CFMacro.h */,
+				288D06C82475556D00775FA9 /* UIView+CFFrame.h */,
+				288D06CC2475556D00775FA9 /* UIView+CFFrame.m */,
+			);
+			path = Lib;
 			sourceTree = "<group>";
 		};
 		3213BBFD225B46B90065E2DD /* YBImageBrowser */ = {
@@ -723,6 +761,8 @@
 		32326459216DE809005CC784 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				288D06C124754CB100775FA9 /* NoteDragView.h */,
+				288D06C224754CB100775FA9 /* NoteDragView.m */,
 				32D72A9C2249B03A00FFB9B4 /* CutImageView */,
 				32B6BE5522485B8C001F9E10 /* DrawBoardView */,
 				32326466216DED2D005CC784 /* LGNNoteMainTableViewCell.h */,
@@ -760,6 +800,7 @@
 		32326470216DF01E005CC784 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				288D06C42475555D00775FA9 /* NoteDropDownMenuView */,
 				3213BC51225C6E950065E2DD /* HDWebImage */,
 				3213BBFD225B46B90065E2DD /* YBImageBrowser */,
 				32D72AA3224A43B200FFB9B4 /* XMLDictionary */,
@@ -989,6 +1030,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3232642D216D9007005CC784 /* LaunchScreen.storyboard in Resources */,
+				288D06CE2475556E00775FA9 /* CFDropDownMenuView.bundle in Resources */,
 				3232642A216D9007005CC784 /* Assets.xcassets in Resources */,
 				325BC3A1216EE2EB00D077F5 /* LGNote.bundle in Resources */,
 				32326428216D9006005CC784 /* Main.storyboard in Resources */,
@@ -1063,6 +1105,7 @@
 				3213BC3C225B46B90065E2DD /* YBVideoBrowseActionBar.m in Sources */,
 				32326481216E265D005CC784 /* LGNoteMBAlert.m in Sources */,
 				325BC3B0216EF7B800D077F5 /* LGNNoteFilterCollectionReusableViewHeader.m in Sources */,
+				288D06C324754CB100775FA9 /* NoteDragView.m in Sources */,
 				32326425216D9006005CC784 /* ViewController.m in Sources */,
 				3213BC98225C6E950065E2DD /* NSButton+WebCache.m in Sources */,
 				3213BC91225C6E950065E2DD /* HDWebImageFrame.m in Sources */,
@@ -1117,6 +1160,8 @@
 				3213BBF9225B23660065E2DD /* LGNoteSafeTool.m in Sources */,
 				3213BBFC225B24CF0065E2DD /* NSData+Notes.m in Sources */,
 				32326487216E2C87005CC784 /* LGNoteNetworkManager.m in Sources */,
+				288D06CF2475556E00775FA9 /* NoteLabelOnLeftButton.m in Sources */,
+				288D06D02475556E00775FA9 /* NOteDropDownMenuView.m in Sources */,
 				3213BC4D225B46B90065E2DD /* YBIBGestureInteractionProfile.m in Sources */,
 				3213BC8C225C6E950065E2DD /* HDImageCacheConfig.m in Sources */,
 				3213BC8E225C6E950065E2DD /* UIImage+HDForceDecode.m in Sources */,
@@ -1129,6 +1174,7 @@
 				3213BC40225B46B90065E2DD /* YBImageBrowserToolBar.m in Sources */,
 				3213BC9B225C6E950065E2DD /* NSData+ImageContentType.m in Sources */,
 				28DAA8C8231D09A6006A0570 /* LGNNewSeleteDataView.m in Sources */,
+				288D06D12475556E00775FA9 /* UIView+CFFrame.m in Sources */,
 				32B6BE6222485BD0001F9E10 /* LGNPenFontBallView.m in Sources */,
 				3213BC3F225B46B90065E2DD /* YBImageBrowserProgressView.m in Sources */,
 				3213BC94225C6E950065E2DD /* UIImage+MultiFormat.m in Sources */,
