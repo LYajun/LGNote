@@ -59,9 +59,9 @@ typedef NS_ENUM(NSInteger, SystemType) {
 @property (nonatomic, copy) NSString *Token;
 /** 笔记来源 */
 @property (nonatomic, copy) NSString *ResourceName;
-/** 笔记来源ID */
+/** 笔记来源ID */  //通用笔记: 章节ID
 @property (nonatomic, copy) NSString *ResourceID;
-/** 用于取某个资料下的所有笔记 与学习任务相关的学习资料ID((对应任务里面多份资料)) */
+/** 用于取某个资料下的所有笔记 与学习任务相关的学习资料ID((对应任务里面多份资料)) */  //通用教学:资料ID
 @property (nonatomic, copy) NSString *MaterialID;
 /** 资料名 */
 @property (nonatomic, copy) NSString *MaterialName;
@@ -104,6 +104,9 @@ typedef NS_ENUM(NSInteger, SystemType) {
 @property (nonatomic, copy) NSString *C_SubjectID;
 /** 备用的系统ID */
 @property (nonatomic, copy) NSString *C_SystemID;
+
+/** 通用教学1  0为平台首页集成 */
+@property (nonatomic, assign) NSInteger MainTY;
 
 @end
 

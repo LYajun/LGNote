@@ -45,6 +45,19 @@ UIKIT_EXTERN NSString *const CheckNoteBaseUrlKey;
 @property (nonatomic, strong) RACCommand *getTermTimeCommand;
 @property (nonatomic, strong) RACSubject *getTermTimeSubject;
 
+//获取某一系统或全部笔记所有学科列表
+
+@property (nonatomic, strong) RACCommand *getAllSubjectCommand;
+@property (nonatomic, strong) RACSubject *getAllSubjectSubject;
+
+//获取备选教材列表
+@property (nonatomic, strong) RACCommand *getTextbookListRateCommand;
+@property (nonatomic, strong) RACSubject *getTextbookListRateSubject;
+
+//获取教材节点
+@property (nonatomic, strong) RACCommand *getNodeInfoRateCommand;
+@property (nonatomic, strong) RACSubject *getNodeInfoRateSubject;
+
 
 /** 数据总数 */
 @property (nonatomic, assign) NSInteger totalCount;

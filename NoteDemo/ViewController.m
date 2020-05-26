@@ -41,31 +41,33 @@
     
     //S0-0129-CE46==2168943E-A8C0-4E46-890A-4746C3CC0E1A==bkstu152==2==黎清微==http://192.168.129.129:10103//===
     
-    params.SystemID = @"930";
-    params.SubjectID = @"S2-English";
-    params.C_SystemID = @"930";
+    params.SystemID = @"000";
+    params.SubjectID = @"history";
+    params.C_SystemID = @"000";
     params.PageSize = 10;
     params.PageIndex = 1;
     params.MaterialIndex = -1;
     params.MaterialCount = 10;
-    params.SubjectName = @"英语";
+    params.SubjectName = @"";
     params.IsKeyPoint = @"-1";
-    params.SchoolID = @"S14-111-FBE8";
-    params.Token = @"BBB13E42-9C41-4253-AA62-7EE0142CB4C3";
+    params.SchoolID = @"S27-511-AF57";
+    params.Token = @"A1C036C7-EBA7-41CD-95C3-91F83422107B";
 
-    params.ResourceName = @"1126高职A教材";
-    params.ResourceID = @"f25aeeef-469d-4660-a097-48fc515af07b";
-    params.MaterialName = @"Ten Reasons to Visit Australia";
+    params.ResourceName = @"第一单元";
+    params.ResourceID = @"111";
+    params.MaterialName = @"第一节点";
 
-    params.MaterialID = @"CFAE29172CIC609MSCb";
+    params.MaterialID = @"1111";
     params.MaterialTotal = @"-1";
     params.ResourceIOSLink = @"";
     params.ResourcePCLink = @"";
     params.ResourceAndroidLink=@"";
-    params.UserID = @"stu01";
+    params.UserID = @"Stu007";
     params.UserType = 2;
     params.UserName = @"stu01";
-    params.CPBaseUrl = @"http://192.168.129.130:10104//";
+    params.CPBaseUrl = @"http://192.168.129.1:30103//";
+    params.MainTY =1;
+
 
 //http://192.168.129.130:10104/Web_FSCModule_Note/api/V2/Notes/OperateNote
     

@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		282B719D22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 282B719C22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m */; };
+		284854B7247B6E63000D3F62 /* LGNTextBookListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 284854B6247B6E63000D3F62 /* LGNTextBookListModel.m */; };
 		28810EF2235470FF0003B03A /* UIImage+ImgSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 28810EF1235470FF0003B03A /* UIImage+ImgSize.m */; };
 		288D06C324754CB100775FA9 /* NoteDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 288D06C224754CB100775FA9 /* NoteDragView.m */; };
 		288D06CE2475556E00775FA9 /* CFDropDownMenuView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 288D06C52475556D00775FA9 /* CFDropDownMenuView.bundle */; };
 		288D06CF2475556E00775FA9 /* NoteLabelOnLeftButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 288D06C72475556D00775FA9 /* NoteLabelOnLeftButton.m */; };
 		288D06D02475556E00775FA9 /* NOteDropDownMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 288D06C92475556D00775FA9 /* NOteDropDownMenuView.m */; };
 		288D06D12475556E00775FA9 /* UIView+CFFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 288D06CC2475556D00775FA9 /* UIView+CFFrame.m */; };
+		28AEB38224762CFC008CB6BB /* LGNNoteMainImageTYCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28AEB38124762CFC008CB6BB /* LGNNoteMainImageTYCell.m */; };
 		28DAA8C7231D09A6006A0570 /* LGNNewSearchToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DAA8C3231D09A5006A0570 /* LGNNewSearchToolView.m */; };
 		28DAA8C8231D09A6006A0570 /* LGNNewSeleteDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DAA8C6231D09A6006A0570 /* LGNNewSeleteDataView.m */; };
 		28DAA8CB231D09B4006A0570 /* LGNNewFilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DAA8CA231D09B4006A0570 /* LGNNewFilterViewController.m */; };
@@ -153,6 +155,8 @@
 		1327CF5CEE302EAC89AC964E /* Pods-NoteDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoteDemo.release.xcconfig"; path = "Target Support Files/Pods-NoteDemo/Pods-NoteDemo.release.xcconfig"; sourceTree = "<group>"; };
 		282B719B22AE848C006691C5 /* HPTextViewTapGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewTapGestureRecognizer.h; sourceTree = "<group>"; };
 		282B719C22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewTapGestureRecognizer.m; sourceTree = "<group>"; };
+		284854B5247B6E63000D3F62 /* LGNTextBookListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LGNTextBookListModel.h; sourceTree = "<group>"; };
+		284854B6247B6E63000D3F62 /* LGNTextBookListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LGNTextBookListModel.m; sourceTree = "<group>"; };
 		28810EF0235470FF0003B03A /* UIImage+ImgSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImgSize.h"; sourceTree = "<group>"; };
 		28810EF1235470FF0003B03A /* UIImage+ImgSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImgSize.m"; sourceTree = "<group>"; };
 		288D06C124754CB100775FA9 /* NoteDragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteDragView.h; sourceTree = "<group>"; };
@@ -165,6 +169,8 @@
 		288D06CB2475556D00775FA9 /* CFMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFMacro.h; sourceTree = "<group>"; };
 		288D06CC2475556D00775FA9 /* UIView+CFFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CFFrame.m"; sourceTree = "<group>"; };
 		288D06CD2475556D00775FA9 /* NoteLabelOnLeftButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteLabelOnLeftButton.h; sourceTree = "<group>"; };
+		28AEB38024762CFC008CB6BB /* LGNNoteMainImageTYCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LGNNoteMainImageTYCell.h; sourceTree = "<group>"; };
+		28AEB38124762CFC008CB6BB /* LGNNoteMainImageTYCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LGNNoteMainImageTYCell.m; sourceTree = "<group>"; };
 		28DAA8C3231D09A5006A0570 /* LGNNewSearchToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGNNewSearchToolView.m; sourceTree = "<group>"; };
 		28DAA8C4231D09A6006A0570 /* LGNNewSeleteDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGNNewSeleteDataView.h; sourceTree = "<group>"; };
 		28DAA8C5231D09A6006A0570 /* LGNNewSearchToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGNNewSearchToolView.h; sourceTree = "<group>"; };
@@ -722,6 +728,8 @@
 				321932C8224274D90019AA64 /* LGNSubjectModel.m */,
 				28EF5B2E22A754C100EA94DB /* LGNSingleTool.h */,
 				28EF5B2F22A754C100EA94DB /* LGNSingleTool.m */,
+				284854B5247B6E63000D3F62 /* LGNTextBookListModel.h */,
+				284854B6247B6E63000D3F62 /* LGNTextBookListModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -769,6 +777,8 @@
 				32326467216DED2D005CC784 /* LGNNoteMainTableViewCell.m */,
 				321932C4224263400019AA64 /* LGNNoteMainImageTableViewCell.h */,
 				321932C5224263400019AA64 /* LGNNoteMainImageTableViewCell.m */,
+				28AEB38024762CFC008CB6BB /* LGNNoteMainImageTYCell.h */,
+				28AEB38124762CFC008CB6BB /* LGNNoteMainImageTYCell.m */,
 				320D4E8D224372EA0013872A /* LGNNoteMoreImageTableViewCell.h */,
 				320D4E8E224372EA0013872A /* LGNNoteMoreImageTableViewCell.m */,
 				32326475216DF5D0005CC784 /* LGNNoteMainTableView.h */,
@@ -1146,6 +1156,7 @@
 				3232645F216DE8F8005CC784 /* LGNNoteEditViewController.m in Sources */,
 				325BC3A7216EF2E600D077F5 /* LGNNoteFilterViewController.m in Sources */,
 				32B6BE6122485BD0001F9E10 /* LGNBoardBgCollectionViewCell.m in Sources */,
+				28AEB38224762CFC008CB6BB /* LGNNoteMainImageTYCell.m in Sources */,
 				3232649A216E3B35005CC784 /* LGNoteBaseTextView.m in Sources */,
 				32B6BE8722488002001F9E10 /* NSBundle+Notes.m in Sources */,
 				32B6BE8822488002001F9E10 /* NSString+NotesEmoji.m in Sources */,
@@ -1183,6 +1194,7 @@
 				321932C9224274D90019AA64 /* LGNSubjectModel.m in Sources */,
 				3213BC4B225B46B90065E2DD /* YBIBPhotoAlbumManager.m in Sources */,
 				3213BC44225B46B90065E2DD /* YBImageBrowseCellData.m in Sources */,
+				284854B7247B6E63000D3F62 /* LGNTextBookListModel.m in Sources */,
 				32B6BE6D22485F2C001F9E10 /* LGNDrawBoardModel.m in Sources */,
 				3213BC8B225C6E950065E2DD /* HDWebImageManager.m in Sources */,
 				32B6BE90224880FE001F9E10 /* LGNImagePickerViewController.m in Sources */,

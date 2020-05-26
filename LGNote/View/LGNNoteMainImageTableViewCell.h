@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 - (void)configureCellForDataSource:(LGNNoteModel *)dataSource indexPath:(NSIndexPath *)indexPath;
+
+- (void)configureCellForDataSource_TY:(LGNNoteModel *)dataSource indexPath:(NSIndexPath *)indexPath;
 //搜索
 @property (nonatomic,assign) BOOL  isSearchVC;
 @property (nonatomic,strong) NSString * searchContent;

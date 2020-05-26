@@ -130,7 +130,7 @@
             }
         } else {
             // 默认 未设置样式的时候 未选中状态为 灰色箭头/灰色文字
-            [self changTintColorWithTintColor:RGB(127, 127, 127) tintColorImgName:CFDrowMenuViewSrcName(@"灰箭头.png")?:CFDrowMenuViewFrameworkSrcName(@"灰箭头.png") ForButton:self.titleBtnArr[i]];
+            [self changTintColorWithTintColor:RGB(37, 37, 37) tintColorImgName:CFDrowMenuViewSrcName(@"灰箭头.png")?:CFDrowMenuViewFrameworkSrcName(@"灰箭头.png") ForButton:self.titleBtnArr[i]];
         }
     }
 }

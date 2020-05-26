@@ -372,6 +372,8 @@ HPTextViewTapGestureRecognizerDelegate
     self.remarkBtn.selected = [viewModel.dataSourceModel.IsKeyPoint isEqualToString:@"1"] ? YES:NO;
     
     
+    [self.remarkSwitch setOn:[viewModel.dataSourceModel.IsKeyPoint isEqualToString:@"1"] ?YES:NO];
+    
     self.materialArray = [self.viewModel configureMaterialPickerDataSource];
     //    去除全部与其他学科
     self.subjectArray = [self.viewModel configureSubjectPickerDataSource];
@@ -802,6 +804,18 @@ else{
     }
 }
 
+- (void)clickSwit1:(UISwitch*)side{
+
+    if(side.on){
+        self.viewModel.dataSourceModel.IsKeyPoint = @"1";
+            
+             [[LGNoteMBAlert shareMBAlert] showSuccessWithStatus:@"已标记为重点"];
+      }else{
+        self.viewModel.dataSourceModel.IsKeyPoint = @"0";
+           
+               [[LGNoteMBAlert shareMBAlert] showSuccessWithStatus:@"  已取消标记  "];
+      }
+}
 - (void)sourceBtnClick:(UIButton *)sender{
     if (IsStrEmpty(_ResourceIOSLink)) {
         return;
@@ -1029,6 +1043,7 @@ else{
         
         _remarkSwitch = [[UISwitch alloc]init];
         _remarkSwitch.transform = CGAffineTransformMakeScale(0.75, 0.75);
+         [_remarkSwitch addTarget:self action:@selector(clickSwit1:) forControlEvents:UIControlEventValueChanged ];
 
     }
     

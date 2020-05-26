@@ -99,6 +99,42 @@
     }];
 }
 
+
+- (void)configureCellForDataSource_TY:(LGNNoteModel *)dataSource indexPath:(NSIndexPath *)indexPath{
+    
+     NSString * ResourceName =dataSource.ResourceName;
+     NSString * MaterialName =dataSource.MaterialName;
+
+                              
+            NSMutableAttributedString *att = [LGNNoteTools attributedStringByStrings:@[ResourceName,MaterialName] colors:@[kColorInitWithRGB(0, 153, 255, 1),kColorInitWithRGB(0, 153, 255, 1)] fonts:@[@(12),@(12)]];
+            self.sourceLabel.attributedText = att;
+    
+      self.editTimeLabel.text = [NSString stringWithFormat:@"%@",dataSource.NoteEditTime];
+      
+      if ([dataSource.IsKeyPoint isEqualToString:@"1"]) {
+          if(_isSearchVC){//搜索标注关键字颜色
+              NSMutableAttributedString *att1 = [[NSMutableAttributedString alloc] initWithString:[dataSource.NoteTitle stringByAppendingString:@" "]];
+              self.noteTitleLabel.attributedText = att1;
+              
+              self.noteTitleLabel.attributedText = [self setAllText:self.noteTitleLabel.text andSpcifiStr:_searchContent withColor:nil specifiStrFont:nil isremark:YES];
+          }else{
+              self.markImageV.hidden = NO;
+              
+              NSMutableAttributedString *att1 = [[NSMutableAttributedString alloc] initWithString:dataSource.NoteTitle];
+              self.noteTitleLabel.attributedText = att1;
+          }
+      } else {
+          self.markImageV.hidden = YES;
+          NSMutableAttributedString *att1 = [[NSMutableAttributedString alloc] initWithString:dataSource.NoteTitle];
+          self.noteTitleLabel.attributedText = att1;
+          if(_isSearchVC){
+              
+              self.noteTitleLabel.attributedText = [self setAllText:self.noteTitleLabel.text andSpcifiStr:_searchContent withColor:nil specifiStrFont:nil isremark:NO];
+          }
+      }
+      
+      [self loadImageViewWithImageUrls:dataSource.imgaeUrls];
+}
 - (void)configureCellForDataSource:(LGNNoteModel *)dataSource indexPath:(NSIndexPath *)indexPath{
     NSString *subjectName = [NSString stringWithFormat:@"%@ | ",[LGNNoteTools getSubjectImageNameWithSubjectID:dataSource.SubjectID]];
 //    if([dataSource.SystemName isEqualToString:@"课后作业"]){

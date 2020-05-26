@@ -1,19 +1,17 @@
 //
-//  NoteMoreImageTableViewCell.h
+//  LGNNoteMainImageTYCell.h
 //  NoteDemo
 //
-//  Created by hend on 2019/3/21.
-//  Copyright © 2019 hend. All rights reserved.
+//  Created by abc on 2020/5/21.
+//  Copyright © 2020 hend. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "LGNNoteMainTableViewCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
-@class LGNNoteModel;
 
-@interface LGNNoteMoreImageTableViewCell : UITableViewCell
+@interface LGNNoteMainImageTYCell : UITableViewCell
 
-- (void)configureCellForDataSource_TY:(LGNNoteModel *)dataSource indexPath:(NSIndexPath *)indexPath;
 
 - (void)configureCellForDataSource:(LGNNoteModel *)dataSource indexPath:(NSIndexPath *)indexPath;
 //搜索

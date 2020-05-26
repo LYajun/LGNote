@@ -292,18 +292,31 @@
     
     switch (requestType) {
         case GET:{
-            
             [manager GET:url parameters:self.parameters progress:^(NSProgress * _Nonnull downloadProgress) {
-                
-            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    success(responseObject);
-                });
-            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    failure(error);
-                });
-            }];
+                           
+                       } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                           dispatch_async(dispatch_get_main_queue(), ^{
+                              // _requstError = RequestErrorNone;
+                               success(responseObject);
+                           });
+                       } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                           dispatch_async(dispatch_get_main_queue(), ^{
+                              // _requstError = error.code == -1001 ? RequestErrorTimeOut:RequestErrorNone;
+                               failure(error);
+                           });
+                       }];
+            
+//            [manager GET:url parameters:self.parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+//
+//            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    success(responseObject);
+//                });
+//            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    failure(error);
+//                });
+//            }];
         }
             break;
         case GETSYSTEM:{

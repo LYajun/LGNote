@@ -14,7 +14,7 @@
 #import "LGNNoteEditViewController.h"
 #import "LGNNoteMainImageTableViewCell.h"
 #import "LGNNoteMoreImageTableViewCell.h"
-
+#import "LGNNoteMainImageTYCell.h"
 @interface LGNNoteMainTableView () <UITableViewDataSource,UITableViewDelegate>{
     
      NSInteger  _allCount;
@@ -32,13 +32,13 @@
     if (self = [super initWithFrame:frame style:style]) {
         self.delegate = self;
         self.dataSource = self;
-        self.rowHeight = 170;
+       //self.rowHeight = 170;
 
         
         [self registerClass:[LGNNoteMainTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LGNNoteMainTableViewCell class])];
         [self registerClass:[LGNNoteMainImageTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LGNNoteMainImageTableViewCell class])];
         [self registerClass:[LGNNoteMoreImageTableViewCell class] forCellReuseIdentifier:NSStringFromClass([LGNNoteMoreImageTableViewCell class])];
-        
+        [self registerClass:[LGNNoteMainImageTYCell class] forCellReuseIdentifier:NSStringFromClass([LGNNoteMainImageTYCell class])];
   
 //            [self allocInitRefreshHeader:YES allocInitFooter:YES];
         
@@ -64,6 +64,7 @@
         
         @strongify(self);
         self.dataArray = x;
+        
         if (IsArrEmpty(self.dataArray)) {
             self.requestStatus = LGBaseTableViewRequestStatusNoData;
             
@@ -119,6 +120,8 @@
             [self.viewModel.refreshCommand execute:self.viewModel.paramModel];
             [self.mj_footer endRefreshing];
             _allCount = 0;
+            
+           
         }
     }];
 
@@ -133,6 +136,26 @@
         _allCount = 0;
     }];
     
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if( self.viewModel.paramModel.SystemType ==SystemType_TYJX ){
+    LGNNoteModel *model = self.dataArray[indexPath.section];
+        if (model.imgaeUrls > 0 && model.mixTextImage){
+            return 210;
+        }else{
+            return 170;
+        }
+
+     
+
+    }else{
+         return 170;
+    }
+    
+  
+
+
 }
 
 
@@ -151,15 +174,6 @@
     // 判断是不是图文混排类型
     if (model.imgaeUrls.count <= 0) {
         
-//        static NSString * const MainTableViewCell = @"LGNNoteMainTableViewCell";
-//
-//        LGNNoteMainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMainTableViewCell class]) forIndexPath:indexPath];
-//
-//        if (!cell) {
-//            cell = [[LGNNoteMainTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MainTableViewCell];
-//            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//        }
-        
 //
         LGNNoteMainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMainTableViewCell class]) forIndexPath:indexPath];
         
@@ -167,31 +181,47 @@
         cell.searchContent =_searchContent;
         cell.isSearchVC = _isSearchVC;
          cell.MaterialName = self.viewModel.paramModel.MaterialName;
-        [cell configureCellForDataSource:model indexPath:indexPath];
+        if( self.viewModel.paramModel.SystemType ==SystemType_TYJX){
+              [cell configureCellForDataSource_TY:model indexPath:indexPath];
+        }else{
+            [cell configureCellForDataSource:model indexPath:indexPath];
+        }
+        
+      
        
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
 
         return cell;
     } else if (model.imgaeUrls > 0 && model.mixTextImage) {
         
-//        static NSString * const ImageTableViewCell = @"LGNNoteMainImageTableViewCell";
-//
-//        LGNNoteMainImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMainImageTableViewCell class]) forIndexPath:indexPath];
-//
-//        if (!cell) {
-//            cell = [[LGNNoteMainImageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ImageTableViewCell];
-//            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//        }
-        // cell.tag =1;
         
-        LGNNoteMainImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMainImageTableViewCell class]) forIndexPath:indexPath];
-        cell.searchContent =_searchContent;
-        cell.isSearchVC = _isSearchVC;
-          cell.MaterialName = self.viewModel.paramModel.MaterialName;
-        [cell configureCellForDataSource:model indexPath:indexPath];
+        if( self.viewModel.paramModel.SystemType ==SystemType_TYJX){
+            LGNNoteMainImageTYCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMainImageTYCell class]) forIndexPath:indexPath];
+                   
+                   
+                   cell.searchContent =_searchContent;
+                   cell.isSearchVC = _isSearchVC;
+                     cell.MaterialName = self.viewModel.paramModel.MaterialName;
+                   [cell configureCellForDataSource:model indexPath:indexPath];
+                   
+                    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                   return cell;
+            
+        }else{
+            
+            LGNNoteMainImageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LGNNoteMainImageTableViewCell class]) forIndexPath:indexPath];
+                   
+                   
+                   cell.searchContent =_searchContent;
+                   cell.isSearchVC = _isSearchVC;
+                     cell.MaterialName = self.viewModel.paramModel.MaterialName;
+                   [cell configureCellForDataSource:model indexPath:indexPath];
+                   
+                    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                   return cell;
+        }
         
-         cell.selectionStyle = UITableViewCellSelectionStyleGray;
-        return cell;
+       
     } else {
         
 //        static NSString * const MoreImageTableViewCell = @"LGNNoteMoreImageTableViewCell";
@@ -207,7 +237,11 @@
         cell.searchContent =_searchContent;
         cell.isSearchVC = _isSearchVC;
         cell.MaterialName = self.viewModel.paramModel.MaterialName;
-        [cell configureCellForDataSource:model indexPath:indexPath];
+     if( self.viewModel.paramModel.SystemType ==SystemType_TYJX){
+                     [cell configureCellForDataSource_TY:model indexPath:indexPath];
+               }else{
+                   [cell configureCellForDataSource:model indexPath:indexPath];
+               }
       
          cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         //self.selectionStyle = UITableViewCellSelectionStyleNone;

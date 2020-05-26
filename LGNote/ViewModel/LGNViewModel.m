@@ -13,7 +13,7 @@
 #import <MJExtension/MJExtension.h>
 #import "NoteXMLDictionary.h"
 #import "LGNNoteModel.h"
-
+#import "LGNTextBookListModel.h"
 NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 
 @interface LGNViewModel ()
@@ -165,6 +165,84 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         }];
         return [RACSignal empty];
     }];
+    
+    //获取备选教材列表
+       
+       self.getTextbookListRateSubject = [RACSubject subject];
+          self.getTextbookListRateCommand= [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
+              
+              @strongify(self);
+              
+              
+              [[self getTextbookListWithParams:input] subscribeNext:^(id  _Nullable x) {
+                  @strongify(self);
+                  
+                  
+                  [self.getTextbookListRateSubject sendNext:x];
+              }];
+              return [RACSignal empty];
+          }];
+          
+       //获取教材节点
+      
+       self.getNodeInfoRateSubject = [RACSubject subject];
+       self.getNodeInfoRateCommand= [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
+           
+           @strongify(self);
+           
+           
+           [[self getNodeInfoWithParams:input] subscribeNext:^(id  _Nullable x) {
+               @strongify(self);
+               
+               
+               [self.getNodeInfoRateSubject sendNext:x];
+           }];
+           return [RACSignal empty];
+       }];
+
+    self.getAllSubjectSubject = [RACSubject subject];
+          self.getAllSubjectCommand= [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
+              
+              @strongify(self);
+              
+              
+              if(IsStrEmpty(self.paramModel.NoteBaseUrl)){
+                        
+                           RACSignal *checkSignal = [self checkNoteBaseUrl];
+                        
+                        [checkSignal subscribeNext:^(NSString *  _Nullable url) {
+                            if (!IsStrEmpty(url)) {
+                                [[NSUserDefaults standardUserDefaults] setObject:url forKey:CheckNoteBaseUrlKey];
+                                self.paramModel.NoteBaseUrl = url;
+                                
+                                [[self getAllSubjectWithParams:input] subscribeNext:^(id  _Nullable x) {
+                                                 @strongify(self);
+                                                 
+                                                 
+                                                 [self.getAllSubjectSubject sendNext:x];
+                                             }];
+                             
+                            } else {
+                                [self.refreshSubject sendNext:@[]];
+                            }
+                        }];
+                    }else{
+
+                         [[NSUserDefaults standardUserDefaults] setObject:self.paramModel.NoteBaseUrl forKey:CheckNoteBaseUrlKey];
+                          
+                        [[self getAllSubjectWithParams:input] subscribeNext:^(id  _Nullable x) {
+                                         @strongify(self);
+                                         
+                                         
+                                         [self.getAllSubjectSubject sendNext:x];
+                                     }];
+                    }
+              
+             
+              return [RACSignal empty];
+          }];
+    
+    
 }
 
 - (void)p_getData{
@@ -450,7 +528,62 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
             
             
             
-        }else{
+        }else if (self.paramModel.SystemType ==SystemType_TYJX){
+            
+                if([keycon isEqualToString:@""]){
+                           
+                        //获取全部
+                    url= [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetAllNotesInformationForOneResource"];
+                        
+                        params = @{
+                                                      @"UserID": Note_HandleParams(self.paramModel.UserID),
+                                                      @"UserType":@(self.paramModel.UserType),
+                                                      @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
+                                                      
+                                                      @"SubjectID":Note_HandleParams(subjectID),
+                                                      @"SecretKey": Note_HandleParams(self.paramModel.Secret),
+                                                      @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
+                                                      @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
+                                                      
+                                                      @"SysID":Note_HandleParams(systemID),
+
+                                                      @"BackUpOne":@"",
+                                                      @"BackUpTwo":@""
+                                                      };
+                        
+                                  //传参也不一样
+                              }else{
+                                  
+                                  //搜索的
+                                  url= [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNotesInformationForOne"];
+                                  params = @{
+                                                                    @"UserID": Note_HandleParams(self.paramModel.UserID),
+                                                                @"UserType":@(self.paramModel.UserType),
+                                                                @"ResourceID":@"",
+                                                                    
+                                                                     @"SubjectID":@"",
+                                                                     @"SecretKey": Note_HandleParams(self.paramModel.Secret),
+                                                                    
+                                                                     @"SchoolID":Note_HandleParams(schoolID),
+                                                                @"MaterialID":@"",
+                                                                     @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
+                                                                    
+                                                                     @"SysID":Note_HandleParams(systemID),
+                                                                    
+                                                                     @"Keycon":Note_HandleParams(keycon),
+                                                                     @"Page":@(pageIndex),
+                                                                     @"StartTime":@"",
+                                                                     @"EndTime":@"",
+                                                                     
+                                                                     @"Size":@(size),
+                                                                     @"BackUpOne":@"",
+                                                                     @"BackUpTwo":@""
+                                                                     };
+                              }
+        }
+        
+        
+        else{
             //其他端集成的
             
             if([keycon isEqualToString:@""]){
@@ -504,6 +637,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                                                              };
                       }
                       
+     
         }
        
         
@@ -654,8 +788,6 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 
 //添加、编辑和删除当前学生笔记   1添加  0编辑  3 删除
 - (RACSignal *)operatedNoteWithParams:(id)params{
-    
-    
     
     
   // 学习小助手 和后期提供给平台集成的整体版本新增笔记时 [ResourceID]和[MaterialID]这两个值都赋值为SystemID
@@ -838,7 +970,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         
         
         NSDictionary *params = @{
-                                 @"SystemType":[NSString stringWithFormat:@"%zd",self.paramModel.SystemType],
+                                 @"SystemType":@"5",
                                  @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
                                  @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
                                  @"ResourceName": Note_HandleParams(self.paramModel.ResourceName),
@@ -963,5 +1095,129 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 }
 
 
+- (RACSignal *)getTextbookListWithParams:(id)Params{
+    
+//    [kMBAlert showIndeterminate];
+    return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+        
+        NSString *urlStr = self.paramModel.CPBaseUrl;
+//        NSString *urlStr = @"http://192.168.2.114:8090//";
+
+        
+    NSString *url = [NSString stringWithFormat:@"%@SubjectResMgr/TextBookMgr/GetTextbookList",urlStr];
+        
+     NSString * toke = [NSString stringWithFormat:@"X-Token=%@",self.paramModel.Token];
+                         
+                   NSDictionary *  HeaderDic = @{
+                                                 @"Authorization":toke,
+                                                 
+                                                 
+                                                 };
+        
+        [kNetwork.setRequestUrl(url).setRequestType(GET).setParameters(Params).setHTTPHeaderDic(HeaderDic)starSendRequestSuccess:^(id respone) {
+            
+            if([respone[@"ErrCode"] integerValue] !=0){
+                           
+                           [subscriber sendNext:nil];
+                           [subscriber sendCompleted];
+                           return ;
+                       }
+            
+            
+//
+              NSArray *dataArray = respone[@"Data"];
+            dataArray = [[dataArray.rac_sequence map:^id _Nullable(id  _Nullable value) {
+                LGNTextBookListModel *model = [LGNTextBookListModel mj_objectWithKeyValues:value];
+                return model;
+            }] array];
+            [subscriber sendNext:dataArray];
+            [subscriber sendCompleted];
+            
+        } failure:^(NSError *error) {
+            
+            [subscriber sendNext:nil];
+            [subscriber sendCompleted];
+        }];
+        
+        return nil;
+    }];
+}
+
+- (RACSignal *)getNodeInfoWithParams:(id)Params{
+    
+//    [kMBAlert showIndeterminate];
+    return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+        
+        NSString *urlStr = self.paramModel.CPBaseUrl;
+
+        NSString *url = [NSString stringWithFormat:@"%@SubjectResMgr/TextBookMgr/GetNodeInfo",urlStr];
+        
+     NSString * toke = [NSString stringWithFormat:@"X-Token=%@",self.paramModel.Token];
+                         
+                   NSDictionary *  HeaderDic = @{
+                                                 @"Authorization":toke,
+                                                 
+                                                 
+                                                 };
+        [kNetwork.setRequestUrl(url).setRequestType(GET).setParameters(Params).setHTTPHeaderDic(HeaderDic)starSendRequestSuccess:^(id respone) {
+            
+            if([respone[@"ErrCode"] integerValue] !=0){
+                           
+                           [subscriber sendNext:nil];
+                           [subscriber sendCompleted];
+                           return ;
+                       }
+//
+              NSArray *dataArray = respone[@"Data"];
+            dataArray = [[dataArray.rac_sequence map:^id _Nullable(id  _Nullable value) {
+                LGNTextBookListModel *model = [LGNTextBookListModel mj_objectWithKeyValues:value];
+                return model;
+            }] array];
+            [subscriber sendNext:dataArray];
+            [subscriber sendCompleted];
+            
+        } failure:^(NSError *error) {
+            
+            [subscriber sendNext:nil];
+            [subscriber sendCompleted];
+        }];
+        
+        return nil;
+    }];
+}
+
+- (RACSignal *)getAllSubjectWithParams:(id)Params{
+    
+    return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
+        
+        NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNoteSubjectInformation"];
+
+        [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(Note_HandleParams(self.paramModel.UserID)).setToken( Note_HandleParams(self.paramModel.Token)).setParameters(Params)starSendRequestSuccess:^(id respone) {
+            
+           if (![respone[kErrorcode] hasSuffix:kSuccess]) {
+               
+        
+                [subscriber sendNext:nil];
+               [subscriber sendCompleted];
+                           return;
+                       }
+
+            NSArray *dataArray = respone[kResult];
+                     dataArray = [[dataArray.rac_sequence map:^id _Nullable(id  _Nullable value) {
+                         LGNSubjectModel *model = [LGNSubjectModel mj_objectWithKeyValues:value];
+                         return model;
+                     }] array];
+                     [subscriber sendNext:dataArray];
+                     [subscriber sendCompleted];
+            
+        } failure:^(NSError *error) {
+            
+            [subscriber sendNext:nil];
+            [subscriber sendCompleted];
+        }];
+        
+        return nil;
+    }];
+}
 
 @end

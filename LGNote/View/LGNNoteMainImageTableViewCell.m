@@ -92,6 +92,53 @@
     }];
 }
 
+- (void)configureCellForDataSource_TY:(LGNNoteModel *)dataSource indexPath:(NSIndexPath *)indexPath{
+
+    NSString * ResourceName =dataSource.ResourceName;
+    NSString * MaterialName =dataSource.MaterialName;
+
+                             
+           NSMutableAttributedString *att = [LGNNoteTools attributedStringByStrings:@[ResourceName,MaterialName] colors:@[kColorInitWithRGB(0, 153, 255, 1),kColorInitWithRGB(0, 153, 255, 1)] fonts:@[@(12),@(12)]];
+           self.sourceLabel.attributedText = att;
+           
+       
+       self.editTimeLabel.text = [NSString stringWithFormat:@"%@",dataSource.NoteEditTime];
+          
+          NSMutableString *contentString = dataSource.NoteContent_Att.mutableString;
+          [contentString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+          self.noteContentLabel.text = contentString;
+          
+          NSString *imageUrl = [dataSource.imgaeUrls objectAtIndex:0];
+
+          [self.noteImageView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[NSBundle lg_imageName:@"notoPlaceholderImage"] options:SDWebImageRefreshCached];
+          
+          
+          if ([dataSource.IsKeyPoint isEqualToString:@"1"]) {
+              if(_isSearchVC){//搜索标注关键字颜色
+                  NSMutableAttributedString *att1 = [[NSMutableAttributedString alloc] initWithString:[dataSource.NoteTitle stringByAppendingString:@" "]];
+                  self.noteTitleLabel.attributedText = att1;
+                  
+                  self.noteTitleLabel.attributedText = [self setAllText:self.noteTitleLabel.text andSpcifiStr:_searchContent withColor:nil specifiStrFont:nil isremark:YES];
+              }else{
+                  
+                  NSMutableAttributedString *att1 = [[NSMutableAttributedString alloc] initWithString:dataSource.NoteTitle];
+                  self.noteTitleLabel.attributedText = att1;
+                  
+                  self.markImageV.hidden = NO;
+                 
+              }
+          } else {
+              self.markImageV.hidden = YES;
+              NSMutableAttributedString *att1 = [[NSMutableAttributedString alloc] initWithString:dataSource.NoteTitle];
+              self.noteTitleLabel.attributedText = att1;
+              if(_isSearchVC){
+                  
+            self.noteTitleLabel.attributedText = [self setAllText:self.noteTitleLabel.text andSpcifiStr:_searchContent withColor:nil specifiStrFont:nil isremark:NO];
+              }
+          }
+          
+}
+
 - (void)configureCellForDataSource:(LGNNoteModel *)dataSource indexPath:(NSIndexPath *)indexPath{
     NSString *subjectName = [NSString stringWithFormat:@"%@ | ",[LGNNoteTools getSubjectImageNameWithSubjectID:dataSource.SubjectID]];
 //    if([dataSource.SystemName isEqualToString:@"课后作业"]){
