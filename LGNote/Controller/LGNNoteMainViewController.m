@@ -269,17 +269,17 @@ LGNNewFilterDelegate
 
         [currentWindow addSubview:self.dragView];
 
-        [self.view addSubview:self.remarkBtn];
+       
 
         [self.view addSubview:self.tableView];
-
-        [self.remarkBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-              make.top.equalTo(self.view).offset(10);
-                make.right.equalTo(self.view).offset(-10);
-
-                make.width.mas_equalTo(85);
-                make.height.mas_equalTo(30);
-                    }];
+//        [self.view addSubview:self.remarkBtn];
+//        [self.remarkBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//              make.top.equalTo(self.view).offset(10);
+//                make.right.equalTo(self.view).offset(-10);
+//
+//                make.width.mas_equalTo(85);
+//                make.height.mas_equalTo(30);
+//                    }];
         [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.right.bottom.equalTo(self.view);
                 make.top.equalTo(self.view).offset(45);
@@ -492,6 +492,8 @@ LGNNewFilterDelegate
     [self.view addSubview:self.dropDownMenuView =dropDownMenuView];
     
     
+    
+    
      [self  getJDData];
     
 }
@@ -636,6 +638,15 @@ LGNNewFilterDelegate
 
     
     [self.view addSubview:self.dropDownMenuView2 =dropDownMenuView2];
+    
+     [self.view addSubview:self.remarkBtn];
+        [self.remarkBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                  make.top.equalTo(self.view).offset(10);
+                    make.right.equalTo(self.view).offset(-10);
+    
+                    make.width.mas_equalTo(85);
+                    make.height.mas_equalTo(30);
+                        }];
     
        // [kMBAlert showStatus:@"请求接口"];
     self.viewModel.paramModel.ResourceID =self.sectionID;
