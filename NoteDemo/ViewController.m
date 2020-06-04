@@ -41,30 +41,33 @@
     
     //S0-0129-CE46==2168943E-A8C0-4E46-890A-4746C3CC0E1A==bkstu152==2==黎清微==http://192.168.129.129:10103//===
     
-    params.SystemID = @"000";
-    params.SubjectID = @"history";
-    params.C_SystemID = @"000";
+    params.SystemID = @"300";
+    params.SubjectID = @"S2-English";
+    params.C_SystemID = @"300";
     params.PageSize = 10;
     params.PageIndex = 1;
     params.MaterialIndex = -1;
     params.MaterialCount = 10;
-    params.SubjectName = @"";
+    params.SubjectName = @"英语";
     params.IsKeyPoint = @"-1";
     params.SchoolID = @"S27-511-AF57";
-    params.Token = @"A1C036C7-EBA7-41CD-95C3-91F83422107B";
+    params.Token = @"380AF46A-911D-4D14-A5A1-A678081EA670";
 
-    params.ResourceName = @"第一单元";
-    params.ResourceID = @"111";
-    params.MaterialName = @"第一节点";
-
-    params.MaterialID = @"1111";
+    params.ResourceName = @"新的Book";
+    params.ResourceID = @"1";
+    params.MaterialName = @"第一单元";
+    params.MaterialID = @"9";
+    
+    params.TermID = @"2019-202002";
+    params.GradeID = @"3AA1F9C3-6E59-450E-959D-C00CA300D1A7";
+    
     params.MaterialTotal = @"-1";
     params.ResourceIOSLink = @"";
     params.ResourcePCLink = @"";
     params.ResourceAndroidLink=@"";
-    params.UserID = @"Stu007";
+    params.UserID = @"0000";
     params.UserType = 2;
-    params.UserName = @"stu01";
+    params.UserName = @"施工";
     params.CPBaseUrl = @"http://192.168.129.1:30103//";
     params.MainTY =1;
 

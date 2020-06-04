@@ -83,7 +83,10 @@ typedef NS_ENUM(NSInteger, SystemType) {
 @property (nonatomic, copy) NSString *TermStartTime;
 /** 本学期结束日期 */
 @property (nonatomic, copy) NSString *TermEndTime;
-
+/** 学期ID */
+@property (nonatomic, copy) NSString *TermID;
+/** 年级ID */
+@property (nonatomic, copy) NSString *GradeID;
 
 /** 用户类型 */
 @property (nonatomic, assign) NSInteger UserType;
@@ -100,6 +103,9 @@ typedef NS_ENUM(NSInteger, SystemType) {
 
 /** 自定义：存放学科数组 */
 @property (nonatomic, copy)   NSArray *SubjectArray;
+
+/** 通用教学 存放学科数组 */
+@property (nonatomic, copy)   NSArray *TYSubjectArray;
 /** 备用的学科ID */
 @property (nonatomic, copy) NSString *C_SubjectID;
 /** 备用的系统ID */

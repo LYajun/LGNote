@@ -9,6 +9,7 @@
 #import "NOteDropDownMenuView.h"
 #import "CFMacro.h"
 #import "UIView+CFFrame.h"
+#import "NSBundle+Notes.h"
 
 #define kTitleBarHeight 45
 #define kViewTagConstant 1  // 所有tag都加上这个 防止出现为0的tag
@@ -375,12 +376,13 @@
 {
     
     
-    [btn setTitleColor:tintColor forState:UIControlStateNormal];
-   // [btn setImage:[UIImage imageNamed:tintColorArrowImgName] forState:UIControlStateNormal];
+//    [btn setTitleColor:tintColor forState:UIControlStateNormal];
+  //  [btn setImage:[UIImage imageNamed:tintColorArrowImgName] forState:UIControlStateNormal];
     
-   
-    [btn setImage: [UIImage imageNamed:CFDrowMenuViewSrcName(@"note_sq@3x.png")] forState:UIControlStateNormal];
+   [btn setTitleColor:RGB(37, 37, 37) forState:UIControlStateNormal];
 
+    [btn setImage: [NSBundle lg_imagePathName:@"note_sq@3x.png"] forState:UIControlStateNormal];
+ 
 }
 
 

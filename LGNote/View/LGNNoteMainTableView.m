@@ -378,14 +378,15 @@
     
     LGNNoteEditViewController *editVC = [[LGNNoteEditViewController alloc] init];
     editVC.updateSubject = [RACSubject subject];
+    editVC.tysubjectArray = self.viewModel.paramModel.TYSubjectArray;
     LGNNoteModel *model = self.dataArray[indexPath.section];
-    
-    
+        
     NSDictionary *param = [self.viewModel.paramModel mj_keyValues];
     editVC.paramModel = [LGNParamModel mj_objectWithKeyValues:param];
     editVC.isNewNote = NO;
     editVC.isSearchNote = _isSearchVC;
     editVC.searchContent= _searchContent;
+    
     editVC.subjectArray = self.viewModel.subjectArray;
     [editVC editNoteWithDataSource:model];
 

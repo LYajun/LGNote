@@ -63,23 +63,23 @@
         
     }
     // 固定宽度
-   width = width > screenW ? screenW:width;
-    
-    height = height >= screenH ? screenH:height;
-//    if(height == screenH){
-//        width= self.size.width-30;
-//    }
-    
-    
-//    if(_isHeng && height >= screenH){
+//   width = width > screenW ? screenW:width;
 //
-//        height =250;
-//    }
+//    height = height >= screenH ? screenH:height;
     
+    CGFloat scaleFactor = 0.0;
+    CGFloat widthFactor = screenW / width;
+    CGFloat heightFactor = screenH / height;
+    if(width > height){
+    scaleFactor = widthFactor;
+    }else{
+    scaleFactor = heightFactor;
+    }
  
     
-    _ImagWidth = width;
-    _ImagHeigt = height;
+    
+    _ImagWidth = width *scaleFactor;
+    _ImagHeigt = height*scaleFactor;
 
     
     [self createSubViews];

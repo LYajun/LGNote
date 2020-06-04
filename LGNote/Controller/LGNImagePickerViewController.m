@@ -35,6 +35,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<UIImagePickerControllerInfoKey,id> *)info{
     
     NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
+    
     if ([type isEqualToString:@"public.image"]) {
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
         [picker dismissViewControllerAnimated:YES completion:nil];

@@ -983,7 +983,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                                  @"MaterialTotal":Note_HandleParams(self.paramModel.MaterialTotal)
                                  };
         
- [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(Note_HandleParams(self.paramModel.UserID)).setToken(Note_HandleParams(self.paramModel.Token)).setParameters(params)starSendRequestSuccess:^(id respone) {
+  [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(Note_HandleParams(self.paramModel.UserID)).setToken(Note_HandleParams(self.paramModel.Token)).setParameters(params)starSendRequestSuccess:^(id respone) {
             
             
             
@@ -1101,10 +1101,9 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         
         NSString *urlStr = self.paramModel.CPBaseUrl;
-//        NSString *urlStr = @"http://192.168.2.114:8090//";
 
         
-    NSString *url = [NSString stringWithFormat:@"%@SubjectResMgr/TextBookMgr/GetTextbookList",urlStr];
+    NSString *url = [NSString stringWithFormat:@"%@TextBook/GetTextbookList",urlStr];
         
      NSString * toke = [NSString stringWithFormat:@"X-Token=%@",self.paramModel.Token];
                          
@@ -1130,6 +1129,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
                 LGNTextBookListModel *model = [LGNTextBookListModel mj_objectWithKeyValues:value];
                 return model;
             }] array];
+            
             [subscriber sendNext:dataArray];
             [subscriber sendCompleted];
             
@@ -1149,8 +1149,8 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         
         NSString *urlStr = self.paramModel.CPBaseUrl;
-
-        NSString *url = [NSString stringWithFormat:@"%@SubjectResMgr/TextBookMgr/GetNodeInfo",urlStr];
+ 
+        NSString *url = [NSString stringWithFormat:@"%@TextBook/GetSubjectUnionList",urlStr];
         
      NSString * toke = [NSString stringWithFormat:@"X-Token=%@",self.paramModel.Token];
                          

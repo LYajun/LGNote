@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy)   NSArray *subjectArray;
 @property (nonatomic, strong) RACSubject *updateSubject;
 
+@property (nonatomic, copy)   NSArray *tysubjectArray;
+
 /**
  编辑笔记时传入的数据模型
 

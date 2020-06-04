@@ -11,13 +11,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LGNTextBookListModel : NSObject
-//教材ID
-@property (nonatomic,strong) NSString * TextbookId;
-@property (nonatomic,strong) NSString * TextbookName;
-//封面图片地址，绝对地址
-@property (nonatomic,strong) NSString * CoverImgUrl;
-//是否已选中
-@property (nonatomic,strong) NSString * IsSelected;
+//教材列表
+
+@property (nonatomic,copy) NSString * BookName;
+@property (nonatomic,copy) NSString * BookId;
+
+
+
+@property (nonatomic,copy) NSString * UnionName;
+@property (nonatomic,copy) NSString * UnionId;
 @end
 
 NS_ASSUME_NONNULL_END

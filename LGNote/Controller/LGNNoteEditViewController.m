@@ -13,6 +13,10 @@
 #import "NOteDropDownMenuView.h"
 #import "LGNSubjectModel.h"
 #import "LGNTextBookListModel.h"
+
+#define MaxWith (kMain_Screen_Width-40)  / 3
+#define SingleWith 12
+
 @interface LGNNoteEditViewController ()
 /** 操作类 */
 @property (nonatomic, strong) LGNViewModel *viewModel;
@@ -28,9 +32,15 @@
 @property (nonatomic,strong) NSString * OldSubjectID;
 
 @property (nonatomic, strong) NOteDropDownMenuView *dropDownMenuView;
+@property (nonatomic,assign) CGFloat  dropDown1With;
+
 /* CFDropDownMenuView */
 @property (nonatomic, strong) NOteDropDownMenuView *dropDownMenuView2;
+@property (nonatomic,assign) CGFloat  dropDown2With;
+
 @property (nonatomic, strong) NOteDropDownMenuView *dropDownMenuView3;
+@property (nonatomic,assign) CGFloat  dropDown3With;
+
 
 @property (nonatomic,strong) NSString * SeletSubjectID;
 //章节目录数组
@@ -131,14 +141,11 @@
             
             NSMutableArray * subArr = [NSMutableArray arrayWithCapacity:10];
                     LGNTextBookListModel *subjectModel =[[LGNTextBookListModel alloc]init];
-                    subjectModel.TextbookName = @"第一单元";
-                    subjectModel.TextbookId = @"111";
+                    subjectModel.BookName = self.viewModel.paramModel.ResourceName;
+                    subjectModel.BookId = self.viewModel.paramModel.ResourceID;
 
                     [subArr addObject:subjectModel];
-                    LGNTextBookListModel *subjectModel1 =[[LGNTextBookListModel alloc]init];
-                              subjectModel1.TextbookName = @"第二单元";
-                              subjectModel1.TextbookId = @"123";
-                    [subArr addObject:subjectModel1];
+                  
                     self.sectionArray =subArr;
             
         }
@@ -150,6 +157,8 @@
             
         }else{
            [self setZJUZ];
+            
+            
         }
            
       
@@ -166,14 +175,11 @@
                 
                 NSMutableArray * subArr = [NSMutableArray arrayWithCapacity:10];
                         LGNTextBookListModel *subjectModel =[[LGNTextBookListModel alloc]init];
-                        subjectModel.TextbookName = @"资料1";
-                        subjectModel.TextbookId = @"1111";
+                        subjectModel.UnionName = self.viewModel.paramModel.MaterialName;
+                        subjectModel.UnionId =self.viewModel.paramModel.MaterialID;
 
                         [subArr addObject:subjectModel];
-                        LGNTextBookListModel *subjectModel1 =[[LGNTextBookListModel alloc]init];
-                                  subjectModel1.TextbookName = @"资料2";
-                                  subjectModel1.TextbookId = @"222";
-                        [subArr addObject:subjectModel1];
+                      
                          self.nodeArray =subArr;
                 
             }
@@ -226,6 +232,13 @@
     [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];
 }
 
+- (void)setTysubjectArray:(NSArray *)tysubjectArray {
+    
+    
+    _tysubjectArray = tysubjectArray;
+}
+
+
 - (void)createSubViews{
     [self addRightNavigationBar];
     [self addLeftNavigationBar];
@@ -241,39 +254,49 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
         
         //获取章节数据
         [self  getZJData];
-        
-       
-      
-        
-        
+ 
     }else{
         
-        if(IsArrEmpty(self.viewModel.subjectArray)){
-             NSMutableArray * subArr = [NSMutableArray arrayWithCapacity:10];
-            LGNSubjectModel *subjectModel =[[LGNSubjectModel alloc]init];
-            subjectModel.SubjectName = @"英语";
-            subjectModel.SubjectID = @"English";
-
-            [subArr addObject:subjectModel];
-            LGNSubjectModel *subjectModel1 =[[LGNSubjectModel alloc]init];
-                      subjectModel1.SubjectName = @"历史";
-                      subjectModel1.SubjectID = @"history";
-            [subArr addObject:subjectModel1];
-            self.viewModel.subjectArray =subArr;
-        }
+      
         
 //         LGNSubjectModel *subjectModel =
         NSMutableArray * subArr = [NSMutableArray arrayWithCapacity:10];
-        for(int i=0;i<self.viewModel.subjectArray.count;i++){
-            LGNSubjectModel *subjectModel = self.viewModel.subjectArray[i];
+        
+        NSString * titleName;
+        
+       // self.subjectArray =self.viewModel.paramModel.TYSubjectArray;
+        
+        self.subjectArray = self.tysubjectArray;
+        
+        
+  
+        
+        for(int i=0;i<self.subjectArray.count;i++){
+            LGNSubjectModel *subjectModel = self.subjectArray[i];
             
             [subArr addObject:subjectModel.SubjectName];
+            
+            if([subjectModel.SubjectID isEqualToString:self.viewModel.paramModel.SubjectID]){
+                titleName =subjectModel.SubjectName;
+                self.SeletSubjectID =subjectModel.SubjectID;
+            }
         }
   
+        if(IsStrEmpty(titleName)){
+             LGNSubjectModel *subjectModel = self.subjectArray[0];
+            titleName =subjectModel.SubjectName;
+            self.SeletSubjectID =subjectModel.SubjectID;
+
+        }
           
-       // if(self.viewModel.subjectArray)
+        
+            CGFloat  with = SingleWith *titleName.length+20;
+                 if(with > MaxWith){
+                     with =MaxWith;
+                 }
+       self.dropDown1With = with;
         //设置学科
-        NOteDropDownMenuView *dropDownMenuView = [[NOteDropDownMenuView alloc] initWithFrame:CGRectMake(20, 0, 60, 45)];
+        NOteDropDownMenuView *dropDownMenuView = [[NOteDropDownMenuView alloc] initWithFrame:CGRectMake(20, 0, with, 45)];
 
                     dropDownMenuView.dataSourceArr = @[
 
@@ -281,7 +304,7 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
 
                                                         ].mutableCopy;
 
-                    dropDownMenuView.defaulTitleArray = [NSArray arrayWithObjects:subArr[0], nil];
+                    dropDownMenuView.defaulTitleArray = [NSArray arrayWithObjects:titleName, nil];
 
 
            // 下拉列表 起始y
@@ -292,25 +315,76 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
         @strongify(self);
 
 //                通过选择学科  去获取章节
-                  for(int i=0;i<self.viewModel.subjectArray.count;i++){
-                             LGNSubjectModel *subjectModel = self.viewModel.subjectArray[i];
+                  for(int i=0;i<self.subjectArray.count;i++){
+                             LGNSubjectModel *subjectModel = self.subjectArray[i];
                              
                       if([subjectModel.SubjectName isEqualToString:currentTitle]){
                           self.SeletSubjectID =subjectModel.SubjectID;
-                          
+                          //self.viewModel.paramModel.SubjectID =subjectModel.SubjectID;
                          
                       }
                          }
                   
-                  //获取章节数据
-                  [self  getZJData];
+            CGFloat  with = SingleWith *currentTitle.length+20;
+                  if(with > MaxWith){
+                      with =MaxWith;
+                  }
+            
+            self.dropDown1With = with;
+                 self.dropDownMenuView.frame =CGRectMake(20, 0, with, 45);
+            for(int i=0;i<self.subjectArray.count;i++){
+                    LGNSubjectModel *subjectModel = self.subjectArray[i];
+                                                                       
+                    if([subjectModel.SubjectName isEqualToString:currentTitle]){
+                          
+                        if([currentTitle isEqualToString:@"全部"]){
+                            
+                            self.SeletSubjectID = @"";
+                             self.viewModel.paramModel.SubjectID =@"";
+                        }else{
+                            
+                            for(int i=0;i<self.subjectArray.count;i++){
+                                                  LGNSubjectModel *subjectModel = self.subjectArray[i];
+                                                      
+                                           if([subjectModel.SubjectName isEqualToString:currentTitle]){
+                                               
+                                               self.SeletSubjectID  = subjectModel.SubjectID;
+                                                
+                                           }
+                                             
+                                                  }
+                            
+                        }
+                        
+                     
+                        
+                    }
+                    }
+            
+            
+            
+            if([currentTitle isEqualToString:@"全部"]){
+                self.sectionID =@"";
+                self.nodeID =@"";
+                self.SeletSubjectID =@"";
+                [self.dropDownMenuView2 removeFromSuperview];
+                [self.dropDownMenuView3 removeFromSuperview];
+            }else{
+                //获取章节数据
+                [self  getZJData];
+            }
+            
+               
                   
                   
 
                     };
                [self.view addSubview:self.dropDownMenuView =dropDownMenuView];
-
-        
+      
+        if(![self.SeletSubjectID isEqualToString:@""] &&![self.SeletSubjectID isEqualToString:@"All"]){
+              [self  getZJData];
+        }
+//          [self  getZJData];
         
     }
     
@@ -342,13 +416,17 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
           for(int i=0;i<self.nodeArray.count;i++){
               LGNTextBookListModel *sectionModel = self.nodeArray[i];
               
-              [subArr addObject:sectionModel.TextbookName];
-              if([sectionModel.TextbookId isEqualToString:self.sourceModel.MaterialID]){
+              [subArr addObject:sectionModel.UnionName];
+              if([sectionModel.UnionId isEqualToString:self.sourceModel.MaterialID]){
                   
-                  titleName =sectionModel.TextbookName;
+                  titleName =sectionModel.UnionName;
               }
           }
       
+    if(IsStrEmpty(titleName)){
+         LGNTextBookListModel *sectionModel = self.nodeArray[0];
+        titleName = sectionModel.UnionName;
+    }
         
 
     NOteDropDownMenuView *dropDownMenuView2 = [[NOteDropDownMenuView alloc] initWithFrame:CGRectMake(105, 0, 150, 45)];
@@ -368,9 +446,9 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
                                    for(int i=0;i<self.nodeArray.count;i++){
                                               LGNTextBookListModel *subjectModel = self.nodeArray[i];
                                               
-                                       if([subjectModel.TextbookName isEqualToString:currentTitle]){
-                                           self.nodeID =subjectModel.TextbookId;
-                                           self.nodeName =subjectModel.TextbookName;
+                                       if([subjectModel.UnionName isEqualToString:currentTitle]){
+                                           self.nodeID =subjectModel.UnionId;
+                                           self.nodeName =subjectModel.UnionName;
                                           
                                        }
                                           }
@@ -386,17 +464,30 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
 - (void)setJDUI{
      [self.dropDownMenuView3 removeFromSuperview];
     
+    NSString * titleName;
     NSMutableArray * subArr = [NSMutableArray arrayWithCapacity:10];
           for(int i=0;i<self.nodeArray.count;i++){
               LGNTextBookListModel *sectionModel = self.nodeArray[i];
               
-              [subArr addObject:sectionModel.TextbookName];
+              [subArr addObject:sectionModel.UnionName];
+              if([sectionModel.UnionId isEqualToString:self.viewModel.paramModel.MaterialID]){
+                  titleName =sectionModel.UnionName;
+                  self.nodeID =sectionModel.UnionId;
+                  self.nodeName =sectionModel.UnionName;
+              }
           }
-    //默认选中第一个
-     LGNTextBookListModel *sectionModel = self.nodeArray[0];
-    self.nodeID =sectionModel.TextbookId;
-    self.nodeName = sectionModel.TextbookName;
-     NOteDropDownMenuView *dropDownMenuView3 = [[NOteDropDownMenuView alloc] initWithFrame:CGRectMake(185, 0, 150, 45)];
+    if(IsStrEmpty(titleName)){
+        //默认选中第一个
+            LGNTextBookListModel *sectionModel = self.nodeArray[0];
+           self.nodeID =sectionModel.UnionId;
+           self.nodeName = sectionModel.UnionName;
+    }
+        CGFloat  with = SingleWith *titleName.length+30;
+               if(with > MaxWith){
+                   with =MaxWith;
+               }
+        self.dropDown3With = with;
+     NOteDropDownMenuView *dropDownMenuView3 = [[NOteDropDownMenuView alloc] initWithFrame:CGRectMake(20+10+10+self.dropDown1With+self.dropDown2With, 0, with, 45)];
 
                        dropDownMenuView3.dataSourceArr = @[
 
@@ -404,18 +495,24 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
 
                                                            ].mutableCopy;
 
-                       dropDownMenuView3.defaulTitleArray = [NSArray arrayWithObjects:subArr[0], nil];
+                       dropDownMenuView3.defaulTitleArray = [NSArray arrayWithObjects:titleName, nil];
                  // 下拉列表 起始y
                      dropDownMenuView3.startY = CGRectGetMaxY(_dropDownMenuView.frame);
                  dropDownMenuView3.chooseConditionBlock = ^(NSString *currentTitle, NSArray *currentTitleArray){
-
+                     CGFloat  with = SingleWith *currentTitle.length+30;
+                                                   if(with > MaxWith){
+                                                       with =MaxWith;
+                                                   }
+                                                   self.dropDown3With = with;
+                                    self.dropDownMenuView3.frame =CGRectMake(20+10+10+self.dropDown1With+self.dropDown2With, 0, with, 45);
+                                   
     //                 通过章节  去获取节点详情
                                     for(int i=0;i<self.nodeArray.count;i++){
                                                LGNTextBookListModel *subjectModel = self.nodeArray[i];
                                                
-                                        if([subjectModel.TextbookName isEqualToString:currentTitle]){
-                                            self.nodeID =subjectModel.TextbookId;
-                                            self.nodeName = subjectModel.TextbookName;
+                                        if([subjectModel.UnionName isEqualToString:currentTitle]){
+                                            self.nodeID =subjectModel.UnionId;
+                                            self.nodeName = subjectModel.UnionName;
                                            
                                         }
                                            }
@@ -435,10 +532,10 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
         for(int i=0;i<self.sectionArray.count;i++){
             LGNTextBookListModel *sectionModel = self.sectionArray[i];
             
-            [subArr addObject:sectionModel.TextbookName];
-            if([sectionModel.TextbookId isEqualToString:self.sourceModel.ResourceID]){
+            [subArr addObject:sectionModel.BookName];
+            if([sectionModel.BookId isEqualToString:self.sourceModel.ResourceID]){
 //                aaaa
-                titleName =sectionModel.TextbookName;
+                titleName =sectionModel.BookName;
             }
         }
     
@@ -467,10 +564,10 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
     for(int i=0;i<self.sectionArray.count;i++){
         LGNTextBookListModel *subjectModel = self.sectionArray[i];
                                                            
-        if([subjectModel.TextbookName isEqualToString:currentTitle]){
-        self.sectionID =subjectModel.TextbookId;
+        if([subjectModel.BookName isEqualToString:currentTitle]){
+        self.sectionID =subjectModel.BookId;
                                                         
-            self.sectionName =subjectModel.TextbookName;
+            self.sectionName =subjectModel.BookName;
         }
         }
                                                 
@@ -489,19 +586,35 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
     
     [self.dropDownMenuView2 removeFromSuperview];
     [self.dropDownMenuView3 removeFromSuperview];
-    
+    NSString * titleName;
     NSMutableArray * subArr = [NSMutableArray arrayWithCapacity:10];
         for(int i=0;i<self.sectionArray.count;i++){
             LGNTextBookListModel *sectionModel = self.sectionArray[i];
             
-            [subArr addObject:sectionModel.TextbookName];
+            [subArr addObject:sectionModel.BookName];
+            
+            if([sectionModel.BookId isEqualToString:self.viewModel.paramModel.ResourceID]){
+                titleName =sectionModel.BookName;
+                self.sectionID =self.viewModel.paramModel.ResourceID;
+                self.sectionName =sectionModel.BookName;
+            }
         }
     
-    //默认选中第一个
-       LGNTextBookListModel *sectionModel = self.sectionArray[0];
-      self.sectionID =sectionModel.TextbookId;
-      self.sectionName =sectionModel.TextbookName;
-    NOteDropDownMenuView *dropDownMenuView2 = [[NOteDropDownMenuView alloc] initWithFrame:CGRectMake(85, 0, 100, 45)];
+    if(IsStrEmpty(titleName)){
+        LGNTextBookListModel *sectionModel = self.sectionArray[0];
+             self.sectionID =sectionModel.BookId;
+           self.sectionName = sectionModel.BookName;
+        titleName =sectionModel.BookName;
+    }
+
+  
+          CGFloat  with = SingleWith *titleName.length+30;
+                 if(with > MaxWith){
+                     with =MaxWith;
+                 }
+          self.dropDown2With = with;
+    
+    NOteDropDownMenuView *dropDownMenuView2 = [[NOteDropDownMenuView alloc] initWithFrame:CGRectMake(30+self.dropDown1With, 0, with, 45)];
 
                    dropDownMenuView2.dataSourceArr = @[
 
@@ -509,18 +622,26 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
 
                                                        ].mutableCopy;
 
-                   dropDownMenuView2.defaulTitleArray = [NSArray arrayWithObjects:subArr[0], nil];
+                   dropDownMenuView2.defaulTitleArray = [NSArray arrayWithObjects:titleName, nil];
              // 下拉列表 起始y
                  dropDownMenuView2.startY = CGRectGetMaxY(_dropDownMenuView.frame);
              dropDownMenuView2.chooseConditionBlock = ^(NSString *currentTitle, NSArray *currentTitleArray){
 
+                 CGFloat  with = SingleWith *currentTitle.length+30;
+                                                if(with > MaxWith){
+                                                    with =MaxWith;
+                                                }
+                                self.dropDown2With = with;
+                                 self.dropDownMenuView2.frame =CGRectMake(30+self.dropDown1With, 0, with, 45);
+                 
+                 
 //                 通过章节  去获取节点详情
                                 for(int i=0;i<self.sectionArray.count;i++){
                                            LGNTextBookListModel *subjectModel = self.sectionArray[i];
                                            
-                                    if([subjectModel.TextbookName isEqualToString:currentTitle]){
-                                        self.sectionID =subjectModel.TextbookId;
-                                        self.sectionName =subjectModel.TextbookName;
+                                    if([subjectModel.BookName isEqualToString:currentTitle]){
+                                        self.sectionID =subjectModel.BookId;
+                                        self.sectionName =subjectModel.BookName;
                                        
                                     }
                                        }
@@ -530,19 +651,26 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
 
                    };
           [self.view addSubview:self.dropDownMenuView2 =dropDownMenuView2];
-    
+    //获取章节数据
+   [self  getJDData];
 }
 
 //获取章节  显示数据
 - (void)getZJData{
     
-     NSDictionary *paramse =@{
-        @"schoolId":@"",
-        @"subjectId":@"",
-        @"gradeId":@"",
-        @"periodId":@"",
-  
-                                              };
+    NSDictionary *paramse ;
+      if(self.paramModel.MainTY ==1){
+         paramse =@{
+          @"subjectId":self.viewModel.paramModel.SubjectID,
+
+                                                };
+    }else{
+        paramse =@{
+                @"subjectId":self.SeletSubjectID,
+
+                                                      };
+    }
+    
      [self.viewModel.getTextbookListRateCommand execute:paramse];
 
    
@@ -558,9 +686,10 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
          self.sectionName =self.sourceModel.ResourceName;
         
     }
+   
       
            NSDictionary *paramse =@{
-            @"upId":self.sectionID,
+            @"bookId":self.sectionID,
      
      
                                                  };
@@ -748,13 +877,23 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
         if(!IsStrEmpty(self.sectionID)){
             self.sourceModel.ResourceID = self.sectionID;
             self.sourceModel.ResourceName = self.sectionName;
+            self.paramModel.ResourceID = self.sectionID;
+            self.paramModel.ResourceName = self.sectionName;
+
         }
         
         if(!IsStrEmpty(self.nodeID)){
        self.sourceModel.MaterialID = self.nodeID;
-              self.sourceModel.MaterialName = self.nodeName;
+        self.sourceModel.MaterialName = self.nodeName;
+        self.paramModel.MaterialID = self.nodeID;
+        self.paramModel.MaterialName = self.nodeName;
+        }
+        if(self.paramModel.MainTY ==0){
+            self.sourceModel.SubjectID = self.SeletSubjectID;
+            self.paramModel.SubjectID = self.SeletSubjectID;
 
         }
+
     }
 
     NSLog(@"%@---%@",self.sourceModel.ResourceName,self.nodeID);
