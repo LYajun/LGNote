@@ -39,42 +39,42 @@
 - (LGNParamModel *)configureParams{
     LGNParamModel *params = [[LGNParamModel alloc] init];
     
-    //S0-0129-CE46==2168943E-A8C0-4E46-890A-4746C3CC0E1A==bkstu152==2==黎清微==http://192.168.129.129:10103//===
-    
     params.SystemID = @"300";
-    params.SubjectID = @"S2-English";
-    params.C_SystemID = @"300";
-    params.PageSize = 10;
-    params.PageIndex = 1;
-    params.MaterialIndex = -1;
-    params.MaterialCount = 10;
-    params.SubjectName = @"英语";
-    params.IsKeyPoint = @"-1";
-    params.SchoolID = @"S27-511-AF57";
-    params.Token = @"380AF46A-911D-4D14-A5A1-A678081EA670";
+      params.SubjectID = @"";
+      params.C_SystemID =@"300";
+      params.SubjectName = @"";
+      params.PageSize = 10;
+      params.PageIndex = 1;
+      params.IsKeyPoint = @"-1";
+      params.MaterialIndex = -1;
+      params.ResourceID = @"";
+      params.ResourceName = @"";
+      params.MaterialName = @"";
+      params.ResourceIOSLink = @"";
+      params.ResourceAndroidLink = @"";
+      params.ResourcePCLink = @"";
+      params.MaterialTotal = @"-1";
+      params.MaterialCount = 10;
+      params.MainTY =0;
+      params.SystemType = SystemType_TYJX;
 
-    params.ResourceName = @"新的Book";
-    params.ResourceID = @"1";
-    params.MaterialName = @"第一单元";
-    params.MaterialID = @"9";
-    
-    params.TermID = @"2019-202002";
-    params.GradeID = @"3AA1F9C3-6E59-450E-959D-C00CA300D1A7";
-    
-    params.MaterialTotal = @"-1";
-    params.ResourceIOSLink = @"";
-    params.ResourcePCLink = @"";
-    params.ResourceAndroidLink=@"";
-    params.UserID = @"0000";
-    params.UserType = 2;
-    params.UserName = @"施工";
-    params.CPBaseUrl = @"http://192.168.129.1:30103//";
-    params.MainTY =1;
+      //根据实际的传
+      params.SchoolID =@"S27-511-AF57";
+      //根据实际的传
+      params.Token = @"4E1FD7C0-9DAA-4138-A5CA-48E14CF08234";
+      //根据实际的传
+      params.UserID =@"Stu079";
+      //根据实际的传
+      params.UserName = @"刘易";
+      params.UserType = 2;
+      //基础平台地址根据实际的传
+      params.CPBaseUrl = @"http://192.168.129.1:30103//";
 
-
-//http://192.168.129.130:10104/Web_FSCModule_Note/api/V2/Notes/OperateNote
-    
-    //params.NoteBaseUrl= @"http://192.168.129.8:10154/";
+      params.CPYPTUrl =@"http://192.168.129.1:10103/Web_LGCP_Rain/";
+      params.Token_md5= @"c889489b81f003530254d4a40e7d6f49";
+         params.TermID =  @"2019-202002";
+         params.GradeID = @"05B5B9FC-A0ED-4D2E-AEE1-2EE9A1FEBC6B";
+      
   
     params.SystemType = SystemType_TYJX;
     

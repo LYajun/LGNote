@@ -35,6 +35,8 @@ typedef NS_ENUM(NSInteger, SystemType) {
 @property (nonatomic, assign) SystemType SystemType;
 /** 基础平台地址 */
 @property (nonatomic, copy) NSString *CPBaseUrl;
+/** 雨平台地址 */
+@property (nonatomic, copy) NSString *CPYPTUrl;
 /** 笔记库的url ：各个系统在登录成功时获取，同获取各个系统url一样，笔记库SystemID为:S22 */
 @property (nonatomic, copy) NSString *NoteBaseUrl;
 /** 笔记ID */
@@ -57,6 +59,12 @@ typedef NS_ENUM(NSInteger, SystemType) {
 @property (nonatomic, copy) NSString *Secret;    // 传空
 /** token：必须要传 */
 @property (nonatomic, copy) NSString *Token;
+
+/** token：MD5加密后的acce */
+@property (nonatomic, copy) NSString *Token_md5;
+/** TeacherID  教师ID  用来获取教材列表 */
+@property (nonatomic, copy) NSString *TeacherID;
+
 /** 笔记来源 */
 @property (nonatomic, copy) NSString *ResourceName;
 /** 笔记来源ID */  //通用笔记: 章节ID

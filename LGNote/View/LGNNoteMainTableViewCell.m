@@ -90,10 +90,20 @@
 
     NSString * ResourceName =dataSource.ResourceName;
     NSString * MaterialName =dataSource.MaterialName;
+    
+    
+    if(!IsStrEmpty(dataSource.ResourceName) &&!IsStrEmpty(dataSource.MaterialName) ){
+        ResourceName = [NSString stringWithFormat:@"%@ | ",dataSource.ResourceName];
 
-                             
-           NSMutableAttributedString *att = [LGNNoteTools attributedStringByStrings:@[ResourceName,MaterialName] colors:@[kColorInitWithRGB(0, 153, 255, 1),kColorInitWithRGB(0, 153, 255, 1)] fonts:@[@(12),@(12)]];
-           self.sourceLabel.attributedText = att;
+    }
+//
+    self.sourceLabel.textColor =LGRGB(0, 153, 255);
+    self.sourceLabel.font = LGFontSize(12);
+    
+    self.sourceLabel.text = [NSString stringWithFormat:@"%@%@",ResourceName,MaterialName];
+//                             
+//           NSMutableAttributedString *att = [LGNNoteTools attributedStringByStrings:@[ResourceName,MaterialName] colors:@[kColorInitWithRGB(0, 153, 255, 1),kColorInitWithRGB(0, 153, 255, 1)] fonts:@[@(12),@(12)]];
+//           self.sourceLabel.attributedText = att;
            
        
        

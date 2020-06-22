@@ -47,12 +47,14 @@ typedef void (^ChooseBtnBlock)(NSString *);
 /* 分类内容 动画起始位置 */
 @property (nonatomic, assign) CGFloat startY;
 
+/* 分类内容宽 */
+@property (nonatomic, assign) CGFloat withM;
 /* 选中状态和未选中状态
  * 默认  选中状态:蓝色文字,蓝色箭头
  *      未选中状态:黑色文字,黑色箭头
- * 使用注意: 参数格式  
+ * 使用注意: 参数格式
  @{
-    @"selected" : @[[UIColor BlueColor], @"蓝箭头"],  // 选中状态  
+    @"selected" : @[[UIColor BlueColor], @"蓝箭头"],  // 选中状态
     @"normal" : @[[UIColor BlackColor], @"黑箭头"]  // 未选中状态
  };
  可以不传 / 也可以只传其中一对键值对 / 也可以都传 (key必须为@"selected"  @"normal")

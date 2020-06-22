@@ -73,7 +73,8 @@
         // 设置文字
         [(MJRefreshAutoNormalFooter *)self.mj_footer setTitle:@"上拉加载更多 ..." forState:MJRefreshStateIdle];
         [(MJRefreshAutoNormalFooter *)self.mj_footer setTitle:@"正在拼命加载 ..." forState:MJRefreshStateRefreshing];
-        [(MJRefreshAutoNormalFooter *)self.mj_footer setTitle:@"已全部加载" forState:MJRefreshStateNoMoreData];
+      //  [(MJRefreshAutoNormalFooter *)self.mj_footer setTitle:@"已全部加载" forState:MJRefreshStateNoMoreData];
+         [(MJRefreshAutoNormalFooter *)self.mj_footer setTitle:@"" forState:MJRefreshStateNoMoreData];
         // 设置字体
         ((MJRefreshAutoNormalFooter *)self.mj_footer).stateLabel.font = [UIFont systemFontOfSize:15];
         // 设置颜色

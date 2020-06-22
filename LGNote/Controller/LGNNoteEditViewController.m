@@ -1,3 +1,4 @@
+
 //
 //  NoteEditViewController.m
 //  NoteDemo
@@ -15,6 +16,9 @@
 #import "LGNTextBookListModel.h"
 
 #define MaxWith (kMain_Screen_Width-40)  / 3
+
+#define MaxWithTY (kMain_Screen_Width-40)  / 2
+
 #define SingleWith 12
 
 @interface LGNNoteEditViewController ()
@@ -43,6 +47,8 @@
 
 
 @property (nonatomic,strong) NSString * SeletSubjectID;
+@property (nonatomic,strong) NSString * SeletSubjectName;
+
 //章节目录数组
 @property (nonatomic, copy)   NSMutableArray *sectionArray;
 @property (nonatomic,strong) NSString * sectionID;
@@ -139,14 +145,19 @@
         
         if(IsArrEmpty( self.sectionArray)){
             
-            NSMutableArray * subArr = [NSMutableArray arrayWithCapacity:10];
-                    LGNTextBookListModel *subjectModel =[[LGNTextBookListModel alloc]init];
-                    subjectModel.BookName = self.viewModel.paramModel.ResourceName;
-                    subjectModel.BookId = self.viewModel.paramModel.ResourceID;
+            if(self.paramModel.MainTY ==1){
+                
+                NSMutableArray * subArr = [NSMutableArray arrayWithCapacity:10];
+                                  LGNTextBookListModel *subjectModel =[[LGNTextBookListModel alloc]init];
+                                  subjectModel.UnionName = self.viewModel.paramModel.ResourceName;
+                                  subjectModel.UnionId = self.viewModel.paramModel.ResourceID;
 
-                    [subArr addObject:subjectModel];
-                  
-                    self.sectionArray =subArr;
+                                  [subArr addObject:subjectModel];
+                                
+                                  self.sectionArray =subArr;
+            }
+            
+          
             
         }
 //        设置UI
@@ -173,14 +184,18 @@
             
             if(IsArrEmpty( self.nodeArray)){
                 
-                NSMutableArray * subArr = [NSMutableArray arrayWithCapacity:10];
-                        LGNTextBookListModel *subjectModel =[[LGNTextBookListModel alloc]init];
-                        subjectModel.UnionName = self.viewModel.paramModel.MaterialName;
-                        subjectModel.UnionId =self.viewModel.paramModel.MaterialID;
+                if(self.paramModel.MainTY ==1){
+                    NSMutableArray * subArr = [NSMutableArray arrayWithCapacity:10];
+                                           LGNTextBookListModel *subjectModel =[[LGNTextBookListModel alloc]init];
+                                           subjectModel.UnionName = self.viewModel.paramModel.MaterialName;
+                                           subjectModel.UnionId =self.viewModel.paramModel.MaterialID;
 
-                        [subArr addObject:subjectModel];
-                      
-                         self.nodeArray =subArr;
+                                           [subArr addObject:subjectModel];
+                                         
+                                            self.nodeArray =subArr;
+                }
+                
+               
                 
             }
     //        设置UI
@@ -195,7 +210,19 @@
                }
           
               }];
+
+
+            [self.viewModel.getCourseClassInfoRateSubject subscribeNext:^(id  _Nullable x) {
+                      @strongify(self);
+                      
+                      
+                      self.viewModel.paramModel.TeacherID = x;
+                     
+                   [self  getZJData];
     
+              
+                  }];
+
 }
 
 - (void)commonInit{
@@ -205,14 +232,20 @@
 - (void)editNoteWithDataSource:(LGNNoteModel *)dataSource{
     self.sourceModel = dataSource;
     
+    NSLog(@"%@",dataSource.ResourceName);
+    
     
     self.sourceModel.UserID = self.paramModel.UserID;
     //self.sourceModel.SystemID = self.paramModel.SystemID;
     self.sourceModel.UserName = self.paramModel.UserName;
     self.sourceModel.SchoolID = self.paramModel.SchoolID;
     
-
     
+
+    if(self.paramModel.SystemType ==SystemType_TYJX){
+        
+        
+    }
     
 }
 
@@ -259,14 +292,12 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
         
       
         
-//         LGNSubjectModel *subjectModel =
         NSMutableArray * subArr = [NSMutableArray arrayWithCapacity:10];
         
         NSString * titleName;
-        
-       // self.subjectArray =self.viewModel.paramModel.TYSubjectArray;
-        
+                
         self.subjectArray = self.tysubjectArray;
+        
         
         
   
@@ -275,17 +306,31 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
             LGNSubjectModel *subjectModel = self.subjectArray[i];
             
             [subArr addObject:subjectModel.SubjectName];
-            
-            if([subjectModel.SubjectID isEqualToString:self.viewModel.paramModel.SubjectID]){
-                titleName =subjectModel.SubjectName;
-                self.SeletSubjectID =subjectModel.SubjectID;
+            if (self.isNewNote) {
+                if([subjectModel.SubjectID isEqualToString:self.viewModel.paramModel.SubjectID]){
+                               titleName =subjectModel.SubjectName;
+                               self.SeletSubjectID =subjectModel.SubjectID;
+                    self.SeletSubjectName = subjectModel.SubjectName;
+                           }
+            }else{
+                if([subjectModel.SubjectID isEqualToString:self.sourceModel.SubjectID]){
+                               titleName =subjectModel.SubjectName;
+                               self.SeletSubjectID =subjectModel.SubjectID;
+                    self.SeletSubjectName = subjectModel.SubjectName;
+
+                           }
             }
+            
+           
         }
+        
+        
   
         if(IsStrEmpty(titleName)){
              LGNSubjectModel *subjectModel = self.subjectArray[0];
             titleName =subjectModel.SubjectName;
             self.SeletSubjectID =subjectModel.SubjectID;
+            self.SeletSubjectName = subjectModel.SubjectName;
 
         }
           
@@ -320,7 +365,8 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
                              
                       if([subjectModel.SubjectName isEqualToString:currentTitle]){
                           self.SeletSubjectID =subjectModel.SubjectID;
-                          //self.viewModel.paramModel.SubjectID =subjectModel.SubjectID;
+                          self.SeletSubjectName = subjectModel.SubjectName;
+
                          
                       }
                          }
@@ -341,6 +387,8 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
                             
                             self.SeletSubjectID = @"";
                              self.viewModel.paramModel.SubjectID =@"";
+                            self.SeletSubjectName = @"";
+
                         }else{
                             
                             for(int i=0;i<self.subjectArray.count;i++){
@@ -349,7 +397,8 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
                                            if([subjectModel.SubjectName isEqualToString:currentTitle]){
                                                
                                                self.SeletSubjectID  = subjectModel.SubjectID;
-                                                
+                                                self.SeletSubjectName = subjectModel.SubjectName;
+
                                            }
                                              
                                                   }
@@ -367,11 +416,18 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
                 self.sectionID =@"";
                 self.nodeID =@"";
                 self.SeletSubjectID =@"";
+                self.SeletSubjectName =@"";
+
                 [self.dropDownMenuView2 removeFromSuperview];
                 [self.dropDownMenuView3 removeFromSuperview];
             }else{
+                
+                
+                //先获取筛选教师ID
+                           
+            [self  getCourseClassInfo];
                 //获取章节数据
-                [self  getZJData];
+//                [self  getZJData];
             }
             
                
@@ -382,7 +438,11 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
                [self.view addSubview:self.dropDownMenuView =dropDownMenuView];
       
         if(![self.SeletSubjectID isEqualToString:@""] &&![self.SeletSubjectID isEqualToString:@"All"]){
-              [self  getZJData];
+            
+            //先获取筛选教师ID
+                                     
+        [self  getCourseClassInfo];
+//              [self  getZJData];
         }
 //          [self  getZJData];
         
@@ -406,11 +466,28 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
    
 }
 
+//获取教学班信息 筛选教师ID  然后通过ID获取教材列表
+
+- (void)getCourseClassInfo{
+    
+         NSDictionary *paramse =@{
+            @"appid":@"300",
+            @"userID":self.viewModel.paramModel.UserID,
+            @"access_token":self.viewModel.paramModel.Token_md5,
+    
+                                                  };
+    
+    self.viewModel.paramModel.SubjectID = self.SeletSubjectID;
+    self.viewModel.paramModel.SubjectName = self.SeletSubjectName;
+    [self.viewModel.getCourseClassInfoRateCommand execute:paramse];
+    
+}
 
 //设置通用教学的数据
 - (void)setJDUITY{
     
     [self.dropDownMenuView2 removeFromSuperview];
+    
     NSMutableArray * subArr = [NSMutableArray arrayWithCapacity:10];
     NSString * titleName;
           for(int i=0;i<self.nodeArray.count;i++){
@@ -420,17 +497,28 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
               if([sectionModel.UnionId isEqualToString:self.sourceModel.MaterialID]){
                   
                   titleName =sectionModel.UnionName;
+                  self.nodeID =sectionModel.UnionId;
+                self.nodeName =sectionModel.UnionName;
               }
           }
       
     if(IsStrEmpty(titleName)){
          LGNTextBookListModel *sectionModel = self.nodeArray[0];
         titleName = sectionModel.UnionName;
+        self.nodeID =sectionModel.UnionId;
+               self.nodeName =sectionModel.UnionName;
     }
+    
+    CGFloat  with = SingleWith *titleName.length+30;
+              if(with > MaxWithTY){
+                  with =MaxWithTY;
+              }
         
+    self.dropDown2With = with;
 
-    NOteDropDownMenuView *dropDownMenuView2 = [[NOteDropDownMenuView alloc] initWithFrame:CGRectMake(105, 0, 150, 45)];
+    NOteDropDownMenuView *dropDownMenuView2 = [[NOteDropDownMenuView alloc] initWithFrame:CGRectMake(20+self.dropDown1With+10, 0, with, 45)];
 
+    dropDownMenuView2.withM =with-20;
                       dropDownMenuView2.dataSourceArr = @[
 
                                                            subArr,
@@ -441,7 +529,16 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
                 // 下拉列表 起始y
                     dropDownMenuView2.startY = CGRectGetMaxY(_dropDownMenuView.frame);
                 dropDownMenuView2.chooseConditionBlock = ^(NSString *currentTitle, NSArray *currentTitleArray){
+                    
+                    CGFloat  with = SingleWith *currentTitle.length+30;
+                                 if(with > MaxWithTY){
+                                     with =MaxWithTY;
+                                 }
+                          self.dropDownMenuView2.withM =with-20;
 
+                       self.dropDown2With = with;
+
+                    self.dropDownMenuView2.frame =CGRectMake(20+self.dropDown1With+10, 0, with, 45);
    //                 通过章节  去获取节点详情
                                    for(int i=0;i<self.nodeArray.count;i++){
                                               LGNTextBookListModel *subjectModel = self.nodeArray[i];
@@ -456,13 +553,26 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
                                   
 
                       };
+   
              [self.view addSubview:self.dropDownMenuView2 =dropDownMenuView2];
-    
+    if(IsArrEmpty(self.nodeArray)){
+                [self.dropDownMenuView2 removeFromSuperview];
+             self.nodeID = @"";
+               
+           }
+       
 }
 
 //设置节点数据
 - (void)setJDUI{
      [self.dropDownMenuView3 removeFromSuperview];
+    
+    if(IsArrEmpty(self.nodeArray)){
+            self.nodeID =@"";
+          self.nodeName =@"";
+                
+           return;
+        }
     
     NSString * titleName;
     NSMutableArray * subArr = [NSMutableArray arrayWithCapacity:10];
@@ -470,17 +580,33 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
               LGNTextBookListModel *sectionModel = self.nodeArray[i];
               
               [subArr addObject:sectionModel.UnionName];
-              if([sectionModel.UnionId isEqualToString:self.viewModel.paramModel.MaterialID]){
-                  titleName =sectionModel.UnionName;
-                  self.nodeID =sectionModel.UnionId;
-                  self.nodeName =sectionModel.UnionName;
+              
+              if(self.isNewNote){
+                  if([sectionModel.UnionId isEqualToString:self.viewModel.paramModel.MaterialID]){
+                                   titleName =sectionModel.UnionName;
+                                   self.nodeID =sectionModel.UnionId;
+                                   self.nodeName =sectionModel.UnionName;
+                               }
+              }else{
+                  
+                  if([sectionModel.UnionId isEqualToString:self.sourceModel.MaterialID]){
+                                   titleName =sectionModel.UnionName;
+                                   self.nodeID =sectionModel.UnionId;
+                                   self.nodeName =sectionModel.UnionName;
+                               }
               }
+              
+             
           }
+    
+    
     if(IsStrEmpty(titleName)){
         //默认选中第一个
             LGNTextBookListModel *sectionModel = self.nodeArray[0];
            self.nodeID =sectionModel.UnionId;
            self.nodeName = sectionModel.UnionName;
+        titleName =sectionModel.UnionName;
+        
     }
         CGFloat  with = SingleWith *titleName.length+30;
                if(with > MaxWith){
@@ -526,22 +652,42 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
 //设置章节数据 - 通用教学
 - (void)setZJUZTY{
     
+    [self.dropDownMenuView removeFromSuperview];
+     [self.dropDownMenuView2 removeFromSuperview];
+    
+    NSLog(@"==%@==",self.sourceModel.ResourceName);
+    
     
     NSMutableArray * subArr = [NSMutableArray arrayWithCapacity:10];
     NSString * titleName;
         for(int i=0;i<self.sectionArray.count;i++){
             LGNTextBookListModel *sectionModel = self.sectionArray[i];
             
-            [subArr addObject:sectionModel.BookName];
-            if([sectionModel.BookId isEqualToString:self.sourceModel.ResourceID]){
+            [subArr addObject:sectionModel.UnionName];
+            if([sectionModel.UnionId isEqualToString:self.sourceModel.ResourceID]){
 //                aaaa
-                titleName =sectionModel.BookName;
+                titleName =sectionModel.UnionName;
+                self.sectionID =sectionModel.UnionId;
+                self.sectionName = sectionModel.UnionName;
             }
         }
     
+    if(IsStrEmpty(titleName)){
+        
+        titleName =self.sourceModel.ResourceName;
+        self.sectionID =self.sourceModel.ResourceID;
+        self.sectionName =self.sourceModel.ResourceName;
+    }
+    
+    CGFloat  with = SingleWith *titleName.length+30;
+              if(with > MaxWithTY){
+                  with =MaxWithTY;
+              }
 
-    NOteDropDownMenuView *dropDownMenuView = [[NOteDropDownMenuView alloc] initWithFrame:CGRectMake(20, 0, 80, 45)];
-
+    self.dropDown1With = with;
+    
+    NOteDropDownMenuView *dropDownMenuView = [[NOteDropDownMenuView alloc] initWithFrame:CGRectMake(20, 0, with, 45)];
+    dropDownMenuView.withM = with-20;
                         dropDownMenuView.dataSourceArr = @[
 
                                                              subArr,
@@ -559,15 +705,25 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
 
             dropDownMenuView.chooseConditionBlock = ^(NSString *currentTitle, NSArray *currentTitleArray){
             @strongify(self);
+                
+                CGFloat  with = SingleWith *currentTitle.length+30;
+                             if(with > MaxWithTY){
+                                 with =MaxWithTY;
+                             }
+
+                   self.dropDown1With = with;
+                
+                self.dropDownMenuView.withM = with-20;
+                
+                self.dropDownMenuView.frame =CGRectMake(20, 0, with, 45);
 
                 //                 通过章节  去获取节点详情
     for(int i=0;i<self.sectionArray.count;i++){
         LGNTextBookListModel *subjectModel = self.sectionArray[i];
                                                            
-        if([subjectModel.BookName isEqualToString:currentTitle]){
-        self.sectionID =subjectModel.BookId;
-                                                        
-            self.sectionName =subjectModel.BookName;
+        if([subjectModel.UnionName isEqualToString:currentTitle]){
+        self.sectionID =subjectModel.UnionId;
+            self.sectionName =subjectModel.UnionName;
         }
         }
                                                 
@@ -586,25 +742,46 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
     
     [self.dropDownMenuView2 removeFromSuperview];
     [self.dropDownMenuView3 removeFromSuperview];
+    if(IsArrEmpty(self.sectionArray)){
+            
+    //        数据为空
+            self.sectionID =@"";
+            self.sectionName =@"";
+        self.nodeName =@"";
+        self.nodeID =@"";
+            return;
+        }
+    
     NSString * titleName;
     NSMutableArray * subArr = [NSMutableArray arrayWithCapacity:10];
         for(int i=0;i<self.sectionArray.count;i++){
             LGNTextBookListModel *sectionModel = self.sectionArray[i];
             
-            [subArr addObject:sectionModel.BookName];
+            [subArr addObject:sectionModel.UnionName];
             
-            if([sectionModel.BookId isEqualToString:self.viewModel.paramModel.ResourceID]){
-                titleName =sectionModel.BookName;
-                self.sectionID =self.viewModel.paramModel.ResourceID;
-                self.sectionName =sectionModel.BookName;
+            if(self.isNewNote){
+                if([sectionModel.UnionId isEqualToString:self.viewModel.paramModel.ResourceID]){
+                               titleName =sectionModel.UnionName;
+                               self.sectionID =self.viewModel.paramModel.ResourceID;
+                               self.sectionName =sectionModel.UnionName;
+                           }
+            }else{
+                
+                if([sectionModel.UnionId isEqualToString:self.sourceModel.ResourceID]){
+                               titleName =sectionModel.UnionName;
+                               self.sectionID =self.sourceModel.ResourceID;
+                               self.sectionName =sectionModel.UnionName;
+                           }
             }
+            
+           
         }
     
     if(IsStrEmpty(titleName)){
         LGNTextBookListModel *sectionModel = self.sectionArray[0];
-             self.sectionID =sectionModel.BookId;
-           self.sectionName = sectionModel.BookName;
-        titleName =sectionModel.BookName;
+             self.sectionID =sectionModel.UnionId;
+           self.sectionName = sectionModel.UnionName;
+        titleName =sectionModel.UnionName;
     }
 
   
@@ -624,7 +801,7 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
 
                    dropDownMenuView2.defaulTitleArray = [NSArray arrayWithObjects:titleName, nil];
              // 下拉列表 起始y
-                 dropDownMenuView2.startY = CGRectGetMaxY(_dropDownMenuView.frame);
+            dropDownMenuView2.startY = CGRectGetMaxY(_dropDownMenuView.frame);
              dropDownMenuView2.chooseConditionBlock = ^(NSString *currentTitle, NSArray *currentTitleArray){
 
                  CGFloat  with = SingleWith *currentTitle.length+30;
@@ -639,9 +816,9 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
                                 for(int i=0;i<self.sectionArray.count;i++){
                                            LGNTextBookListModel *subjectModel = self.sectionArray[i];
                                            
-                                    if([subjectModel.BookName isEqualToString:currentTitle]){
-                                        self.sectionID =subjectModel.BookId;
-                                        self.sectionName =subjectModel.BookName;
+                                    if([subjectModel.UnionName isEqualToString:currentTitle]){
+                                        self.sectionID =subjectModel.UnionId;
+                                        self.sectionName =subjectModel.UnionName;
                                        
                                     }
                                        }
@@ -660,15 +837,34 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
     
     NSDictionary *paramse ;
       if(self.paramModel.MainTY ==1){
-         paramse =@{
-          @"subjectId":self.viewModel.paramModel.SubjectID,
+     
+          NSInteger length =self.viewModel.paramModel.TermID.length-1;
+             NSString * termId = [self.viewModel.paramModel.TermID substringFromIndex:length];
+             
+              paramse =@{
+                 @"subjectId":self.viewModel.paramModel.SubjectID,
+                 @"gradeId":self.viewModel.paramModel.GradeID,
+                 @"termId":termId,
+                 @"teacherId":self.viewModel.paramModel.TeacherID,
+            
 
-                                                };
+                                                       };
+          
     }else{
-        paramse =@{
-                @"subjectId":self.SeletSubjectID,
+       
+        
+        NSInteger length =self.viewModel.paramModel.TermID.length-1;
+                   NSString * termId = [self.viewModel.paramModel.TermID substringFromIndex:length];
+                   
+                    paramse =@{
+                       @"subjectId":Note_HandleParams(self.SeletSubjectID),
+                       @"gradeId":Note_HandleParams(self.viewModel.paramModel.GradeID),
+                       @"termId":Note_HandleParams(termId),
+                       @"teacherId":Note_HandleParams(self.viewModel.paramModel.TeacherID),
+                  
 
-                                                      };
+                                                             };
+                
     }
     
      [self.viewModel.getTextbookListRateCommand execute:paramse];
@@ -680,25 +876,27 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
 //获取节点 数据
 - (void)getJDData{
     
-    if(IsStrEmpty(self.sectionID)){
-        
-        self.sectionID = self.sourceModel.ResourceID;
-         self.sectionName =self.sourceModel.ResourceName;
-        
-    }
-   
-      
-           NSDictionary *paramse =@{
-            @"bookId":self.sectionID,
-     
-     
-                                                 };
-     
-     
-     
-         [self.viewModel.getNodeInfoRateCommand execute:paramse];
+   self.nodeArray =[NSMutableArray arrayWithCapacity:10];
+    
+      for(int i=0;i<self.sectionArray.count;i++){
+          
+          LGNTextBookListModel *sectionModel = self.sectionArray[i];
+          
+          if([sectionModel.UnionId isEqualToString:self.sectionID]){
+              self.nodeArray =sectionModel.chapters;
+              
+          }
 
+          
+      }
    
+    if(self.paramModel.MainTY ==1){
+                          //学习推荐的
+                    [self setJDUITY];
+                          
+                      }else{
+                        [self setJDUI];
+                      }
     
 }
 
@@ -889,8 +1087,28 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
         self.paramModel.MaterialName = self.nodeName;
         }
         if(self.paramModel.MainTY ==0){
+            
+            NSLog(@"%@===%@==%@==%@==%@",self.sectionID,self.sectionName,self.nodeName,self.nodeID,self.SeletSubjectID);
+            if( IsStrEmpty(self.sectionID)){
+                self.sectionID =@"";
+                 self.sectionName =@"";
+            }
+            if( IsStrEmpty(self.nodeID)){
+                self.nodeID =@"";
+                self.nodeName =@"";
+            }
+            self.sourceModel.SystemID = @"300";
             self.sourceModel.SubjectID = self.SeletSubjectID;
-            self.paramModel.SubjectID = self.SeletSubjectID;
+            self.sourceModel.SubjectName = self.SeletSubjectName;
+          self.sourceModel.MaterialID = self.nodeID;
+         self.sourceModel.MaterialName = self.nodeName;
+        self.paramModel.MaterialID = self.nodeID;
+        self.paramModel.MaterialName = self.nodeName;
+            
+            self.sourceModel.ResourceID = self.sectionID;
+            self.sourceModel.ResourceName = self.sectionName;
+            self.paramModel.ResourceID = self.sectionID;
+            self.paramModel.ResourceName = self.sectionName;
 
         }
 
@@ -1017,3 +1235,4 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
 }
 
 @end
+
