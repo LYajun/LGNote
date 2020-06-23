@@ -64,6 +64,8 @@ HPTextViewTapGestureRecognizerDelegate
 @property (nonatomic,assign) BOOL  isNeed;
 //时时编辑的数据图片
 @property (nonatomic, copy) NSArray *NowimgaeUrls;
+
+@property (nonatomic,strong) UILabel * subtileLabel;
 @end
 
 @implementation LGNNoteEditView
@@ -100,6 +102,7 @@ HPTextViewTapGestureRecognizerDelegate
     return self;
 }
 
+
 - (void)registNotifications{
     
     _isNeed = YES;
@@ -135,7 +138,16 @@ HPTextViewTapGestureRecognizerDelegate
         [self addSubview:self.contentTextView];
         [self setupSubviewsContraintsTXJX];
 
-    }else{
+    }else if (_style == NoteEditViewHeaderStyleInfoContenTYJX){
+        
+        
+         [self addSubview:self.titleTextF];
+        [self addSubview:self.remarkBtn];
+        [self addSubview:self.subtileLabel];
+        [self addSubview:self.contentTextView];
+              [self setupSubviewsContraintsTXJXLookInfo];
+    }
+    else{
         switch (_style) {
                case NoteEditViewHeaderStyleNoHidden:
                case NoteEditViewHeaderStyleNoHiddenCanTouch:
@@ -272,6 +284,41 @@ HPTextViewTapGestureRecognizerDelegate
         
     }];
 }
+//通用教学查看笔记
+- (void)setupSubviewsContraintsTXJXLookInfo{
+    
+    CGFloat offsetX = 15.f;
+    
+    
+    
+    [self.titleTextF mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.top.equalTo(self).offset(offsetX);
+          make.left.equalTo(self).offset(offsetX);
+          make.right.equalTo(self).offset(-41);
+           make.height.mas_equalTo(35);
+                }];
+    
+    [self.remarkBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.centerY.equalTo(self.titleTextF);
+          make.right.equalTo(self).offset(-offsetX);
+          make.size.mas_equalTo(CGSizeMake(16, 16));
+      }];
+    
+    [self.subtileLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.top.equalTo(self.titleTextF.mas_bottom).offset(10);
+           make.left.equalTo(self).offset(offsetX);
+           make.height.mas_equalTo(20);
+           make.right.equalTo(self).offset(-offsetX);
+
+                    }];
+    
+      [self.contentTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+          make.top.equalTo(self.subtileLabel.mas_bottom).offset(30);
+          make.centerX.bottom.equalTo(self);
+          make.left.equalTo(self.titleTextF).offset(-5);
+          
+      }];
+}
 
 //通用教学
 - (void)setupSubviewsContraintsTXJX{
@@ -338,6 +385,31 @@ HPTextViewTapGestureRecognizerDelegate
 }
 
 #pragma mark - API
+//通用教学查看笔记
+
+- (void)bindViewModelLook:(LGNViewModel *)viewModel{
+    
+    self.viewModel = viewModel;
+    self.titleTextF.text = viewModel.dataSourceModel.NoteTitle;
+    self.contentTextView.attributedText = viewModel.dataSourceModel.NoteContent_Att;
+    self.viewModel.dataSourceModel.imageAllCont =self.viewModel.dataSourceModel.imgaeUrls.count;
+
+    
+    self.remarkBtn.selected = [viewModel.dataSourceModel.IsKeyPoint isEqualToString:@"1"] ? YES:NO;
+    
+    self.remarkBtn.hidden = [viewModel.dataSourceModel.IsKeyPoint isEqualToString:@"1"] ? NO:YES;
+
+    
+    
+    if(IsStrEmpty(viewModel.dataSourceModel.MaterialName)){
+          self.subtileLabel.text = [NSString stringWithFormat:@"%@  %@%@",viewModel.dataSourceModel.SubjectName,viewModel.dataSourceModel.ResourceName,viewModel.dataSourceModel.MaterialName];
+    }else{
+       self.subtileLabel.text = [NSString stringWithFormat:@"%@  %@ > %@",viewModel.dataSourceModel.SubjectName,viewModel.dataSourceModel.ResourceName,viewModel.dataSourceModel.MaterialName];
+    }
+    
+  
+}
+
 - (void)bindViewModel:(LGNViewModel *)viewModel{
     self.viewModel = viewModel;
     self.titleTextF.text = viewModel.dataSourceModel.NoteTitle;
@@ -486,6 +558,8 @@ else{
     
     return NO;
 }
+
+
 
 - (NSArray *)configureUrls:(NSString*)urlStr{
     
@@ -1062,6 +1136,19 @@ else{
     }
     
     return _remarkTipsLabel;
+}
+
+- (UILabel *)subtileLabel{
+    
+    if(!_subtileLabel){
+        
+        _subtileLabel = [[UILabel alloc]init];
+        _subtileLabel.font = [UIFont systemFontOfSize:12.0f];
+        _subtileLabel.textColor = LGRGB(101, 101, 101);
+        
+    }
+    
+    return _subtileLabel;
 }
 
 //[self addSubview:self.remarkTipsLabel];

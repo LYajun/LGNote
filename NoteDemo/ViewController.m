@@ -61,7 +61,7 @@
       //根据实际的传
       params.SchoolID =@"S27-511-AF57";
       //根据实际的传
-      params.Token = @"4E1FD7C0-9DAA-4138-A5CA-48E14CF08234";
+      params.Token = @"E6BA4951-CCE0-49E2-BEAE-64B19D999A03";
       //根据实际的传
       params.UserID =@"Stu079";
       //根据实际的传

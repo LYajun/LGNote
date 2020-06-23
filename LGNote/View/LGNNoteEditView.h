@@ -21,7 +21,8 @@ typedef NS_ENUM(NSInteger, NoteEditViewHeaderStyle) {
     NoteEditViewHeaderStyleHideSource,        // 隐藏来源选项
     NoteEditViewHeaderStyleHideSubject,       // 隐藏学科选项
     NoteEditViewHeaderStyleHideAll,            // 隐藏全部
-    NoteEditViewHeaderStyleTYJX            // 通用版教学
+    NoteEditViewHeaderStyleTYJX,            // 通用版教学
+    NoteEditViewHeaderStyleInfoContenTYJX            // 通用版教学查看笔记
 
 };
 
@@ -41,6 +42,9 @@ typedef NS_ENUM(NSInteger, NoteEditViewHeaderStyle) {
               headerViewStyle:(NoteEditViewHeaderStyle)style;
 
 - (void)bindViewModel:(LGNViewModel *)viewModel;
+//通用教学查看笔记
+- (void)bindViewModelLook:(LGNViewModel *)viewModel;
+
 
 @property (nonatomic, strong) LGNoteBaseTextView *contentTextView;
 @property (nonatomic, strong) LGNoteBaseTextField *titleTextF;

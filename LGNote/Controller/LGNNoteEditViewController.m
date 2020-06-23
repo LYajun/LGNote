@@ -27,6 +27,8 @@
 /** model类 */
 @property (nonatomic, strong) LGNNoteModel *sourceModel;
 @property (nonatomic, strong) LGNNoteEditView *contentView;
+@property (nonatomic, strong) LGNNoteEditView *LookcontentView;
+
 @property (nonatomic,strong) NSString * NotoContent;
 @property (nonatomic,strong) NSString * NotoTitle;
 @property (nonatomic,strong) NSString * IsKeyPoint;
@@ -275,195 +277,219 @@
 - (void)createSubViews{
     [self addRightNavigationBar];
     [self addLeftNavigationBar];
-    [self.view addSubview:self.contentView];
     
 if(self.paramModel.SystemType ==SystemType_TYJX){
     
-    if(self.paramModel.MainTY ==1){
+//    LookcontentView
+       
+    if(_isNewNote){
         
-        //获取章节/节点
+        //新建笔记
         
-        NSLog(@"%@==%@==%@",self.paramModel.SubjectID,self.paramModel.ResourceID,self.paramModel.MaterialID);
+        [self  editNOte];
         
-        //获取章节数据
-        [self  getZJData];
- 
     }else{
-        
-      
-        
-        NSMutableArray * subArr = [NSMutableArray arrayWithCapacity:10];
-        
-        NSString * titleName;
-                
-        self.subjectArray = self.tysubjectArray;
-        
-        
-        
-  
-        
-        for(int i=0;i<self.subjectArray.count;i++){
-            LGNSubjectModel *subjectModel = self.subjectArray[i];
-            
-            [subArr addObject:subjectModel.SubjectName];
-            if (self.isNewNote) {
-                if([subjectModel.SubjectID isEqualToString:self.viewModel.paramModel.SubjectID]){
-                               titleName =subjectModel.SubjectName;
-                               self.SeletSubjectID =subjectModel.SubjectID;
-                    self.SeletSubjectName = subjectModel.SubjectName;
-                           }
-            }else{
-                if([subjectModel.SubjectID isEqualToString:self.sourceModel.SubjectID]){
-                               titleName =subjectModel.SubjectName;
-                               self.SeletSubjectID =subjectModel.SubjectID;
-                    self.SeletSubjectName = subjectModel.SubjectName;
+        //查看笔记
+           [self.view addSubview:self.LookcontentView];
 
-                           }
-            }
-            
-           
-        }
-        
-        
-  
-        if(IsStrEmpty(titleName)){
-             LGNSubjectModel *subjectModel = self.subjectArray[0];
-            titleName =subjectModel.SubjectName;
-            self.SeletSubjectID =subjectModel.SubjectID;
-            self.SeletSubjectName = subjectModel.SubjectName;
-
-        }
-          
-        
-            CGFloat  with = SingleWith *titleName.length+20;
-                 if(with > MaxWith){
-                     with =MaxWith;
-                 }
-       self.dropDown1With = with;
-        //设置学科
-        NOteDropDownMenuView *dropDownMenuView = [[NOteDropDownMenuView alloc] initWithFrame:CGRectMake(20, 0, with, 45)];
-
-                    dropDownMenuView.dataSourceArr = @[
-
-                                                         subArr,
-
-                                                        ].mutableCopy;
-
-                    dropDownMenuView.defaulTitleArray = [NSArray arrayWithObjects:titleName, nil];
-
-
-           // 下拉列表 起始y
-                  dropDownMenuView.startY = CGRectGetMaxY(dropDownMenuView.frame);
-        @weakify(self);
-
-        dropDownMenuView.chooseConditionBlock = ^(NSString *currentTitle, NSArray *currentTitleArray){
-        @strongify(self);
-
-//                通过选择学科  去获取章节
-                  for(int i=0;i<self.subjectArray.count;i++){
-                             LGNSubjectModel *subjectModel = self.subjectArray[i];
-                             
-                      if([subjectModel.SubjectName isEqualToString:currentTitle]){
-                          self.SeletSubjectID =subjectModel.SubjectID;
-                          self.SeletSubjectName = subjectModel.SubjectName;
-
-                         
-                      }
-                         }
-                  
-            CGFloat  with = SingleWith *currentTitle.length+20;
-                  if(with > MaxWith){
-                      with =MaxWith;
-                  }
-            
-            self.dropDown1With = with;
-                 self.dropDownMenuView.frame =CGRectMake(20, 0, with, 45);
-            for(int i=0;i<self.subjectArray.count;i++){
-                    LGNSubjectModel *subjectModel = self.subjectArray[i];
-                                                                       
-                    if([subjectModel.SubjectName isEqualToString:currentTitle]){
-                          
-                        if([currentTitle isEqualToString:@"全部"]){
-                            
-                            self.SeletSubjectID = @"";
-                             self.viewModel.paramModel.SubjectID =@"";
-                            self.SeletSubjectName = @"";
-
-                        }else{
-                            
-                            for(int i=0;i<self.subjectArray.count;i++){
-                                                  LGNSubjectModel *subjectModel = self.subjectArray[i];
-                                                      
-                                           if([subjectModel.SubjectName isEqualToString:currentTitle]){
-                                               
-                                               self.SeletSubjectID  = subjectModel.SubjectID;
-                                                self.SeletSubjectName = subjectModel.SubjectName;
-
-                                           }
-                                             
-                                                  }
-                            
-                        }
-                        
-                     
-                        
-                    }
-                    }
-            
-            
-            
-            if([currentTitle isEqualToString:@"全部"]){
-                self.sectionID =@"";
-                self.nodeID =@"";
-                self.SeletSubjectID =@"";
-                self.SeletSubjectName =@"";
-
-                [self.dropDownMenuView2 removeFromSuperview];
-                [self.dropDownMenuView3 removeFromSuperview];
-            }else{
-                
-                
-                //先获取筛选教师ID
-                           
-            [self  getCourseClassInfo];
-                //获取章节数据
-//                [self  getZJData];
-            }
-            
-               
-                  
-                  
-
-                    };
-               [self.view addSubview:self.dropDownMenuView =dropDownMenuView];
-      
-        if(![self.SeletSubjectID isEqualToString:@""] &&![self.SeletSubjectID isEqualToString:@"All"]){
-            
-            //先获取筛选教师ID
-                                     
-        [self  getCourseClassInfo];
-//              [self  getZJData];
-        }
-//          [self  getZJData];
-        
+             [self.LookcontentView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.edges.equalTo(self.view);
+                }];
     }
-    
-   
-    
-    
-        [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.view).offset(50);
-            make.left.right.bottom.equalTo(self.view);
-
-           }];
+ 
         
     }else{
         
+
+        [self.view addSubview:self.contentView];
+
         [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
                make.edges.equalTo(self.view);
            }];
     }
    
+}
+//编辑/新建笔记 通用教学
+- (void)editNOte{
+       if(self.paramModel.MainTY ==1){
+            
+            //获取章节/节点
+            
+            NSLog(@"%@==%@==%@",self.paramModel.SubjectID,self.paramModel.ResourceID,self.paramModel.MaterialID);
+            
+            //获取章节数据
+            [self  getZJData];
+     
+        }else{
+            
+          
+            
+            NSMutableArray * subArr = [NSMutableArray arrayWithCapacity:10];
+            
+            NSString * titleName;
+                    
+            self.subjectArray = self.tysubjectArray;
+            
+            
+            
+      
+            
+            for(int i=0;i<self.subjectArray.count;i++){
+                LGNSubjectModel *subjectModel = self.subjectArray[i];
+                
+                [subArr addObject:subjectModel.SubjectName];
+                if (self.isNewNote) {
+                    if([subjectModel.SubjectID isEqualToString:self.viewModel.paramModel.SubjectID]){
+                                   titleName =subjectModel.SubjectName;
+                                   self.SeletSubjectID =subjectModel.SubjectID;
+                        self.SeletSubjectName = subjectModel.SubjectName;
+                               }
+                }else{
+                    if([subjectModel.SubjectID isEqualToString:self.sourceModel.SubjectID]){
+                                   titleName =subjectModel.SubjectName;
+                                   self.SeletSubjectID =subjectModel.SubjectID;
+                        self.SeletSubjectName = subjectModel.SubjectName;
+
+                               }
+                }
+                
+               
+            }
+            
+            
+      
+            if(IsStrEmpty(titleName)){
+                 LGNSubjectModel *subjectModel = self.subjectArray[0];
+                titleName =subjectModel.SubjectName;
+                self.SeletSubjectID =subjectModel.SubjectID;
+                self.SeletSubjectName = subjectModel.SubjectName;
+
+            }
+              
+            
+                CGFloat  with = SingleWith *titleName.length+20;
+                     if(with > MaxWith){
+                         with =MaxWith;
+                     }
+           self.dropDown1With = with;
+            //设置学科
+            NOteDropDownMenuView *dropDownMenuView = [[NOteDropDownMenuView alloc] initWithFrame:CGRectMake(20, 0, with, 45)];
+
+                        dropDownMenuView.dataSourceArr = @[
+
+                                                             subArr,
+
+                                                            ].mutableCopy;
+
+                        dropDownMenuView.defaulTitleArray = [NSArray arrayWithObjects:titleName, nil];
+
+
+               // 下拉列表 起始y
+                      dropDownMenuView.startY = CGRectGetMaxY(dropDownMenuView.frame);
+            @weakify(self);
+
+            dropDownMenuView.chooseConditionBlock = ^(NSString *currentTitle, NSArray *currentTitleArray){
+            @strongify(self);
+
+    //                通过选择学科  去获取章节
+                      for(int i=0;i<self.subjectArray.count;i++){
+                                 LGNSubjectModel *subjectModel = self.subjectArray[i];
+                                 
+                          if([subjectModel.SubjectName isEqualToString:currentTitle]){
+                              self.SeletSubjectID =subjectModel.SubjectID;
+                              self.SeletSubjectName = subjectModel.SubjectName;
+
+                             
+                          }
+                             }
+                      
+                CGFloat  with = SingleWith *currentTitle.length+20;
+                      if(with > MaxWith){
+                          with =MaxWith;
+                      }
+                
+                self.dropDown1With = with;
+                     self.dropDownMenuView.frame =CGRectMake(20, 0, with, 45);
+                for(int i=0;i<self.subjectArray.count;i++){
+                        LGNSubjectModel *subjectModel = self.subjectArray[i];
+                                                                           
+                        if([subjectModel.SubjectName isEqualToString:currentTitle]){
+                              
+                            if([currentTitle isEqualToString:@"全部"]){
+                                
+                                self.SeletSubjectID = @"";
+                                 self.viewModel.paramModel.SubjectID =@"";
+                                self.SeletSubjectName = @"";
+
+                            }else{
+                                
+                                for(int i=0;i<self.subjectArray.count;i++){
+                                                      LGNSubjectModel *subjectModel = self.subjectArray[i];
+                                                          
+                                               if([subjectModel.SubjectName isEqualToString:currentTitle]){
+                                                   
+                                                   self.SeletSubjectID  = subjectModel.SubjectID;
+                                                    self.SeletSubjectName = subjectModel.SubjectName;
+
+                                               }
+                                                 
+                                                      }
+                                
+                            }
+                            
+                         
+                            
+                        }
+                        }
+                
+                
+                
+                if([currentTitle isEqualToString:@"全部"]){
+                    self.sectionID =@"";
+                    self.nodeID =@"";
+                    self.SeletSubjectID =@"";
+                    self.SeletSubjectName =@"";
+
+                    [self.dropDownMenuView2 removeFromSuperview];
+                    [self.dropDownMenuView3 removeFromSuperview];
+                }else{
+                    
+                    
+                    //先获取筛选教师ID
+                               
+                [self  getCourseClassInfo];
+                    //获取章节数据
+    //                [self  getZJData];
+                }
+                
+                   
+                      
+                      
+
+                        };
+                   [self.view addSubview:self.dropDownMenuView =dropDownMenuView];
+          
+            if(![self.SeletSubjectID isEqualToString:@""] &&![self.SeletSubjectID isEqualToString:@"All"]){
+                
+                //先获取筛选教师ID
+                                         
+            [self  getCourseClassInfo];
+    //              [self  getZJData];
+            }
+    //          [self  getZJData];
+            
+        }
+        
+       
+        
+        [self.view addSubview:self.contentView];
+
+        [self.contentView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(self.view).offset(50);
+                make.left.right.bottom.equalTo(self.view);
+
+               }];
+    
 }
 
 //获取教学班信息 筛选教师ID  然后通过ID获取教材列表
@@ -907,13 +933,25 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
     
     if(!self.contentView.canEditing){
         
+        //通用版查看笔记笔记;
+          //更换contentView展现方式;
+            if(self.paramModel.SystemType == SystemType_TYJX){
+            
+                [self.LookcontentView removeFromSuperview];
+                [self  editNOte];
+
+            
+            }
+        
+        
         self.title = @"编辑笔记";
     
      self.navigationItem.rightBarButtonItem.title=@"完成";
         self.contentView.titleTextF.enabled = YES;
         [self.contentView.contentTextView setEditable:YES];
+        // self.contentView.remarkBtn.enabled = YES;
+
         self.contentView.canEditing = YES;
-       // self.contentView.remarkBtn.enabled = YES;
         self.contentView.remarkBtn.hidden = NO;
         
          self.contentView.remarkBtn.userInteractionEnabled = YES;
@@ -1165,6 +1203,25 @@ if(self.paramModel.SystemType ==SystemType_TYJX){
         _viewModel.subjectArray = self.subjectArray;
     }
     return _viewModel;
+}
+
+- (LGNNoteEditView *)LookcontentView{
+    if (!_LookcontentView) {
+           NSInteger style = NoteEditViewHeaderStyleInfoContenTYJX;
+            _LookcontentView = [[LGNNoteEditView alloc] initWithFrame:CGRectZero headerViewStyle:style];
+           _LookcontentView.ownController = self;
+           self.contentView.canEditing = self.isNewNote;
+           [_LookcontentView bindViewModelLook:self.viewModel];
+        _LookcontentView.titleTextF.enabled = NO;
+//         _LookcontentView.remarkBtn.enabled = NO;
+        _LookcontentView.remarkBtn.userInteractionEnabled = NO;
+
+        [_LookcontentView.contentTextView setEditable:YES];
+
+        
+       }
+       return _LookcontentView;
+    
 }
 
 - (LGNNoteEditView *)contentView{
