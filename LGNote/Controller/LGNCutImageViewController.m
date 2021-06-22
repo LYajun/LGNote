@@ -65,7 +65,8 @@
         make.size.mas_equalTo(CGSizeMake(50, 44));
     }];
     [self.cutImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.right.equalTo(self.view);
+        make.top.equalTo(self.view).offset((LGNoteIsIphoneX() ? 44.0f : 20.0f));
+        make.left.right.equalTo(self.view);
         make.bottom.equalTo(self.cancelBtn.mas_top);
     }];
 }

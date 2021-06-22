@@ -179,13 +179,13 @@ static const void *LGTextViewToolBarStyleKey          = &LGTextViewToolBarStyleK
     
     if (action ==@selector(copy:)){
         
-        return NO;
+        return YES;
         
     }
     
     else if (action ==@selector(paste:)){
         
-        return NO;
+        return YES;
         
     }
     

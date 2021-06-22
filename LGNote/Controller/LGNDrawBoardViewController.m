@@ -53,89 +53,73 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
     self.title = @"画板";
-    CGFloat width = self.size.width;
-    CGFloat height = self.size.height;
-    CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
-    CGFloat screenH = [UIScreen mainScreen].bounds.size.height - 100;
-    
-    if (_isCamera && width > height) {
-        height =250;
-        
-    }
-    // 固定宽度
-//   width = width > screenW ? screenW:width;
-//
-//    height = height >= screenH ? screenH:height;
-    
-    CGFloat scaleFactor = 0.0;
-    CGFloat widthFactor = screenW / width;
-    CGFloat heightFactor = screenH / height;
-    if(width > height){
-    scaleFactor = widthFactor;
-    }else{
-    scaleFactor = heightFactor;
-    }
- 
-    
-    
-    _ImagWidth = width *scaleFactor;
-    _ImagHeigt = height*scaleFactor;
-
     
     [self createSubViews];
-    
-    
-    
 }
 
 - (void)createSubViews{
+    [self.view addSubview:self.drawView];
     [self.view addSubview:self.cancelBtn];
     [self.view addSubview:self.redoBtn];
     [self.view addSubview:self.buttonView];
-    [self.view addSubview:self.drawView];
     [self setupSubviewsContraints];
-    
-    
 }
 
 - (void)setupSubviewsContraints{
+    self.cancelBtn.layer.cornerRadius = 15.0f;
+    self.cancelBtn.layer.masksToBounds = YES;
+    self.cancelBtn.backgroundColor = [UIColor.blackColor colorWithAlphaComponent:0.5];
     [self.cancelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.top.equalTo(self.view);
-        make.size.mas_equalTo(CGSizeMake(60, 44));
+        make.left.equalTo(self.view);
+        if (LGNoteIsIphoneX()) {
+            make.top.equalTo(self.view.mas_top).offset(44.0f + 6.0f);
+        } else {
+            make.top.equalTo(self.view.mas_top).offset(20.0f + 6.0f);
+        }
+        make.size.mas_equalTo(CGSizeMake(60, 30));
     }];
+    
+    self.redoBtn.layer.cornerRadius = 15.0f;
+    self.redoBtn.layer.masksToBounds = YES;
+    self.redoBtn.backgroundColor = [UIColor.blackColor colorWithAlphaComponent:0.5];
     [self.redoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.top.equalTo(self.view);
-        make.size.mas_equalTo(CGSizeMake(60, 44));
+        make.right.equalTo(self.view);
+        if (LGNoteIsIphoneX()) {
+            make.top.equalTo(self.view.mas_top).offset(44.0f + 6.0f);
+        } else {
+            make.top.equalTo(self.view.mas_top).offset(20.0f + 6.0f);
+        }
+        make.size.mas_equalTo(CGSizeMake(60, 30));
     }];
+    
     [self.buttonView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.right.bottom.equalTo(self.view);
+        make.left.right.equalTo(self.view);
         make.height.mas_equalTo(50);
+        if (LGNoteIsIphoneX()) {
+            make.bottom.equalTo(self.view.mas_bottom).offset(-10.0f);
+        } else {
+            make.bottom.equalTo(self.view.mas_bottom);
+        }
     }];
     
-    
-    
-    if(self.style == LGNoteDrawBoardViewControllerStyleDefault){
-        
+    if (self.style == LGNoteDrawBoardViewControllerStyleDefault) {
         [self.drawView mas_makeConstraints:^(MASConstraintMaker *make) {
-            //make.left.equalTo(self.view);
-            make.height.mas_equalTo(_ImagHeigt);
-            make.width.mas_equalTo(_ImagWidth);
+            make.top.mas_greaterThanOrEqualTo(self.view.mas_top).offset(LGNoteIsIphoneX() ? 88.0f : 64.0f);
+            make.bottom.mas_lessThanOrEqualTo(self.view.mas_bottom).offset(- (LGNoteIsIphoneX() ? 10.0f : 0.0f) - 50.0f);
+            make.left.mas_greaterThanOrEqualTo(self.view.mas_left);
+            make.right.mas_lessThanOrEqualTo(self.view.mas_right);
             make.centerY.equalTo(self.view);
             make.centerX.equalTo(self.view);
+            make.width.equalTo(self.drawView.mas_height).multipliedBy(self.size.width / self.size.height);
         }];
-        
-    }else{
+    } else {
         [self.drawView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.right.equalTo(self.view);
-            make.top.equalTo(self.cancelBtn.mas_bottom);
-           make.bottom.equalTo(self.buttonView.mas_top);
-            
+            make.top.equalTo(self.view.mas_top).offset(LGNoteIsIphoneX() ? 88.0f : 64.0f);
+            make.bottom.equalTo(self.view.mas_bottom).offset(- (LGNoteIsIphoneX() ? 10.0f : 0.0f) - 50.0f);
+            make.left.equalTo(self.view.mas_left);
+            make.right.equalTo(self.view.mas_right);
         }];
-        
     }
-    
-  
-   
 }
 
 #pragma mark - NoteDrawSettingViewDelegate
@@ -354,7 +338,7 @@
 
 - (LGNNoteDrawView *)drawView{
     if (!_drawView) {
-        UIImageView *bgImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 44, kMain_Screen_Width, kMain_Screen_Height-50-64)];
+        UIImageView *bgImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, (LGNoteIsIphoneX() ? 88.0f : 64.0f), kMain_Screen_Width, kMain_Screen_Height - (LGNoteIsIphoneX() ? 88.0f : 64.0f) - (LGNoteIsIphoneX() ? 10.0f : 0.0f) - 50.0f)];
         bgImgView.image = [NSBundle lg_imagePathName:@"note_board_2"];
         
         _drawView = [[LGNNoteDrawView alloc] init];

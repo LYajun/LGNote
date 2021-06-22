@@ -10,14 +10,6 @@
 
 @implementation LGNParamModel
 
-- (void)setResourceName:(NSString *)ResourceName{
-    ResourceName = [ResourceName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    if (ResourceName.length > 20) {
-        ResourceName = [ResourceName substringToIndex:20];
-    }
-    _ResourceName = ResourceName;
-}
-
 - (NSString *)UserID{
     if (!_UserID) {
         _UserID = @"userID_null";
@@ -150,7 +142,7 @@
             _SystemName = @"蓝鸽云平台";
             break;
         case SystemType_DZJC:
-            _SystemName = @"电子教材";
+            _SystemName = @"电子素材";
             break;
         case SystemType_XYTJ:
             _SystemName = @"学友推荐";

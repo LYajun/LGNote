@@ -70,8 +70,7 @@
       //基础平台地址根据实际的传
       params.CPBaseUrl = @"http://192.168.129.1:30103//";
 
-      params.CPYPTUrl =@"http://192.168.129.1:10103/Web_LGCP_Rain/";
-      params.Token_md5= @"c889489b81f003530254d4a40e7d6f49";
+
          params.TermID =  @"2019-202002";
          params.GradeID = @"05B5B9FC-A0ED-4D2E-AEE1-2EE9A1FEBC6B";
       

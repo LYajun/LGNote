@@ -9,6 +9,20 @@
 #ifndef LGNoteConfigure_h
 #define LGNoteConfigure_h
 
+#import <UIKit/UIKit.h>
+static inline BOOL LGNoteIsIphoneX(void) {
+    BOOL iPhoneX = NO;
+    if (UIDevice.currentDevice.userInterfaceIdiom != UIUserInterfaceIdiomPhone) {
+        return iPhoneX;
+    }
+    if (@available(iOS 11.0, *)) {
+        UIWindow *mainWindow = [[[UIApplication sharedApplication] delegate] window];
+        if (mainWindow.safeAreaInsets.bottom > 0.0) {
+            iPhoneX = YES;
+        }
+    }
+    return iPhoneX;
+}
 
 #define kMBAlert                          [LGNoteMBAlert shareMBAlert]
 #define kNetwork                          [LGNoteNetworkManager shareManager]
@@ -45,7 +59,7 @@
 #define kSYSTEMFONT(FONTSIZE)             [UIFont systemFontOfSize:FONTSIZE]
 
 // 判断是否是iPhone X系列机型
-#define NoteiPhoneXs (([[UIApplication sharedApplication] statusBarFrame].size.height == 44.0f) ? (YES):(NO))
+#define NoteiPhoneXs (LGNoteIsIphoneX())
 // 状态栏高度
 #define NoteSTATUS_HEIGHT (NoteiPhoneXs ? 44.f : 20.f)
 // 导航栏高度

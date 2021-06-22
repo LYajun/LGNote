@@ -10,10 +10,4 @@
 
 @implementation LGNTextBookListModel
 
-+ (NSDictionary *)mj_objectClassInArray
-{
-    return @{
-             @"chapters" : [LGNTextBookListModel class]
-             };
-}
 @end

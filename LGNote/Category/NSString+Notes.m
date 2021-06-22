@@ -24,7 +24,7 @@
     
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     
-    paragraphStyle.lineSpacing = 15;// 字体的行间距
+    paragraphStyle.lineSpacing = 6;// 字体的行间距
     
     NSDictionary *attributes = @{
                                  

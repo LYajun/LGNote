@@ -33,8 +33,7 @@
     
     [btn setTitle:title forState:UIControlStateNormal];
     btn.titleLabel.textAlignment = NSTextAlignmentCenter;
-    btn.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-
+    
     [btn setImage:[UIImage imageNamed:imgName] forState:UIControlStateNormal];
     [btn setTitleColor:titleColor forState:UIControlStateNormal];
     

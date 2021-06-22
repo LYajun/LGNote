@@ -261,11 +261,6 @@
 //        return;
 //    }
     
-    if( self.viewModel.paramModel.SystemType ==SystemType_TYJX){
-    
-        return;
-    }
-    
 
     NSLog(@"==%zd==",indexPath.section);
     

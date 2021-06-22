@@ -121,46 +121,6 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
     }];
     
     
-  
-    /** 获取所有学科 */
-    self.getSubjectSubject = [RACSubject subject];
-    self.getSubjectCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
-        
-      
-        if(IsStrEmpty(self.paramModel.NoteBaseUrl)){
-                                         
-                                            RACSignal *checkSignal = [self checkNoteBaseUrl];
-                                         
-                                         [checkSignal subscribeNext:^(NSString *  _Nullable url) {
-                                             if (!IsStrEmpty(url)) {
-                                                 [[NSUserDefaults standardUserDefaults] setObject:url forKey:CheckNoteBaseUrlKey];
-                                                 self.paramModel.NoteBaseUrl = url;
-                                                 
-                                                 [[self getSubjectWithParams:input] subscribeNext:^(id  _Nullable x) {
-                                                                  @strongify(self);
-                                                                  
-                                                                  
-                                                                   [self.getSubjectSubject sendNext:x];
-                                                              }];
-                                              
-                                             } else {
-                                                 [self.refreshSubject sendNext:@[]];
-                                             }
-                                         }];
-                                     }else{
-
-                                          [[NSUserDefaults standardUserDefaults] setObject:self.paramModel.NoteBaseUrl forKey:CheckNoteBaseUrlKey];
-                                           
-                                         [[self getSubjectWithParams:input] subscribeNext:^(id  _Nullable x) {
-                                                          @strongify(self);
-                                                          
-                                                          
-                                                           [self.getSubjectSubject sendNext:x];
-                                                      }];
-                                     }
-        
-        return [RACSignal empty];
-    }];
     
 //    self.deletedSubject = [RACSubject subject];
 //    self.deletedCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(NoteModel * _Nullable inputModel) {
@@ -206,22 +166,6 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         return [RACSignal empty];
     }];
     
-    //获取教学班信息  获取教师ID
-
-    self.getCourseClassInfoRateSubject = [RACSubject subject];
-    self.getCourseClassInfoRateCommand= [[RACCommand alloc] initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
-        
-        @strongify(self);
-        
-        
-        [[self getCourseClassInfoWithParams:input] subscribeNext:^(id  _Nullable x) {
-            @strongify(self);
-            
-            
-            [self.getCourseClassInfoRateSubject sendNext:x];
-        }];
-        return [RACSignal empty];
-    }];
     //获取备选教材列表
        
        self.getTextbookListRateSubject = [RACSubject subject];
@@ -311,19 +255,7 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
         
         
         
-    }else if (self.paramModel.SystemType == SystemType_TYJX){
-        
-        
-        RACSignal *uploadSignal = [self uploadNoteSourceInfo:@""];
-                  
-                  [uploadSignal subscribeNext:^(id  _Nullable x) {
-                      
-                  }];
-    }
-    
-    else{
-        
-        
+    }else{
         
         if(!IsStrEmpty(self.paramModel.ResourceID)){
           
@@ -388,8 +320,8 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
             [self.dataArray addObjectsFromArray:notesArray];
             self.totalCount = [[notesInfo lastObject] integerValue];
             
-            self.subjectArray = subjectArray;
-            self.systemArray = systemArray;
+            _subjectArray = subjectArray;
+            _systemArray = systemArray;
             
             // 判断是否请求到学科或者系统数据
             if (IsArrEmpty(subjectArray) || IsArrEmpty(systemArray)) {
@@ -598,86 +530,56 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
             
         }else if (self.paramModel.SystemType ==SystemType_TYJX){
             
-            
-            if(self.paramModel.MainTY == 0){
-                url= [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNotesInformation"];
-                          params = @{
-                                     @"UserID":Note_HandleParams(self.paramModel.UserID),
-                                     @"UserType":@(self.paramModel.UserType),
-                                     @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
-                                     @"SubjectID":Note_HandleParams(subjectID),
-                                     @"SecretKey":Note_HandleParams(self.paramModel.Secret),
-                                     
-                                     @"SchoolID":Note_HandleParams(schoolID),
-                                     @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
-                                     @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
-                                     
-                                     @"SysID":Note_HandleParams(systemID),
-                                     @"Keycon":Note_HandleParams(keycon),
-                                     @"Page":@(pageIndex),
-                                     @"StartTime":Note_HandleParams(self.paramModel.StartTime),
-                                     @"EndTime":Note_HandleParams(self.paramModel.EndTime),
-                                     
-                                     @"Size":@(size),
-                                     @"BackUpOne":@"All",
-                                     @"BackUpTwo":@""
-                                     };
-            }else{
-                
                 if([keycon isEqualToString:@""]){
-                                         
-                                  
-                                  url= [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetAllNotesInformationForOneResource"];
-                                      
-                                      params = @{
-                                                                    @"UserID": Note_HandleParams(self.paramModel.UserID),
-                                                                    @"UserType":@(self.paramModel.UserType),
-                                                                    @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
-                                                                    
-                                                                    @"SubjectID":Note_HandleParams(subjectID),
-                                                                    @"SecretKey": Note_HandleParams(self.paramModel.Secret),
-                                                                    @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
-                                                                    @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
-                                                                    
-                                                                    @"SysID":Note_HandleParams(systemID),
+                           
+                        //获取全部
+                    url= [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetAllNotesInformationForOneResource"];
+                        
+                        params = @{
+                                                      @"UserID": Note_HandleParams(self.paramModel.UserID),
+                                                      @"UserType":@(self.paramModel.UserType),
+                                                      @"ResourceID":Note_HandleParams(self.paramModel.ResourceID),
+                                                      
+                                                      @"SubjectID":Note_HandleParams(subjectID),
+                                                      @"SecretKey": Note_HandleParams(self.paramModel.Secret),
+                                                      @"MaterialID":Note_HandleParams(self.paramModel.MaterialID),
+                                                      @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
+                                                      
+                                                      @"SysID":Note_HandleParams(systemID),
 
-                                                                    @"BackUpOne":@"",
-                                                                    @"BackUpTwo":@""
-                                                                    };
-                                      
-                                                //传参也不一样
-                                            }else{
-                                                
-                                                //搜索的
-                                                url= [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNotesInformationForOne"];
-                                                params = @{
-                                                                                  @"UserID": Note_HandleParams(self.paramModel.UserID),
-                                                                              @"UserType":@(self.paramModel.UserType),
-                                                                              @"ResourceID":@"",
-                                                                                  
-                                                                                   @"SubjectID":@"",
-                                                                                   @"SecretKey": Note_HandleParams(self.paramModel.Secret),
-                                                                                  
-                                                                                   @"SchoolID":Note_HandleParams(schoolID),
-                                                                              @"MaterialID":@"",
-                                                                                   @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
-                                                                                  
-                                                                                   @"SysID":Note_HandleParams(systemID),
-                                                                                  
-                                                                                   @"Keycon":Note_HandleParams(keycon),
-                                                                                   @"Page":@(pageIndex),
-                                                                                   @"StartTime":@"",
-                                                                                   @"EndTime":@"",
-                                                                                   
-                                                                                   @"Size":@(size),
-                                                                                   @"BackUpOne":@"",
-                                                                                   @"BackUpTwo":@""
-                                                                                   };
-                                            }
-            }
-            
-            
-              
+                                                      @"BackUpOne":@"",
+                                                      @"BackUpTwo":@""
+                                                      };
+                        
+                                  //传参也不一样
+                              }else{
+                                  
+                                  //搜索的
+                                  url= [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetNotesInformationForOne"];
+                                  params = @{
+                                                                    @"UserID": Note_HandleParams(self.paramModel.UserID),
+                                                                @"UserType":@(self.paramModel.UserType),
+                                                                @"ResourceID":@"",
+                                                                    
+                                                                     @"SubjectID":@"",
+                                                                     @"SecretKey": Note_HandleParams(self.paramModel.Secret),
+                                                                    
+                                                                     @"SchoolID":Note_HandleParams(schoolID),
+                                                                @"MaterialID":@"",
+                                                                     @"IsKeyPoint":Note_HandleParams(self.paramModel.IsKeyPoint),
+                                                                    
+                                                                     @"SysID":Note_HandleParams(systemID),
+                                                                    
+                                                                     @"Keycon":Note_HandleParams(keycon),
+                                                                     @"Page":@(pageIndex),
+                                                                     @"StartTime":@"",
+                                                                     @"EndTime":@"",
+                                                                     
+                                                                     @"Size":@(size),
+                                                                     @"BackUpOne":@"",
+                                                                     @"BackUpTwo":@""
+                                                                     };
+                              }
         }
         
         
@@ -1198,17 +1100,18 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
 //    [kMBAlert showIndeterminate];
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         
-        NSString *urlStr = self.paramModel.CPYPTUrl;
+        NSString *urlStr = self.paramModel.CPBaseUrl;
+
         
-        //http://192.168.129.1:10103/Web_LGCP_Rain/TeachingPlan/GetStudentCategory?subjectId=S2-Chinese&gradeId=AC6F56E5-E9AD-481E-B6CB-1BFC7BEF43BB&termId=2&teacherId=000444
-        
-    NSString *url = [NSString stringWithFormat:@"%@TeachingPlan/GetStudentCategory",urlStr];
+    NSString *url = [NSString stringWithFormat:@"%@TextBook/GetTextbookList",urlStr];
         
      NSString * toke = [NSString stringWithFormat:@"X-Token=%@",self.paramModel.Token];
                          
-        NSDictionary *  HeaderDic = @{
-            @"Authorization":toke,
-                                    };
+                   NSDictionary *  HeaderDic = @{
+                                                 @"Authorization":toke,
+                                                 
+                                                 
+                                                 };
         
         [kNetwork.setRequestUrl(url).setRequestType(GET).setParameters(Params).setHTTPHeaderDic(HeaderDic)starSendRequestSuccess:^(id respone) {
             
@@ -1222,12 +1125,10 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
             
 //
               NSArray *dataArray = respone[@"Data"];
-            
             dataArray = [[dataArray.rac_sequence map:^id _Nullable(id  _Nullable value) {
                 LGNTextBookListModel *model = [LGNTextBookListModel mj_objectWithKeyValues:value];
                 return model;
             }] array];
-            
             
             [subscriber sendNext:dataArray];
             [subscriber sendCompleted];
@@ -1314,115 +1215,6 @@ NSString *const CheckNoteBaseUrlKey = @"CheckNoteBaseUrlKey";
             [subscriber sendNext:nil];
             [subscriber sendCompleted];
         }];
-        
-        return nil;
-    }];
-}
-
-
-
-
-- (RACSignal *)getCourseClassInfoWithParams:(id)Params{
-    
-//    [kMBAlert showIndeterminate];
-    return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
-        
-        NSString *urlStr = self.paramModel.CPBaseUrl;
-//http://192.168.129.1:30103/BaseApi/UserMgr/TeachInfoMgr/GetCourseClassInfo?
-        
-    NSString *url = [NSString stringWithFormat:@"%@BaseApi/UserMgr/TeachInfoMgr/GetCourseClassInfo",urlStr];
-        
-     NSString * toke = [NSString stringWithFormat:@"X-Token=%@",self.paramModel.Token];
-                         
-                   NSDictionary *  HeaderDic = @{
-                                                 @"Authorization":toke,
-                                                 
-                                                 
-                                                 };
-        
-        [kNetwork.setRequestUrl(url).setRequestType(GET).setParameters(Params)starSendRequestSuccess:^(id respone) {
-            
-            if([respone[@"ErrCode"] integerValue] !=0){
-                           
-                           [subscriber sendNext:nil];
-                           [subscriber sendCompleted];
-                           return ;
-                       }
-            
-            
-//
-              NSArray *dataArray = respone[@"Data"];
-            dataArray = [[dataArray.rac_sequence map:^id _Nullable(id  _Nullable value) {
-                LGNTextBookListModel *model = [LGNTextBookListModel mj_objectWithKeyValues:value];
-                return model;
-            }] array];
-            
-            NSString * TeacherID;
-            
-            for(int i=0;i<dataArray.count;i++){
-                
-                LGNTextBookListModel * model = dataArray[i];
-                
-                if([model.SubjectID isEqualToString:self.paramModel.SubjectID]){
-                    self.paramModel.TeacherID = model.TeacherID;
-                    TeacherID =model.TeacherID;
-                }
-                
-            }
-            
-            [subscriber sendNext:TeacherID];
-            [subscriber sendCompleted];
-            
-        } failure:^(NSError *error) {
-            
-            [subscriber sendNext:nil];
-            [subscriber sendCompleted];
-        }];
-        
-        return nil;
-    }];
-}
-
-
-
-- (RACSignal *)getSubjectWithParams:(id)Params{
-    
-    return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
-        
-          NSString *url = [self.paramModel.NoteBaseUrl stringByAppendingString:@"api/V2/Notes/GetSubjectInfo"];
-             
-         
-             NSDictionary *params = @{
-                                      @"UserID":Note_HandleParams(self.paramModel.UserID),
-                                      @"UserType":@(self.paramModel.UserType),
-                                      @"SecretKey": Note_HandleParams(self.paramModel.Secret),
-                                      @"SchoolID":Note_HandleParams(self.paramModel.SchoolID),
-                                      @"Token":Note_HandleParams(self.paramModel.Token),
-                                      @"BackUpOne":@"",
-                                      @"BackUpTwo":@""
-                                      };
-
-        [kNetwork.setRequestUrl(url).setRequestType(POSTENCRY).setEncryKey(Note_HandleParams(self.paramModel.UserID)).setToken( Note_HandleParams(self.paramModel.Token)).setParameters(params)starSendRequestSuccess:^(id respone) {
-            
-                if (![respone[kErrorcode] hasSuffix:kSuccess]) {
-                    [subscriber sendNext:nil];
-                    [subscriber sendCompleted];
-                    return;
-                }
-                
-                NSArray *dataArray = respone[kResult];
-            
-                dataArray = [[dataArray.rac_sequence map:^id _Nullable(id  _Nullable value) {
-                    LGNSubjectModel *model = [LGNSubjectModel mj_objectWithKeyValues:value];
-                    return model;
-                }] array];
-                [subscriber sendNext:dataArray];
-                [subscriber sendCompleted];
-                
-            } failure:^(NSError *error) {
-                [subscriber sendNext:nil];
-                [subscriber sendCompleted];
-            }];
         
         return nil;
     }];

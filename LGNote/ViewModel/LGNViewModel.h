@@ -25,7 +25,7 @@ UIKIT_EXTERN NSString *const CheckNoteBaseUrlKey;
 @property (nonatomic, strong) RACSubject *refreshSubject;
 @property (nonatomic, strong) RACCommand *nextPageCommand;
 
-/** 添加、编辑、删除（1添加、0编辑、3删除) */
+/** 添加、编辑、删除（1添加、0编辑、3删除) */  
 @property (nonatomic, strong) RACCommand *operateCommand;
 @property (nonatomic, strong) RACSubject *operateSubject;
 //
@@ -49,9 +49,6 @@ UIKIT_EXTERN NSString *const CheckNoteBaseUrlKey;
 
 @property (nonatomic, strong) RACCommand *getAllSubjectCommand;
 @property (nonatomic, strong) RACSubject *getAllSubjectSubject;
-//获取教学班信息  获取教师ID
-@property (nonatomic, strong) RACCommand *getCourseClassInfoRateCommand;
-@property (nonatomic, strong) RACSubject *getCourseClassInfoRateSubject;
 
 //获取备选教材列表
 @property (nonatomic, strong) RACCommand *getTextbookListRateCommand;
@@ -88,12 +85,6 @@ UIKIT_EXTERN NSString *const CheckNoteBaseUrlKey;
  @return <#return value description#>
  */
 - (RACSignal *)getAllSubjectInfo;
-
-
-//获取筛选支持的学科信息
-
-@property (nonatomic, strong) RACCommand *getSubjectCommand;
-@property (nonatomic, strong) RACSubject *getSubjectSubject;
 
 /**
  获取所有支持的系统信息

@@ -77,16 +77,7 @@
     
     self.titleBtnArr = [[NSMutableArray alloc] init];
     
-    NSLog(@"%lf",self.withM);
     CGFloat btnW = 120;
-    if(self.withM>1){
-        btnW = self.withM;
-    }
-    
-  
-//    CGFloat btnW = self.frame.size.width-20;
-
-    
     CGFloat btnH = kTitleBarHeight;
     
     for (NSInteger i=0; i<dataSourceArr.count; i++) {
@@ -218,7 +209,7 @@
 
         _dropDownMenuTableView.delegate = self;
         _dropDownMenuTableView.dataSource = self;
-        _dropDownMenuTableView.scrollEnabled = YES;
+        _dropDownMenuTableView.scrollEnabled = NO;
     }
     return _dropDownMenuTableView;
 }

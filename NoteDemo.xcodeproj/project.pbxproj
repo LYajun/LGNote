@@ -10,9 +10,7 @@
 		282B719D22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 282B719C22AE848C006691C5 /* HPTextViewTapGestureRecognizer.m */; };
 		284854B7247B6E63000D3F62 /* LGNTextBookListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 284854B6247B6E63000D3F62 /* LGNTextBookListModel.m */; };
 		28810EF2235470FF0003B03A /* UIImage+ImgSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 28810EF1235470FF0003B03A /* UIImage+ImgSize.m */; };
-		28823A6B24A197AA0005FBE0 /* LGNoteContenInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28823A6A24A197AA0005FBE0 /* LGNoteContenInfoViewController.m */; };
 		288D06C324754CB100775FA9 /* NoteDragView.m in Sources */ = {isa = PBXBuildFile; fileRef = 288D06C224754CB100775FA9 /* NoteDragView.m */; };
-		288D06CE2475556E00775FA9 /* CFDropDownMenuView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 288D06C52475556D00775FA9 /* CFDropDownMenuView.bundle */; };
 		288D06CF2475556E00775FA9 /* NoteLabelOnLeftButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 288D06C72475556D00775FA9 /* NoteLabelOnLeftButton.m */; };
 		288D06D02475556E00775FA9 /* NOteDropDownMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 288D06C92475556D00775FA9 /* NOteDropDownMenuView.m */; };
 		288D06D12475556E00775FA9 /* UIView+CFFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 288D06CC2475556D00775FA9 /* UIView+CFFrame.m */; };
@@ -48,7 +46,6 @@
 		3213BC4D225B46B90065E2DD /* YBIBGestureInteractionProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 3213BC31225B46B90065E2DD /* YBIBGestureInteractionProfile.m */; };
 		3213BC4E225B46B90065E2DD /* YBImageBrowserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3213BC33225B46B90065E2DD /* YBImageBrowserView.m */; };
 		3213BC4F225B46B90065E2DD /* YBImageBrowserViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3213BC37225B46B90065E2DD /* YBImageBrowserViewLayout.m */; };
-		3213BC50225B46B90065E2DD /* YBImageBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3213BC39225B46B90065E2DD /* YBImageBrowser.bundle */; };
 		3213BC89225C6E950065E2DD /* HDWebImageImageIOCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3213BC52225C6E950065E2DD /* HDWebImageImageIOCoder.m */; };
 		3213BC8A225C6E950065E2DD /* HDWebImageGIFCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3213BC55225C6E950065E2DD /* HDWebImageGIFCoder.m */; };
 		3213BC8B225C6E950065E2DD /* HDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3213BC5A225C6E950065E2DD /* HDWebImageManager.m */; };
@@ -132,6 +129,14 @@
 		32D72AA6224A43B200FFB9B4 /* NoteXMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D72AA5224A43B200FFB9B4 /* NoteXMLDictionary.m */; };
 		32D8CEFD2237D199000BD642 /* LGNoteBaseNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 32D8CEFC2237D199000BD642 /* LGNoteBaseNavigationViewController.m */; };
 		32DA50BC224DC4450064787C /* LGNNoteSourceDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32DA50BB224DC4450064787C /* LGNNoteSourceDetailView.m */; };
+		BA003FC0268202BE00C41FF0 /* YJNewNoteTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA003FB2268202BE00C41FF0 /* YJNewNoteTextView.m */; };
+		BA003FC1268202BE00C41FF0 /* YJNewNoteKlgView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA003FB3268202BE00C41FF0 /* YJNewNoteKlgView.m */; };
+		BA003FC2268202BE00C41FF0 /* YJNewNoteMarqueeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = BA003FB4268202BE00C41FF0 /* YJNewNoteMarqueeLabel.m */; };
+		BA003FC3268202BE00C41FF0 /* YJNewNoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = BA003FB5268202BE00C41FF0 /* YJNewNoteView.m */; };
+		BA003FC4268202BE00C41FF0 /* YJNewNoteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BA003FB6268202BE00C41FF0 /* YJNewNoteManager.m */; };
+		BA003FC5268202BE00C41FF0 /* YJNewNoteMarqueeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BA003FB9268202BE00C41FF0 /* YJNewNoteMarqueeButton.m */; };
+		BA003FC6268202BE00C41FF0 /* YJNewNoteDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BA003FBD268202BE00C41FF0 /* YJNewNoteDataModel.m */; };
+		BA003FC7268202BE00C41FF0 /* YJNewNote.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BA003FBE268202BE00C41FF0 /* YJNewNote.bundle */; };
 		C089BECC87C865CAFC5664C8 /* Pods_NoteDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F69574B6C56DF4CDE82A6315 /* Pods_NoteDemo.framework */; };
 /* End PBXBuildFile section */
 
@@ -160,11 +165,8 @@
 		284854B6247B6E63000D3F62 /* LGNTextBookListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LGNTextBookListModel.m; sourceTree = "<group>"; };
 		28810EF0235470FF0003B03A /* UIImage+ImgSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImgSize.h"; sourceTree = "<group>"; };
 		28810EF1235470FF0003B03A /* UIImage+ImgSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImgSize.m"; sourceTree = "<group>"; };
-		28823A6924A197AA0005FBE0 /* LGNoteContenInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LGNoteContenInfoViewController.h; sourceTree = "<group>"; };
-		28823A6A24A197AA0005FBE0 /* LGNoteContenInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LGNoteContenInfoViewController.m; sourceTree = "<group>"; };
 		288D06C124754CB100775FA9 /* NoteDragView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteDragView.h; sourceTree = "<group>"; };
 		288D06C224754CB100775FA9 /* NoteDragView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteDragView.m; sourceTree = "<group>"; };
-		288D06C52475556D00775FA9 /* CFDropDownMenuView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CFDropDownMenuView.bundle; sourceTree = "<group>"; };
 		288D06C72475556D00775FA9 /* NoteLabelOnLeftButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteLabelOnLeftButton.m; sourceTree = "<group>"; };
 		288D06C82475556D00775FA9 /* UIView+CFFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+CFFrame.h"; sourceTree = "<group>"; };
 		288D06C92475556D00775FA9 /* NOteDropDownMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NOteDropDownMenuView.m; sourceTree = "<group>"; };
@@ -245,7 +247,6 @@
 		3213BC36225B46B90065E2DD /* YBImageBrowserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBImageBrowserView.h; sourceTree = "<group>"; };
 		3213BC37225B46B90065E2DD /* YBImageBrowserViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBImageBrowserViewLayout.m; sourceTree = "<group>"; };
 		3213BC38225B46B90065E2DD /* YBImageBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBImageBrowser.h; sourceTree = "<group>"; };
-		3213BC39225B46B90065E2DD /* YBImageBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = YBImageBrowser.bundle; sourceTree = "<group>"; };
 		3213BC52225C6E950065E2DD /* HDWebImageImageIOCoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HDWebImageImageIOCoder.m; sourceTree = "<group>"; };
 		3213BC53225C6E950065E2DD /* NSButton+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSButton+WebCache.h"; sourceTree = "<group>"; };
 		3213BC54225C6E950065E2DD /* HDWebImageTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HDWebImageTransition.h; sourceTree = "<group>"; };
@@ -416,6 +417,21 @@
 		32DA50BA224DC4450064787C /* LGNNoteSourceDetailView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LGNNoteSourceDetailView.h; sourceTree = "<group>"; };
 		32DA50BB224DC4450064787C /* LGNNoteSourceDetailView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LGNNoteSourceDetailView.m; sourceTree = "<group>"; };
 		598743329030DF392A5BCC27 /* Pods-NoteDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoteDemo.debug.xcconfig"; path = "Target Support Files/Pods-NoteDemo/Pods-NoteDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		BA003FB1268202BE00C41FF0 /* YJNewNoteMarqueeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJNewNoteMarqueeButton.h; sourceTree = "<group>"; };
+		BA003FB2268202BE00C41FF0 /* YJNewNoteTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJNewNoteTextView.m; sourceTree = "<group>"; };
+		BA003FB3268202BE00C41FF0 /* YJNewNoteKlgView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJNewNoteKlgView.m; sourceTree = "<group>"; };
+		BA003FB4268202BE00C41FF0 /* YJNewNoteMarqueeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJNewNoteMarqueeLabel.m; sourceTree = "<group>"; };
+		BA003FB5268202BE00C41FF0 /* YJNewNoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJNewNoteView.m; sourceTree = "<group>"; };
+		BA003FB6268202BE00C41FF0 /* YJNewNoteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJNewNoteManager.m; sourceTree = "<group>"; };
+		BA003FB7268202BE00C41FF0 /* YJNewNoteDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJNewNoteDataModel.h; sourceTree = "<group>"; };
+		BA003FB8268202BE00C41FF0 /* YJNewNoteTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJNewNoteTextView.h; sourceTree = "<group>"; };
+		BA003FB9268202BE00C41FF0 /* YJNewNoteMarqueeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJNewNoteMarqueeButton.m; sourceTree = "<group>"; };
+		BA003FBA268202BE00C41FF0 /* YJNewNoteKlgView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJNewNoteKlgView.h; sourceTree = "<group>"; };
+		BA003FBB268202BE00C41FF0 /* YJNewNoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJNewNoteView.h; sourceTree = "<group>"; };
+		BA003FBC268202BE00C41FF0 /* YJNewNoteMarqueeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJNewNoteMarqueeLabel.h; sourceTree = "<group>"; };
+		BA003FBD268202BE00C41FF0 /* YJNewNoteDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJNewNoteDataModel.m; sourceTree = "<group>"; };
+		BA003FBE268202BE00C41FF0 /* YJNewNote.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = YJNewNote.bundle; sourceTree = "<group>"; };
+		BA003FBF268202BE00C41FF0 /* YJNewNoteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJNewNoteManager.h; sourceTree = "<group>"; };
 		F69574B6C56DF4CDE82A6315 /* Pods_NoteDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NoteDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -457,7 +473,6 @@
 		288D06C42475555D00775FA9 /* NoteDropDownMenuView */ = {
 			isa = PBXGroup;
 			children = (
-				288D06C52475556D00775FA9 /* CFDropDownMenuView.bundle */,
 				288D06C62475556D00775FA9 /* Lib */,
 			);
 			path = NoteDropDownMenuView;
@@ -486,7 +501,6 @@
 				3213BC19225B46B90065E2DD /* ImageBrowse */,
 				3213BBFF225B46B90065E2DD /* Protocol */,
 				3213BC06225B46B90065E2DD /* VideoBrowse */,
-				3213BC39225B46B90065E2DD /* YBImageBrowser.bundle */,
 				3213BC38225B46B90065E2DD /* YBImageBrowser.h */,
 				3213BBFE225B46B90065E2DD /* YBImageBrowser.m */,
 			);
@@ -708,6 +722,7 @@
 		32326452216D9059005CC784 /* LGNote */ = {
 			isa = PBXGroup;
 			children = (
+				BA003FB0268202BE00C41FF0 /* YJNewNote */,
 				32326488216E2C94005CC784 /* Base */,
 				32326453216D9398005CC784 /* Model */,
 				32326459216DE809005CC784 /* View */,
@@ -765,8 +780,6 @@
 				32D72AA12249B9FC00FFB9B4 /* LGNCutImageViewController.m */,
 				28DAA8C9231D09B4006A0570 /* LGNNewFilterViewController.h */,
 				28DAA8CA231D09B4006A0570 /* LGNNewFilterViewController.m */,
-				28823A6924A197AA0005FBE0 /* LGNoteContenInfoViewController.h */,
-				28823A6A24A197AA0005FBE0 /* LGNoteContenInfoViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -931,6 +944,28 @@
 			path = XMLDictionary;
 			sourceTree = "<group>";
 		};
+		BA003FB0268202BE00C41FF0 /* YJNewNote */ = {
+			isa = PBXGroup;
+			children = (
+				BA003FBE268202BE00C41FF0 /* YJNewNote.bundle */,
+				BA003FB7268202BE00C41FF0 /* YJNewNoteDataModel.h */,
+				BA003FBD268202BE00C41FF0 /* YJNewNoteDataModel.m */,
+				BA003FBA268202BE00C41FF0 /* YJNewNoteKlgView.h */,
+				BA003FB3268202BE00C41FF0 /* YJNewNoteKlgView.m */,
+				BA003FBF268202BE00C41FF0 /* YJNewNoteManager.h */,
+				BA003FB6268202BE00C41FF0 /* YJNewNoteManager.m */,
+				BA003FB1268202BE00C41FF0 /* YJNewNoteMarqueeButton.h */,
+				BA003FB9268202BE00C41FF0 /* YJNewNoteMarqueeButton.m */,
+				BA003FBC268202BE00C41FF0 /* YJNewNoteMarqueeLabel.h */,
+				BA003FB4268202BE00C41FF0 /* YJNewNoteMarqueeLabel.m */,
+				BA003FB8268202BE00C41FF0 /* YJNewNoteTextView.h */,
+				BA003FB2268202BE00C41FF0 /* YJNewNoteTextView.m */,
+				BA003FBB268202BE00C41FF0 /* YJNewNoteView.h */,
+				BA003FB5268202BE00C41FF0 /* YJNewNoteView.m */,
+			);
+			path = YJNewNote;
+			sourceTree = "<group>";
+		};
 		CB317818D090F1B714C2CE6F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1045,11 +1080,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3232642D216D9007005CC784 /* LaunchScreen.storyboard in Resources */,
-				288D06CE2475556E00775FA9 /* CFDropDownMenuView.bundle in Resources */,
 				3232642A216D9007005CC784 /* Assets.xcassets in Resources */,
 				325BC3A1216EE2EB00D077F5 /* LGNote.bundle in Resources */,
 				32326428216D9006005CC784 /* Main.storyboard in Resources */,
-				3213BC50225B46B90065E2DD /* YBImageBrowser.bundle in Resources */,
+				BA003FC7268202BE00C41FF0 /* YJNewNote.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1129,7 +1163,6 @@
 				3213BC96225C6E950065E2DD /* HDWebImageDownloader.m in Sources */,
 				32B6BE8422488002001F9E10 /* NSString+Notes.m in Sources */,
 				3213BC3A225B46B90065E2DD /* YBImageBrowser.m in Sources */,
-				28823A6B24A197AA0005FBE0 /* LGNoteContenInfoViewController.m in Sources */,
 				3213BCA2225C6E950065E2DD /* HDWebImageCoder.m in Sources */,
 				32326494216E398C005CC784 /* LGNoteBaseTextField.m in Sources */,
 				32326477216DF5D0005CC784 /* LGNNoteMainTableView.m in Sources */,
@@ -1149,6 +1182,7 @@
 				3213BC9A225C6E950065E2DD /* HDWebImageDownloaderOperation.m in Sources */,
 				32D8CEFD2237D199000BD642 /* LGNoteBaseNavigationViewController.m in Sources */,
 				3213BC45225B46B90065E2DD /* YBImageBrowseCell.m in Sources */,
+				BA003FC3268202BE00C41FF0 /* YJNewNoteView.m in Sources */,
 				32326456216D93A9005CC784 /* LGNNoteModel.m in Sources */,
 				32D72AA6224A43B200FFB9B4 /* NoteXMLDictionary.m in Sources */,
 				32B6BE6A22485E4A001F9E10 /* LGNoteBaseModel.m in Sources */,
@@ -1157,6 +1191,7 @@
 				3213BC92225C6E950065E2DD /* HDWebImageCoderHelper.m in Sources */,
 				32326468216DED2D005CC784 /* LGNNoteMainTableViewCell.m in Sources */,
 				3246AD06222FC97200940E2D /* LGNSearchToolViewConfigure.m in Sources */,
+				BA003FC2268202BE00C41FF0 /* YJNewNoteMarqueeLabel.m in Sources */,
 				32B6BE8522488002001F9E10 /* UITextView+Notes.m in Sources */,
 				3213BC8A225C6E950065E2DD /* HDWebImageGIFCoder.m in Sources */,
 				3232645F216DE8F8005CC784 /* LGNNoteEditViewController.m in Sources */,
@@ -1205,9 +1240,11 @@
 				3213BC8B225C6E950065E2DD /* HDWebImageManager.m in Sources */,
 				32B6BE90224880FE001F9E10 /* LGNImagePickerViewController.m in Sources */,
 				32326465216DE963005CC784 /* LGNViewModel.m in Sources */,
+				BA003FC4268202BE00C41FF0 /* YJNewNoteManager.m in Sources */,
 				3213BCA0225C6E950065E2DD /* UIView+WebCacheOperation.m in Sources */,
 				3232648E216E2C94005CC784 /* LGNoteBaseTableView.m in Sources */,
 				3213BC49225B46B90065E2DD /* YBIBUtilities.m in Sources */,
+				BA003FC1268202BE00C41FF0 /* YJNewNoteKlgView.m in Sources */,
 				3213BC93225C6E950065E2DD /* UIImage+GIF.m in Sources */,
 				32326422216D9006005CC784 /* AppDelegate.m in Sources */,
 				3213BC9C225C6E950065E2DD /* UIImageView+WebCache.m in Sources */,
@@ -1215,6 +1252,9 @@
 				32326474216DF420005CC784 /* LGNNoteTools.m in Sources */,
 				3213BC4C225B46B90065E2DD /* YBIBTransitionManager.m in Sources */,
 				32B6BE8F224880FE001F9E10 /* LGNDrawBoardViewController.m in Sources */,
+				BA003FC5268202BE00C41FF0 /* YJNewNoteMarqueeButton.m in Sources */,
+				BA003FC6268202BE00C41FF0 /* YJNewNoteDataModel.m in Sources */,
+				BA003FC0268202BE00C41FF0 /* YJNewNoteTextView.m in Sources */,
 				32DA50BC224DC4450064787C /* LGNNoteSourceDetailView.m in Sources */,
 				32B6BE6422485BD0001F9E10 /* LGNNoteDrawSettingView.m in Sources */,
 				32326462216DE923005CC784 /* LGNNoteSearchViewController.m in Sources */,

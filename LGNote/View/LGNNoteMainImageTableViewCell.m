@@ -96,10 +96,6 @@
 
     NSString * ResourceName =dataSource.ResourceName;
     NSString * MaterialName =dataSource.MaterialName;
-    if(!IsStrEmpty(dataSource.ResourceName) &&!IsStrEmpty(dataSource.MaterialName) ){
-        ResourceName = [NSString stringWithFormat:@"%@ | ",dataSource.MaterialName];
-        
-    }
 
                              
            NSMutableAttributedString *att = [LGNNoteTools attributedStringByStrings:@[ResourceName,MaterialName] colors:@[kColorInitWithRGB(0, 153, 255, 1),kColorInitWithRGB(0, 153, 255, 1)] fonts:@[@(12),@(12)]];

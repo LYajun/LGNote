@@ -5,7 +5,7 @@ target ‘NoteDemo’ do
   pod 'YJBaseModule','~> 1.2.4'
   pod 'BlocksKit'
   pod 'YYImage', '~> 1.0.4'
-  
+  pod 'YJUtils'
   pod 'AFNetworking'
   pod 'Masonry'
   pod 'ReactiveObjC', '~> 3.0.0'
