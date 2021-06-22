@@ -26,6 +26,9 @@ static NSString * const kYJCharactersSubDelimitersToEncode = @"!$&'()*+,;=";
 - (NSArray *)yj_splitToCharacters;
 + (NSString *)yj_ChineseNumbersWithNumber:(NSInteger)number;
 
+/** 四舍五入 */
++ (NSString *)yj_doRoundWithDigit:(CGFloat)digit pointCount:(NSInteger)pointCount;
+
 #pragma mark - Xml
 /** xml字符串转换成NSDictionary */
 - (NSDictionary *)yj_XMLDictionary;
@@ -76,6 +79,10 @@ static NSString * const kYJCharactersSubDelimitersToEncode = @"!$&'()*+,;=";
 - (NSString *)yj_URLDecode;
 - (NSString *)yj_URLEncode;
 - (NSString *)yj_URLQueryAllowedCharacterSet;
+- (NSString *)yj_htmlDecode;
++ (NSString *)yj_deleteURLDoubleSlashWithUrlStr:(NSString *)urlStr;
++ (BOOL)yj_isNum:(NSString *)checkedNumString;
++ (BOOL)yj_predicateMatchWithText:(NSString *)text matchFormat:(NSString *)matchFormat;
 @end
 
 @interface NSString (Emo)

@@ -132,4 +132,15 @@
 
 /** 隐藏 */
 - (void)hide;
+
+
+/** 自定义图标提示 */
+/** 成功 */
+- (void)showImgSuccessWithStatus:(NSString *)status;
+/** 失败 */
+- (void)showImgErrorWithStatus:(NSString *)status;
+- (void)showImgErrorWithError:(NSError *)error;
+/** 警告 */
+- (void)showImgInfoWithStatus:(NSString *)status;
+
 @end

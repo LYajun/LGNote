@@ -244,7 +244,7 @@
     if (!_loadErrorView) {
         _loadErrorView = [[UIView alloc]init];
         _loadErrorView.backgroundColor = self.backgroundColor;
-        UIImageView *img = [[UIImageView alloc]initWithImage:[UIImage yj_imageNamed:[YJBManager defaultManager].loadErrorImgName atDir:@"Error" atBundle:[YJBManager defaultManager].currentBundle]];
+        UIImageView *img = [[UIImageView alloc]initWithImage:[UIImage yj_imageNamed:[YJBManager defaultManager].loadErrorImgName atDir:@"error" atBundle:[YJBManager defaultManager].lgBundle]];
         [_loadErrorView addSubview:img];
         [img mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.loadErrorView);
@@ -303,13 +303,13 @@
         if (IsIPad) {
             imgName = [imgName stringByAppendingString:@"_ipad"];
         }
-        _noDataImgView = [[UIImageView alloc] initWithImage:[UIImage yj_imageNamed:imgName atDir:@"Empty" atBundle:[YJBManager defaultManager].currentBundle]];
+        _noDataImgView = [[UIImageView alloc] initWithImage:[UIImage yj_imageNamed:imgName atDir:@"empty" atBundle:[YJBManager defaultManager].lgBundle]];
     }
     return _noDataImgView;
 }
 - (UIImageView *)noDataSearchImgView{
     if (!_noDataSearchImgView) {
-        _noDataSearchImgView = [[UIImageView alloc] initWithImage:[UIImage yj_imageNamed:[YJBManager defaultManager].searchEmptyImgName atDir:@"SearchEmpty" atBundle:[YJBManager defaultManager].currentBundle]];
+        _noDataSearchImgView = [[UIImageView alloc] initWithImage:[UIImage yj_imageNamed:[YJBManager defaultManager].searchEmptyImgName atDir:@"search_empty" atBundle:[YJBManager defaultManager].lgBundle]];
     }
     return _noDataSearchImgView;
 }

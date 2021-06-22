@@ -27,6 +27,21 @@
 #import "YJBHppleElement.h"
 #import "YJBWebNavigationView.h"
 #import "YJBWebView.h"
+#import "YJRBarButtonItem.h"
+#import "YJRFontsViewController.h"
+#import "YJRRichTextEditor.h"
+#import "YJRRichTextView.h"
+#import "YJRBrightnessCursor.h"
+#import "YJRCgUtil.h"
+#import "YJRColorCursor.h"
+#import "YJRColorPickerMacros.h"
+#import "YJRColorPickerView.h"
+#import "YJRColorPickerViewController.h"
+#import "YJRColorUtil.h"
+#import "YJRLayoutManager.h"
+#import "YJRTextStorage.h"
+#import "YJRTextView.h"
+#import "YJRToken.h"
 
 FOUNDATION_EXPORT double YJBaseModuleVersionNumber;
 FOUNDATION_EXPORT const unsigned char YJBaseModuleVersionString[];

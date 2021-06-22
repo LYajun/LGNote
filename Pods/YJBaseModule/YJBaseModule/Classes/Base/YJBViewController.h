@@ -32,6 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)yj_updateData;
 - (void)yj_loadErrorUpdate;
 
+- (void)yj_loadTableData;
+
 /** 加载视图与顶部的间距 */
 @property (nonatomic,assign) CGFloat yj_loadingViewTopSpace;
 
@@ -41,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)yj_setLoadingGifViewShow:(BOOL)show;
 - (void)yj_setLoadingFlowerTitleViewShow:(BOOL)show;
 
+@property (nonatomic,strong) UIColor *loadingViewBgColor;
 @property (copy, nonatomic) NSString *yj_loadingGifTitle;
 @property (copy, nonatomic) NSString *yj_loadingFlowerTitle;
 

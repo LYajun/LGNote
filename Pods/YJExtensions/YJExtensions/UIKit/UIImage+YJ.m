@@ -15,11 +15,12 @@
     return [self yj_imageNamed:name atDir:nil atBundle:bundle];
 }
 + (UIImage *)yj_imageNamed:(NSString *)name atDir:(NSString *)dir atBundle:(nonnull NSBundle *)bundle{
-    NSString *namePath = name;
-    if (dir && dir.length > 0) {
-        namePath = [dir stringByAppendingPathComponent:namePath];
-    }
-    return [UIImage imageNamed:[bundle yj_bundlePathWithName:namePath]];
+//    NSString *namePath = name;
+//    if (dir && dir.length > 0) {
+//        namePath = [dir stringByAppendingPathComponent:namePath];
+//    }
+//    return [UIImage imageNamed:[bundle yj_bundlePathWithName:namePath]];
+    return [UIImage yj_imagePathName:name atDir:dir atBundle:bundle];
 }
 + (UIImage *)yj_imagePathName:(NSString *)name atDir:(NSString *)dir atBundle:(NSBundle *)bundle{
     NSString *namePath = name;
@@ -258,5 +259,16 @@
     CGContextRelease(ctx);
     CGImageRelease(cgimg);
     return img;
+}
+- (NSData *)yj_compressImageOnlength:(CGFloat)length{
+    NSInteger minL = length * 1024;
+    CGFloat compress = 1.0;
+    CGFloat minCompress = 0.1;
+    NSData *imgData = UIImageJPEGRepresentation(self,compress);
+    while (imgData && imgData.length > minL && compress > minCompress) {
+        compress -= 0.1;
+        imgData = UIImageJPEGRepresentation(self,compress);
+    }
+    return imgData;
 }
 @end

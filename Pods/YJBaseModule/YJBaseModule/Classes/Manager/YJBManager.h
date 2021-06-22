@@ -12,12 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 #define IsIPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 
 @interface YJBManager : NSObject
-/** 加载动图文件夹名 */
-@property (nonatomic,copy) NSString *loadingDirName;
-/** 加载动图文件名前缀 */
-@property (nonatomic,copy) NSString *loadingImgPrefix;
-/** 加载动图文件名后缀缀 */
-@property (nonatomic,copy) NSString *loadingImgSuffix;
 
 /** 加载视图颜色 */
 @property (nonatomic,strong) UIColor *loadingColor;
@@ -67,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 + (YJBManager *)defaultManager;
-
+- (NSBundle *)lgBundle;
 - (NSBundle *)currentBundle;
 - (NSArray *)loadingImgs;
 @end

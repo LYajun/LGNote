@@ -10,6 +10,8 @@
 #import "YJAlertView.h"
 #import "LGProgressHUD.h"
 #import <YJExtensions/YJExtensions.h>
+#import "YJSheetView.h"
+#import "LGTipsAlertView.h"
 
 @interface LGAlertHUD ()
 {
@@ -192,7 +194,21 @@
         [self hide];
     }
     if (LGA_IsIpad()) {
-        [self alertWithTitle:title message:msg canceTitle:canceTitle confirmTitle:confirmTitle cancelBlock:cancelBlock confirmBlock:confirmBlock];
+        YJSheetView *sheetView = [YJSheetView sheetViewWithTitle:title canceTitle:canceTitle buttonTitles:@[confirmTitle] buttonBlock:^(NSInteger index) {
+            if (confirmBlock) {
+                confirmBlock();
+            }
+        } cancelBlock:^{
+            if (cancelBlock) {
+                cancelBlock();
+            }
+        }];
+        
+        if (controller.navigationController) {
+            [sheetView showOnView:controller.navigationController.view];
+        }else{
+            [sheetView showOnView:controller.view];
+        }
     }else{
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleActionSheet];
         UIAlertAction *confirmButton = [UIAlertAction actionWithTitle:confirmTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -207,6 +223,7 @@
         }];
         [alertController addAction:cancelButton];
         [alertController addAction:confirmButton];
+         alertController.modalPresentationStyle = UIModalPresentationFullScreen;
         [controller presentViewController:alertController animated:YES completion:nil];
     }
 }
@@ -215,15 +232,21 @@
         [self hide];
     }
     if (LGA_IsIpad()) {
-        [[[YJAlertView alloc]initWithTitle:title message:msg style:YJAlertViewStyleAlert buttonTitles:buttonTitles cancelButtonTitle:canceTitle destructiveButtonTitle:nil actionHandler:^(YJAlertView * _Nonnull alertView, NSUInteger index, NSString * _Nullable title) {
+        YJSheetView *sheetView = [YJSheetView sheetViewWithTitle:title canceTitle:canceTitle buttonTitles:buttonTitles buttonBlock:^(NSInteger index) {
             if (buttonBlock) {
                 buttonBlock(index);
             }
-        } cancelHandler:^(YJAlertView * _Nonnull alertView) {
+        } cancelBlock:^{
             if (cancelBlock) {
                 cancelBlock();
             }
-        } destructiveHandler:nil] showAnimated];
+        }];
+        
+        if (controller.navigationController) {
+            [sheetView showOnView:controller.navigationController.view];
+        }else{
+            [sheetView showOnView:controller.view];
+        }
     }else{
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:msg preferredStyle:UIAlertControllerStyleActionSheet];
         UIAlertAction *cancelButton = [UIAlertAction actionWithTitle:canceTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -241,10 +264,14 @@
             }];
             [alertController addAction:button];
         }
+        alertController.modalPresentationStyle = UIModalPresentationFullScreen;
         [controller presentViewController:alertController animated:YES completion:nil];
     }
 }
 #pragma mark - HUD
+- (void)setHudTextAttibute{
+    _hud.detailsLabelFont = [UIFont systemFontOfSize:15];
+}
 - (void)showIndeterminate{
     [self showIndeterminateWithStatus:nil];
 }
@@ -258,6 +285,7 @@
     }else{
         _hud.detailsLabelText = @"请稍等...";
     }
+    [self setHudTextAttibute];
 }
 - (void)showSuccessWithStatus:(NSString *)status{
     if (_hud) {
@@ -269,6 +297,7 @@
     UIImage *image = [[UIImage imageNamed:LG_GETBundleResource(@"lg_hud_success")] imageWithRenderingMode:UIImageRenderingModeAutomatic];
     _hud.customView = [[UIImageView alloc] initWithImage:image];
     _hud.detailsLabelText = status;
+    [self setHudTextAttibute];
     [_hud hide:YES afterDelay:2.0f];
 }
 - (void)showErrorWithStatus:(NSString *)status{
@@ -281,6 +310,7 @@
     UIImage *image = [[UIImage imageNamed:LG_GETBundleResource(@"lg_hud_error")] imageWithRenderingMode:UIImageRenderingModeAutomatic];
     _hud.customView = [[UIImageView alloc] initWithImage:image];
     _hud.detailsLabelText = status;
+     [self setHudTextAttibute];
     [_hud hide:YES afterDelay:2.0f];
 }
 - (void)showErrorWithError:(NSError *)error{
@@ -300,6 +330,7 @@
     UIImage *image = [[UIImage imageNamed:LG_GETBundleResource(@"lg_hud_warning")] imageWithRenderingMode:UIImageRenderingModeAutomatic];
     _hud.customView = [[UIImageView alloc] initWithImage:image];
     _hud.detailsLabelText = status;
+     [self setHudTextAttibute];
     [_hud hide:YES afterDelay:2.0f];
 }
 - (void)showStatus:(NSString *)status{
@@ -310,6 +341,7 @@
     _hud.userInteractionEnabled = NO;
     _hud.mode = LGProgressHUDModeText;
     _hud.detailsLabelText = status;
+     [self setHudTextAttibute];
     _hud.yOffset = ([UIScreen mainScreen].bounds.size.height -64)/2 - 100;
     [_hud hide:YES afterDelay:2.0f];
 }
@@ -322,6 +354,7 @@
     _hud.mode = LGProgressHUDModeText;
     _hud.detailsLabelText = status;
     _hud.detailsLabelColor = [UIColor redColor];
+     [self setHudTextAttibute];
     _hud.yOffset = ([UIScreen mainScreen].bounds.size.height -64)/2 - 100;
     [_hud hide:YES afterDelay:2.0f];
 }
@@ -344,8 +377,40 @@
     }
 }
 - (void)hide{
+    [LGTipsAlertView hide];
     [_hud hide:YES];
     _hud = nil;
+}
+
+- (void)showImgSuccessWithStatus:(NSString *)status{
+    if (_hud) {
+        [self hide];
+    }
+    _hud = [[LGProgressHUD alloc] init];
+    [LGTipsAlertView showSuccessWithTips:status];
+}
+
+- (void)showImgInfoWithStatus:(NSString *)status{
+    if (_hud) {
+        [self hide];
+    }
+    _hud = [[LGProgressHUD alloc] init];
+    [LGTipsAlertView showErrorWithTips:status];
+}
+- (void)showImgErrorWithStatus:(NSString *)status{
+   if (_hud) {
+        [self hide];
+    }
+    _hud = [[LGProgressHUD alloc] init];
+    [LGTipsAlertView showFailureWithTips:status];
+}
+
+- (void)showImgErrorWithError:(NSError *)error{
+    if (_hud) {
+        [self hide];
+    }
+    _hud = [[LGProgressHUD alloc] init];
+    [LGTipsAlertView showFailureWithError:error];
 }
 #pragma mark - private
 - (UIView *)keyWindow{

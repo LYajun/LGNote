@@ -32,6 +32,11 @@
     paragraphStyle.lineSpacing = lineSpacing;
     [self addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, self.length)];
 }
+- (void)yj_setAlignment:(NSTextAlignment)alignment{
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+   paragraphStyle.alignment = alignment;
+   [self addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, self.length)];
+}
 - (void)yj_setChineseForegroundColor:(UIColor *)color font:(CGFloat)font{
     for (int i=0; i<self.string.length; i++) {
         unichar ch = [self.string characterAtIndex:i];

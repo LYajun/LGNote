@@ -38,7 +38,7 @@ Pod::Spec.new do |spec|
   spec.dependency 'MJExtension'
   spec.dependency 'LGAlertHUD'
   spec.dependency 'ReactiveObjC'
-  spec.dependency 'AFNetworking','3.2.1'
+  spec.dependency 'AFNetworking'
   spec.dependency 'MJRefresh'
   spec.dependency 'TFHpple'
   spec.dependency 'YYImage'

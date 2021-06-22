@@ -8,6 +8,12 @@
 #import <WebKit/WebKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
+
+UIKIT_EXTERN NSString *const YJWebViewEnglishToChineseNotifiaction;
+UIKIT_EXTERN NSString *const YJWebViewChineseToEnglishNotifiaction;
+UIKIT_EXTERN NSString *const YJWebViewDictionaryNotifiaction;
+
+
 /** 以下需要配套使用
  addScriptMessageHandler
  removeScriptMessageHandlerForName
@@ -23,8 +29,16 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-@interface YJBWebView : WKWebView
+@protocol YJBWeakWebMenuDelegate <NSObject>
 
+@optional
+- (void)webView:(WKWebView *)webView didSelectNoteContent:(NSString *)noteContent;
+@end
+
+@interface YJBWebView : WKWebView
+@property (nonatomic,assign) BOOL translateDisable;
+@property (nonatomic,assign) BOOL noteEnable;
+@property (nonatomic, assign) id<YJBWeakWebMenuDelegate> menuDelegate;
 - (void)showNavigationBarAtDidFinishNavigation;
 
 - (void)yj_loadHTMLUrlString:(NSString *)urlString baseURL:(nullable NSURL *)baseURL;

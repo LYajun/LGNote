@@ -55,7 +55,7 @@
 - (UIButton *)backBtn{
     if (!_backBtn) {
         _backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_backBtn setImage:[UIImage yj_imageNamed:@"back" atDir:@"Other" atBundle:[YJBManager defaultManager].currentBundle] forState:UIControlStateNormal];
+        [_backBtn setImage:[UIImage yj_imageNamed:@"back" atBundle:[YJBManager defaultManager].currentBundle] forState:UIControlStateNormal];
         [_backBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     }
     return _backBtn;

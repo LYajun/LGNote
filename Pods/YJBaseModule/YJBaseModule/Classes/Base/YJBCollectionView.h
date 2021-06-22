@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)collectionViewFooterDidRefresh;
 @end
 @interface YJBCollectionView : UICollectionView
+@property (nonatomic,assign) BOOL hideFooterStateLab;
 @property (nonatomic,assign) id<YJBCollectionViewRefreshDelegate> refreshDelegate;
 - (void)installRefreshHeader:(BOOL)installHeader footer:(BOOL)installFooter;
 - (void)endHeaderRefreshing;

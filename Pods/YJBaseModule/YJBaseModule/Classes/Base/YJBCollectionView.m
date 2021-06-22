@@ -9,7 +9,7 @@
 #import <MJRefresh/MJRefresh.h>
 #import "YJBManager.h"
 @interface YJBCollectionView ()
-
+@property (nonatomic,strong) MJRefreshAutoNormalFooter *currentFooter;
 @end
 @implementation YJBCollectionView
 - (instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout{
@@ -51,6 +51,13 @@
         footer.stateLabel.font = [UIFont systemFontOfSize:[YJBManager defaultManager].refreshFooterStateTitleSize];
         footer.stateLabel.textColor = [YJBManager defaultManager].refreshFooterStateTitleColor;
         self.mj_footer = footer;
+        self.currentFooter = footer;
+    }
+}
+- (void)setHideFooterStateLab:(BOOL)hideFooterStateLab{
+    _hideFooterStateLab = hideFooterStateLab;
+    if (self.currentFooter) {
+        self.currentFooter.stateLabel.hidden = hideFooterStateLab;
     }
 }
 - (void)endHeaderRefreshing{

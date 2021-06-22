@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)yj_setNumberForegroundColor:(UIColor *)color font:(CGFloat)font;
 - (void)yj_setSubChar:(NSString *)subStr foregroundColor:(UIColor *)color font:(CGFloat)font;
 - (void)yj_addParagraphLineSpacing:(CGFloat) lineSpacing;
-
+- (void)yj_setAlignment:(NSTextAlignment)alignment;
 + (NSMutableAttributedString *)yj_AttributedStringByHtmls:(NSArray *)htmls colors:(NSArray *)colors fonts:(NSArray *)fonts;
 @end
 

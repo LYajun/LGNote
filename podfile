@@ -1,17 +1,17 @@
 platform :ios,’9.0’
 use_frameworks!
 target ‘NoteDemo’ do
-  pod 'TFHpple', '~> 2.0.0'
-  pod 'YJBaseModule','~> 1.2.4'
+  pod 'TFHpple'
+  pod 'YJBaseModule'
   pod 'BlocksKit'
-  pod 'YYImage', '~> 1.0.4'
+  pod 'YYImage'
   pod 'YJUtils'
-  pod 'AFNetworking','3.2.1'
+  pod 'AFNetworking'
   pod 'Masonry'
-  pod 'ReactiveObjC', '~> 3.0.0'
-  pod 'LGAlertHUD', '1.0.3'
+  pod 'ReactiveObjC'
+  pod 'LGAlertHUD'
   pod 'MJExtension'
-  pod 'SDWebImage', '~> 4.0.0'
+  pod 'SDWebImage'
   pod 'MJRefresh'
 
 end

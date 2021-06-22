@@ -10,11 +10,24 @@
 #import <CommonCrypto/CommonCrypto.h>
 #import "YJEHpple.h"
 #import <objc/runtime.h>
+#import "YJEGumbo+Query.h"
 
 #define YJ_ASSOCIATIVE_CURRENT_DICTIONARY_KEY @"ASSOCIATIVE_CURRENT_DICTIONARY_KEY"
 #define YJ_ASSOCIATIVE_CURRENT_TEXT_KEY @"ASSOCIATIVE_CURRENT_TEXT_KEY"
 
 #define IsObjEmpty(_ref)    (((_ref) == nil) || ([(_ref) isEqual:[NSNull null]]))
+
+
+static inline NSDictionary *YJHTMLEscapeMap() {
+    return @{@"&nbsp;":@" ",
+             @"&lt;":@"<",
+             @"&gt;":@">",
+             @"&amp;":@"&",
+             @"&quot;":@"\"",
+             @"&apos;":@"'"
+    };
+}
+
 @interface NSString () <NSXMLParserDelegate>
 
 @property(nonatomic, retain)NSMutableArray *currentDictionaries;
@@ -24,6 +37,9 @@
 @end
 
 @implementation NSString (YJ)
+
+
+
 + (NSString *)yj_Char1{
     return [NSString stringWithFormat:@"%c",1];
 }
@@ -50,7 +66,11 @@
                           @"12":@"⑬",
                           @"13":@"⑭",
                           @"14":@"⑮",
-                          @"15":@"⑯"
+                          @"15":@"⑯",
+                          @"16":@"⑰",
+                          @"17":@"⑱",
+                          @"18":@"⑲",
+                          @"19":@"⑳"
                           };
     NSArray *allKeys = [dic allKeys];
     NSString *key = [NSString stringWithFormat:@"%li",intCount];
@@ -100,6 +120,14 @@
         numberStr = [NSString stringWithFormat:@"%@百%@十%@",[numberDic objectForKey:[NSString stringWithFormat:@"%li",bai]],[numberDic objectForKey:[NSString stringWithFormat:@"%li",shi]],[numberDic objectForKey:[NSString stringWithFormat:@"%li",ge]]] ;
     }
     return numberStr;
+}
+
++ (NSString *)yj_doRoundWithDigit:(CGFloat)digit pointCount:(NSInteger)pointCount{
+    NSDecimalNumberHandler* roundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain scale:pointCount raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+    NSString *scoreStr = [NSString stringWithFormat:@"%f",digit];
+    NSDecimalNumber *numResult = [NSDecimalNumber decimalNumberWithString:scoreStr];
+    scoreStr =[[numResult decimalNumberByRoundingAccordingToBehavior:roundingBehavior] stringValue];
+    return scoreStr;
 }
 #pragma mark - Xml
 
@@ -240,32 +268,113 @@
     str = [str stringByReplacingOccurrencesOfString:@"</strong>" withString:@"</font>"];
     return str;
 }
+
+//- (NSString *)yj_htmlImgFrameAdjust{
+//    __block NSString *html = self.copy;
+//    if (!html || html.length == 0) {
+//        return html;
+//    }
+//    NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
+//    // 解析html数据
+//    YJEHpple *xpathParser = [[YJEHpple alloc] initWithHTMLData:htmlData];
+//    // 根据标签来进行过滤
+//    NSArray *imgArray = [xpathParser searchWithXPathQuery:@"//img"];
+//    if (imgArray && imgArray.count > 0) {
+//        [imgArray enumerateObjectsUsingBlock:^(YJEHppleElement *hppleElement, NSUInteger idx, BOOL * _Nonnull stop) {
+//            NSDictionary *attributes = hppleElement.attributes;
+//            NSString *src = attributes[@"src"];
+//            NSString *srcSuf = [src componentsSeparatedByString:@"."].lastObject;
+//            if (srcSuf && [srcSuf.lowercaseString containsString:@"gif"]) {
+//                // gif 自适应
+//            }else{
+//                if ([attributes.allKeys containsObject:@"style"]) {
+//                    NSString *styleStr = [NSString stringWithFormat:@"style=\"%@\"",[attributes objectForKey:@"style"]];
+//                    html = [html stringByReplacingOccurrencesOfString:styleStr withString:@""];
+//                }
+//                CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
+//                html = [NSString stringWithFormat:@"<html><head><style>img{max-width:%.f;height:auto !important;width:auto !important;};</style></head><body style='margin:0; padding:0;'>%@</body></html>",screenW-60, html];
+//            }
+//        }];
+//    }
+//    return html;
+//}
 - (NSString *)yj_htmlImgFrameAdjust{
-    __block NSString *html = self.copy;
+    NSString *html = self.copy;
     if (!html || html.length == 0) {
         return html;
     }
-    NSData *htmlData = [html dataUsingEncoding:NSUTF8StringEncoding];
-    // 解析html数据
-    YJEHpple *xpathParser = [[YJEHpple alloc] initWithHTMLData:htmlData];
-    // 根据标签来进行过滤
-    NSArray *imgArray = [xpathParser searchWithXPathQuery:@"//img"];
-    
-    if (imgArray && imgArray.count > 0) {
-        [imgArray enumerateObjectsUsingBlock:^(YJEHppleElement *hppleElement, NSUInteger idx, BOOL * _Nonnull stop) {
-            NSDictionary *attributes = hppleElement.attributes;
-            NSString *src = attributes[@"src"];
-            NSString *srcSuf = [src componentsSeparatedByString:@"."].lastObject;
-            if (srcSuf && [srcSuf.lowercaseString containsString:@"gif"]) {
-                // gif 自适应
-            }else{
-                CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
-                html = [NSString stringWithFormat:@"<html><head><style>img{max-width:%.f;height:auto !important;width:auto !important;};</style></head><body style='margin:0; padding:0;'>%@</body></html>",screenW-30, html];
+    CGFloat screenW = [UIScreen mainScreen].bounds.size.width;
+    if ([html.lowercaseString containsString:@"<img"]) {
+        html = [NSString stringWithFormat:@"<html><head><style>img{max-width:%.f;height:auto !important;width:auto !important;};</style></head><body style='margin:0; padding:0;'>%@</body></html>",screenW-60, html];
+    }
+    YJEGumboDocument *document = [[YJEGumboDocument alloc] initWithHTMLString:html];
+    NSArray *elements = document.Query(@"table");
+    NSArray *documentImgEles = document.Query(@"img");
+    NSMutableArray *documentImgArr = [NSMutableArray array];
+    if ([html.lowercaseString containsString:@"<table"] && [html.lowercaseString containsString:@"<img"]) {
+        for (YJEGumboElement *element in elements) {
+            NSString *htmlStr = element.html();
+            [documentImgArr addObject:htmlStr];
+            if ([htmlStr.lowercaseString containsString:@"<img"] && [htmlStr.lowercaseString containsString:@"<tr"] && [htmlStr.lowercaseString containsString:@"<td"]) {
+                YJEGumboDocument *tdDocument = [[YJEGumboDocument alloc] initWithHTMLString:htmlStr];
+                NSInteger tdElementCount = [htmlStr.lowercaseString componentsSeparatedByString:@"<td"].count-1;
+                NSInteger trElementCount = [htmlStr.lowercaseString componentsSeparatedByString:@"<tr"].count-1;
+                
+                NSArray *imgElements = tdDocument.Query(@"img");
+                
+                NSRegularExpression *imgRegularExpretion = [NSRegularExpression regularExpressionWithPattern:@"<img[^>]*?>" options:NSRegularExpressionCaseInsensitive error:nil];
+                NSArray<NSTextCheckingResult *> *arr = [imgRegularExpretion matchesInString:htmlStr options:NSMatchingReportCompletion range:NSMakeRange(0, htmlStr.length)];
+                NSString *htmlReplaceStr = htmlStr;
+                
+                if (imgElements && imgElements.count > 0 && arr && arr.count > 0) {
+                    NSInteger count = MIN(arr.count, imgElements.count);
+                    for (int i = 0; i < count;i++) {
+                        NSTextCheckingResult *result = arr[i];
+                        YJEGumboElement *imgElement = imgElements[i];
+                        NSRange matchRange = result.range;
+                        NSString *imgStr = [htmlStr substringWithRange:matchRange];
+                        CGFloat cowCount = tdElementCount / trElementCount;
+                       CGFloat maxWidth = 20;
+                        if (cowCount <= 1) {
+                            maxWidth = 80;
+                        }else if (cowCount <= 3){
+                            maxWidth = 30;
+                        }else if (cowCount <= 5){
+                            maxWidth = 25;
+                        }
+                        NSString *maxWidthStr = [NSString stringWithFormat:@"%@%%",[NSString yj_doRoundWithDigit:maxWidth pointCount:1]];
+                        NSString *imgSrc = imgElement.attr(@"src");
+                        NSString *imgRepaceStr = [NSString stringWithFormat:@"<img style=\"max-width:%@;width:auto !important;height:auto !important;\" src=\"%@\">",maxWidthStr,imgSrc];
+                        htmlReplaceStr = [htmlReplaceStr stringByReplacingOccurrencesOfString:imgStr withString:imgRepaceStr];
+                    }
+                    html = [html stringByReplacingOccurrencesOfString:htmlStr withString:htmlReplaceStr];
+                }
             }
-        }];
+            
+        }
+    }
+    NSMutableArray *imgEles = [NSMutableArray array];
+    if (documentImgArr.count > 0) {
+        NSString *str = [documentImgArr componentsJoinedByString:@"|"];
+        for (YJEGumboElement *imgElement in documentImgEles) {
+            NSString *imgSrc = imgElement.attr(@"src");
+            if (![str containsString:imgSrc]) {
+                [imgEles addObject:imgElement];
+            }
+        }
+    }else{
+        [imgEles addObjectsFromArray:documentImgEles];
+    }
+    for (YJEGumboElement *imgElement in imgEles) {
+        NSString *imgStyle = imgElement.attr(@"style");
+        if (imgStyle && imgStyle.length > 0) {
+            NSString *styleStr = [NSString stringWithFormat:@"style=\"%@\"",imgStyle];
+            html = [html stringByReplacingOccurrencesOfString:styleStr withString:@""];
+        }
     }
     return html;
 }
+
 + (NSString *)yj_filterHTML:(NSString *)html{
     NSScanner *theScanner;
     NSString *text = nil;
@@ -453,6 +562,49 @@
 }
 - (NSString *)yj_URLQueryAllowedCharacterSet{
     return [self stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+}
++ (NSString *)yj_deleteURLDoubleSlashWithUrlStr:(NSString *)urlStr{
+    if (urlStr && urlStr.length > 0){
+        urlStr = [urlStr stringByRemovingPercentEncoding];
+    }
+    if (urlStr && urlStr.length > 0 && [urlStr containsString:@"://"]) {
+        NSArray *urlArr = [urlStr componentsSeparatedByString:@"://"];
+       NSString *lastStr = [urlArr.lastObject stringByReplacingOccurrencesOfString:@"//" withString:@"/"];
+       while ([lastStr containsString:@"//"]) {
+           lastStr = [lastStr stringByReplacingOccurrencesOfString:@"//" withString:@"/"];
+       }
+       urlStr = [NSString stringWithFormat:@"%@://%@",urlArr.firstObject,lastStr];
+    }
+    return urlStr;
+}
+- (NSString *)yj_htmlDecode{
+    if (self && self.length > 0) {
+        NSString *html = self;
+        for (NSString *keyStr in YJHTMLEscapeMap().allKeys) {
+            if ([html containsString:keyStr]) {
+                html = [html stringByReplacingOccurrencesOfString:keyStr withString:[YJHTMLEscapeMap() objectForKey:keyStr]];
+            }
+        }
+        return html;
+    }
+    return @"";
+}
++ (BOOL)yj_isNum:(NSString *)checkedNumString{
+    if (!checkedNumString || checkedNumString.length == 0) {
+        return NO;
+    }
+    checkedNumString = [checkedNumString stringByTrimmingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet]];
+    if(checkedNumString.length > 0) {
+        return NO;
+    }
+    return YES;
+}
++ (BOOL)yj_predicateMatchWithText:(NSString *)text matchFormat:(NSString *)matchFormat{
+    if (!text || text.length == 0) {
+        return NO;
+    }
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"SELF MATCHES %@", matchFormat];
+    return [predicate evaluateWithObject:text];
 }
 @end
 

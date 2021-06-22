@@ -31,6 +31,13 @@ NS_ASSUME_NONNULL_BEGIN
                        destructiveTitle:(NSString *)destructiveTitle
                             cancelBlock:(void (^)(void))cancelBlock
                        destructiveBlock:(void (^)(void))destructiveBlock;
++ (YJLancooAlert *)lancooAlertWithTitle:(NSString *)title
+                                msgAttr:(NSAttributedString *)msgAttr
+                              alignment:(NSTextAlignment)alignment
+                            cancelTitle:(NSString *)cancelTitle
+                       destructiveTitle:(NSString *)destructiveTitle
+                            cancelBlock:(void (^)(void))cancelBlock
+                       destructiveBlock:(void (^)(void))destructiveBlock;
 
 + (YJLancooAlert *)lancooAlertWithTitle:(NSString *)title
                                 msgAttr:(NSAttributedString *)msgAttr
@@ -39,6 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (YJLancooAlert *)lancooAlertGifViewWithGifName:(NSString *)gifName msg:(NSString *)msg duration:(NSInteger)duration;
 
+- (void)showOnView:(UIView *)view;
 - (void)show;
 - (void)hide;
 + (void)dismiss;

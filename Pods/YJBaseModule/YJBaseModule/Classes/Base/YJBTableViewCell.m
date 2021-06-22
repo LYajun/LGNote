@@ -7,7 +7,9 @@
 
 #import "YJBTableViewCell.h"
 #import <YJExtensions/YJExtensions.h>
-
+@interface YJBTableViewCell ()
+@property (nonatomic,strong) UIView *botLine;
+@end
 @implementation YJBTableViewCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -28,6 +30,15 @@
     _separatorWidth = 0.8;
     _sepColor = [UIColor yj_colorWithHex:0xdcdcdc];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (@available(iOS 14.0, *)) {
+        [self.contentView addSubview:self.botLine];
+    }
+}
+- (UIView *)botLine{
+    if (!_botLine) {
+        _botLine = [UIView new];
+    }
+    return _botLine;
 }
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated{
     if (self.highlightColor) {
@@ -44,6 +55,8 @@
     if (!self.isShowSeparator) {
         width = 0;
     }
+    self.botLine.frame = CGRectMake(self.separatorOffsetPoint.x, rect.size.height - width, rect.size.width-self.separatorOffsetPoint.x-self.separatorOffsetPoint.y, width);
+    self.botLine.backgroundColor = self.sepColor;
     UIBezierPath *bezierPath = [UIBezierPath bezierPathWithRect:CGRectMake(self.separatorOffsetPoint.x, rect.size.height - width, rect.size.width-self.separatorOffsetPoint.x-self.separatorOffsetPoint.y, width)];
     [self.sepColor setFill];
     [bezierPath fillWithBlendMode:kCGBlendModeNormal alpha:1];

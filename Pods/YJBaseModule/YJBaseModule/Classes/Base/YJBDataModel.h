@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class YJBViewController,YJBTableView,YJBCollectionView;
+@class YJBViewController,YJBTableView,YJBCollectionView,YJBView;
 @interface YJBDataModel : NSObject
 @property (nonatomic,strong) YJBModel *model;
 
@@ -80,12 +80,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /** 所属的控制器 */
+@property (weak, nonatomic) YJBView *ownView;
 @property (weak, nonatomic) YJBViewController *ownController;
 @property (weak, nonatomic) YJBTableView *ownTableView;
 @property (weak, nonatomic) YJBCollectionView *ownCollectionView;
 
 - (instancetype)initWithOwnController:(YJBViewController *)ownController;
-
+- (instancetype)initWithOwnView:(YJBView *)ownView;
 - (void)yj_configure;
 
 

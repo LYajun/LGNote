@@ -292,7 +292,7 @@
     
     switch (requestType) {
         case GET:{
-            [manager GET:url parameters:self.parameters progress:^(NSProgress * _Nonnull downloadProgress) {
+            [manager GET:url parameters:self.parameters headers:nil progress:^(NSProgress * _Nonnull downloadProgress) {
                            
                        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                            dispatch_async(dispatch_get_main_queue(), ^{
@@ -378,7 +378,7 @@
             break;
             
         case POST:{
-            [manager POST:url parameters:self.parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+            [manager POST:url parameters:self.parameters headers:nil progress:^(NSProgress * _Nonnull uploadProgress) {
                 
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -470,7 +470,7 @@
         }
             break;
         case UPLOAD:{
-            [self POST:url parameters:self.parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+            [self POST:url parameters:self.parameters headers:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                 NSInteger count = self.uploadDatas.count;
                 for (int i = 0; i < count; i ++) {
                     NSData *uploadData = self.uploadDatas[i];

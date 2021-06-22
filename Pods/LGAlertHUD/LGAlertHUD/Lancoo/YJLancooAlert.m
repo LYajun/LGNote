@@ -14,8 +14,9 @@
 
 #define kLancooScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kLancooScreenHeight [UIScreen mainScreen].bounds.size.height
-#define kLancooWidth (kLancooScreenWidth * 0.8)
-#define kLancooHeadImageH 100
+#define IsPad (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+#define kLancooWidth (IsPad ? 400 : kLancooScreenWidth * 0.8)
+#define kLancooHeadImageH (IsPad ? 120 : 100)
 
 
 @interface YJLancooAlert ()
@@ -66,15 +67,15 @@
 }
 - (void)configure{
 
-    _titleFontSize = 18;
+    _titleFontSize = IsPad ? 21 : 18;
     _titleColor = [UIColor yj_colorWithHex:0x222222];
     
-    _contentFontSize = 15;
-    _contentColor = [UIColor yj_colorWithHex:0x444444];
+    _contentFontSize = IsPad ? 17 : 15;
+    _contentColor = [UIColor yj_colorWithHex:0x252525];
     
-    _btnBackgroundColor = [UIColor yj_colorWithHex:0x0baffb];
+    _btnBackgroundColor = [UIColor yj_colorWithHex:0x23a1fa];
     _btnTitleColor = [UIColor whiteColor];
-    _btnTitleFontSize = 15;
+    _btnTitleFontSize = IsPad ? 17 : 15;
 //    _btnBorderColor = [UIColor yj_colorWithHex:0x1DBDB8];
     
 }
@@ -98,9 +99,13 @@
     }];
     
     CGFloat leftOffset = kLancooScreenWidth > 320 ? 30 : 20;
-    CGFloat btnSpace = 30;
+    CGFloat btnSpace = 16;
+    if (IsPad) {
+        leftOffset = 48;
+        btnSpace = 24;
+    }
     CGFloat twoBtnWidth = (kLancooWidth - leftOffset * 2 - btnSpace)/2;
-    CGFloat twoBtnHeight = 36;
+    CGFloat twoBtnHeight = IsPad ? 40 : 36;
     [contentView addSubview:self.cancelBtn];
     [self.cancelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(contentView).offset(-20);
@@ -108,28 +113,34 @@
         make.width.mas_equalTo(twoBtnWidth);
         make.height.mas_equalTo(twoBtnHeight);
     }];
-    [self.cancelBtn yj_clipLayerWithRadius:twoBtnHeight/2 width:1.5 color:_btnBackgroundColor];
+    
+    
+    [self.cancelBtn yj_shadowWithCornerRadius:twoBtnHeight/2 borderWidth:1.2 borderColor:_btnBackgroundColor shadowColor:[UIColor yj_colorWithHex:0x00C3F2] shadowOpacity:0.4 shadowOffset:CGSizeMake(0, 2.0) roundedRect:CGRectMake(3, 2, twoBtnWidth-6, twoBtnHeight) cornerRadii:CGSizeMake(twoBtnHeight/2, twoBtnHeight/2) rectCorner:UIRectCornerAllCorners];
     
     [contentView addSubview:self.destructiveBtn];
     [self.destructiveBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.width.height.equalTo(self.cancelBtn);
         make.left.equalTo(self.cancelBtn.mas_right).offset(btnSpace);
     }];
-    [self.destructiveBtn yj_clipLayerWithRadius:twoBtnHeight/2 width:0 color:nil];
-    
+    [self.destructiveBtn yj_shadowWithCornerRadius:twoBtnHeight/2 borderWidth:0 borderColor:nil shadowColor:[UIColor yj_colorWithHex:0x00C3F2] shadowOpacity:0.5 shadowOffset:CGSizeMake(0, 2.5) roundedRect:CGRectMake(3, 2, twoBtnWidth-6, twoBtnHeight) cornerRadii:CGSizeMake(twoBtnHeight/2, twoBtnHeight/2) rectCorner:UIRectCornerAllCorners];
+   
+     CGFloat sureWidth = (kLancooScreenWidth > 320 ? 0.5 : 0.7)*kLancooWidth;
+    if (IsPad) {
+        sureWidth = 200;
+    }
     [contentView addSubview:self.sureBtn];
     [self.sureBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(contentView);
-        make.width.equalTo(contentView).multipliedBy(kLancooScreenWidth > 320 ? 0.5 : 0.7);
+        make.width.mas_equalTo(sureWidth);
         make.height.bottom.equalTo(self.cancelBtn);
     }];
-    [self.sureBtn yj_clipLayerWithRadius:twoBtnHeight/2 width:0 color:nil];
-
+    
+    [self.sureBtn yj_shadowWithCornerRadius:twoBtnHeight/2 borderWidth:0 borderColor:nil shadowColor:[UIColor yj_colorWithHex:0x00C3F2] shadowOpacity:0.5 shadowOffset:CGSizeMake(0, 2.5) roundedRect:CGRectMake(3, 2, sureWidth-6, twoBtnHeight) cornerRadii:CGSizeMake(sureWidth, twoBtnHeight/2) rectCorner:UIRectCornerAllCorners];
     
     [contentView addSubview:self.titleL];
     [self.titleL mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(contentView);
-        make.top.equalTo(contentView.mas_top).offset(kLancooHeadImageH/2);
+        make.top.equalTo(contentView.mas_top).offset(kLancooHeadImageH/2 + 10 + (IsPad ? 10 : 0));
         make.left.equalTo(contentView.mas_left).offset(20);
         make.height.mas_equalTo(20);
     }];
@@ -146,16 +157,22 @@
     [self.contentTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(contentView);
         make.left.equalTo(contentView).offset(20);
-        make.top.equalTo(self.titleL.mas_bottom).offset(8);
-        make.bottom.equalTo(self.cancelBtn.mas_top).offset(-20);
+        make.top.equalTo(self.titleL.mas_bottom).offset(20);
+        make.bottom.equalTo(self.cancelBtn.mas_top).offset(-30);
     }];
 }
 - (CGFloat)alertHeightuUnlessContentHeight{
     CGFloat topOffset = kLancooHeadImageH/2 - 10;
-    CGFloat bottomOffset = 36 + 20;
-    CGFloat titleHeight = kLancooHeadImageH/2 + 20;
-    CGFloat contentTopOffset = 20;
-    CGFloat contentBottomOffset = 30;
+    CGFloat bottomOffset = (IsPad ? 40 : 36) + 20;
+    CGFloat titleHeight = kLancooHeadImageH/2 + 10 + 20 + (IsPad ? 10 : 0);
+    CGFloat contentTopOffset = 25;
+    CGFloat contentBottomOffset = 35;
+    
+    if (IsPad) {
+        contentTopOffset += 10;
+        contentBottomOffset += 20;
+    }
+    
     return topOffset + bottomOffset + titleHeight + contentTopOffset + contentBottomOffset;
 }
 #pragma mark - Public
@@ -176,7 +193,7 @@
 
 + (YJLancooAlert *)lancooAlertWithTitle:(NSString *)title msg:(NSString *)msg cancelTitle:(NSString *)cancelTitle destructiveTitle:(NSString *)destructiveTitle cancelBlock:(void (^)(void))cancelBlock destructiveBlock:(void (^)(void))destructiveBlock{
     YJLancooAlert *alertView = [[YJLancooAlert alloc] init];
-     alertView.cancelBlock = cancelBlock;
+    alertView.cancelBlock = cancelBlock;
     alertView.destructiveBlock = destructiveBlock;
     alertView.contentTextView.hidden = YES;
     alertView.sureBtn.hidden = YES;
@@ -198,9 +215,14 @@
     alertView.cancelBtn.hidden = YES;
     alertView.destructiveBtn.hidden = YES;
     alertView.titleL.text = title;
-    alertView.contentTextView.attributedText = msgAttr;
+    NSMutableAttributedString *attr = msgAttr.mutableCopy;
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = 6;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+    [attr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, attr.length)];
+    alertView.contentTextView.attributedText = attr;
     [alertView.sureBtn setTitle:sureTitle forState:UIControlStateNormal];
-    CGFloat contentHeight = [msgAttr boundingRectWithSize:CGSizeMake(kLancooWidth-40, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height;
+    CGFloat contentHeight = [attr boundingRectWithSize:CGSizeMake(kLancooWidth-40, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height;
     if (contentHeight > kLancooScreenHeight * 0.3) {
         contentHeight = kLancooScreenHeight * 0.3;
     }
@@ -210,16 +232,25 @@
     return alertView;
 }
 + (YJLancooAlert *)lancooAlertWithTitle:(NSString *)title msgAttr:(NSAttributedString *)msgAttr cancelTitle:(NSString *)cancelTitle destructiveTitle:(NSString *)destructiveTitle cancelBlock:(void (^)(void))cancelBlock destructiveBlock:(void (^)(void))destructiveBlock{
+    return [YJLancooAlert lancooAlertWithTitle:title msgAttr:msgAttr alignment:NSTextAlignmentCenter cancelTitle:cancelTitle destructiveTitle:destructiveTitle cancelBlock:cancelBlock destructiveBlock:destructiveBlock];
+}
++ (YJLancooAlert *)lancooAlertWithTitle:(NSString *)title msgAttr:(NSAttributedString *)msgAttr alignment:(NSTextAlignment)alignment cancelTitle:(NSString *)cancelTitle destructiveTitle:(NSString *)destructiveTitle cancelBlock:(void (^)(void))cancelBlock destructiveBlock:(void (^)(void))destructiveBlock{
+    
     YJLancooAlert *alertView = [[YJLancooAlert alloc] init];
     alertView.cancelBlock = cancelBlock;
     alertView.destructiveBlock = destructiveBlock;
     alertView.contentL.hidden = YES;
     alertView.sureBtn.hidden = YES;
     alertView.titleL.text = title;
-    alertView.contentTextView.attributedText = msgAttr;
+    NSMutableAttributedString *attr = msgAttr.mutableCopy;
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineSpacing = 6;
+    paragraphStyle.alignment = alignment;
+    [attr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, attr.length)];
+    alertView.contentTextView.attributedText = attr;
     [alertView.cancelBtn setTitle:cancelTitle forState:UIControlStateNormal];
     [alertView.destructiveBtn setTitle:destructiveTitle forState:UIControlStateNormal];
-    CGFloat contentHeight = [msgAttr boundingRectWithSize:CGSizeMake(kLancooWidth-40, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height;
+    CGFloat contentHeight = [attr boundingRectWithSize:CGSizeMake(kLancooWidth-40, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.height;
     if (contentHeight > kLancooScreenHeight * 0.3) {
         contentHeight = kLancooScreenHeight * 0.3;
     }
@@ -266,16 +297,15 @@
         }
     }
 }
-- (void)show{
-    UIWindow *rootWindow = [UIApplication sharedApplication].delegate.window;
-    for (UIView *view in rootWindow.subviews) {
-        if ([view isKindOfClass:[YJLancooAlert class]]) {
-            [(YJLancooAlert *)view hide];
+- (void)showOnView:(UIView *)view{
+    for (UIView *subview in view.subviews) {
+        if ([subview isKindOfClass:[YJLancooAlert class]]) {
+            [(YJLancooAlert *)subview hide];
         }
     }
-    [rootWindow addSubview:self.maskView];
-    [rootWindow addSubview:self];
-    self.center = rootWindow.center;
+    [view addSubview:self.maskView];
+    [view addSubview:self];
+    self.center = view.center;
     self.transform = CGAffineTransformConcat(CGAffineTransformIdentity,
                                              CGAffineTransformMakeScale(0.7f, 0.7f));
     self.alpha = 0.0f;
@@ -287,6 +317,10 @@
                                                      CGAffineTransformMakeScale(1.0f, 1.0f));
         weakSelf.alpha = 1.0f;
     }];
+    
+}
+- (void)show{
+    [self showOnView:[UIApplication sharedApplication].delegate.window];
 }
 - (void)hide{
     __weak typeof(self) weakSelf = self;

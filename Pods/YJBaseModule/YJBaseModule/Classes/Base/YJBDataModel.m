@@ -20,6 +20,13 @@
     }
     return self;
 }
+- (instancetype)initWithOwnView:(YJBView *)ownView{
+    if (self = [super init]) {
+        self.ownView = ownView;
+        [self yj_configure];
+    }
+    return self;
+}
 - (void)yj_configure{
     _models = [NSMutableArray array];
     _startPage = 1;
@@ -45,15 +52,23 @@
     // This method is for override
 }
 - (void)yj_handleResponseData:(NSDictionary *)data modelClass:(Class)modelClass success:(void (^)(BOOL))success{
-    BOOL noMoreData = NO;
-    if (data && data.count > 0) {
-        self.model = [[modelClass alloc] initWithDictionary:data];
-    }else{
-        noMoreData = YES;
-    }
-    if (success) {
-        success(noMoreData);
-    }
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        BOOL noMoreData = NO;
+        if (data && data.count > 0) {
+            weakSelf.model = [[modelClass alloc] initWithDictionary:data];
+        }else{
+            noMoreData = YES;
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (success) {
+                success(noMoreData);
+            }
+            
+        });
+        
+    });
 }
 
 #pragma mark - Table
@@ -79,11 +94,16 @@
             [weakSelf.ownTableView endFooterRefreshing];
         }
         [weakSelf.ownTableView reloadData];
+        if (weakSelf.ownController) {
+            [weakSelf.ownController yj_loadTableData];
+        }
+        weakSelf.ownTableView.hideFooterStateLab = weakSelf.models.count == 0;
     } failed:^(NSError * _Nonnull error) {
-        [LGAlert showStatus:@"加载失败"];
+        [LGAlert showErrorWithStatus:@"加载失败"];
         [weakSelf.ownTableView endHeaderRefreshing];
         [weakSelf.ownTableView endFooterRefreshing];
         weakSelf.totalCount = 0;
+         weakSelf.ownTableView.hideFooterStateLab = weakSelf.models.count == 0;
     }];
 }
 - (void)yj_loadTableDataWithPage:(NSInteger)page success:(void (^)(BOOL))success failed:(void (^)(NSError * _Nonnull))failed{
@@ -96,14 +116,14 @@
     [self yj_loadTableDataAtIndexPath:self.updateIndexPath success:^(BOOL noData) {
         [weakSelf.ownController yj_setLoadingViewShow:NO backgroundColor:[UIColor colorWithWhite:0.2 alpha:0.4] tintColor:[UIColor whiteColor]];
         if (noData) {
-            [LGAlert showStatus:@"更新失败"];
+            [LGAlert showErrorWithStatus:@"更新失败"];
         }else{
             [weakSelf.ownTableView reloadData];
             [weakSelf.ownTableView scrollToRowAtIndexPath:weakSelf.updateIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
         }
     } failed:^(NSError * _Nonnull error) {
         [weakSelf.ownController yj_setLoadingViewShow:NO backgroundColor:[UIColor colorWithWhite:0.2 alpha:0.4] tintColor:[UIColor whiteColor]];
-        [LGAlert showStatus:@"更新失败"];
+        [LGAlert showErrorWithStatus:@"更新失败"];
     }];
 }
 - (void)yj_loadTableDataAtIndexPath:(NSIndexPath *)indexPath success:(void (^)(BOOL))success failed:(void (^)(NSError * _Nonnull))failed{
@@ -132,11 +152,16 @@
             [weakSelf.ownCollectionView endFooterRefreshing];
         }
         [weakSelf.ownCollectionView yj_reloadData];
+        if (weakSelf.ownController) {
+           [weakSelf.ownController yj_loadTableData];
+        }
+        weakSelf.ownCollectionView.hideFooterStateLab = weakSelf.models.count == 0;
     } failed:^(NSError * _Nonnull error) {
-        [LGAlert showStatus:@"加载失败"];
+        [LGAlert showErrorWithStatus:@"加载失败"];
         [weakSelf.ownCollectionView endHeaderRefreshing];
         [weakSelf.ownCollectionView endFooterRefreshing];
         weakSelf.totalCount = 0;
+        weakSelf.ownCollectionView.hideFooterStateLab = weakSelf.models.count == 0;
     }];
 }
 
@@ -150,14 +175,14 @@
     [self yj_loadCollectionDataAtIndexPath:self.updateIndexPath success:^(BOOL noData) {
         [weakSelf.ownController yj_setLoadingViewShow:NO backgroundColor:[UIColor colorWithWhite:0.2 alpha:0.4] tintColor:[UIColor whiteColor]];
         if (noData) {
-            [LGAlert showStatus:@"更新失败"];
+            [LGAlert showErrorWithStatus:@"更新失败"];
         }else{
             [weakSelf.ownCollectionView yj_reloadData];
             [weakSelf.ownCollectionView scrollToItemAtIndexPath:weakSelf.updateIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
         }
     } failed:^(NSError * _Nonnull error) {
         [weakSelf.ownController yj_setLoadingViewShow:NO backgroundColor:[UIColor colorWithWhite:0.2 alpha:0.4] tintColor:[UIColor whiteColor]];
-        [LGAlert showStatus:@"更新失败"];
+        [LGAlert showErrorWithStatus:@"更新失败"];
     }];
 }
 
@@ -168,6 +193,9 @@
 
 #pragma mark - 数据处理
 - (void)yj_handleResponseDataList:(NSArray *)dataList modelClass:(Class)modelClass totalCount:(NSInteger)totalCount success:(void (^)(BOOL))success{
+    if (self. yj_isRemoveAll) {
+        [self yj_removeAllData];
+    }
     BOOL noMore = NO;
     if (dataList && dataList.count > 0) {
         if (self.currentPage != self.startPage) {
@@ -180,9 +208,6 @@
             if (dataList.count < self.pageSize || (totalCount > 0 && dataList.count == totalCount)) {
                 noMore = YES;
             }
-        }
-        if (self. yj_isRemoveAll) {
-            [self yj_removeAllData];
         }
         for (NSDictionary *dict in dataList) {
             YJBModel *model = [[modelClass alloc] initWithDictionary:dict];

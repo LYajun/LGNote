@@ -8,9 +8,12 @@
 #import "YJBManager.h"
 #import <YJExtensions/YJExtensions.h>
 
+#import <LGBundle/LGBundleManager.h>
+
 @interface YJBManager ()
 @property (nonatomic,strong) NSArray *loadingImgs;
 @property (nonatomic,strong) NSBundle *currentBundle;
+@property (nonatomic,strong) NSBundle *lgBundle;
 @end
 @implementation YJBManager
 + (YJBManager *)defaultManager{
@@ -22,12 +25,13 @@
     });
     return macro;
 }
+
 - (void)configure{
     _currentBundle = [NSBundle yj_bundleWithCustomClass:YJBManager.class bundleName:@"YJBaseModule"];
+    _lgBundle = [LGBundleManager defaultManager].bundle;
     
-    _loadingDirName = @"Loading1";
-    _loadingImgPrefix = @"loading";
-    _loadingImgSuffix = @"jpg";
+    _loadingImgs = [LGBundleManager defaultManager].loadingImgs;
+    
     
     _loadingColor = [UIColor yj_colorWithHex:0x989898];
     _loadingGifTitle = @"努力加载中...";
@@ -61,22 +65,6 @@
     _refreshFooterStateTitleSize = 15;
     _refreshFooterStateTitleColor = [UIColor yj_colorWithHex:0x989898];
     
-    [self initLoadingImg];
+   
 }
-
-- (void)initLoadingImg{
-    CFAbsoluteTime startTime =CFAbsoluteTimeGetCurrent();
-    NSFileManager *fielM = [NSFileManager defaultManager];
-    NSArray *arrays = [fielM contentsOfDirectoryAtPath:[self.currentBundle yj_bundlePathWithName:self.loadingDirName] error:nil];
-    NSMutableArray *imageArr = [NSMutableArray array];
-    for (NSInteger i = 1; i <= arrays.count; i++) {
-        UIImage *image = [UIImage yj_imagePathName:[NSString stringWithFormat:@"%@/%@%li.%@",self.loadingDirName,self.loadingImgPrefix,i,self.loadingImgSuffix] atBundle:self.currentBundle];
-        if (image) {
-            [imageArr addObject:image];
-        }
-    }
-    NSLog(@"loadingGifImg Linked in %f ms", (CFAbsoluteTimeGetCurrent() - startTime) *1000.0);
-    self.loadingImgs = imageArr;
-}
-
 @end

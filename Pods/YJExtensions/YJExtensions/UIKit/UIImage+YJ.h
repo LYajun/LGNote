@@ -27,7 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - UIImage处理
 - (UIImage *)yj_transformtoSize:(CGSize)Newsize;
 + (UIImage *)yj_fixOrientation:(UIImage *)aImage;
-
+/** length 压缩最大尺寸，单位为K */
+- (NSData *)yj_compressImageOnlength:(CGFloat)length;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -2,6 +2,7 @@ ${PODS_ROOT}/Target Support Files/Pods-NoteDemo/Pods-NoteDemo-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework
 ${BUILT_PRODUCTS_DIR}/BlocksKit/BlocksKit.framework
 ${BUILT_PRODUCTS_DIR}/LGAlertHUD/LGAlertHUD.framework
+${BUILT_PRODUCTS_DIR}/LGBundle/LGBundle.framework
 ${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework
 ${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework
 ${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework
