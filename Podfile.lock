@@ -90,7 +90,7 @@ PODS:
   - YYImage/Core (1.0.4)
 
 DEPENDENCIES:
-  - AFNetworking
+  - AFNetworking (= 3.2.1)
   - BlocksKit
   - LGAlertHUD (= 1.0.3)
   - Masonry
@@ -136,6 +136,6 @@ SPEC CHECKSUMS:
   YJUtils: 41d33220656b74ac0fd4fe3c2e19f45726dc06c0
   YYImage: 1e1b62a9997399593e4b9c4ecfbbabbf1d3f3b54
 
-PODFILE CHECKSUM: e29c78733cfdc937b1123032aec6418762f5565d
+PODFILE CHECKSUM: b0328844765d72e5dee0942f8317ebd8f579da29
 
 COCOAPODS: 1.9.2
