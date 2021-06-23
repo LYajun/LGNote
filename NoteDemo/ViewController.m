@@ -57,7 +57,9 @@
       params.MaterialCount = 10;
       params.MainTY =0;
       params.SystemType = SystemType_TYJX;
-
+     
+    
+    
       //根据实际的传
       params.SchoolID =@"S27-511-AF57";
       //根据实际的传
