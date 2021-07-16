@@ -4,7 +4,6 @@ target ‘NoteDemo’ do
   pod 'TFHpple'
   pod 'YJBaseModule'
   pod 'BlocksKit'
-  pod 'YYImage'
   pod 'YJUtils'
   pod 'AFNetworking'
   pod 'Masonry'
@@ -13,5 +12,5 @@ target ‘NoteDemo’ do
   pod 'MJExtension'
   pod 'SDWebImage'
   pod 'MJRefresh'
-
+  pod 'YJImageBrowser'
 end

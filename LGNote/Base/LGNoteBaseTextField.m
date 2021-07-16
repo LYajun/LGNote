@@ -53,7 +53,7 @@ NSString  *const LGTextFieldKeyBoardWillHiddenNotification = @"LGTextFieldKeyBoa
     self.textColor = [UIColor darkGrayColor];
     self.backgroundColor = [UIColor whiteColor];
     self.clearButtonMode = UITextFieldViewModeWhileEditing;
-    self.autocorrectionType = UITextAutocorrectionTypeNo;
+//    self.autocorrectionType = UITextAutocorrectionTypeNo;
     [self addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     [self registerNotification];
@@ -61,6 +61,9 @@ NSString  *const LGTextFieldKeyBoardWillHiddenNotification = @"LGTextFieldKeyBoa
     __weak typeof(self) weakSelf = self;
     self.bk_didEndEditingBlock = ^(UITextField *textField) {
         [weakSelf yj_textFieldDidEndEditing:textField];
+    };
+    self.bk_shouldReturnBlock = ^BOOL(UITextField *textField) {
+        return [weakSelf j1_textFieldShouldReturn:textField];
     };
     self.bk_shouldChangeCharactersInRangeWithReplacementStringBlock = ^BOOL(UITextField *textField, NSRange range, NSString *string) {
         return [weakSelf yj_textField:textField shouldChangeCharactersInRange:range replacementString:string];
@@ -83,7 +86,12 @@ NSString  *const LGTextFieldKeyBoardWillHiddenNotification = @"LGTextFieldKeyBoa
 - (void)done{
     [self resignFirstResponder];
 }
-
+- (BOOL)j1_textFieldShouldReturn:(UITextField *)textField{
+    if (self.lgDelegate && [self.lgDelegate respondsToSelector:@selector(lg_textFieldShouldReturn:)]) {
+       return [self.lgDelegate lg_textFieldShouldReturn:self];
+    }
+    return YES;
+}
 
 // 实时监控textFiled输入的结果
 - (void)textFieldDidChange:(UITextField *)textField{

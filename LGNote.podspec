@@ -3,7 +3,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "LGNote"
-  spec.version      = "1.6.7"
+  spec.version      = "1.6.8"
   spec.summary      = "笔记公共工具"
 
   spec.homepage     = "https://github.com/LYajun/LGNote"
@@ -41,19 +41,11 @@ Pod::Spec.new do |spec|
   spec.dependency 'AFNetworking'
   spec.dependency 'MJRefresh'
   spec.dependency 'TFHpple'
-  spec.dependency 'YYImage'
   spec.dependency 'SDWebImage'
   spec.dependency 'BlocksKit'
   spec.dependency 'YJBaseModule'
-
-  spec.subspec 'YJNewNote' do |newNote|
-        newNote.source_files = 'LGNote/YJNewNote/*.{h,m}'
-        newNote.resources = 'LGNote/YJNewNote/YJNewNote.bundle'
-        newNote.dependency 'YJExtensions'
-        newNote.dependency 'Masonry'
-        newNote.dependency 'YJUtils'
-        newNote.dependency 'MJExtension'
-        newNote.dependency 'LGAlertHUD'
-  end
+  spec.dependency 'YJImageBrowser'
+  spec.dependency 'YJExtensions'
+  spec.dependency 'YJUtils'
   
 end

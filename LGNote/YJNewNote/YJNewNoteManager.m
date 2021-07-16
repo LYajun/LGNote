@@ -20,7 +20,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
        macro = [[YJNewNoteManager alloc]init];
-        macro.noteBundle = [NSBundle yj_bundleWithCustomClass:NSClassFromString(@"YJNewNoteView") bundleName:@"YJNewNote"];
+        macro.noteBundle = [NSBundle yj_bundleWithCustomClass:NSClassFromString(@"YJNewNoteView") bundleName:@"LGNote"];
     });
     return macro;
 }

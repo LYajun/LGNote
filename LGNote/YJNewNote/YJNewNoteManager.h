@@ -18,6 +18,7 @@ typedef NS_ENUM(NSInteger , YJNewNoteType){
     YJNewNoteTypeText
 };
 @interface YJNewNoteManager : NSObject
+@property (nonatomic, weak) UIViewController *ownController;
 
 @property (nonatomic,copy) NSString *NoteApi;
 @property (nonatomic,assign) YJNewNoteType newNoteType;

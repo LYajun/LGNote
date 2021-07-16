@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,copy) NSString *NoteTitle;
 /** 笔记内容 */
 @property (nonatomic,copy) NSString *NoteContent;
+@property (nonatomic, strong) NSMutableAttributedString *NoteContent_Att;
+@property (nonatomic,copy) NSString *NoteCreateTime;
 /** 笔记来源 */
 @property (nonatomic,copy) NSString *ResourceName;
 @property (nonatomic,copy) NSString *ResourceID;
@@ -37,12 +40,21 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic,assign) NSInteger imageAllCont;
 @property (nonatomic,assign) NSInteger MaterialIndex;
 @property (nonatomic,assign) NSInteger TotalCount;
-@property (nonatomic,strong) NSArray *imageInfo;
 /** 是否是图文混排 */
 @property (nonatomic, assign) BOOL mixTextImage;
 
 
 - (void)uploadNoteDataWithComplete:(void (^_Nullable) (BOOL isSuccess))complete;
+
+
+@property (nonatomic, strong) NSMutableDictionary *imageInfo;
+- (void)updateImageInfo:(NSDictionary *) imageInfo imageAttr:(NSAttributedString *) imageAttr;
+
+// 将富文本转换从字符串
+- (void)updateText:(NSAttributedString *)textAttr;
+
+
+- (void)uploadNoteImg:(UIImage *)image complete:(void (^)(NSString * _Nullable imgUrl))complete;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -11,7 +11,7 @@
 #import "LGNSubjectPickerView.h"
 #import "LGNoteConfigure.h"
 #import "LGNNoteSourceDetailView.h"
-#import "YBImageBrowser.h"
+#import <YJImageBrowser/YJImageBrowserView.h>
 #import "LGNImagePickerViewController.h"
 #import "LGNDrawBoardViewController.h"
 #import "LGNCutImageViewController.h"
@@ -472,11 +472,6 @@ HPTextViewTapGestureRecognizerDelegate
 }
 
 - (BOOL)lg_textViewShouldInteractWithTextAttachment:(LGNoteBaseTextView *)textView{
-//    YBImageBrowser *browser = [YBImageBrowser new];
-//    browser.dataSourceArray = [self configureUrls];
-//    browser.currentIndex = 0;
-//    [browser show];
-    
     return YES;
 }
 //
@@ -489,46 +484,6 @@ HPTextViewTapGestureRecognizerDelegate
     }
     
     return NO;
-}
-
-- (NSArray *)configureUrls:(NSString*)urlStr{
-    
-    
-    NSArray * imageArr = [NSArray array];
-    
-    if(!IsArrEmpty(_NowimgaeUrls)){
-        
-       imageArr = _NowimgaeUrls;
-    }else{
-      imageArr =self.viewModel.dataSourceModel.imgaeUrls;
-    }
-   
-    
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:imageArr.count];
-    
-    for (int i = 0; i < imageArr.count; i ++) {
-        YBImageBrowseCellData *data = [YBImageBrowseCellData new];
-        data.url = imageArr[i];
-       NSString *str1 = [data.url absoluteString];
-        
-        if ([urlStr containsString:@".jpg"]) {
-            urlStr = [urlStr stringByReplacingOccurrencesOfString:@".png" withString:@""];
-            
-        }
-        
-     if([str1 containsString:urlStr]){
-         //保存照片index
-         _photoIndex = i;
-       
-     }
-        
-        
-        [result addObject:data];
-        
-    }
-    
-    
-    return result;
 }
 
 - (void)lg_textViewPhotoEvent:(LGNoteBaseTextView *)textView{
@@ -776,11 +731,8 @@ HPTextViewTapGestureRecognizerDelegate
 {
 
     _photoIndex = 0;
-    YBImageBrowser *browser = [YBImageBrowser new];
-    browser.dataSourceArray = [self configureUrls:textAttachment.fileWrapper.preferredFilename];
-    browser.currentIndex = _photoIndex;
-    [browser show];
-  
+    NSString *urlStr =  textAttachment.fileWrapper.preferredFilename;
+    [YJImageBrowserView showWithImageUrls:@[urlStr] atIndex:0];
 }
 
 

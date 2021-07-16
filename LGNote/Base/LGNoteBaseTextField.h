@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, LGTextFiledKeyBoardInputType) {
 
 @protocol LGNoteBaseTextFieldDelegate <NSObject>
 @optional
-
+- (BOOL)lg_textFieldShouldReturn:(LGNoteBaseTextField *)textField;
 - (void)lg_textFieldDidEndEditing:(LGNoteBaseTextField *)textField;
 - (void)lg_textFieldDidChange:(LGNoteBaseTextField *)textField;
 
